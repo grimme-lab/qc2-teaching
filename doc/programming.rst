@@ -86,8 +86,8 @@ it with ``gfortran``.
    :emphasize-lines: 3
 
    gfortran empty.f90
-   /usr/bin/ld: /usr/lib/Scrt1.o: in function ``_start':
-   (.text+0x24): undefined reference to ``main'
+   /usr/bin/ld: /usr/lib/Scrt1.o: in function `_start':
+   (.text+0x24): undefined reference to `main'
    collect2: error: ld returned 1 exit status
 
 This did not work as expected, ``gfortran`` tells you that your program is

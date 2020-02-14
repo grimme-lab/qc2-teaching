@@ -1,9 +1,9 @@
-WP8 -- Quantum Chemistry II
+QC2 -- Quantum Chemistry II
 ===========================
 
-This is the guide to the practical course for WP8.
+This is the guide to the practical course for QC2.
 
-.. code:: fortran
+.. code-block:: fortran
 
    program my_scf
       use, intrinsic :: iso_fortran_env
@@ -49,3 +49,4 @@ This is the guide to the practical course for WP8.
 
    intro
    programming
+   scf
