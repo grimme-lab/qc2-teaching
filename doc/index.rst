@@ -48,3 +48,4 @@ This is the guide to the practical course for WP8.
    :caption: Programming
 
    intro
+   programming
