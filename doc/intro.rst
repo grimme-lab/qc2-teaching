@@ -135,7 +135,7 @@ a complete summary can be found in its manual page by ``man <command>``.
 Editors
 -------
 
-To access and edit any textfile in Linux you will need an editor. A huge variety
+To access and edit any text file in Linux you will need an editor. A huge variety
 of editors exist and your difficult task is to pick the one you are most
 comfortable with. We introduce the most common ones in this chapter, but feel
 free to work with the editor that fits you the best.
@@ -195,22 +195,98 @@ It has the advantage of being installed by default on almost any Linux
 machine and is even fully usable without a graphical user interface.
 
 However, getting past the initial learning curve can take the better part of a
-month, but having truely mastered ``vim`` usually results in a huge performance
-gain when developing. We encourage you to pick up ``vim`` instead ``atom``.
+month, but having truly mastered ``vim`` usually results in a huge performance
+gain when developing. We encourage you to pick up ``vim`` instead of ``atom``.
 
 To get started with ``vim`` open a new terminal (type ``<alt>-<F2>`` for the
-quicklaunch menu, than type ``konsole`` or search for it in the menu) and
+quick launch menu, than type ``konsole`` or search for it in the menu) and
 type ``vimtutor``.
 This will launch an instance of ``vim`` with an extensive introduction for using
 it, follow the instructions until you feel confident navigating and editing files
 with ``vim``.
 
-.. note::
+.. attention::
    Don't read past this note without finishing ``vimtutor``!
 
 To make working with ``vim`` easier for you, we changed some of the default
 settings for you. Type ``vim ~/.vimrc`` to look into our setup, if you are
 not happy with something we put in here, feel free to modify or replace it,
 you can also add new configurations if you like.
+
+After you have covered the basics, there are come tricks you might find useful.
+
+.. tip::
+
+   We recommend to work with a *single* instance of ``vim`` in *one* terminal,
+   if used right ``vim`` can provide all functions from your file navigator
+   and terminal.
+
+1. Open your current working directories with ``vim .`` and you will find yourself
+   in the ``netrw`` file navigator.
+2. Navigate to a file you would like to open and hit ``<Enter>``, it will be opened
+   in the same ``vim`` instance, to get back type ``:E`` in normal mode and find
+   yourself back in ``netrw``.
+3. To open a new window type ``<ctrl>-w n``, you can close the window again
+   with ``<ctrl>-w q`` or by typing ``:q`` as usual.
+4. To open a second window you can split your ``vim`` window by using ``<ctrl>-w v``
+   (for vertical splitting) or ``<ctrl>-w s`` (for horizontal splitting) to have
+   to windows with the for the same file which can be used independently.
+
+.. tip::
+
+   If your ``vim`` instance freeze, you hit ``<ctrl>-s`` by accident, which
+   tells the hosting terminal to freeze, unfreeze it with ``<ctrl>-q``.
+
+5. If you have your mouse enabled for ``vim`` you can jump between
+   them by clicking into another window, the faster way is to use ``<ctrl>-w w``
+   to go to the next window.
+
+Make yourself familiar with navigation between multiple windows by creating,
+closing and jumping between multiple windows.
+You can yank and paste content between the windows that way, which allows
+seamless transfer between different files.
+
+6. Now go in one of the windows back to ``netrw``, we want to create a new
+   directory without using ``:!mkdir ...``, type ``d`` in normal in your ``netrw``
+   instance and you should be prompted to provide a name.
+7. You can delete it again with ``D``, do so by moving your cursor over the file
+   or directory and press ``D``, than accept your choice in the prompt.
+8. Now we want a new file, the easiest way would be ``:e ...``, but this path
+   has to be relative from the working directory we started our ``vim`` instance
+   in, so we use ``netrw`` instead and type ``%`` which prompts as to provide
+   a name and opens the new file afterwards in a new ``vim`` window.
+
+Lets open a new file ``hello.f90`` and enter
+
+.. code-block:: fortran
+   :linenos:
+
+   program hello
+      implicit none
+      write(*, '(a)') "My first Fortran program"
+   end program hello
+
+.. tip::
+
+   In case the syntax highlighting looks strange, ``vim`` is trying to use
+   Fortran 77 highlighting, add ``let fortran_free_source=1`` to your ``.vimrc``
+   to get the correct Fortran 90 highlighting and restart ``vim`` for it to
+   take effect.
+
+After saving the file, compile and run it by typing ``:!gfortran % && ./a.out``,
+you should see something like this printout in your terminal:
+
+.. code-block:: none
+
+   My first Fortran program
+
+   Press ENTER or type command to continue
+
+The first line is from your program, the second one produced by ``vim``.
+
+.. note::
+
+   To switch between your terminal and ``vim`` use ``<ctrl>-z`` to stop ``vim``
+   and get it back from the terminal by using the command ``fg``.
 
 At this point you should be ready to use ``vim`` in production, happy coding.

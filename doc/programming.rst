@@ -45,7 +45,7 @@ Let's take a look at a complete Fortran program.
    :linenos:
 
    program hello
-   write(*,*) "This is probably the simplest Fortran program"
+   write(*, *) "This is probably the simplest Fortran program"
    end program hello
 
 If you were to execute this program, it would simply display its message and
@@ -79,7 +79,7 @@ exit.
    is ``a.out``. They should produce the same output.
 
 Now that we can translate our program, we should check what it needs
-to create an excutable, create an empty file ``empty.f90`` and try to translate
+to create an executable, create an empty file ``empty.f90`` and try to translate
 it with ``gfortran``.
 
 .. code-block:: none
@@ -113,7 +113,7 @@ The name used in this section has to match the *declaration section*.
 
 Everything in between is the *execution section*, each statement in this
 section is executed when calling the translated program.
-We use the ``write(*,*)`` statement which causes the program to display
+We use the ``write(*, *)`` statement which causes the program to display
 whatever is behind it until the end of the line.
 The double quotes enclosing the sentence make the program recognize that
 the following characters are just that, *i.e.*, a sequence of characters
@@ -143,7 +143,7 @@ For example we could write
    implicit none
    integer :: my_number
    my_number = 42
-   write(*,*) "My number is", my_number
+   write(*, *) "My number is", my_number
    end program numbers
 
 Now the *declaration section* of our program is line 1-3, the second line
@@ -174,13 +174,13 @@ a value to ``my_number``, than we are printing it to the screen.
    the program really useful, we have to want to have the program
    *read* in our number.
 
-   Use the ``read(*,*)`` statement to provide the number to the program,
-   which works similar to the ``write(*,*)`` statement.
+   Use the ``read(*, *)`` statement to provide the number to the program,
+   which works similar to the ``write(*, *)`` statement.
 
 .. admonition:: Solutions 2
    :class: tip
 
-   We replace the assignment in line 4 with the ``read(*,*) my_number``
+   We replace the assignment in line 4 with the ``read(*, *) my_number``
    and than translate it to a program.
 
    .. code-block:: none
@@ -239,9 +239,9 @@ a value to ``my_number``, than we are printing it to the screen.
       program numbers
       implicit none
       integer :: my_number
-      write(*,*) "Enter an integer value"
-      read(*,*) my_number
-      write(*,*) "My number is", my_number
+      write(*, *) "Enter an integer value"
+      read(*, *) my_number
+      write(*, *) "My number is", my_number
       end program numbers
 
    While this will not prevent wrong input it will make it more unlikely
@@ -267,11 +267,11 @@ So let's examine the following code:
      integer :: res
 
      ! get two values to be stored in a and b
-     read(*,*) a, b
+     read(*, *) a, b
 
      res = a + b  ! perform the addition
 
-     write(*,*) "The result is", res
+     write(*, *) "The result is", res
    end program add
 
 Again we declare our program and give it a useful name describing the task at
@@ -323,7 +323,7 @@ program again.
 .. admonition:: Solutions 3
    :class: tip
 
-   As before we add a line like ``write(*,*) "Enter two numbers to add"``
+   As before we add a line like ``write(*, *) "Enter two numbers to add"``
    before the read statement. We can do something similar like in numbers
    for both ``a`` and ``b`` to echo their values, the resulting shell history
    should look similar to this
@@ -414,9 +414,9 @@ Let us consider the following program using ``real`` variables
      b = 6.0
      c = a / b
 
-     write(*,*) 'a is', a
-     write(*,*) 'b is', b
-     write(*,*) 'c is', c
+     write(*, *) 'a is', a
+     write(*, *) 'b is', b
+     write(*, *) 'c is', c
 
    end program accuracy
 
@@ -449,8 +449,8 @@ Now consider the following program
      integer :: single, double
      single = selected_real_kind(6)
      double = selected_real_kind(15)
-     write(*,*) "For 6 significant digits", single, "bytes are required"
-     write(*,*) "For 15 significant digits", double, "bytes are required"
+     write(*, *) "For 6 significant digits", single, "bytes are required"
+     write(*, *) "For 15 significant digits", double, "bytes are required"
    end program kinds
 
 The ``intrinsic :: selected_real_kinds`` declares that we are using
@@ -491,9 +491,9 @@ specified significant digits.
         b = 6.0_wp
         c = a / b
 
-        write(*,*) 'a is', a
-        write(*,*) 'b is', b
-        write(*,*) 'c is', c
+        write(*, *) 'a is', a
+        write(*, *) 'b is', b
+        write(*, *) 'c is', c
 
       end program accuracy
 
@@ -510,18 +510,18 @@ specified significant digits.
        c is  0.166666666666667
 
    It is important to notice here that we cannot get the same result
-   we would evaulate on a piece of paper, since the precision is still
+   we would evaluate on a piece of paper, since the precision is still
    limited by the representation of the number.
 
    Finally we want to highlight line 6 in ``accuracy``, the ``parameter``
    attached to data type (here ``integer``) is used to declare
-   variables that are constant and unchangable through the course of our
+   variables that are constant and unchangeable through the course of our
    program, more important, their value is known (by the compiler) while
    translating the program. This gives us the possibility to assign
-   meaningful and easy to remembeer names to important values.
+   meaningful and easy to remember names to important values.
 
 There is one more issue we have to discuss, look at the following
-program which does apprently the same calculation as ``accuracy.f90``,
+program which does apparently the same calculation as ``accuracy.f90``,
 but with different kinds of literals.
 
 .. code-block:: fortran
@@ -540,16 +540,16 @@ but with different kinds of literals.
      b =    1.0 / 6.0
      c =      1 / 6
 
-     write(*,*) 'a is', a
-     write(*,*) 'b is', b
-     write(*,*) 'c is', c
+     write(*, *) 'a is', a
+     write(*, *) 'b is', b
+     write(*, *) 'c is', c
 
    end program literals
 
 If we run the program now we find surprisingly that only ``a`` has the expected
 value, while all other are off. We can easily explain the result for ``c``,
 the actual calculation is happening in integer arithmetic which yields 0
-and is than _casted_ into a real number ``0.0``.
+and is than *casted* into a real number ``0.0``.
 
 .. code-block:: none
 
@@ -560,14 +560,14 @@ and is than _casted_ into a real number ``0.0``.
 
 But what happens in case of ``b``, we perform the calculation with ``1.0/6.0``,
 but those are real number from the default type represented in 32 bits
-(4 bytes) and than, as we store the result in ``b``, _casted_ into a
+(4 bytes) and than, as we store the result in ``b``, *casted* into a
 real number represented in 64 bits (8 bytes).
 
 .. important:: **Always specify the kind parameters in floating point literals!**
 
-Here we introduce the concept of _casting_ one data type to another,
+Here we introduce the concept of *casting* one data type to another,
 whenever a variable is assigned a different data type, the compiler has
-to convert it first, which is called _casting_.
+to convert it first, which is called *casting*.
 
 .. admonition:: Possible Errors
    :class: tip
@@ -592,9 +592,9 @@ to convert it first, which is called _casting_.
         b = 6.0_wp
         c = a / b
 
-        write(*,*) 'a is', a
-        write(*,*) 'b is', b
-        write(*,*) 'c is', c
+        write(*, *) 'a is', a
+        write(*, *) 'b is', b
+        write(*, *) 'c is', c
 
       end program accuracy
 
@@ -629,7 +629,7 @@ to convert it first, which is called _casting_.
    Therefore, always check for the first error that occurs.
 
    You could also ask how important line 4 with ``intrinsic ::`` is for
-   our program. In fact you *could* leave it out completly (try it!),
+   our program. In fact you *could* leave it out completely (try it!),
    but we will always declare all the intrinsic functions we are using
    here such that you know they are, indeed, intrinsic functions.
 
@@ -667,25 +667,25 @@ Check out the following program to find roots
      real(wp) :: d
 
      ! request user input
-     write(*,*) "Solving x² + p·x + q = 0, please enter p and q"
-     read(*,*) p, q
+     write(*, *) "Solving x² + p·x + q = 0, please enter p and q"
+     read(*, *) p, q
      d = 0.25_wp * p**2 - q
      ! descriminant is positive, we have two real roots
      if (d > 0.0_wp) then
-       write(*,*) "x1 =", -0.5_wp * p + sqrt(d)
-       write(*,*) "x2 =", -0.5_wp * p - sqrt(d)
+       write(*, *) "x1 =", -0.5_wp * p + sqrt(d)
+       write(*, *) "x2 =", -0.5_wp * p - sqrt(d)
      ! descriminant is negative, we have two complex roots
      else if (d < 0.0_wp) then
-       write(*,*) "x1 =", -0.5_wp * p, "+ i ·", sqrt(abs(d))
-       write(*,*) "x2 =", -0.5_wp * p, "- i ·", sqrt(abs(d))
+       write(*, *) "x1 =", -0.5_wp * p, "+ i ·", sqrt(abs(d))
+       write(*, *) "x2 =", -0.5_wp * p, "- i ·", sqrt(abs(d))
      else  ! descriminant is zero, we have only one root
-       write(*,*) "x1 = x2 =", -0.5_wp * p
+       write(*, *) "x1 = x2 =", -0.5_wp * p
      endif
    end program roots
 
 .. admonition:: Exercise 5
 
-    1. check the conditions for simple cases, start by setting up quadradic
+    1. check the conditions for simple cases, start by setting up quadratic
        equations with known roots and compare your results against the
        program.
 
@@ -722,13 +722,13 @@ lesser equal   ``<=``    ``.ge.``  ``var <= 8``,  ``var.le.8``
    above, but this is usually not necessary.
    If you find yourself comparing two logical expressions with each other,
    rethink the logic in your program first, most of the time is just some
-   superfluous constuct.
+   superfluous construct.
    If you are sure that it is really necessary, use ``.eqv.`` and ``.neqv.``
    for the task.
 
 To negate a logical expression we use prepend ``.not.`` to the expression
 and to test multiple expressions we can use ``.or.`` and ``.and.``
-which have the same meaning as their equivalant operators in logic.
+which have the same meaning as their equivalent operators in logic.
 
 Repeating tasks
 ---------------
@@ -746,14 +746,14 @@ Consider this simple program for summing up its input
      ! initialize
      number = 0
      do
-       read(*,*) i
+       read(*, *) i
        if (i <= 0) then
          exit
        else
          number = number + i
        end if
      end do
-     write(*,*) "Sum of all input", number
+     write(*, *) "Sum of all input", number
    end program loop
 
 Here we introduce a new construct called ``do``-loop.
@@ -819,12 +819,12 @@ the ``do while(<condition>)`` construct instead.
      integer :: number
      ! initialize
      number = 0
-     read(*,*) i
+     read(*, *) i
      do while(i > 0)
        number = number + i
-       read(*,*) i
+       read(*, *) i
      end do
-     write(*,*) "Sum of all input", number
+     write(*, *) "Sum of all input", number
    end program while_loop
 
 This shifts the condition to the beginning of the loop, so we have to restructure
@@ -832,7 +832,7 @@ our execution sequence a bit to match the new logical flow of the program.
 Here, we save the ``if`` and ``exit``, but have to provide the ``read`` statement
 twice.
 
-Imagine we do not want to sum arbitrary numbers but make a cummulative sum over
+Imagine we do not want to sum arbitrary numbers but make a cumulative sum over
 a range of numbers. In this case we would use another version of the ``do`` loop
 as given here:
 
@@ -840,18 +840,18 @@ as given here:
    :caption: sum.f90
    :linenos:
 
-   program cummulative_sum
+   program cumulative_sum
      implicit none
      integer :: i, n
      integer :: number
      ! initialize
      number = 0
-     read(*,*) n
+     read(*, *) n
      do i = 1, n
        number = number + i
      end do
-     write(*,*) "Sum is", number
-   end program cummulative_sum
+     write(*, *) "Sum is", number
+   end program cumulative_sum
 
 You might noticed we had to introduce another variable ``n`` for the upper
 bound of the range, because we made ``i`` now our loop counter, which is
@@ -868,27 +868,27 @@ the specified range.
    3. The lower bound is fixed to one, make it adjustable by user input.
       Compare the results again with your previous programs.
 
-Now, if we want to sum only even numbers in our cummulative sum, we could try
+Now, if we want to sum only even numbers in our cumulative sum, we could try
 to add a condition in our loop:
 
 .. code-block:: fortran
    :caption: sum.f90
    :linenos:
 
-   program cummulative_sum
+   program cumulative_sum
      implicit none
      intrinsic :: modulo
      integer :: i, n
      integer :: number
      ! initialize
      number = 0
-     read(*,*) n
+     read(*, *) n
      do i = 1, n
        if (modulo(i, 2) == 1) cycle
        number = number + i
      end do
-     write(*,*) "Sum is", number
-   end program cummulative_sum
+     write(*, *) "Sum is", number
+   end program cumulative_sum
 
 The ``cycle`` instruction breaks out of the *current* iteration, but not out of
 the complete loop like ``exit``. Here we use it together with the intrinsic
@@ -907,6 +907,71 @@ every step and ``cycle`` in case we find a reminder of one, meaning an odd numbe
    most people also find it unintuitive to start counting from 0.
 
 
+Fields and Arrays of Data
+-------------------------
+
+So far we dealed with scalar data, for more complex programs we will need
+fields of data, like a set of cartesian coordinates or the overlap matrix.
+Fortran provides first class multidimensional array support.
+
+.. code-block:: fortran
+   :caption: array.f90
+   :linenos:
+
+   program array
+     implicit none
+     intrinsic :: sum, product, maxval, minval
+     integer :: vec(3)
+     ! get all elements from standard input
+     read(*, *) vec
+     ! produce some results
+     write(*, *) "Sum of all elements", sum(vec)
+     write(*, *) "Product of all elemnts", product(vec)
+     write(*, *) "Maximal/minimal value at", maxval(vec), minval(vec)
+   end program array
+
+We denote arrays by adding the dimension in parenthesis behind the variable,
+in this we choose a range from 1 to 3, resulting in 3 elements.
+
+.. admonition:: Exercise 8
+
+   1. Expand the above program to work on a 3 by 3 matrix
+   2. The ``sum`` and ``product`` can work on only one of the two dimension,
+      try to use them only for the rows or columns of the matrix
+
+Usually we do not know the size of the array in advance, to deal with this
+issue we have to make the array ``allocatable`` and explicitly request
+the memory at runtime
+
+.. code-block:: fortran
+   :caption: array.f90
+   :linenos:
+
+   program array
+     implicit none
+     intrinsic :: sum, product, maxval, minval
+     integer :: ndim
+     integer, allocatable :: vec(:)
+     ! read the dimension of the vector first
+     read(*, *) ndim
+     ! request the necessary memory
+     allocate(vec(ndim))
+     ! now read the ndim elements of the vector
+     read(*, *) vec
+     write(*, *) "Sum of all elements", sum(vec)
+     write(*, *) "Product of all elemnts", product(vec)
+     write(*, *) "Maximal/minimal value at", maxval(vec), minval(vec)
+   end program array
+
+.. admonition:: Exercise 9
+
+   1. What happens if you provide zero as dimension? Does the behaviour match
+      your expectations?
+   2. Try to allocate your array with a lower bound unequal to 1 by using something
+      like ``allocate(vec(lower:upper))``
+   3. What happens if you read/write above the upper bound or below the lower
+      bound of the array?
+
 Character Constants and Variables
 ---------------------------------
 
@@ -918,9 +983,9 @@ Fortran program. The minimum number of characters in a string is 0.
 .. code-block:: fortran
    :linenos:
 
-   write(*,*) "This is a valid character constant!"
-   write(*,*) '3.1415936' ! not a number
-   write(*,*) "{']!=" ! any character can be included, even !
+   write(*, *) "This is a valid character constant!"
+   write(*, *) '3.1415936' ! not a number
+   write(*, *) "{']!=" ! any character can be included, even !
 
 A *character variable* is a variable containing a value of the
 ``character`` data type:
