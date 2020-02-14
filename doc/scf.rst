@@ -345,11 +345,11 @@ eigenvalues **s**.
 
 .. admonition:: Exercise 7
 
-   1. Use **F'** = **X**^T^**FX** and **C** = **XC'** to show that the general and
-      eigenvalue problem and the transformed one are equivalent.
+   1. Use **F'** = **X**:sup:`T` **FX** and **C** = **XC'** to show that the
+      general and eigenvalue problem and the transformed one are equivalent.
    2. write a ``subroutine`` to calculate the symmetric orthonormalizer
       **X** from the overlap matrix.
-   3. Make sure that **X**^T^**SX** = **1** and that you are not overwriting
+   3. Make sure that **X**:sup:`T` **SX** = **1** and that you are not overwriting
       your overlap matrix in the diagonalization.
    4. Do you see why **X** is called symmetric orthonormalizer?
 
@@ -454,9 +454,9 @@ in ``lib/integrals.f90``.
 Self Consistent Field Procedure
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Now you have everything together to build the self consistent field loop.
+Now you have everything together to build the self-consistent field loop.
 
-.. admonition:: Exercise 11
+.. admonition:: Exercise 12
 
    1. First you need to construct a new Fock matrix from the density matrix.
    2. Construct a loop that performs your self consistent field calculation.

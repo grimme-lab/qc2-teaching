@@ -31,7 +31,7 @@ Shell in a nutshell
 After executing the terminal-emulator you will end up with a window, which
 looks similar to the following image:
 
-.. code:: bash
+.. code:: none
 
    ehlert@c01:~> pwd
    /home/ehlert
@@ -66,7 +66,7 @@ Since you are in your home directory, this will print the path to that home
 directory to the screen.
 Note that all input in the terminal is case-sensitive.
 
-.. code:: bash
+.. code:: none
 
    ehlert@c01:~> pwd
    /home/ehlert
@@ -104,32 +104,33 @@ huge variety of options that can not be listed here, and will hardly concern you
 For all options the program can be started with ``<command> --help`` and
 a complete summary can be found in its manual page by ``man <command>``.
 
-.. note:: "Exercise 1"
+.. admonition:: Exercise 1
 
-    To get familiar with the shell try to achieve the following task
+   To get familiar with the shell try to achieve the following task
 
-    1. change to the ``QCII`` directory
-    2. find the ``tutorial`` directory in ``QCII``
-    3. rename the ``tutorial`` directory to ``shell tutorial``
-    4. change to the newly created directory
+   1. change to the ``QCII`` directory
+   2. find the ``tutorial`` directory in ``QCII``
+   3. rename the ``tutorial`` directory to ``shell tutorial``
+   4. change to the newly created directory
 
-.. note:: "Solutions 1"
+.. admonition:: Solutions 1
+   :class: tip
 
-    A sequence of this command would achieve the wished results.
+   A sequence of this command would achieve the wished results.
 
-    .. code:: bash
+   .. code:: bash
 
-       username@hostname:~> cd QCII
-       username@hostname:~/QCII> ls tutorial
-       tutorial
-       username@hostname:~/QCII> mv tutorial shell tutorial
-       mv: cannot move 'tutorial' to a subdirectory of itself, 'tutorial/tutorial'
-       mv: cannot stat 'shell': No such file or directory
-       username@hostname:~/QCII> mv tutorial 'shell tutorial'
-       username@hostname:~/QCII> cd shell\ tutorial
-       username@hostname:~/QCII/shell tutorial>
+      username@hostname:~> cd QCII
+      username@hostname:~/QCII> ls tutorial
+      tutorial
+      username@hostname:~/QCII> mv tutorial shell tutorial
+      mv: cannot move 'tutorial' to a subdirectory of itself, 'tutorial/tutorial'
+      mv: cannot stat 'shell': No such file or directory
+      username@hostname:~/QCII> mv tutorial 'shell tutorial'
+      username@hostname:~/QCII> cd shell\ tutorial
+      username@hostname:~/QCII/shell tutorial>
 
-    Note that you have to escape the space in ``shell tutorial`` in some way.
+   Note that you have to escape the space in ``shell tutorial`` in some way.
 
 Editors
 -------
@@ -158,7 +159,7 @@ additional packages here.
 Start ``atom`` by using ``<alt>-<F2>`` and typing atom in the quick launch bar
 or searching the start menu for ``atom``.
 
-.. figure:: img/atom-new.png
+.. image:: img/atom-new.png
    :alt: new atom instance
 
 Having started a new instance of ``atom`` you either have already an empty
@@ -167,14 +168,14 @@ with ``<ctrl>-<s>`` by creating a new directory and giving the file a name there
 if you name the file ``hello.f90`` it will be automatically identified as
 Fortran source code.
 
-.. figure:: img/atom-new-folder.png
+.. image:: img/atom-new-folder.png
    :alt: Always save your files
 
 You can start a shell by hitting ``<ctrl>-<shft>-<p>`` and typing ``terminal``
 in the quick launcher of ``atom`` the shell can be used for all commands you
 previously learned.
 
-.. figure:: img/atom-terminal.png
+.. image:: img/atom-terminal.png
    :alt: img/atom-terminal.png
 
 Later you can use it to compile and execute your programs without leaving
@@ -182,7 +183,7 @@ your editor. For example we write a simple Fortran program to print a line
 to the screen, save it and compile it using ``gfortran`` in our shell inside
 ``atom``.
 
-.. figure:: img/atom-run.png
+.. image:: img/atom-run.png
    :alt: Running gfortran from atom
 
 Vim
@@ -200,7 +201,7 @@ gain when developing. We encourage you to pick up ``vim`` instead ``atom``.
 To get started with ``vim`` open a new terminal (type ``<alt>-<F2>`` for the
 quicklaunch menu, than type ``konsole`` or search for it in the menu) and
 type ``vimtutor``.
-This will launch an instance of ``vim`` with an extensive introduction into using
+This will launch an instance of ``vim`` with an extensive introduction for using
 it, follow the instructions until you feel confident navigating and editing files
 with ``vim``.
 

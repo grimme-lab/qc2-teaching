@@ -1,5 +1,5 @@
-Programming
-===========
+Introduction to Fortran
+=======================
 
 General principles
 ------------------
@@ -9,11 +9,11 @@ an action or solve a problem which would be too difficult or laborious to do
 by hand.
 It thus involves the following steps:
 
- 1. Understanding the problem.
- 2. Formulating an approach/algorithm to the problem.
- 3. Translating the algorithm into a computer--compatible language: *Coding*
- 4. Compiling and running the program.
- 5. Analyzing the result and improving the program if necessary or desired.
+1. Understanding the problem.
+2. Formulating an approach/algorithm to the problem.
+3. Translating the algorithm into a computer--compatible language: *Coding*
+4. Compiling and running the program.
+5. Analyzing the result and improving the program if necessary or desired.
 
 This manual assumes that steps 1 and 2 have already been taken care of in
 the Quantum Chemistry I module.
@@ -66,7 +66,7 @@ exit.
    translate your program using the compiler ``gfortran`` to machine code.
    The resulting binary file can be executed, thus usually called executable.
 
-   .. code-block:: bash
+   .. code-block:: none
 
       gfortran hello.f90 -o helloprog
       ./helloprog
@@ -82,7 +82,7 @@ Now that we can translate our program, we should check what it needs
 to create an excutable, create an empty file ``empty.f90`` and try to translate
 it with ``gfortran``.
 
-.. code-block:: bash
+.. code-block:: none
    :emphasize-lines: 3
 
    gfortran empty.f90
@@ -95,7 +95,8 @@ missing a *main* which it was about to *start*. The main program
 in Fortran is indicated by the ``program`` statement, which is not present
 in the empty file we gave to ``gfortran``.
 
-.. tip:: Important note about errors
+.. admonition:: Important note about errors
+   :class: tip
 
    Errors are not necessarily a bad thing, most of the programs you will
    use in this course will return useful error messages that will help
@@ -161,7 +162,7 @@ a value to ``my_number``, than we are printing it to the screen.
    you type in the above program. Than translate it with ``gfortran``
    with
 
-   .. code-block:: bash
+   .. code-block:: none
 
       gfortran numbers.f90 -o numbers_prog
       ./numbers_prog
@@ -177,11 +178,12 @@ a value to ``my_number``, than we are printing it to the screen.
    which works similar to the ``write(*,*)`` statement.
 
 .. admonition:: Solutions 2
+   :class: tip
 
    We replace the assignment in line 4 with the ``read(*,*) my_number``
    and than translate it to a program.
 
-   .. code-block:: bash
+   .. code-block:: none
 
       gfortran numbers.f90 -o numbers_prog
       ./numbers_prog
@@ -300,32 +302,33 @@ and reads values into ``a`` and ``b``. Afterwards we perform the addition ``a + 
 and assign the result to ``res``. Finally we print the result and exit the
 program again.
 
-.. admonition:: Excercise 3
+.. admonition:: Exercise 3
 
     Create the file ``add.f90`` from the manual and modify it to make it do the
     following and check
 
-     1. Display a message to the user of your program (*via* write statements)
-        about what kind of input is to be entered by them.
+    1. Display a message to the user of your program (*via* write statements)
+       about what kind of input is to be entered by them.
 
-     2. Read values from the console into the variables ``a`` and ``b``,
-        which are then *multiplied* and printed out.
-        For error checking, print out the values ``a`` and ``b`` in the course
-        of your program.
+    2. Read values from the console into the variables ``a`` and ``b``,
+       which are then *multiplied* and printed out.
+       For error checking, print out the values ``a`` and ``b`` in the course
+       of your program.
 
-     3. What happens if you provide input like ``3.14``?
+    3. What happens if you provide input like ``3.14``?
 
-     3. Perform a division instead of a multiplication.
-        Attempt to obtain a fraction.
+    4. Perform a division instead of a multiplication.
+       Attempt to obtain a fraction.
 
 .. admonition:: Solutions 3
+   :class: tip
 
    As before we add a line like ``write(*,*) "Enter two numbers to add"``
    before the read statement. We can do something similar like in numbers
    for both ``a`` and ``b`` to echo their values, the resulting shell history
    should look similar to this
 
-   .. code-block:: bash
+   .. code-block:: none
 
       gfortran add -o add_prog
       ./add_prog
@@ -357,7 +360,7 @@ program again.
    for the multiplication, since there is nothing worse than a program called
    ``add_prog`` performing multiplications).
 
-   .. code-block:: bash
+   .. code-block:: none
 
       ./multiply_prog
        Enter two numbers to multiply
@@ -464,6 +467,7 @@ specified significant digits.
       Replace kind with the number you determined in ``kinds.f90``.
 
 .. admonition:: Solutions 4
+   :class: tip
 
    The output of the second write statement should be ``8`` on most machines.
 
@@ -566,6 +570,7 @@ whenever a variable is assigned a different data type, the compiler has
 to convert it first, which is called _casting_.
 
 .. admonition:: Possible Errors
+   :class: tip
 
    You might ask what happens if we leave out the ``parameter``
    attribute in line 6, let's try it out:
@@ -678,7 +683,7 @@ Check out the following program to find roots
      endif
    end program roots
 
-.. admonition:: Excercise 5
+.. admonition:: Exercise 5
 
     1. check the conditions for simple cases, start by setting up quadradic
        equations with known roots and compare your results against the
@@ -725,15 +730,6 @@ To negate a logical expression we use prepend ``.not.`` to the expression
 and to test multiple expressions we can use ``.or.`` and ``.and.``
 which have the same meaning as their equivalant operators in logic.
 
-.. code-block:: fortran
-   :caption: logic.f90
-   :linenos:
-
-   program logic
-     implicit none
-     !! TODO !!
-   end program logic
-
 Repeating tasks
 ---------------
 
@@ -769,10 +765,11 @@ or equal to zero).
 
 .. admonition:: Exercise 6
 
-    1. there is no reason to limit us to positive values, modify the program
-       such that it also takes negative values and breaks at zero.
+   1. there is no reason to limit us to positive values, modify the program
+      such that it also takes negative values and breaks at zero.
 
 .. admonition:: Solutions 6
+   :class: tip
 
    You might have tried to exchange the condition for ``i = 0``, but since
    the equal sign is reserved for the assignment ``gfortran`` will throw
@@ -805,6 +802,98 @@ or equal to zero).
    In Fortran the assignment does not return a value (unlike in C),
    therefore the code is logically and syntactically wrong.
    We are better off using the correct ``==`` or ``.eq.`` operator here.
+
+Now that we know the basic loop construction from Fortran, we will introduce
+two special version, which you will encounter more frequently in the future.
+First the loop we setup in the example before, did not terminate without us
+specifying a condition. We can add the condition directly to the loop using
+the ``do while(<condition>)`` construct instead.
+
+.. code-block:: fortran
+   :caption: while.f90
+   :linenos:
+
+   program while_loop
+     implicit none
+     integer :: i
+     integer :: number
+     ! initialize
+     number = 0
+     read(*,*) i
+     do while(i > 0)
+       number = number + i
+       read(*,*) i
+     end do
+     write(*,*) "Sum of all input", number
+   end program while_loop
+
+This shifts the condition to the beginning of the loop, so we have to restructure
+our execution sequence a bit to match the new logical flow of the program.
+Here, we save the ``if`` and ``exit``, but have to provide the ``read`` statement
+twice.
+
+Imagine we do not want to sum arbitrary numbers but make a cummulative sum over
+a range of numbers. In this case we would use another version of the ``do`` loop
+as given here:
+
+.. code-block:: fortran
+   :caption: sum.f90
+   :linenos:
+
+   program cummulative_sum
+     implicit none
+     integer :: i, n
+     integer :: number
+     ! initialize
+     number = 0
+     read(*,*) n
+     do i = 1, n
+       number = number + i
+     end do
+     write(*,*) "Sum is", number
+   end program cummulative_sum
+
+You might noticed we had to introduce another variable ``n`` for the upper
+bound of the range, because we made ``i`` now our loop counter, which is
+automatically incremented for each repetition of the loop, also you don't have
+to care about the termination condition, as it is generated automatically by
+the specified range.
+
+.. important:: Never write to the loop counter variable inside its loop.
+
+.. admonition:: Exercise 7
+
+   1. Check the results by comparing to your previous programs for summing integer.
+   2. What happens if you provide a negative upper bound?
+   3. The lower bound is fixed to one, make it adjustable by user input.
+      Compare the results again with your previous programs.
+
+Now, if we want to sum only even numbers in our cummulative sum, we could try
+to add a condition in our loop:
+
+.. code-block:: fortran
+   :caption: sum.f90
+   :linenos:
+
+   program cummulative_sum
+     implicit none
+     intrinsic :: modulo
+     integer :: i, n
+     integer :: number
+     ! initialize
+     number = 0
+     read(*,*) n
+     do i = 1, n
+       if (modulo(i, 2) == 1) cycle
+       number = number + i
+     end do
+     write(*,*) "Sum is", number
+   end program cummulative_sum
+
+The ``cycle`` instruction breaks out of the *current* iteration, but not out of
+the complete loop like ``exit``. Here we use it together with the intrinsic
+``modulo`` function to determine the reminder of our loop counter variable in
+every step and ``cycle`` in case we find a reminder of one, meaning an odd number.
 
 .. note::
 
@@ -886,7 +975,7 @@ specifies an integer datatype with automatic width.
 The result will look similar to your first run, but now there will only be one
 space between the characters and the final result. Of course you can do more:
 ``/`` is a line break, ``f12.8`` is a 12 characters wide floating point number
-printout with 8 decimal places and ``e12.4`` switches to scientific notation
+printout with 8 decimal places and ``es12.4`` switches to scientific notation
 with only 4 decimal places.
 
 Interacting with Files
@@ -920,4 +1009,3 @@ Fortunately you do not have to keep track on the numbers used, as Fortran will
 do this automatically for you. Of course you can check the value of ``io`` after
 opening a file and will find that it is just a (negative) number used to identify
 the file opened.
-
