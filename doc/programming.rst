@@ -23,7 +23,7 @@ or a formula, spelled out on paper, to something the computer understands first.
 Compiling and running a program
 -------------------------------
 
-Before beginning to write computer code, or *to code* in short, one needs to
+Before beginning to write computer code or *to code* in short, one needs to
 choose a programming language.
 Many of them exist: some are general, some are specifically designed for a task,
 e.g. web site design or piloting a plane, some have simple data structures,
@@ -107,7 +107,7 @@ in the empty file we gave to ``gfortran``.
 Let us reexamine the code in ``hello.f90``,
 The first line is the *declaration section* which starts the main program
 and gives it an arbitrary name.
-The third line is the *termination section* which stop the execution of
+The third line is the *termination section* which stops the execution of
 the program again and tells the compiler that we are done.
 The name used in this section has to match the *declaration section*.
 
@@ -130,10 +130,10 @@ We can use variables similar to the ones used in math in that they can have
 different values. Within Fortran, they cannot be used as *unknowns* in an
 equation; only in an assignment.
 
-In Fortran we need to declare the type of every variable explicitly,
+In Fortran, we need to declare the type of every variable explicitly,
 this means that a variable is given a specific and unchanging data type
 like ``character``, ``integer`` or ``real``.
-For example we could write
+For example, we could write
 
 .. code-block:: fortran
    :caption: numbers.f90
@@ -146,20 +146,20 @@ For example we could write
    write(*, *) "My number is", my_number
    end program numbers
 
-Now the *declaration section* of our program is line 1-3, the second line
+Now the *declaration section* of our program in line 1-3, the second line
 declares that we want to declare all our variables explicitly.
 Implicit typing is a leftover from the earliest version of Fortran
 and should be avoided at all cost, therefore you will but the line
 ``implicit none`` in every declaration you write from now on.
 The third line declares the variable ``my_number`` as type ``integer``.
 
-Line 4 and 5 are the *executable section* of the program, first we assign
-a value to ``my_number``, than we are printing it to the screen.
+Line 4 and 5 are the *executable section* of the program, first, we assign
+a value to ``my_number``, then we are printing it to the screen.
 
 .. admonition:: Exercise 2
 
    Make a new directory and save create the file ``numbers.f90`` where
-   you type in the above program. Than translate it with ``gfortran``
+   you type in the above program. Then translate it with ``gfortran``
    with
 
    .. code-block:: none
@@ -171,7 +171,7 @@ a value to ``my_number``, than we are printing it to the screen.
    Despite being a bit oddly formatted the program correctly returned the
    number we have written in ``numbers.f90``.
    ``numbers_prog`` will now always return the same number, to make
-   the program really useful, we have to want to have the program
+   the program useful, we have to want to have the program
    *read* in our number.
 
    Use the ``read(*, *)`` statement to provide the number to the program,
@@ -181,7 +181,7 @@ a value to ``my_number``, than we are printing it to the screen.
    :class: tip
 
    We replace the assignment in line 4 with the ``read(*, *) my_number``
-   and than translate it to a program.
+   and then translate it to a program.
 
    .. code-block:: none
 
@@ -190,7 +190,7 @@ a value to ``my_number``, than we are printing it to the screen.
       31
        My number is          31
 
-   If you now execute ``numbers_prog`` the shell apparently freezes.
+   If you now execute ``numbers_prog`` the shell freezes.
    We are now exactly at the read statement and the ``numbers_prog`` is waiting
    for your action, so go ahead and type a number.
 
@@ -219,7 +219,7 @@ a value to ``my_number``, than we are printing it to the screen.
       #7  0x56338a59f0fd in ???
       #8  0xffffffffffffffff in ???
 
-   So we got an error here, the program is printing a lot cryptic information,
+   So we got an error here, the program is printing a lot of cryptic information,
    but the most useful lines are near to our input of ``four``.
    We have produced an error at the runtime of our Fortran program,
    therefore it is called a runtime error, more precise we have given
@@ -282,9 +282,9 @@ The third line is a comment, any text after the exclamation mark is considered
 to be a comment in Fortran and is ignored by the compiler.
 Since it does not affect the final program we can use comments to remind
 ourselves why we choose to do something particular, the intent of the statement
-or to describe the what the program is doing.
-At the beginning you should comment your code as much as possible such that
-you will still understand them in a year from new. It is completely fine
+or to describe what the program is doing.
+In the beginning, you should comment your code as much as possible such that
+you will still understand them in a year from now. It is completely fine
 to produce more comment lines than lines of code to keep your program
 understandable.
 Also notice that Fortran does not care much about leading spaces (indentation)
@@ -293,13 +293,13 @@ which makes it more appealing and easier to read.
 
 The comment states that we will declare our variables as integers,
 we have two integer declarations here, once for ``a`` and ``b``, comma-separated
-on the same line and on the next line an integer declaration for ``res``.
+on the same line and the next line an integer declaration for ``res``.
 We could put ``a, b, res`` on one line, but we might want to separate our
 input and result variables visually.
 
 The next statement is in line 8 in the *executable section* of the code
-and reads values into ``a`` and ``b``. Afterwards we perform the addition ``a + b``
-and assign the result to ``res``. Finally we print the result and exit the
+and reads values into ``a`` and ``b``. Afterward, we perform the addition ``a + b``
+and assign the result to ``res``. Finally, we print the result and exit the
 program again.
 
 .. admonition:: Exercise 3
@@ -311,7 +311,7 @@ program again.
        about what kind of input is to be entered by them.
 
     2. Read values from the console into the variables ``a`` and ``b``,
-       which are then *multiplied* and printed out.
+       which are then *multiplied* and printed out?
        For error checking, print out the values ``a`` and ``b`` in the course
        of your program.
 
@@ -375,18 +375,18 @@ program again.
    as smart as you.
    We choose the default kind of the ``integer`` data types
    which uses 32 bits (4 bytes) to represent whole numbers in a range
-   from -2,147,483,648 to +2,147,483,648 (2^31^) using two's complement
-   arithmetic, since the expected result is clearly to large to be represented
+   from -2,147,483,648 to +2,147,483,648 (2:sup:`31`) using two's complement
+   arithmetic, since the expected result is too large to be represented
    with only 32 bits (4 bytes), the result is truncated and the sign bit is left
    toggled which results in a large negative number (which is called
-   an integer overflow, to understand why that actually makes sense look up
+   an integer overflow, to understand why that makes sense lookup
    two's complement arithmetic).
 
-   Usually you do not have to worry about exceeding the 32 bits (4 bytes)
+   Usually, you do not have to worry about exceeding the 32 bits (4 bytes)
    of precision since we have data types that can represent such large numbers
    in a better way.
 
-   Finally think carefully about the result you expect when performing
+   Finally, think carefully about the result you expect when performing
    division with integers. Test your hypothesis with your division program.
    Note for yourself what to expect when trying to obtain fractions from
    integers.
@@ -394,8 +394,8 @@ program again.
 Accuracy of Numbers
 -------------------
 
-We already noted in the last exercise that we can create number not
-representable by integers like very large number or decimal number,
+We already noted in the last exercise that we can create numbers not
+representable by integers like very large numbers or decimal numbers,
 therefore we have to resort to real numbers declared by the
 ``real`` data type.
 
@@ -433,7 +433,7 @@ it is not that accurate
 
 Similar to our integer arithmetic test, real (floating point) arithmetic has
 also limitation. The default representation uses 32 bits (4 bytes) to represent
-the floating point number, which results in 6 significant digits, before
+the floating-point number, which results in 6 significant digits, before
 the result starts to differ from what we would expect, by doing the calculation
 on a piece of paper or in our head.
 
@@ -454,16 +454,16 @@ Now consider the following program
    end program kinds
 
 The ``intrinsic :: selected_real_kinds`` declares that we are using
-a build-in function from the Fortran compiler. This one returns the kind
-of ``real`` we need to represent a floating point number with the
+a built-in function from the Fortran compiler. This one returns the kind
+of ``real`` we need to represent a floating-point number with the
 specified significant digits.
 
 .. admonition:: Exercise 4
 
    1. create a file ``kinds.f90`` and run it to determine the necessary
-      kind of your floating point variables.
+      kind of your floating-point variables.
    2. use the syntax ``real(kind) ::`` to modify ``accuracy.f90``
-      to employ what we call double precision floating point numbers.
+      to employ what we call double-precision floating-point numbers.
       Replace kind with the number you determined in ``kinds.f90``.
 
 .. admonition:: Solutions 4
@@ -510,18 +510,18 @@ specified significant digits.
        c is  0.166666666666667
 
    It is important to notice here that we cannot get the same result
-   we would evaluate on a piece of paper, since the precision is still
+   we would evaluate on a piece of paper since the precision is still
    limited by the representation of the number.
 
-   Finally we want to highlight line 6 in ``accuracy``, the ``parameter``
-   attached to data type (here ``integer``) is used to declare
+   Finally, we want to highlight line 6 in ``accuracy``, the ``parameter``
+   attached to the data type (here ``integer``) is used to declare
    variables that are constant and unchangeable through the course of our
    program, more important, their value is known (by the compiler) while
    translating the program. This gives us the possibility to assign
    meaningful and easy to remember names to important values.
 
 There is one more issue we have to discuss, look at the following
-program which does apparently the same calculation as ``accuracy.f90``,
+program which does the same calculation as ``accuracy.f90``,
 but with different kinds of literals.
 
 .. code-block:: fortran
@@ -547,9 +547,9 @@ but with different kinds of literals.
    end program literals
 
 If we run the program now we find surprisingly that only ``a`` has the expected
-value, while all other are off. We can easily explain the result for ``c``,
+value, while all others are off. We can easily explain the result for ``c``,
 the actual calculation is happening in integer arithmetic which yields 0
-and is than *casted* into a real number ``0.0``.
+and is then * cast* into a real number ``0.0``.
 
 .. code-block:: none
 
@@ -559,11 +559,11 @@ and is than *casted* into a real number ``0.0``.
     c is  0.00000000000000000
 
 But what happens in case of ``b``, we perform the calculation with ``1.0/6.0``,
-but those are real number from the default type represented in 32 bits
-(4 bytes) and than, as we store the result in ``b``, *casted* into a
+but those are a real number from the default type represented in 32 bits
+(4 bytes) and then, as we store the result in ``b``, *casted* into a
 real number represented in 64 bits (8 bytes).
 
-.. important:: **Always specify the kind parameters in floating point literals!**
+.. important:: **Always specify the kind parameters in floating-point literals!**
 
 Here we introduce the concept of *casting* one data type to another,
 whenever a variable is assigned a different data type, the compiler has
@@ -599,7 +599,7 @@ to convert it first, which is called *casting*.
       end program accuracy
 
    ``gfortran`` complains about errors in the source code, pointing you at
-   line 7, with several errors following, as usual the first error is the
+   line 7, with several errors following, as usual, the first error is the
    interesting one:
 
    .. code-block:: none
@@ -629,7 +629,7 @@ to convert it first, which is called *casting*.
    Therefore, always check for the first error that occurs.
 
    You could also ask how important line 4 with ``intrinsic ::`` is for
-   our program. In fact you *could* leave it out completely (try it!),
+   our program. You *could* leave it out completely (try it!),
    but we will always declare all the intrinsic functions we are using
    here such that you know they are, indeed, intrinsic functions.
 
@@ -638,7 +638,7 @@ Logical constructs
 
 Our programs so far had one line of execution.
 Logic is very fundamental for controlling the execution flow of a program,
-usually you evaluate logical expression directly in the corresponding
+usually, you evaluate logical expression directly in the corresponding
 ``if`` construct to decide which branch to take or save it to
 a ``logical`` variable.
 
@@ -699,11 +699,11 @@ enclosing true and false values).
 
     Programmer coming from C or C++ may find it unintuitive that Fortran
     stores a ``logical`` in 32 bits (4 bytes) similar to an
-    ``integer`` and that true and false are not literally 1 and 0.
+    ``integer`` and that true and false are not 1 and 0.
 
 You already saw two operators, greater than ``>`` and lesser than ``<``,
 for a complete list of all operators see the following table.
-They always come in two version but have the same meaning.
+They always come in two versions but have the same meaning.
 
 =============  =======   ========  ======================================
 Operation      symbol    .op.      example (var is ``integer``)
@@ -759,7 +759,7 @@ Consider this simple program for summing up its input
 Here we introduce a new construct called ``do``-loop.
 The content enclosed in the ``do/end do`` block will be repeated until
 the ``exit`` statement is reached.
-Here we are continue summing up as long as we are getting positive integer
+Here we continue summing up as long as we are getting positive integer
 values (coded in its negated form as exit if the user input is lesser than
 or equal to zero).
 
@@ -777,7 +777,7 @@ or equal to zero).
 
    .. code-block:: none
       :emphasize-lines: 6
-     
+
       gfortran loop.f90
       loop.f90:9:10:
 
@@ -796,16 +796,16 @@ or equal to zero).
       Error: Expecting END DO statement at (1)
 
    It is a common pitfall in other programming languages to confuse
-   the assignment operator with the equal operator, which are fundamentally
+   the assignment operator with the equal operator, which is fundamentally
    different. While it is syntactically correct in C to use an assignment
    in a conditional statement, the resulting code is often in error.
-   In Fortran the assignment does not return a value (unlike in C),
+   In Fortran, the assignment does not return a value (unlike in C),
    therefore the code is logically and syntactically wrong.
    We are better off using the correct ``==`` or ``.eq.`` operator here.
 
 Now that we know the basic loop construction from Fortran, we will introduce
-two special version, which you will encounter more frequently in the future.
-First the loop we setup in the example before, did not terminate without us
+two special versions, which you will encounter more frequently in the future.
+First, the loop we set up in the example before, did not terminate without us
 specifying a condition. We can add the condition directly to the loop using
 the ``do while(<condition>)`` construct instead.
 
@@ -833,7 +833,7 @@ Here, we save the ``if`` and ``exit``, but have to provide the ``read`` statemen
 twice.
 
 Imagine we do not want to sum arbitrary numbers but make a cumulative sum over
-a range of numbers. In this case we would use another version of the ``do`` loop
+a range of numbers. In this case, we would use another version of the ``do`` loop
 as given here:
 
 .. code-block:: fortran
@@ -853,7 +853,7 @@ as given here:
      write(*, *) "Sum is", number
    end program cumulative_sum
 
-You might noticed we had to introduce another variable ``n`` for the upper
+You might notice we had to introduce another variable ``n`` for the upper
 bound of the range, because we made ``i`` now our loop counter, which is
 automatically incremented for each repetition of the loop, also you don't have
 to care about the termination condition, as it is generated automatically by
@@ -863,7 +863,7 @@ the specified range.
 
 .. admonition:: Exercise 7
 
-   1. Check the results by comparing to your previous programs for summing integer.
+   1. Check the results by comparing them to your previous programs for summing integer.
    2. What happens if you provide a negative upper bound?
    3. The lower bound is fixed to one, make it adjustable by user input.
       Compare the results again with your previous programs.
@@ -892,13 +892,13 @@ to add a condition in our loop:
 
 The ``cycle`` instruction breaks out of the *current* iteration, but not out of
 the complete loop like ``exit``. Here we use it together with the intrinsic
-``modulo`` function to determine the reminder of our loop counter variable in
+``modulo`` function to determine the remainder of our loop counter variable in
 every step and ``cycle`` in case we find a reminder of one, meaning an odd number.
 
 .. note::
 
    Programmers coming from almost any language might find it confusing
-   to start counting at 1. It was adopted as default choice because it
+   to start counting at 1. It was adopted as default choice because of it
    is the natural choice (for non-programmers at least), but Fortran
    does not limit you there, there are scenarios where counting from
    -l to +l is the better choice, *i.e.* for orbital angular momenta.
@@ -910,9 +910,9 @@ every step and ``cycle`` in case we find a reminder of one, meaning an odd numbe
 Fields and Arrays of Data
 -------------------------
 
-So far we dealed with scalar data, for more complex programs we will need
+So far we dealt with scalar data, for more complex programs we will need
 fields of data, like a set of cartesian coordinates or the overlap matrix.
-Fortran provides first class multidimensional array support.
+Fortran provides first-class multidimensional array support.
 
 .. code-block:: fortran
    :caption: array.f90
@@ -936,10 +936,10 @@ in this we choose a range from 1 to 3, resulting in 3 elements.
 .. admonition:: Exercise 8
 
    1. Expand the above program to work on a 3 by 3 matrix
-   2. The ``sum`` and ``product`` can work on only one of the two dimension,
+   2. The ``sum`` and ``product`` can work on only one of the two dimensions,
       try to use them only for the rows or columns of the matrix
 
-Usually we do not know the size of the array in advance, to deal with this
+Usually, we do not know the size of the array in advance, to deal with this
 issue we have to make the array ``allocatable`` and explicitly request
 the memory at runtime
 
@@ -965,7 +965,7 @@ the memory at runtime
 
 .. admonition:: Exercise 9
 
-   1. What happens if you provide zero as dimension? Does the behaviour match
+   1. What happens if you provide zero as dimension? Does the behavior match
       your expectations?
    2. Try to allocate your array with a lower bound unequal to 1 by using something
       like ``allocate(vec(lower:upper))``
@@ -999,15 +999,15 @@ A *character variable* is a variable containing a value of the
    character(len=:), allocatable :: input
 
 - the first variable ``single`` can contain only a single character
-- like before one could try to create an array like ``many`` containing many
-  characters, but it turns out that this is not really a viable approach
+- like before one could try to create an array-like ``many`` containing many
+  characters, but it turns out that this is not a viable approach
   to deal with characters
-- Fortran offers a better way to actually make use of the character data type
+- Fortran offers a better way to make use of the character data type
   by adding a length to the variable, like its done for ``fname``.
 - a more flexible way of declaring your character variables is to use a so
   called *deferred size* character, like ``input``.
 
-To write certain data in a neat way to the screen *format specifiers* can be used,
+To write certain data neatly to the screen *format specifiers* can be used,
 which are character constants or variables. Consider your addition program from
 the beginning of this course:
 
@@ -1038,8 +1038,8 @@ a character. The second specifier is one space (``1x``), while the last (``i0``)
 specifies an integer datatype with automatic width.
 
 The result will look similar to your first run, but now there will only be one
-space between the characters and the final result. Of course you can do more:
-``/`` is a line break, ``f12.8`` is a 12 characters wide floating point number
+space between the characters and the final result. Of course, you can do more:
+``/`` is a line break, ``f12.8`` is a 12 characters wide floating-point number
 printout with 8 decimal places and ``es12.4`` switches to scientific notation
 with only 4 decimal places.
 
@@ -1047,7 +1047,7 @@ Interacting with Files
 ----------------------
 
 Up to now you only interacted with your Fortran program by standard input and
-standard output. For more complex program a complicated input file might be
+standard output. For a more complex program a complicated input file might be
 necessary or the output should be saved for later analysis in a file on disk.
 To perform this task you need to open and close your files.
 
@@ -1069,8 +1069,8 @@ To perform this task you need to open and close your files.
      close(io)
    end program files
 
-You see that you can interact with your files like with the standard input or output, but instead of the asterisk you need to give each file a number.
-Fortunately you do not have to keep track on the numbers used, as Fortran will
-do this automatically for you. Of course you can check the value of ``io`` after
+You see that you can interact with your files like with the standard input or output, but instead of the asterisk, you need to give each file a number.
+Fortunately, you do not have to keep track of the numbers used, as Fortran will
+do this automatically for you. Of course, you can check the value of ``io`` after
 opening a file and will find that it is just a (negative) number used to identify
 the file opened.

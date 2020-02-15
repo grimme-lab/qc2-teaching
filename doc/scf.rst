@@ -13,7 +13,7 @@ program.
 Getting Input
 ~~~~~~~~~~~~~
 
-First we have to gather which information are important to perform a
+First, we have to gather which information is important to perform a
 Hartree-Fock calculation.
 We need to know about the molecular geometry. There are several ways
 to represent the geometry, the most simple is to use Cartesian coordinates
@@ -27,17 +27,17 @@ obvious relation to the SI unit, but here we will use Bohr which is
 the length unit of the atomic units system.
 Atomic units have the advantage that a lot of constants drop out of the
 equations we want to code up and we can convert them easily back,
-in fact we provide a conversion routine back to SI units for you.
+in fact, we provide a conversion routine back to SI units for you.
 
 This were the considerations we have to put in the geometry, now we have
 to identify the atoms/nuclei in our molecule. Chemical identity like the
 element is given by the nuclear charge and the number of electrons.
 It is quite popular to specify both with the element symbol which
 map to the atomic number (which corresponds to the nuclear charge and the
-number of electrons of the neutral atom), since it is the intuitive choice.
-We will not follow this approach, since it would require you to work with
+number of electrons of the neutral atom) since it is the intuitive choice.
+We will not follow this approach since it would require you to work with
 character type variables, instead we will separate the nuclear charge information
-and the number of electrons. For each element we will read the nuclear charge
+and the number of electrons. For each element, we will read the nuclear charge
 in multiples of the electron charge (which is the atomic unit of charge)
 and specify the number of electrons separately.
 
@@ -47,13 +47,13 @@ to expand our wavefunction.
 There are many possible choices, like atom centered basis functions
 (Slater-type, Gaussian-type, ...) plain waves, wavelets, ...
 This is one of the most important choices for every quantum chemistry code,
-usually a single kind of functions is supported which is limiting the chemical
-systems which can be calculated with this.
+usually, a single kind of functions is supported which is limiting the chemical
+systems that can be calculated with this.
 The most common distinction is made between codes that support periodic boundary
 conditions or not, while periodic boundary conditions are naturally included
 in plain wave and wavelet based programs, extra effort has to be put into
-codes using Gaussian-type basis function to support this kind of calculations.
-Also most wavefunction centered programs use atom centered orbitals since the
+codes using Gaussian-type basis functions to support this kind of calculation.
+Also, most wavefunction centered programs use atom centered orbitals since the
 resulting integrals are easier to solve.
 Here the exception from the rule is quite common in our field of research
 and usually offers a unique competitive edge.
@@ -75,7 +75,7 @@ and the basis set are tied together.
 
    2 2 2
    0.0  0.0 -0.7  1.0  1
-   1.20 
+   1.20
    0.0  0.0  0.7  1.0  1
    1.20
 
@@ -90,7 +90,7 @@ starting to read the rest of the file.
 Starting from the second line we expect a tuple of the three Cartesian
 coordinates in Bohr, the nuclear charges in multiples of electron charge
 and the number of basis functions this particular atom.
-In the lines after position and identity we find the exponents of our basis 
+In the lines after position and identity, we find the exponents of our basis
 functions, the number of lines following corresponds to the number of
 basis functions for this particular atom.
 
@@ -101,7 +101,7 @@ basis functions for this particular atom.
 
    1. A helium atom in a double zeta basis set with exponents 2.5 and 1.0.
    2. A helium-hydrogen cation with a bond distance of 2 Bohr in a minimal
-      basis set on both atoms and an  exponent of 1.25 for each atom.
+      basis set on both atoms and an exponent of 1.25 for each atom.
 
 .. admonition:: Solutions 1
 
@@ -114,7 +114,7 @@ basis functions for this particular atom.
 
       1 2 2
       0.0  0.0  0.0  2.0  2
-      2.5 
+      2.5
       1.0
 
    The helium-hydrogen cation looks similar to the dihydrogen, except for
@@ -139,7 +139,7 @@ basis functions for this particular atom.
 Classical Contributions
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-First we start by computing the classical nuclear repulsion energy, *i.e.*
+First, we start by computing the classical nuclear repulsion energy, *i.e.*
 the Coulomb energy between the nuclei.
 
 .. admonition:: Exercise 3
@@ -148,7 +148,7 @@ the Coulomb energy between the nuclei.
    2. Code up the nuclear repulsion energy in a separate ``subroutine``.
       Write the resulting energy in a meaningful way to the terminal.
    3. Evaluate the Coulomb-law for the dihydrogen molecule at 1.4 Bohr
-      distance and compare with your program.
+      distance and compare it with your program.
       Can you run your ``subroutine`` multiple times and get the
       same result? If not recheck your code.
    4. Check what happens if calculate the nuclear repulsion energy for
@@ -158,20 +158,20 @@ Classical contributions to the total energy are everything independent from
 the density or wavefunction, beside the nuclear repulsion energy
 correction terms like dispersion are often calculated along with the
 nuclear repulsion energy. It is strongly recommended to perform such
-calculations before starting with the self consistent field procedure,
-since an error afterwards can ruin an expensive calculation.
+calculations before starting with the self-consistent field procedure,
+since an error afterward can ruin an expensive calculation.
 
 Basis set setup
 ~~~~~~~~~~~~~~~
 
 This Hartree-Fock program will use contracted Gaussian-type orbitals to
 expand the molecular orbitals in atomic orbitals.
-We will use a STO-6G basis set, *i.e.* we use the best representation of a
+We will use an STO-6G basis set, *i.e.* we use the best representation of a
 Slater-type orbital by six primitive Gaussian-type orbitals.
 
 This is the first time you will use an external library function, therefore
 we will clarify to you how to read and use an ``interface``.
-In your program you will call a provided ``subroutine`` to perform
+In your program, you will call a provided ``subroutine`` to perform
 the expansion from the Slater orbital to six primitive Gaussian-type orbitals.
 
 The final call in your program might look somewhat similar to this:
@@ -202,10 +202,10 @@ you with the implementation details.
 
 .. note::
 
-    for programmers coming from C or C++ it is similar to an ``extern``
+    for programmers coming from C or C++, it is similar to an ``extern``
     declaration in a header file for a function.
 
-Usually you do not have to write an ``interface`` since they
+Usually, you do not have to write an ``interface`` since they
 are conveniently created and handled for you by your compiler.
 
 .. admonition:: Exercise 4
@@ -219,7 +219,7 @@ are conveniently created and handled for you by your compiler.
    3. Allocate enough space to store all the primitive exponents and coefficients
       from the expansion for calculating the integrals later.
    4. Loop over all basis functions, perform the expansion for each and save the
-      resulting primitive Gaussian's to the respective arrays.
+      resulting primitive Gaussians to the respective arrays.
 
 One-Electron Integrals
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -231,7 +231,7 @@ basis sets for quantitative calculations, but the basic principle remains
 the same.
 
 Integral calculations can quickly be very obscure depending on the way
-a basis set is stored and mainly handle implementation specific details
+a basis set is stored and mainly handle implementation-specific details
 of the program to perform the integral evaluation in some clever way.
 We use a simple basis set here to teach you the basic principle of
 integral evaluation.
@@ -240,7 +240,7 @@ We start with the simple one-electron integrals, for Hartree-Fock we need
 two-center overlap integrals, two-center kinetic energy integrals and
 three-center nuclear attraction integrals.
 To make things easier we provide the implementation for all three integrals
-over contracted Gaussian orbitals, let's checkout the ``interface``:
+over contracted Gaussian orbitals, let's check out the ``interface``:
 
 .. code-block:: fortran
 
@@ -266,11 +266,11 @@ over contracted Gaussian orbitals, let's checkout the ``interface``:
    end interface
 
 The most important information is we need *two* centers for the calculation,
-meaning we have to implement it as loop over all atom pairs.
+meaning we have to implement it as a loop over all atom pairs.
 
 .. admonition:: Exercise 5
 
-   1. Which matrices do can you compute from the one electron integrals.
+   1. Which matrices do can you compute from the one-electron integrals?
    2. Allocate space for the necessary matrices.
    3. Loop over all pairs and calculate all the matrix elements.
 
@@ -287,7 +287,7 @@ meaning we have to implement it as loop over all atom pairs.
         & 3 & 5 & 8 & \\
         &   & 6 & 9 & \\
         &   &   & 10& \\
-      \vdots & & & & \ddots \\ 
+      \vdots & & & & \ddots \\
       \end{pmatrix}
       \Leftrightarrow
       \begin{pmatrix}
@@ -310,7 +310,7 @@ meaning we have to implement it as loop over all atom pairs.
    2. Pack all symmetric matrices.
 
    The eigenvalue solver provided can only work with symmetric packed matrices,
-   therefore you should have a unpacked to packed conversion routine ready for
+   therefore you should have an unpacked to packed conversion routine ready for
    the next exercise.
 
 Symmetric Orthonormalizer
@@ -329,7 +329,7 @@ we want to solve the problem instead:
 .. math::
    \mathbf F^\prime \mathbf C^\prime = \mathbf C^\prime \boldsymbol\varepsilon
 
-For this reason we have to find a transformation from **F** to **F'**
+For this reason, we have to find a transformation from **F** to **F'**
 and back from **C'** to **C**.
 We choose the Loewdin orthonormalization or symmetric orthonormalization
 by calculating **X** = **S**:sup:`-1/2`, to invert (or perform any operation
@@ -363,9 +363,9 @@ There are now two possible ways to initialize your density matrix **P**.
 
 If you happen to have converged orbitals around, the first method would be
 the most suitable.
-Alternatively you can provide a model Hamiltonian, usually a tight-binding
+Alternatively, you can provide a model Hamiltonian, usually a tight-binding
 or extended Hückel Hamiltonian is used here.
-The simplest possible model Hamiltonian we have readily available is the
+The simplest possible model Hamiltonian we have readily available in the
 core Hamiltonian **H**:sub:`0` = **T** + **V**.
 
 The initial density matrix **P** is obtained from the orbital coefficients by
@@ -380,7 +380,7 @@ and zero for virtual orbitals.
 
 .. admonition:: Exercise 8
 
-   1. By using **F** = **H**:sub:`0` as initial guess for the Fock matrix we 
+   1. By using **F** = **H**:sub:`0` as an initial guess for the Fock matrix we
       effectively set the density matrix **P** to zero.
       What does this mean from a physical point of view?
    2. Add the initial guess to your program.
@@ -412,7 +412,7 @@ Two-Electron Integrals
 
 We have ignored the two-electron integrals for a while now, up to know
 they were not important, but we will now need to calculate them to
-perform an self-consistent field procedure.
+perform a self-consistent field procedure.
 The four-center two-electron integrals are the most expensive quantity
 in any Hartree-Fock calculation and there exist many clever algorithms
 to avoid calculating them all together, we will again go the straight-forward
@@ -423,12 +423,12 @@ in ``lib/integrals.f90``.
 
 .. admonition:: Exercise 10
 
-   1. Allocate enough space to store the two electron integrals.
-   2. Create a (nested) loop to calculate all two electron integrals.
+   1. Allocate enough space to store the two-electron integrals.
+   2. Create a (nested) loop to calculate all two-electron integrals.
 
 .. admonition:: Exercise 11
 
-   The four-center integrals have a eight-fold symmetry relation we want to use
+   The four-center integrals have an eight-fold symmetry relation we want to use
    when calculating such an expensive integral to speed up the calculation.
    Rewrite your loops to only calculate the unique integrals:
 
@@ -458,8 +458,8 @@ Now you have everything together to build the self-consistent field loop.
 
 .. admonition:: Exercise 12
 
-   1. First you need to construct a new Fock matrix from the density matrix.
-   2. Construct a loop that performs your self consistent field calculation.
+   1. First, you need to construct a new Fock matrix from the density matrix.
+   2. Construct a loop that performs your self-consistent field calculation.
    3. Copy or move (whatever you find more appropriate) the necessary steps
       inside the SCF loop.
    4. Define a convergence criterion using a conditional statement (``if``)
@@ -496,4 +496,3 @@ Unrestricted Hartree-Fock
 
 Møller-Plesset Perturbation Theory
 ----------------------------------
-

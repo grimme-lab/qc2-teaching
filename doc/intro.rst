@@ -1,11 +1,11 @@
 Working on Linux
 ================
 
-As you participate in this lab exercise, it is mandatory for you to have at
+As you participate in this lab exercise, you must have at
 least a basic knowledge of working with a Linux computer.
 This chapter shows you the basic commands to get along with your computational
 environment.
-First of all you will be provided with a **username** and a **password**.
+First of all, you will be provided with a **username** and a **password**.
 This represents your user account for the whole lab course and all the data you
 produce is available with this information.
 
@@ -23,7 +23,7 @@ important thing is to access the Linux command line. This is usually
 done by starting a terminal-emulator, which is called
 **shell** or **terminal**. On the machines you are using there should be a
 quick start icon directly on the desktop. By clicking on this icon, a window is
-opened which allows you to communicate with the PC in a command line mode.
+opened which allows you to communicate with the PC in a command-line mode.
 
 Shell in a nutshell
 -------------------
@@ -42,22 +42,22 @@ looks similar to the following image:
    ehlert@c01:~> cd QCII
    ehlert@c01:~/QCII>
 
-On the left you can see the so called **prompt**. Depending on the default
+On the left, you can see the so-called **prompt**. Depending on the default
 settings of your system it provides you with various information. In a
-standard configuration it will show: ``#!bash username@hostname:~>``.
+standard configuration, it will show: ``#!bash username@hostname:~>``.
 
 Where ``username`` is your username, ``hostname`` is the name of the
 computer and the tilde (``~``) shows that you are currently located in
 your **home directory** (``/home/username``).
 The Linux file structure follows the *Filesystem Hierarchy Standard*,
 which ensures a similar file structure on every version of Linux you can get.
-As you work with the system you will rapidly gain experience about the different
-directories and their purposes. For now you should know that you are in your
+As you work with the system you will rapidly gain experience with the different
+directories and their purposes. For now, you should know that you are in your
 home directory which is located at ``/home/username`` and is abbreviated by ``~``.
 
 With your user account you have the power to create, edit, and delete files in
 your home directory at will. But with great power comes great responsibility.
-You have to be careful with the commands you execute, when you delete or
+You have to be careful with the commands you execute when you delete or
 overwrite a file it is gone for good.
 With that in mind, we can now start with the first couple of commands.
 To see exactly which directory you are in,
@@ -137,16 +137,16 @@ Editors
 
 To access and edit any text file in Linux you will need an editor. A huge variety
 of editors exist and your difficult task is to pick the one you are most
-comfortable with. We introduce the most common ones in this chapter, but feel
+comfortable with. We introduce the most common ones in this chapter but feel
 free to work with the editor that fits you the best.
 
 Atom
 ~~~~
 
-``atom`` is a rather heavyweight but easy-to-use editor, which is build on-top
+``atom`` is a rather heavyweight but easy-to-use editor, which is built on-top
 of the ``electron`` framework and has comparable capabilities to a web browser.
 Since we are dealing here with electrons and atoms the choice of programs
-could not have been better, unfortunately they do not know much about quantum
+could not have been better, unfortunately, they do not know much about quantum
 chemistry.
 For you can work entirely in ``atom``, but you need some extension which
 might already be installed with your version of ``atom``.
@@ -179,7 +179,7 @@ previously learned.
    :alt: img/atom-terminal.png
 
 Later you can use it to compile and execute your programs without leaving
-your editor. For example we write a simple Fortran program to print a line
+your editor. For example, we write a simple Fortran program to print a line
 to the screen, save it and compile it using ``gfortran`` in our shell inside
 ``atom``.
 
@@ -199,7 +199,7 @@ month, but having truly mastered ``vim`` usually results in a huge performance
 gain when developing. We encourage you to pick up ``vim`` instead of ``atom``.
 
 To get started with ``vim`` open a new terminal (type ``<alt>-<F2>`` for the
-quick launch menu, than type ``konsole`` or search for it in the menu) and
+quick launch menu, then type ``konsole`` or search for it in the menu) and
 type ``vimtutor``.
 This will launch an instance of ``vim`` with an extensive introduction for using
 it, follow the instructions until you feel confident navigating and editing files
@@ -213,24 +213,23 @@ settings for you. Type ``vim ~/.vimrc`` to look into our setup, if you are
 not happy with something we put in here, feel free to modify or replace it,
 you can also add new configurations if you like.
 
-After you have covered the basics, there are come tricks you might find useful.
+After you have covered the basics, there are some tricks you might find useful.
 
 .. tip::
 
-   We recommend to work with a *single* instance of ``vim`` in *one* terminal,
+   We recommend working with a *single* instance of ``vim`` in *one* terminal,
    if used right ``vim`` can provide all functions from your file navigator
    and terminal.
 
 1. Open your current working directories with ``vim .`` and you will find yourself
    in the ``netrw`` file navigator.
 2. Navigate to a file you would like to open and hit ``<Enter>``, it will be opened
-   in the same ``vim`` instance, to get back type ``:E`` in normal mode and find
-   yourself back in ``netrw``.
+   in the same ``vim`` instance, to get back type ``:E`` in normal mode and find yourself back in ``netrw``.
 3. To open a new window type ``<ctrl>-w n``, you can close the window again
    with ``<ctrl>-w q`` or by typing ``:q`` as usual.
 4. To open a second window you can split your ``vim`` window by using ``<ctrl>-w v``
    (for vertical splitting) or ``<ctrl>-w s`` (for horizontal splitting) to have
-   to windows with the for the same file which can be used independently.
+   to windows with the same file which can be used independently.
 
 .. tip::
 
@@ -250,13 +249,13 @@ seamless transfer between different files.
    directory without using ``:!mkdir ...``, type ``d`` in normal in your ``netrw``
    instance and you should be prompted to provide a name.
 7. You can delete it again with ``D``, do so by moving your cursor over the file
-   or directory and press ``D``, than accept your choice in the prompt.
+   or directory and press ``D``, then accept your choice in the prompt.
 8. Now we want a new file, the easiest way would be ``:e ...``, but this path
    has to be relative from the working directory we started our ``vim`` instance
    in, so we use ``netrw`` instead and type ``%`` which prompts as to provide
-   a name and opens the new file afterwards in a new ``vim`` window.
+   a name and opens the new file afterward in a new ``vim`` window.
 
-Lets open a new file ``hello.f90`` and enter
+Let's open a new file ``hello.f90`` and enter
 
 .. code-block:: fortran
    :linenos:
@@ -289,4 +288,4 @@ The first line is from your program, the second one produced by ``vim``.
    To switch between your terminal and ``vim`` use ``<ctrl>-z`` to stop ``vim``
    and get it back from the terminal by using the command ``fg``.
 
-At this point you should be ready to use ``vim`` in production, happy coding.
+At this point, you should be ready to use ``vim`` in production, happy coding.
