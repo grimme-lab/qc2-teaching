@@ -375,12 +375,12 @@ program again.
    as smart as you.
    We choose the default kind of the ``integer`` data types
    which uses 32 bits (4 bytes) to represent whole numbers in a range
-   from -2,147,483,648 to +2,147,483,648 (2:sup:`31`) using two's complement
-   arithmetic, since the expected result is too large to be represented
-   with only 32 bits (4 bytes), the result is truncated and the sign bit is left
-   toggled which results in a large negative number (which is called
-   an integer overflow, to understand why that makes sense lookup
-   two's complement arithmetic).
+   from -2,147,483,648 to +2,147,483,648 or *–2*:sup:`31` to *+2*:sup:`31`
+   using two's complement arithmetic, since the expected result is too
+   large to be represented with only 32 bits (4 bytes), the result is
+   truncated and the sign bit is left toggled which results in a large
+   negative number (which is called an integer overflow, to understand
+   why that makes sense lookup two's complement arithmetic).
 
    Usually, you do not have to worry about exceeding the 32 bits (4 bytes)
    of precision since we have data types that can represent such large numbers
@@ -936,7 +936,7 @@ in this we choose a range from 1 to 3, resulting in 3 elements.
 .. admonition:: Exercise 8
 
    1. Expand the above program to work on a 3 by 3 matrix
-   2. The ``sum`` and ``product`` can work on only one of the two dimensions,
+   2. The ``sum`` and ``product`` can also work on only one of the two dimensions,
       try to use them only for the rows or columns of the matrix
 
 Usually, we do not know the size of the array in advance, to deal with this
@@ -969,8 +969,178 @@ the memory at runtime
       your expectations?
    2. Try to allocate your array with a lower bound unequal to 1 by using something
       like ``allocate(vec(lower:upper))``
-   3. What happens if you read/write above the upper bound or below the lower
-      bound of the array?
+
+Up to now we only performed operations on an entire (multidimensional) array,
+to access a specific element we use its index
+
+.. code-block:: fortran
+   :caption: array_sum.f90
+   :linenos:
+
+   program array_sum
+     implicit none
+     intrinsic :: size
+     integer :: ndim, i, vec_sum
+     integer, allocatable :: vec(:)
+     ! read the dimension of the vector first
+     read(*, *) ndim
+     ! request the necessary memory
+     allocate(vec(ndim))
+     ! now read the ndim elements of the vector
+     read(*, *) vec
+     vec_sum = 0
+     do i = 1, size(vec)
+       vec_sum = vec_sum + vec(i)
+     end do
+     write(*, *) "Sum of all elements", vec_sum
+   end program array_sum
+
+The above program provides a similar functionality to the intrinsic ``sum``
+function.
+
+.. admonition:: Exercise 10
+
+   1. Reproduce the functionality of ``product``, ``maxval`` and ``minval``,
+      compare to the intrinsic functions.
+   2. What happens when you read or write out side the bounds of the array?
+
+.. admonition:: Solutions 10
+   :class: tip
+
+   Let's try to read one element past the size of the array and add this
+   elements to the sum (``do i = 1, size(vec)+1``):
+
+   .. code-block:: none
+
+      ./array_sum
+      10
+      1 1 1 1 1 1 1 1 1 1
+       Sum of all elements         331
+
+   Since we provided ten elements which are all one, we expect 10 as result,
+   but get a different number. So what is element 11 of our array of size 10?
+   We have gone out-of-bounds for the array, whatever is beyond the bounds
+   of our array, we are not supposed to know or care.
+
+   Checking out-of-bounds errors is not enabled by default, we enable it by
+   recompiling our program and now found a helpful message
+
+   .. code-block:: none
+      :emphasize-lines: 6
+
+      gfortran array_sum.f90 -fcheck=bounds -o array_sum
+      ./array_sum
+      10
+      1 1 1 1 1 1 1 1 1 1
+      At line 14 of file array_sum.f90
+      Fortran runtime error: Index '11' of dimension 1 of array 'vec' above upper bound of 10
+
+      Error termination. Backtrace:
+      #0  0x55fc72c90530 in ???
+      #1  0x55fc72c9062f in ???
+      #2  0x7ff5c6e57152 in ???
+      #3  0x55fc72c9014d in ???
+      #4  0xffffffffffffffff in ???
+
+   By using the intrinsic functions like ``size`` it is garanteered that you
+   will stay inside the array bounds.
+
+
+Functions and Subroutines
+-------------------------
+
+In the last exercise you wrote implementations for ``sum``, ``product``, ``maxval``
+and ``minval``, but since they are inlined in the program we cannot really reuse
+them. For this purpose we introduce functions and subroutines:
+
+.. code-block:: fortran
+   :caption: sum_func.f90
+   :linenos:
+
+   program array_sum
+     implicit none
+     interface
+     function sum_func(vector) result(vector_sum)
+       integer, intent(in) :: vector(:)
+       integer :: vector_sum
+     end function sum_func
+     end interface
+     integer :: ndim
+     integer, allocatable :: vec(:)
+     ! read the dimension of the vector first
+     read(*, *) ndim
+     ! request the necessary memory
+     allocate(vec(ndim))
+     ! now read the ndim elements of the vector
+     read(*, *) vec
+     write(*, *) "Sum of all elements", sum_func(vec)
+   end program array_sum
+
+   function sum_func(vector) result(vector_sum)
+     implicit none
+     intrinsic :: size
+     integer, intent(in) :: vector(:)
+     integer :: vector_sum, i
+     vector_sum = 0
+     do i = 1, size(vector)
+       vector_sum = vector_sum + vector(i)
+     end do
+   end function sum_func
+
+
+In the above program we have separated the implementation of the summation
+to an external function called ``sum_func`` we provided an ``interface`` to
+allow our main program to access the new function. We have to introduce a
+dummy argument (called ``vector``) and have to specify its ``intent``, here
+it is ``in`` because we do have to modify it (other intents are ``out`` and
+``inout``). When invoking the function we pass ``vec`` as ``vector`` to our
+summation function which returns the sum for us.
+
+Note that we now have *two* declaration sections in our file, one for our program
+and one for the implementation of our summation function.
+You might also notice that writing interfaces might become cumbersome fast,
+so there is a better mechanism we want to use here:
+
+.. code-block:: fortran
+   :caption: sum_func.f90
+   :linenos:
+
+   module array_funcs
+     implicit none
+   contains
+     function sum_func(vector) result(vector_sum)
+       intrinsic :: size
+       integer, intent(in) :: vector(:)
+       integer :: vector_sum, i
+       vector_sum = 0
+       do i = 1, size(vector)
+         vector_sum = vector_sum + vector(i)
+       end do
+     end function sum_func
+   end module array_funcs
+
+   program array_sum
+     use array_funcs
+     implicit none
+     integer :: ndim
+     integer, allocatable :: vec(:)
+     ! read the dimension of the vector first
+     read(*, *) ndim
+     ! request the necessary memory
+     allocate(vec(ndim))
+     ! now read the ndim elements of the vector
+     read(*, *) vec
+     write(*, *) "Sum of all elements", sum_func(vec)
+   end program array_sum
+
+We wrap implementation of the summation now into a ``module`` which ensures the
+correct ``interface`` is generated automatically and made available by adding
+the ``use`` statement to the main program.
+
+.. admonition:: Exercise 11
+
+   1. Implement your ``product``, ``maxval`` and ``minval`` function in the
+      ``array_funcs`` module. Compare your results with your previous programs.
 
 Character Constants and Variables
 ---------------------------------
