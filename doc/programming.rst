@@ -1141,6 +1141,9 @@ the ``use`` statement to the main program.
 
    1. Implement your ``product``, ``maxval`` and ``minval`` function in the
       ``array_funcs`` module. Compare your results with your previous programs.
+   2. Write functions to perform the scalar product between two vectors and
+      reuse it to write a function for matrix-vector multiplications.
+      Compare to the intrinsic functions ``dot_product`` and ``matmul``.
 
 Character Constants and Variables
 ---------------------------------
@@ -1244,3 +1247,68 @@ Fortunately, you do not have to keep track of the numbers used, as Fortran will
 do this automatically for you. Of course, you can check the value of ``io`` after
 opening a file and will find that it is just a (negative) number used to identify
 the file opened.
+
+Application
+-----------
+
+Finally we have some more elaborate exercises to test what you already learned,
+it is not mandatory to solve the exercises here, but it will not harm as well.
+
+.. admonition:: Exercise 12
+
+   Calculate an approximation to π using Leibniz' formula:
+
+   .. math::
+
+      \frac\pi4 = \sum_{k=0}^{\infty} \frac{(-1)^{k}}{2k+1} \\
+      \Rightarrow \quad \pi \approx 4 \sum_{k=0}^{N} \frac{(-1)^{k}}{2k+1}
+
+   The number of summands *N* shall be read from command line input.
+   Do a sensible convergence check every few summands, *i.e.* if the summand
+   becomes smaller than a threshold, exit the loop.
+
+   Note that the values in the Leibniz formula alternate in sign, rewrite your
+   program to always add two of the summands (one with positive and one with
+   negative sign) at once. Compare the results, why do they differ?
+
+   To adjust the step-length in the loop use
+
+   .. code-block:: fortran
+
+      do i = 1, nmax, 2
+        ...
+      end do
+
+
+.. admonition:: Exercise 13
+
+   Approximately calculate the area in a unit circle to obtain π using trapezoids.
+   The simplest way to do this is to choose a quarter circle and multiply its area
+   by four.
+
+   .. image:: img/trapezoidal-rule.png
+      :alt: Trapezoidal integration of a function
+
+   Recall that the area of a trapezoid is the average of its sides times its
+   height. The number of trapezoids shall be read from command line input.
+
+
+.. admonition:: Exercise 14
+
+   Approximately calculate π using the statistical method.
+
+   .. image:: img/monte-carlo.png
+      :alt: Monte Carlo integration
+
+   Generate pairs of random numbers *(x,y)* in the interval [0,1].
+   If they correspond to a point within the quarter circle, count them as
+   “in”. For large numbers of pairs, the ratio of “in” to the total number
+   of pairs should correspond to the ratio of the area of the quarter circle
+   to the area of the square (as described by the mentioned interval).
+
+   To generate (pseudo-)random numbers in Fortran use
+
+   .. code-block:: fortran
+
+      real(kind) :: x(dim)
+      call random_number(x)
