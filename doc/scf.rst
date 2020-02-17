@@ -475,6 +475,88 @@ Now you have everything together to build the self-consistent field loop.
        Be            --14.568567143
       ============= ========================
 
+   6. Calculate the proton affinity of H\ :sub:`2`.
+      H\ :sub:`3`\ :sup:`+` has a D\ :sub:`3h` structure with
+      *R*\ :sub:`HH` = 1.7 Bohr
+
+Dissociation Curves
+~~~~~~~~~~~~~~~~~~~
+
+To calculate a dissociation curve we could either implement this functionality
+in the program itself or use an external script to automatically write input
+files and read the program output to collect the necessary data.
+Since this approach is common for computional chemistry, we will use a scripting
+approach here as well.
+
+Modify the provided ``bash`` script to calculate a dissociation curve:
+
+.. code-block:: bash
+   :caption: h2-diss.bash
+
+   #!/usr/bin/env bash
+
+   # stop on errors
+   set -e
+
+   # put the name of your program here
+   program=echo
+   # unique pattern to find the final energy
+   pattern='final SCF energy'
+   # output file for plotting
+   datafile=plot.dat
+
+   # scan distances
+   start_distance=1.4
+   last_distance=5.0
+   step=0.1
+
+   inputfile=<<EOF
+   2 2 2
+   0.0  0.0   0.0  1.0  1
+   1.20
+   0.0  0.0  DIST  1.0  1
+   1.20
+   EOF
+
+   tmpinp=temporary.inp
+   tmpout=temporary.out
+
+   # cleanup
+   [ -f $datafile ] && rm -v $datafile
+
+   steps=$(seq $start_distance $step $last_distance | wc -l)
+   printf "Scanning from %.3f Bohr to %.3f Bohr in %d steps\n" \
+      $start_distance $last_distance $steps
+
+   for distance in $(seq $start_distance $step $last_distance | sed s/,/./)
+   do
+      # generate the input file
+      echo $input | sed s/DIST/$distance/ > $tmpinp
+      # perform the actual calculation on the input file
+      2>&1 $program $tmpinp > $tmpout
+      # get the energy from the program output
+      energy=$(grep "$pattern" $tmpout | awk '{printf "%f",$(NF)}' | tail -1)
+      # if there is no energy to be found, we complain
+      if [ -z "$energy" ]
+         then
+            1>&2 printf "ERROR!\n"
+            1>&2 printf "'%s' cannot be found in '%s' output\n" "$pattern" "$program"
+            1>&2 printf "please inspect '%s' and '%s'\n" "$tmpinp" "$tmpout"
+            exit 1
+      fi
+      # otherwise we write to the logfile
+      printf "Current energy is %.8f Hartree for distance %.3f Bohr\n" \
+         $energy $distance
+      printf "%8.3f %12.8f\n" $distance $energy >> $datafile
+   done
+
+   # cleanup
+   [ -f $tmpinp ] && rm $tmpinp
+   [ -f $tmpout ] && rm $tmpout
+
+The above script only contains dummies and can be executed without performing
+a calculation. Perform such a dry-run to understand how the script is working,
+than modify it to match your program and plot the resulting dissociation curve.
 
 Properties
 ----------
