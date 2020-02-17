@@ -44,9 +44,8 @@ looks similar to the following image:
 
 On the left, you can see the so-called **prompt**. Depending on the default
 settings of your system it provides you with various information. In a
-standard configuration, it will show: ``#!bash username@hostname:~>``.
-
-Where ``username`` is your username, ``hostname`` is the name of the
+standard configuration, it will show: ``username@hostname:~>``,
+where ``username`` is your username, ``hostname`` is the name of the
 computer and the tilde (``~``) shows that you are currently located in
 your **home directory** (``/home/username``).
 The Linux file structure follows the *Filesystem Hierarchy Standard*,
@@ -82,21 +81,21 @@ A standard set of commands is shown in the following table:
 +-----------------------+----------------------------------------------+
 | ``cd <name>``         | change to the directory with ``<name>``      |
 +-----------------------+----------------------------------------------+
-| ``cd ..``             |                                              |
+| ``cd ..``             | change to the parent directory               |
 +-----------------------+----------------------------------------------+
-| ``cp <old> <new>``    |                                              |
+| ``cp <old> <new>``    | copy file ``<old>`` to ``<new>``             |
 +-----------------------+----------------------------------------------+
-| ``cp -r <old> <new>`` |                                              |
+| ``cp -r <old> <new>`` | copy directory ``<old>`` to ``<new>``        |
 +-----------------------+----------------------------------------------+
-| ``mv <old> <new>``    |                                              |
+| ``mv <old> <new>``    | move (rename) file/directory                 |
 +-----------------------+----------------------------------------------+
-| ``rm <name>``         |                                              |
+| ``rm <name>``         | remove file with ``<name>``                  |
 +-----------------------+----------------------------------------------+
-| ``rm -r <name>``      |                                              |
+| ``rm -r <name>``      | remove directory recursively (caution!)      |
 +-----------------------+----------------------------------------------+
 | ``mkdir <name>``      | make a new directory with ``<name>``         |
 +-----------------------+----------------------------------------------+
-| ``rmdir <name>``      |                                              |
+| ``rmdir <name>``      | remove (empty) directory with ``<name>``     |
 +-----------------------+----------------------------------------------+
 
 This is only a very basic list of commands available and some of them have a
@@ -118,7 +117,7 @@ a complete summary can be found in its manual page by ``man <command>``.
 
    A sequence of this command would achieve the wished results.
 
-   .. code:: bash
+   .. code:: none
 
       username@hostname:~> cd QCII
       username@hostname:~/QCII> ls tutorial
@@ -160,7 +159,7 @@ Start ``atom`` by using ``<alt>-<F2>`` and typing atom in the quick launch bar
 or searching the start menu for ``atom``.
 
 .. image:: img/atom-new.png
-   :alt: new atom instance
+   :alt: New atom instance
 
 Having started a new instance of ``atom`` you either have already an empty
 file opened or you can open a new file by ``<ctrl>-<n>``, save the file
@@ -176,7 +175,7 @@ in the quick launcher of ``atom`` the shell can be used for all commands you
 previously learned.
 
 .. image:: img/atom-terminal.png
-   :alt: img/atom-terminal.png
+   :alt: Quicklaunch terminal
 
 Later you can use it to compile and execute your programs without leaving
 your editor. For example, we write a simple Fortran program to print a line
@@ -224,7 +223,8 @@ After you have covered the basics, there are some tricks you might find useful.
 1. Open your current working directories with ``vim .`` and you will find yourself
    in the ``netrw`` file navigator.
 2. Navigate to a file you would like to open and hit ``<Enter>``, it will be opened
-   in the same ``vim`` instance, to get back type ``:E`` in normal mode and find yourself back in ``netrw``.
+   in the same ``vim`` instance, to get back type ``:E`` in normal mode and find
+   yourself back in ``netrw``.
 3. To open a new window type ``<ctrl>-w n``, you can close the window again
    with ``<ctrl>-w q`` or by typing ``:q`` as usual.
 4. To open a second window you can split your ``vim`` window by using ``<ctrl>-w v``
@@ -236,8 +236,8 @@ After you have covered the basics, there are some tricks you might find useful.
    If your ``vim`` instance freeze, you hit ``<ctrl>-s`` by accident, which
    tells the hosting terminal to freeze, unfreeze it with ``<ctrl>-q``.
 
-5. If you have your mouse enabled for ``vim`` you can jump between
-   them by clicking into another window, the faster way is to use ``<ctrl>-w w``
+5. If you have your mouse enabled for ``vim`` you can jump between windows
+   by clicking into another window, the faster way is to use ``<ctrl>-w w``
    to go to the next window.
 
 Make yourself familiar with navigation between multiple windows by creating,
@@ -246,8 +246,8 @@ You can yank and paste content between the windows that way, which allows
 seamless transfer between different files.
 
 6. Now go in one of the windows back to ``netrw``, we want to create a new
-   directory without using ``:!mkdir ...``, type ``d`` in normal in your ``netrw``
-   instance and you should be prompted to provide a name.
+   directory without using ``:!mkdir ...``, type ``d`` in normal mode in your
+   ``netrw`` instance and you should be prompted to provide a name.
 7. You can delete it again with ``D``, do so by moving your cursor over the file
    or directory and press ``D``, then accept your choice in the prompt.
 8. Now we want a new file, the easiest way would be ``:e ...``, but this path
@@ -281,7 +281,7 @@ you should see something like this printout in your terminal:
 
    Press ENTER or type command to continue
 
-The first line is from your program, the second one produced by ``vim``.
+The first line is from your program, the second one is produced by ``vim``.
 
 .. note::
 

@@ -4,8 +4,8 @@ Introduction to Quantum Chemistry
 The main objective of this course is to write a working restricted Hartree--Fock
 program.
 
-Restricted Hartree-Fock
------------------------
+Restricted Hartree--Fock
+------------------------
 
 The first task in this course is to code a working restricted Hartree--Fock
 program.
@@ -554,24 +554,34 @@ Modify the provided ``bash`` script to calculate a dissociation curve:
    [ -f $tmpinp ] && rm $tmpinp
    [ -f $tmpout ] && rm $tmpout
 
-The above script only contains dummies and can be executed without performing
-a calculation. Perform such a dry-run to understand how the script is working,
-than modify it to match your program and plot the resulting dissociation curve.
+
+.. admonition:: Exercise 13
+
+   1. The above script only contains dummies and can be executed without performing
+      a calculation. Perform such a dry-run to understand how the script is working.
+   2. Modify it to match your program and plot the resulting dissociation curve.
 
 Properties
 ----------
 
+With a working RHF program we have access to a wavefunction and we can use it
+to calculate certain properties.
+
 Partial Charges
 ~~~~~~~~~~~~~~~
 
-The total number of electrons in a system must be given by
+The total number of electrons in a system is given by
 
 .. math::
    N_{el} = \sum_{\mu}^{N} \sum_{\nu}^{N} {P}_{\mu\nu} {S}_{\nu\mu}
-   = \sum_{\mu}^{M} (\mathbf{PS})_{\mu\mu}
+   = \sum_{\mu}^{M} (\mathbf{PS})_{\mu\mu}.
 
-otherwise the SCF procedure is broken. Mulliken concluded that the number of
-electrons associated with a particular nucleus is equal to the number of electrons
+If your SCF wavefunction does not return its input number of electrons, the
+wavefunction is most certainly not properly normalized. In this case recheck
+your SCF and integral implementation.
+
+Based on the above formula, Mulliken concluded that the number of electrons
+associated with a particular nucleus is equal to the number of electrons
 associated with its basis functions. Thus the partial Mulliken charge of atom *A*
 is defined as:
 
@@ -581,7 +591,7 @@ is defined as:
 .. admonition:: Exercise 13
 
    1. Code a subroutine to perform a Mulliken atomic population analysis
-   2. Determine the Mulliken partial atomic charges in LiH using the input file
+   2. Determine the Mulliken atomic partial charges in LiH using the input file
       provided.
 
 Charge Density
@@ -592,16 +602,17 @@ given by
 
 .. math::
    \rho(\mathbf{r}) = \sum_{\mu} \sum_{\nu} {P}_{\mu \nu}
-   \psi_{\mu}(\mathbf{r}) \psi_{\nu}(\mathbf{r})
+   \psi_{\mu}(\mathbf{r}) \psi_{\nu}(\mathbf{r}).
 
-The Gaussian Product Theorem can be used here:
+To calculate the product of the two basis functions the Gaussian product
+theorem can be used
 
 .. math::
 
    \phi(\alpha, \mathbf r - \mathbf R_A) \cdot
    \phi(\beta, \mathbf r - \mathbf R_B)
-   = K_{AB} \cdot
-   \phi\left(\alpha + \beta, \mathbf r - \frac{\alpha\mathbf R_A + \beta\mathbf R_B}{\alpha + \beta}\right)
+   = K_{AB} \cdot \phi\left(\alpha + \beta,
+   \mathbf r - \frac{\alpha\mathbf R_A + \beta\mathbf R_B}{\alpha + \beta}\right)
 
 where *K*\ :sub:`AB` is given by
 
@@ -611,7 +622,7 @@ where *K*\ :sub:`AB` is given by
    \exp[-\alpha\beta/(\alpha+\beta)R^2_{AB}]
 
 Note that the norming constants of the Gaussians have been absorbed into the
-contraction coefficients.
+contraction coefficients already.
 
 .. admonition:: Exercise 14
 
@@ -623,23 +634,30 @@ contraction coefficients.
 Geometry Optimization
 ---------------------
 
+The next task is to expand your program to perform a simple geometry optimization.
+
 Numerical Derivatives
 ~~~~~~~~~~~~~~~~~~~~~
 
-Hopefully, you programmed the SCF energy in a separate subroutine, otherwise,
-you now need to restructure your program accordingly. Test your program by
-calling this routine repeatedly within the same program run. If you have made
-any errors concerning allocation or initialization, they might show up now and
-you can fix them before adding much more code to your program.
+The simplest way to perform geometry optimizations is by using the information
+from the energy derivative, since we do not want to code analytical derivatives
+of the Hartree--Fock energy expression, we will resort to numerical derivatives
+instead. This requires to evalulate several SCF energies in one program run,
+since you coded your SCF in a subroutine this should not be an issue.
+Nevertheless, try to run the subroutine several times to check if the code
+is correctly allocating and initializing its variables, they might show up now
+and you can fix them before adding much more code to your program.
 
 Copy and modify your input files such that for each parameter (cartesian atomic
-coordinates and Slater exponents) θ\ :sub:`i` it contains an integer indicating
-whether a numerical gradient with respect to θ\ :sub:`i` is to be calculated.
+coordinates and Slater exponents) *θ*\ :sub:`i` it contains an integer indicating
+whether a numerical gradient with respect to *θ*\ :sub:`i` is to be calculated.
 Create a new subroutine that will allow the variation of one parameter
-θ\ :sub:`i` at a time as necessary for each element of the numerical gradient
+*θ*\ :sub:`i` at a time as necessary for each element of the numerical gradient
 
 .. math::
-   \frac{\delta E}{\delta \theta_{i}} \approx \frac{E(\theta_{1}, \ldots, \theta_{i} + \Delta \theta, \ldots, \theta_{n}) - E(\theta_{1}, \ldots, \theta_{i} - \Delta \theta, \ldots, \theta_{n})}{2 \Delta \theta}.
+   \frac{\delta E}{\delta \theta_{i}} \approx \frac{E(\theta_{1}, \ldots, \theta_{i}
+   + \Delta \theta, \ldots, \theta_{n}) - E(\theta_{1}, \ldots, \theta_{i}
+   - \Delta \theta, \ldots, \theta_{n})}{2 \Delta \theta}.
 
 .. admonition:: Exercise 15
 
@@ -648,7 +666,8 @@ Create a new subroutine that will allow the variation of one parameter
    2. Save your gradient components to arrays analogous to the ones for the atom
       positions and Slater exponents.
       We shall call the conceptual combination of them the gradient vector **g**.
-   3. By definition, in which direction does a gradient point?
+   3. By definition, in which direction does a gradient point? How is this
+      different from the force?
 
 Steepest Decent
 ~~~~~~~~~~~~~~~
@@ -656,20 +675,20 @@ Steepest Decent
 Similar to the SCF, parameter optimizations are performed iteratively and
 depend on a convergence criterion concerning energy and/or size of gradient.
 
-Code a variant of the \enquote{steepest descent} optimization routine as given by:
+Code a variant of the “steepest descent” optimization routine as given by:
 
 .. math::
 
    \Theta^{k+1} = \Theta^{k} + \eta \mathbf{g}^{k}
 
-*k* denotes the number of the optimization cycle, Θ is the parameter set for an
-iteration. Choose η to get smooth, fast convergence.
+*k* denotes the number of the optimization cycle, *Θ* is the parameter set for an
+iteration. Choose *η* to get smooth, fast convergence.
 
 .. admonition:: Exercise 16
 
-   2. Optimize the geometry of HeH\ :sup:`+` in a minimal basis set.
-   3. Optimize the Slater exponents of Be and H\ :sub:`2` (*R*:sub:`HH` = 1.4 Bohr)
-      in a full double-ζ basis set.
+   1. Optimize the geometry of HeH\ :sup:`+` in a minimal basis set.
+   2. Optimize the Slater exponents of Be and H\ :sub:`2` (*R*:sub:`HH` = 1.4 Bohr)
+      2n a full double-ζ basis set.
       Compare to energies for the est. HF basis set limit:
 
       =========== ===================
@@ -682,10 +701,10 @@ iteration. Choose η to get smooth, fast convergence.
 Unrestricted Hartree-Fock
 -------------------------
 
-Copy and modify your RHF program to create an UHF program. The input files will
-need to be modified such that they contain the number of α and the number of
-β electrons. By definition, the number of α electrons is bigger then the number
-of β electrons. You can check the correctness of your results against the Li atom
+Copy and modify your RHF subroutine to create an UHF program. The input files will
+need to be modified such that they contain the number of *α* and the number of
+*β* electrons. By definition, the number of *α* electrons is bigger then the number
+of *β* electrons. You can check the correctness of your results against the Li atom
 (Slater exponents 3.5, 2.0, 0.7 and 0.3: E = --7.419629 E\ :sub:`h`) and the H
 atom.
 
@@ -694,9 +713,11 @@ the two eigenvalue problems
 
 .. math::
 
-   \mathbf{F}^{\alpha} \mathbf{C}^{\alpha} =   \mathbf{S}\mathbf{C}^{\alpha}{\boldsymbol\varepsilon}^{\alpha}
+   \mathbf{F}^{\alpha} \mathbf{C}^{\alpha} =
+   \mathbf{S}\mathbf{C}^{\alpha}{\boldsymbol\varepsilon}^{\alpha}
    \quad \text{and} \quad
-   \mathbf{F}^{\beta} \mathbf{C}^{\beta} =  \mathbf{S}\mathbf{C}^{\beta}{\boldsymbol\varepsilon}^{\beta}
+   \mathbf{F}^{\beta} \mathbf{C}^{\beta} =
+   \mathbf{S}\mathbf{C}^{\beta}{\boldsymbol\varepsilon}^{\beta}
 
 concurrently. They are coupled only through the formation of the Fock matrix
 *via* the Coulomb interaction as demonstrated for **F**\ :sup:`α` below:
@@ -718,7 +739,7 @@ the RHF solution.
 The UHF Energy is given by:
 
 .. math::
-   E = \frac{1}{2} \sum_{\mu} \sum_{\nu}
+   E = \frac{1}{2} \sum_{\mu\nu}
    \Bigl(
    {P}^{\alpha}_{\mu\nu}( {h}_{\nu\mu} + {F}^{\alpha}_{\nu\mu} )
    +
@@ -798,15 +819,15 @@ as much memory.
 For now, code up the straigthforward algorithm to transform the two-electron
 integrals. This is the one that scales with *M*:sup:`8`.
 
-+-------------+------------------------+-------------------------------+
-| Input       |  E(RHF) / E\ :sub:`h`  |  E(MP2) / E\ :sub:`h`         |
-+=============+========================+===============================+
-| H\ :sub:`2` |  --1.127785613         | --0.012541746                 |
-+-------------+------------------------+-------------------------------+
-| He          |  --2.860251227         | --0.012686549                 |
-+-------------+------------------------+-------------------------------+
-| Be          | --14.568567143         | --0.014939565                 |
-+-------------+------------------------+-------------------------------+
++-------------+------------------------+-----------------------------------+
+| Input       |  E(RHF) / E\ :sub:`h`  |  E\ :sub:`c`\ (MP2) / E\ :sub:`h` |
++=============+========================+===================================+
+| H\ :sub:`2` |  --1.127785613         | --0.012541746                     |
++-------------+------------------------+-----------------------------------+
+| He          |  --2.860251227         | --0.012686549                     |
++-------------+------------------------+-----------------------------------+
+| Be          | --14.568567143         | --0.014939565                     |
++-------------+------------------------+-----------------------------------+
 
 In contrast to the *M*:sup:`8` variant, where you transform from
 :math:`\left({\mu \nu}|{\lambda \kappa}\right)` to
@@ -842,4 +863,3 @@ two-electron integrals step-by-step:
       You will find that there is a minimum in each curve. From your knowledge
       about HF and MP2, did you expect this behavior?
       What effect could be the cause for the minimum in the RHF curve?
-
