@@ -496,7 +496,7 @@ Modify the provided ``bash`` script to calculate a dissociation curve:
    #!/usr/bin/env bash
 
    # stop on errors
-   set -e
+   set -eu
 
    # put the name of your program here
    program=echo
@@ -510,12 +510,13 @@ Modify the provided ``bash`` script to calculate a dissociation curve:
    last_distance=5.0
    step=0.1
 
-   inputfile=<<EOF
-   2 2 2
-   0.0  0.0   0.0  1.0  1
-   1.20
-   0.0  0.0  DIST  1.0  1
-   1.20
+   read -r -d 'END' input <<-EOF
+      2 2 2
+      0.0  0.0   0.0  1.0  1
+      1.20
+      0.0  0.0  DIST  1.0  1
+      1.20
+      END
    EOF
 
    tmpinp=temporary.inp
@@ -531,7 +532,7 @@ Modify the provided ``bash`` script to calculate a dissociation curve:
    for distance in $(seq $start_distance $step $last_distance | sed s/,/./)
    do
       # generate the input file
-      echo $input | sed s/DIST/$distance/ > $tmpinp
+      echo "$input" | sed s/DIST/$distance/ > $tmpinp
       # perform the actual calculation on the input file
       2>&1 $program $tmpinp > $tmpout
       # get the energy from the program output
@@ -756,8 +757,8 @@ The UHF Energy is given by:
       The experimental value is 9.3 eV.
    4. Are He\ :sub:`2`\ :sup:`+` or :sup:`3`\ He\ :sub:`2` bonded?
 
-Spin Contaminiation
-~~~~~~~~~~~~~~~~~~~
+Spin Contamination
+~~~~~~~~~~~~~~~~~~
 
 Recall that spin contamination can occur in UHF calculations, *i.e.* deviations
 of the expectation value of the square of the total spin angular momentum operator
@@ -771,7 +772,7 @@ S\ :sup:`2` from the ideal value:
    \frac{N_{el}^{\alpha} - N_{el}^{\beta}}{2}
    \cdot \left( \frac{N_{el}^{\alpha} - N_{el}^{\beta}}{2} + 1 \right)
 
-Calculate the spin contamniation according to
+Calculate the spin contamination according to
 
 .. math::
 
