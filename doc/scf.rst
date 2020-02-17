@@ -1,20 +1,20 @@
 Introduction to Quantum Chemistry
 =================================
 
-The main objective of this course is to write a working restricted Hartree-Fock
+The main objective of this course is to write a working restricted Hartree--Fock
 program.
 
 Restricted Hartree-Fock
 -----------------------
 
-The first task in this course is to code a working restricted Hartree-Fock
+The first task in this course is to code a working restricted Hartree--Fock
 program.
 
 Getting Input
 ~~~~~~~~~~~~~
 
 First, we have to gather which information is important to perform a
-Hartree-Fock calculation.
+Hartree--Fock calculation.
 We need to know about the molecular geometry. There are several ways
 to represent the geometry, the most simple is to use Cartesian coordinates
 as a vector of *x*, *y* and *z* coordinates.
@@ -465,20 +465,78 @@ Now you have everything together to build the self-consistent field loop.
    4. Define a convergence criterion using a conditional statement (``if``)
       based on the energy change and/or the change in the density matrix
       and ``exit`` the SCF loop.
+   5. Compare your final HF energies with
+
+      ============= ========================
+       Input          E(RHF) / E\ :sub:`h`
+      ============= ========================
+       H\ :sub:`2`    --1.127785613
+       He             --2.860251227
+       Be            --14.568567143
+      ============= ========================
 
 
 Properties
 ----------
 
-HOMO-LUMO Gap
-~~~~~~~~~~~~~
-
 Partial Charges
 ~~~~~~~~~~~~~~~
+
+The total number of electrons in a system must be given by
+
+.. math::
+   N_{el} = \sum_{\mu}^{N} \sum_{\nu}^{N} {P}_{\mu\nu} {S}_{\nu\mu}
+   = \sum_{\mu}^{M} (\mathbf{PS})_{\mu\mu}
+
+otherwise the SCF procedure is broken. Mulliken concluded that the number of
+electrons associated with a particular nucleus is equal to the number of electrons
+associated with its basis functions. Thus the partial Mulliken charge of atom *A*
+is defined as:
+
+.. math::
+   q_{A} = Z_{A} - \sum_{\mu \in A} (\mathbf{PS})_{\mu\mu}
+
+.. admonition:: Exercise 13
+
+   1. Code a subroutine to perform a Mulliken atomic population analysis
+   2. Determine the Mulliken partial atomic charges in LiH using the input file
+      provided.
 
 Charge Density
 ~~~~~~~~~~~~~~
 
+In terms of real contracted (Gaussian) basis functions, the electron density is
+given by
+
+.. math::
+   \rho(\mathbf{r}) = \sum_{\mu} \sum_{\nu} {P}_{\mu \nu}
+   \psi_{\mu}(\mathbf{r}) \psi_{\nu}(\mathbf{r})
+
+The Gaussian Product Theorem can be used here:
+
+.. math::
+
+   \phi(\alpha, \mathbf r - \mathbf R_A) \cdot
+   \phi(\beta, \mathbf r - \mathbf R_B)
+   = K_{AB} \cdot
+   \phi\left(\alpha + \beta, \mathbf r - \frac{\alpha\mathbf R_A + \beta\mathbf R_B}{\alpha + \beta}\right)
+
+where *K*\ :sub:`AB` is given by
+
+.. math::
+
+   K_{AB} = \left(\frac{2\alpha\beta}{(\alpha+\beta)\pi}\right)^{\frac34}
+   \exp[-\alpha\beta/(\alpha+\beta)R^2_{AB}]
+
+Note that the norming constants of the Gaussians have been absorbed into the
+contraction coefficients.
+
+.. admonition:: Exercise 14
+
+   1. Code a subroutine to calculate the electron density *ρ* at a given point
+      in cartesian space.
+   2. Calculate and plot the electron density along the axis connecting the bonds
+      in H\ :sub:`2` and through the Be and He atoms. Plot them together.
 
 Geometry Optimization
 ---------------------
@@ -486,13 +544,220 @@ Geometry Optimization
 Numerical Derivatives
 ~~~~~~~~~~~~~~~~~~~~~
 
+Hopefully, you programmed the SCF energy in a separate subroutine, otherwise,
+you now need to restructure your program accordingly. Test your program by
+calling this routine repeatedly within the same program run. If you have made
+any errors concerning allocation or initialization, they might show up now and
+you can fix them before adding much more code to your program.
+
+Copy and modify your input files such that for each parameter (cartesian atomic
+coordinates and Slater exponents) θ\ :sub:`i` it contains an integer indicating
+whether a numerical gradient with respect to θ\ :sub:`i` is to be calculated.
+Create a new subroutine that will allow the variation of one parameter
+θ\ :sub:`i` at a time as necessary for each element of the numerical gradient
+
+.. math::
+   \frac{\delta E}{\delta \theta_{i}} \approx \frac{E(\theta_{1}, \ldots, \theta_{i} + \Delta \theta, \ldots, \theta_{n}) - E(\theta_{1}, \ldots, \theta_{i} - \Delta \theta, \ldots, \theta_{n})}{2 \Delta \theta}.
+
+.. admonition:: Exercise 15
+
+   1. Code a numerical gradient that allows the calculation of the derivative of
+      the HF energy with respect to atom positions and Slater exponents.
+   2. Save your gradient components to arrays analogous to the ones for the atom
+      positions and Slater exponents.
+      We shall call the conceptual combination of them the gradient vector **g**.
+   3. By definition, in which direction does a gradient point?
+
 Steepest Decent
 ~~~~~~~~~~~~~~~
 
+Similar to the SCF, parameter optimizations are performed iteratively and
+depend on a convergence criterion concerning energy and/or size of gradient.
+
+Code a variant of the \enquote{steepest descent} optimization routine as given by:
+
+.. math::
+
+   \Theta^{k+1} = \Theta^{k} + \eta \mathbf{g}^{k}
+
+*k* denotes the number of the optimization cycle, Θ is the parameter set for an
+iteration. Choose η to get smooth, fast convergence.
+
+.. admonition:: Exercise 16
+
+   2. Optimize the geometry of HeH\ :sup:`+` in a minimal basis set.
+   3. Optimize the Slater exponents of Be and H\ :sub:`2` (*R*:sub:`HH` = 1.4 Bohr)
+      in a full double-ζ basis set.
+      Compare to energies for the est. HF basis set limit:
+
+      =========== ===================
+      System      Energy/E\ :sub:`h`
+      =========== ===================
+      H\ :sub:`2`  --1.134
+      Be          --14.573
+      =========== ===================
 
 Unrestricted Hartree-Fock
 -------------------------
 
+Copy and modify your RHF program to create an UHF program. The input files will
+need to be modified such that they contain the number of α and the number of
+β electrons. By definition, the number of α electrons is bigger then the number
+of β electrons. You can check the correctness of your results against the Li atom
+(Slater exponents 3.5, 2.0, 0.7 and 0.3: E = --7.419629 E\ :sub:`h`) and the H
+atom.
 
-Møller-Plesset Perturbation Theory
-----------------------------------
+For UHF you use one set of **F**, **C** and **P** matrices for each spin to solve
+the two eigenvalue problems
+
+.. math::
+
+   \mathbf{F}^{\alpha} \mathbf{C}^{\alpha} =   \mathbf{S}\mathbf{C}^{\alpha}{\boldsymbol\varepsilon}^{\alpha}
+   \quad \text{and} \quad
+   \mathbf{F}^{\beta} \mathbf{C}^{\beta} =  \mathbf{S}\mathbf{C}^{\beta}{\boldsymbol\varepsilon}^{\beta}
+
+concurrently. They are coupled only through the formation of the Fock matrix
+*via* the Coulomb interaction as demonstrated for **F**\ :sup:`α` below:
+
+.. math::
+
+   {F}^{\alpha}_{\mu\nu} = {h}_{\mu\nu}
+   + \sum_{\lambda} \sum_{\kappa} \Bigl( ( {P}^{\alpha}_{\lambda\kappa}
+   + {P}^{\beta}_{\lambda\kappa} ) \left({\mu\nu}|{\kappa\lambda}\right)
+   - {P}^{\alpha}_{\lambda\kappa} \left({\mu\lambda}|{\kappa\nu}\right) \Bigr)
+
+Note that the calculation of **P** differs in the occupation number and for
+closed-shell test cases provided your UHF program must give RHF results.
+For this reason, you have to break the spatial symmetry of your system to obtain
+the UHF solution, if it is available. The easiest way to do this is through the
+initial guess. If you use a symmetric guess (like **P** = 0), you will only find
+the RHF solution.
+
+The UHF Energy is given by:
+
+.. math::
+   E = \frac{1}{2} \sum_{\mu} \sum_{\nu}
+   \Bigl(
+   {P}^{\alpha}_{\mu\nu}( {h}_{\nu\mu} + {F}^{\alpha}_{\nu\mu} )
+   +
+   {P}^{\beta}_{\mu\nu}( {h}_{\nu\mu} + {F}^{\beta}_{\nu\mu} )
+   \Bigr)
+
+.. admonition:: Exercise 17
+
+   1. Calculate and plot the dissociation/potential curves for
+      :sup:`3`\ H\ :sub:`2`, :sup:`1`\ H\ :sub:`2` and :sup:`1`\ Li\ :sub:`2`.
+   2. The exchange reaction H\ :sub:`2` + H → H + H\ :sub:`2` has a linear
+      symmetric transition state. Find it and its relative energy.
+   3. Calculate the first ionization potential of Be.
+      The experimental value is 9.3 eV.
+   4. Are He\ :sub:`2`\ :sup:`+` or :sup:`3`\ He\ :sub:`2` bonded?
+
+Spin Contaminiation
+~~~~~~~~~~~~~~~~~~~
+
+Recall that spin contamination can occur in UHF calculations, *i.e.* deviations
+of the expectation value of the square of the total spin angular momentum operator
+S\ :sup:`2` from the ideal value:
+
+.. math::
+
+   \langle{\hat S^{2}}\rangle_{\text{UHF}} =
+   \langle{\hat S^{2}}\rangle_{\text{exact}} + \Delta \\
+   \langle{\hat S^{2}}\rangle_{\text{exact}} =
+   \frac{N_{el}^{\alpha} - N_{el}^{\beta}}{2}
+   \cdot \left( \frac{N_{el}^{\alpha} - N_{el}^{\beta}}{2} + 1 \right)
+
+Calculate the spin contamniation according to
+
+.. math::
+
+   \Delta = N_{el}^{\beta} - \sum_{i}^{N_{el}^{\alpha}}
+   \sum_{j}^{N_{el}^{\beta}} \ \Bigl\lvert
+   \langle{\chi_{i}^{\alpha}}\vert{\chi_{j}^{\beta}}\rangle
+   \Bigr\rvert^{2}
+
+where *i*, *j* indicate *α* and *β*-MOs, respectively.
+
+.. admonition:: Exercise 18
+
+   1. For the system:
+
+      .. code-block:: none
+
+         h 0.0  0.0  -1.0
+         h 0.0  0.0   0.0
+         h 0.0  0.2   1.0
+
+      and a Slater exponent of 1.24, you should find a spin contamination of
+      0.004682 and a UHF energy of -1.265643.
+   2. Plot the spin contamination along both RHF and UHF dissociation curves of
+      H\ :sub:`2`.
+   3. Why is the spin contamination of RHF always 0?
+
+Møller--Plesset Perturbation Theory
+-----------------------------------
+
+Using your RHF program, code a subroutine to calculate the RMP2 energy after
+your RHF procedure has converged. The RMP2 correction to the HF energy
+(assuming real MOs *a, b, r, s*) can be written as
+
+.. math::
+   W_{2} = \sum_{a,b=1}^{N_{el}/2} \sum_{\substack{r,s= \\ N_{el}/2+1}}^{M}
+   \frac{\left({ar}|{bs}\right)\left[2 \left({ar}|{bs}\right) - \left({as}|{br}\right) \right]}
+   {\varepsilon_{a} + \varepsilon_{b} - \varepsilon_{r} -\varepsilon_{s}}.
+
+As for all correlation methods, you will need to have two-electron integrals
+over MOs (denoted by Roman letters) instead of over AOs (Greek letters).
+The process to obtain them is called AO-MO-Transformation.
+There are different algorithms possible, among them are one to scale
+with *M*:sup:`8` and one with *M*:sup:`5` that takes approximately twice
+as much memory.
+For now, code up the straigthforward algorithm to transform the two-electron
+integrals. This is the one that scales with *M*:sup:`8`.
+
++-------------+------------------------+-------------------------------+
+| Input       |  E(RHF) / E\ :sub:`h`  |  E(MP2) / E\ :sub:`h`         |
++=============+========================+===============================+
+| H\ :sub:`2` |  --1.127785613         | --0.012541746                 |
++-------------+------------------------+-------------------------------+
+| He          |  --2.860251227         | --0.012686549                 |
++-------------+------------------------+-------------------------------+
+| Be          | --14.568567143         | --0.014939565                 |
++-------------+------------------------+-------------------------------+
+
+In contrast to the *M*:sup:`8` variant, where you transform from
+:math:`\left({\mu \nu}|{\lambda \kappa}\right)` to
+:math:`\left({ar}|{bs}\right)` at once, you need to transform the
+two-electron integrals step-by-step:
+
+.. math::
+
+   \left({\mu \nu}|{\lambda \kappa}\right) \rightarrow
+   \left({a \nu}|{\lambda \kappa}\right) \rightarrow
+   \left({ar}|{\lambda \kappa}\right) \rightarrow
+   \left({ar}|{b \kappa}\right) \rightarrow
+   \left({ar}|{bs}\right)
+
+.. admonition:: Exercise 19
+
+   1. Copy your RMP2 routine and modify it such that your integral transformation
+      scales with *M*:sup:`5`.
+   2. For the provided examples H\ :sub:`2` and LiH compare the efficiency of
+      both algorithms by counting the number of cycles passed through in the most
+      inner loops.
+      What happens if you increase the number of Slater functions by a factor of
+      two?
+   3. Calculate the dissociation curve of H\ :sub:`2` with RMP2.
+      Plot both the RHF and RMP2 curves on a relative energy scale (in kcal/mol)
+      in a minimal STO basis with Slater exponent of *ζ = 1.2*.
+      As in the provided input for H\ :sub:`2`, the Hartree-Fock energy of a
+      hydrogen atom is --0.4798356 E\ :sub:`h`.
+      What behavior do you observe compared to RHF close to the equilibrium and
+      at far distances *R* = 10 Bohr?
+   4. Calculate the dissociation curve of He\ :sub:`2` between 4 and 10 Bohr with
+      RHF and RMP2 and plot them on a relative energy scale (in kcal/mol).
+      You will find that there is a minimum in each curve. From your knowledge
+      about HF and MP2, did you expect this behavior?
+      What effect could be the cause for the minimum in the RHF curve?
+
