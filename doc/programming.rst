@@ -40,13 +40,10 @@ scientific equations into computer code.
 
 Let's take a look at a complete Fortran program.
 
-.. code-block:: fortran
+.. literalinclude:: src/hello.1.f90
+   :language: fortran
    :caption: hello.f90
    :linenos:
-
-   program hello
-   write(*, *) "This is probably the simplest Fortran program"
-   end program hello
 
 If you were to execute this program, it would simply display its message and
 exit.
@@ -135,16 +132,10 @@ this means that a variable is given a specific and unchanging data type
 like ``character``, ``integer`` or ``real``.
 For example, we could write
 
-.. code-block:: fortran
+.. literalinclude:: src/numbers.1.f90
+   :language: fortran
    :caption: numbers.f90
    :linenos:
-
-   program numbers
-   implicit none
-   integer :: my_number
-   my_number = 42
-   write(*, *) "My number is", my_number
-   end program numbers
 
 Now the *declaration section* of our program in line 1-3, the second line
 declares that we want to declare all our variables explicitly.
@@ -232,17 +223,10 @@ a value to ``my_number``, then we are printing it to the screen.
    on what kind of input we expect to avoid this sort of errors.
    A possible solution would look like
 
-   .. code-block:: fortran
+   .. literalinclude:: src/numbers.2.f90
+      :language: fortran
       :caption: numbers.f90
       :linenos:
-
-      program numbers
-      implicit none
-      integer :: my_number
-      write(*, *) "Enter an integer value"
-      read(*, *) my_number
-      write(*, *) "My number is", my_number
-      end program numbers
 
    While this will not prevent wrong input it will make it more unlikely
    by clearly communicating with the user of the program what we are
@@ -256,23 +240,11 @@ case, add two numbers.
 
 So let's examine the following code:
 
-.. code-block:: fortran
+.. literalinclude:: src/add.1.f90
    :caption: add.f90
+   :language: fortran
    :linenos:
 
-   program add
-     implicit none
-     ! declare variables: integers
-     integer :: a, b
-     integer :: res
-
-     ! get two values to be stored in a and b
-     read(*, *) a, b
-
-     res = a + b  ! perform the addition
-
-     write(*, *) "The result is", res
-   end program add
 
 Again we declare our program and give it a useful name describing the task at
 hand. The second statement is used to explicitly declare all variables and
@@ -401,24 +373,11 @@ therefore we have to resort to real numbers declared by the
 
 Let us consider the following program using ``real`` variables
 
-.. code-block:: fortran
+.. literalinclude:: src/accuracy.1.f90
+   :language: fortran
    :caption: accuracy.f90
    :linenos:
 
-   program accuracy
-     implicit none
-
-     real :: a, b, c
-
-     a = 1.0
-     b = 6.0
-     c = a / b
-
-     write(*, *) 'a is', a
-     write(*, *) 'b is', b
-     write(*, *) 'c is', c
-
-   end program accuracy
 
 We translate ``accuracy.f90`` to an executable and run it to find that
 it is not that accurate
@@ -439,19 +398,11 @@ on a piece of paper or in our head.
 
 Now consider the following program
 
-.. code-block:: fortran
+.. literalinclude:: src/kinds.1.f90
+   :language: fortran
    :caption: kinds.f90
    :linenos:
 
-   program kinds
-     implicit none
-     intrinsic :: selected_real_kind
-     integer :: single, double
-     single = selected_real_kind(6)
-     double = selected_real_kind(15)
-     write(*, *) "For 6 significant digits", single, "bytes are required"
-     write(*, *) "For 15 significant digits", double, "bytes are required"
-   end program kinds
 
 The ``intrinsic :: selected_real_kinds`` declares that we are using
 a built-in function from the Fortran compiler. This one returns the kind
@@ -474,28 +425,11 @@ specified significant digits.
    But instead of hardcoding our wanted precision we combine ``kinds.f90`` and
    ``accuracy.f90`` in the final program version.
 
-   .. code-block:: fortran
+   .. literalinclude:: src/accuracy.2.f90
+      :language: fortran
       :caption: accuracy.f90
       :linenos:
 
-      program accuracy
-        implicit none
-
-        intrinsic :: selected_real_kind
-        ! kind parameter for real variables
-        integer, parameter :: wp = selected_real_kind(15)
-        real(wp) :: a, b, c
-
-        ! also use the kind parameter here
-        a = 1.0_wp
-        b = 6.0_wp
-        c = a / b
-
-        write(*, *) 'a is', a
-        write(*, *) 'b is', b
-        write(*, *) 'c is', c
-
-      end program accuracy
 
    If we now translate ``accuracy.f90`` we find that the output changed,
    we got more digits printed and also a more accurate, but still
@@ -524,27 +458,11 @@ There is one more issue we have to discuss, look at the following
 program which does the same calculation as ``accuracy.f90``,
 but with different kinds of literals.
 
-.. code-block:: fortran
+.. literalinclude:: src/literals.1.f90
+   :language: fortran
    :caption: literals.f90
    :linenos:
 
-   program literals
-     implicit none
-
-     intrinsic :: selected_real_kind
-     ! kind parameter for real variables
-     integer, parameter :: wp = selected_real_kind(15)
-     real(wp) :: a, b, c
-
-     a = 1.0_wp / 6.0_wp
-     b =    1.0 / 6.0
-     c =      1 / 6
-
-     write(*, *) 'a is', a
-     write(*, *) 'b is', b
-     write(*, *) 'c is', c
-
-   end program literals
 
 If we run the program now we find surprisingly that only ``a`` has the expected
 value, while all others are off. We can easily explain the result for ``c``,
@@ -597,6 +515,7 @@ to convert it first, which is called *casting*.
         write(*, *) 'c is', c
 
       end program accuracy
+
 
    ``gfortran`` complains about errors in the source code, pointing you at
    line 7, with several errors following, as usual, the first error is the
@@ -654,34 +573,11 @@ We have to be able to evaluate conditions and create branches dependent
 on the conditions for our code to evaluate.
 Check out the following program to find roots
 
-.. code-block:: fortran
+.. literalinclude:: src/roots.1.f90
+   :language: fortran
    :caption: roots.f90
    :linenos:
 
-   program roots
-     implicit none
-     ! sqrt is the square root and abs is the absolute value
-     intrinsic :: selected_real_kind, sqrt, abs
-     integer, parameter :: wp = selected_real_kind(15)
-     real(wp) :: p, q
-     real(wp) :: d
-
-     ! request user input
-     write(*, *) "Solving x² + p·x + q = 0, please enter p and q"
-     read(*, *) p, q
-     d = 0.25_wp * p**2 - q
-     ! descriminant is positive, we have two real roots
-     if (d > 0.0_wp) then
-       write(*, *) "x1 =", -0.5_wp * p + sqrt(d)
-       write(*, *) "x2 =", -0.5_wp * p - sqrt(d)
-     ! descriminant is negative, we have two complex roots
-     else if (d < 0.0_wp) then
-       write(*, *) "x1 =", -0.5_wp * p, "+ i ·", sqrt(abs(d))
-       write(*, *) "x2 =", -0.5_wp * p, "- i ·", sqrt(abs(d))
-     else  ! descriminant is zero, we have only one root
-       write(*, *) "x1 = x2 =", -0.5_wp * p
-     endif
-   end program roots
 
 .. admonition:: Exercise 5
 
@@ -735,26 +631,11 @@ Repeating tasks
 
 Consider this simple program for summing up its input
 
-.. code-block:: fortran
+.. literalinclude:: src/loop.1.f90
+   :language: fortran
    :caption: loop.f90
    :linenos:
 
-   program loop
-     implicit none
-     integer :: i
-     integer :: number
-     ! initialize
-     number = 0
-     do
-       read(*, *) i
-       if (i <= 0) then
-         exit
-       else
-         number = number + i
-       end if
-     end do
-     write(*, *) "Sum of all input", number
-   end program loop
 
 Here we introduce a new construct called ``do``-loop.
 The content enclosed in the ``do/end do`` block will be repeated until
@@ -809,23 +690,10 @@ First, the loop we set up in the example before, did not terminate without us
 specifying a condition. We can add the condition directly to the loop using
 the ``do while(<condition>)`` construct instead.
 
-.. code-block:: fortran
+.. literalinclude:: src/while.1.f90
+   :language: fortran
    :caption: while.f90
    :linenos:
-
-   program while_loop
-     implicit none
-     integer :: i
-     integer :: number
-     ! initialize
-     number = 0
-     read(*, *) i
-     do while(i > 0)
-       number = number + i
-       read(*, *) i
-     end do
-     write(*, *) "Sum of all input", number
-   end program while_loop
 
 This shifts the condition to the beginning of the loop, so we have to restructure
 our execution sequence a bit to match the new logical flow of the program.
@@ -836,22 +704,11 @@ Imagine we do not want to sum arbitrary numbers but make a cumulative sum over
 a range of numbers. In this case, we would use another version of the ``do`` loop
 as given here:
 
-.. code-block:: fortran
+.. literalinclude:: src/sum.1.f90
+   :language: fortran
    :caption: sum.f90
    :linenos:
 
-   program cumulative_sum
-     implicit none
-     integer :: i, n
-     integer :: number
-     ! initialize
-     number = 0
-     read(*, *) n
-     do i = 1, n
-       number = number + i
-     end do
-     write(*, *) "Sum is", number
-   end program cumulative_sum
 
 You might notice we had to introduce another variable ``n`` for the upper
 bound of the range, because we made ``i`` now our loop counter, which is
@@ -871,24 +728,11 @@ the specified range.
 Now, if we want to sum only even numbers in our cumulative sum, we could try
 to add a condition in our loop:
 
-.. code-block:: fortran
+.. literalinclude:: src/sum.2.f90
+   :language: fortran
    :caption: sum.f90
    :linenos:
 
-   program cumulative_sum
-     implicit none
-     intrinsic :: modulo
-     integer :: i, n
-     integer :: number
-     ! initialize
-     number = 0
-     read(*, *) n
-     do i = 1, n
-       if (modulo(i, 2) == 1) cycle
-       number = number + i
-     end do
-     write(*, *) "Sum is", number
-   end program cumulative_sum
 
 The ``cycle`` instruction breaks out of the *current* iteration, but not out of
 the complete loop like ``exit``. Here we use it together with the intrinsic
@@ -914,21 +758,11 @@ So far we dealt with scalar data, for more complex programs we will need
 fields of data, like a set of cartesian coordinates or the overlap matrix.
 Fortran provides first-class multidimensional array support.
 
-.. code-block:: fortran
+.. literalinclude:: src/array.1.f90
+   :language: fortran
    :caption: array.f90
    :linenos:
 
-   program array
-     implicit none
-     intrinsic :: sum, product, maxval, minval
-     integer :: vec(3)
-     ! get all elements from standard input
-     read(*, *) vec
-     ! produce some results
-     write(*, *) "Sum of all elements", sum(vec)
-     write(*, *) "Product of all elemnts", product(vec)
-     write(*, *) "Maximal/minimal value at", maxval(vec), minval(vec)
-   end program array
 
 We denote arrays by adding the dimension in parenthesis behind the variable,
 in this we choose a range from 1 to 3, resulting in 3 elements.
@@ -943,25 +777,11 @@ Usually, we do not know the size of the array in advance, to deal with this
 issue we have to make the array ``allocatable`` and explicitly request
 the memory at runtime
 
-.. code-block:: fortran
+.. literalinclude:: src/array.2.f90
+   :language: fortran
    :caption: array.f90
    :linenos:
 
-   program array
-     implicit none
-     intrinsic :: sum, product, maxval, minval
-     integer :: ndim
-     integer, allocatable :: vec(:)
-     ! read the dimension of the vector first
-     read(*, *) ndim
-     ! request the necessary memory
-     allocate(vec(ndim))
-     ! now read the ndim elements of the vector
-     read(*, *) vec
-     write(*, *) "Sum of all elements", sum(vec)
-     write(*, *) "Product of all elemnts", product(vec)
-     write(*, *) "Maximal/minimal value at", maxval(vec), minval(vec)
-   end program array
 
 .. admonition:: Exercise 9
 
@@ -973,27 +793,11 @@ the memory at runtime
 Up to now we only performed operations on an entire (multidimensional) array,
 to access a specific element we use its index
 
-.. code-block:: fortran
-   :caption: array_sum.f90
+.. literalinclude:: src/array_sum.1.f90
+   :language: fortran
+   :caption: array.f90
    :linenos:
 
-   program array_sum
-     implicit none
-     intrinsic :: size
-     integer :: ndim, i, vec_sum
-     integer, allocatable :: vec(:)
-     ! read the dimension of the vector first
-     read(*, *) ndim
-     ! request the necessary memory
-     allocate(vec(ndim))
-     ! now read the ndim elements of the vector
-     read(*, *) vec
-     vec_sum = 0
-     do i = 1, size(vec)
-       vec_sum = vec_sum + vec(i)
-     end do
-     write(*, *) "Sum of all elements", vec_sum
-   end program array_sum
 
 The above program provides a similar functionality to the intrinsic ``sum``
 function.
@@ -1053,39 +857,10 @@ In the last exercise you wrote implementations for ``sum``, ``product``, ``maxva
 and ``minval``, but since they are inlined in the program we cannot really reuse
 them. For this purpose we introduce functions and subroutines:
 
-.. code-block:: fortran
+.. literalinclude:: src/sum_func.1.f90
+   :language: fortran
    :caption: sum_func.f90
    :linenos:
-
-   program array_sum
-     implicit none
-     interface
-     function sum_func(vector) result(vector_sum)
-       integer, intent(in) :: vector(:)
-       integer :: vector_sum
-     end function sum_func
-     end interface
-     integer :: ndim
-     integer, allocatable :: vec(:)
-     ! read the dimension of the vector first
-     read(*, *) ndim
-     ! request the necessary memory
-     allocate(vec(ndim))
-     ! now read the ndim elements of the vector
-     read(*, *) vec
-     write(*, *) "Sum of all elements", sum_func(vec)
-   end program array_sum
-
-   function sum_func(vector) result(vector_sum)
-     implicit none
-     intrinsic :: size
-     integer, intent(in) :: vector(:)
-     integer :: vector_sum, i
-     vector_sum = 0
-     do i = 1, size(vector)
-       vector_sum = vector_sum + vector(i)
-     end do
-   end function sum_func
 
 
 In the above program we have separated the implementation of the summation
@@ -1101,37 +876,11 @@ and one for the implementation of our summation function.
 You might also notice that writing interfaces might become cumbersome fast,
 so there is a better mechanism we want to use here:
 
-.. code-block:: fortran
+.. literalinclude:: src/sum_func.2.f90
+   :language: fortran
    :caption: sum_func.f90
    :linenos:
 
-   module array_funcs
-     implicit none
-   contains
-     function sum_func(vector) result(vector_sum)
-       intrinsic :: size
-       integer, intent(in) :: vector(:)
-       integer :: vector_sum, i
-       vector_sum = 0
-       do i = 1, size(vector)
-         vector_sum = vector_sum + vector(i)
-       end do
-     end function sum_func
-   end module array_funcs
-
-   program array_sum
-     use array_funcs
-     implicit none
-     integer :: ndim
-     integer, allocatable :: vec(:)
-     ! read the dimension of the vector first
-     read(*, *) ndim
-     ! request the necessary memory
-     allocate(vec(ndim))
-     ! now read the ndim elements of the vector
-     read(*, *) vec
-     write(*, *) "Sum of all elements", sum_func(vec)
-   end program array_sum
 
 We wrap implementation of the summation now into a ``module`` which ensures the
 correct ``interface`` is generated automatically and made available by adding
