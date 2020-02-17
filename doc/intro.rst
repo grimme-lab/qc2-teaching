@@ -117,7 +117,7 @@ a complete summary can be found in its manual page by ``man <command>``.
 
    A sequence of this command would achieve the wished results.
 
-   .. code:: none
+   .. code-block:: none
 
       username@hostname:~> cd QCII
       username@hostname:~/QCII> ls tutorial
