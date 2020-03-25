@@ -1,81 +1,98 @@
-program my_scf
-!* this is the standard FORTRAN environment, which contains some declarations
-!  which are useful for I/O-heavy tasks.
-!  output_unit = STDOUT, error_unit = STDERR,  input_unit = STDIN
-!  iostat_end  = EOF,    iostat_eor = newline, real64     = double precision
-   use iso_fortran_env
+!> This is your module to write your very own SCF program.
+module scf_main
+    !> Include standard Fortran environment for IO
+    use iso_fortran_env, only : output_unit, error_unit
 
-!! ======================================================================== !!
-!  library functions provided by your lab assistents:
+    ! ------------------------------------------------------------------------
+    !> library functions provided by your lab assistents:
 
-!* interface to LAPACK's double precision symmetric eigenvalue solver (dspev)
-   use linear_algebra
-!  examples:
-!  call solve_spev(mat,eigval,eigvec)
+    !> interface to LAPACK's double precision symmetric eigenvalue solver (dspev)
+    !  examples:
+    !  call solve_spev(mat, eigval, eigvec)
+    use linear_algebra, only : solve_spev
 
-!* expansion of slater-functions into contracted gaussians,
-!  coefficients and primitive exponents are taken from R.F. Stewart, JCP, 1970
-   use slater
-!  example:
-!  call slater_expansion(6,zeta,alpha,coeff)
+    !> expansion of slater-functions into contracted gaussians,
+    !  coefficients and primitive exponents are taken from R.F. Stewart, JCP, 1970
+    !  example:
+    !  call expand_slater(zeta, alpha, coeff)
+    use slater, only : expand_slater
 
-!* calculates one-electron integrals and two-electron integrals over
-!  spherical gaussians (s-functions). One-electron quanities supported
-!  are overlap, kinetic energy and nuclear attraction integrals.
-!  Two-electron integrals are provided in chemist notation.
-   use integrals
-!  examples:
-!  call oneint(npa,npb,nat,xyz,chrg,r_a,r_b,alp,bet,ci,cj,s,t,v)
-!  call twoint(npa,npb,npc,npd,r_a,r_b,r_c,r_d,alp,bet,gam,del,ci,cj,ck,cl,g)
+    !> calculates one-electron integrals and two-electron integrals over
+    !  spherical gaussians (s-functions). One-electron quanities supported
+    !  are overlap, kinetic energy and nuclear attraction integrals.
+    !  Two-electron integrals are provided in chemist notation.
+    !  examples:
+    !  call oneint(xyz, chrg, r_a, r_b, alp, bet, ca, ca, s, t, v)
+    !  call twoint(r_a, r_b, r_c, r_d, alp, bet, gam, del, ca, cb, cc, cd, g)
+    use integrals, only : oneint, twoint
 
-!* prints a matrix quantity to screen
-   use print_matrix
-!  examples:
-!  call prmat(mat,n,n,name='matrix')
-!  call prmat(mat,n,name='packed matrix')
+    !> prints a matrix quantity to screen
+    !  examples:
+    !  call write_vector(vec, name='vector')
+    !  call write_matrix(mat, name='matrix')
+    !  call write_matrix(mat, name='packed matrix')
+    use print_matrix, only : write_vector, write_matrix
 
-!* other tools that may help you jump ahead with I/O-heavy tasks
-   use io_tools
-!  examples:
-!  call rdcmdarg(1,input_name)
-!  call getline(input_unit,input_name)
-!! ======================================================================== !!
+    !> other tools that may help you jump ahead with I/O-heavy tasks
+    !  example:
+    !  call read_line(input, line)
+    use io_tools, only : read_line
 
-!  include this line in *every* function and subroutine you write
-   implicit none
+    !> Always declare everything explicitly
+    implicit none
 
-!* system specific data
-!  number of atoms
-   integer :: nat
-!  number of electrons
-   integer :: nel
-!  atom coordinates of the system, all distances in bohr
-   real(8),allocatable :: xyz(:,:)
-!  nuclear charges
-   real(8),allocatable :: chrg(:)
+    !> All subroutines within this module are not exported, except for scf_prog
+    !  which is the entry point to your program
+    private
+    public :: scf_prog
 
-!  number of basis functions
-   integer :: nbf
-!  slater exponents of basis functions
-   real(8),allocatable :: zeta(:)
+    !> Selecting double precision real number
+    integer, parameter :: wp = selected_real_kind(15)
 
-!  name of the input file
-   character(len=:),allocatable :: input_name
-
-!  Hartree-Fock energy
-   real(8) :: escf
-
-!  declarations may not be complete, so you have to add your own soon.
-!  Create a program that reads the input and prints out final results.
-!  And, please, indent your code.
-
-!  Write the self-consistent field procedure in a subroutine.
-   write(output_unit,'(a)') 'Here could start a Hartree-Fock calculation'
-
-   write(error_unit, '(a)') 'normal termination of my program'
 
 contains
-!  Put all subroutines and functions here or use modules
 
 
-end program my_scf
+!> This is the entry point to your program, do not modify the dummy arguments
+!  without adjusting the call in lib/prog.f90
+subroutine scf_prog(input)
+
+    !> Always declare everything explicitly
+    implicit none
+
+    !> IO unit bound to the input file
+    integer, intent(in) :: input
+
+    !> System specific data
+    !> Number of atoms
+    integer :: nat
+
+    !> Number of electrons
+    integer :: nel
+
+    !> Atom coordinates of the system, all distances in bohr
+    real(wp), allocatable :: xyz(:,:)
+
+    !> Nuclear charges
+    real(wp), allocatable :: chrg(:)
+
+    !> Number of basis functions
+    integer :: nbf
+
+    !> Slater exponents of basis functions
+    real(wp),allocatable :: zeta(:)
+
+    !> Hartree-Fock energy
+    real(wp) :: escf
+
+    !  declarations may not be complete, so you have to add your own soon.
+    !  Create a program that reads the input and prints out final results.
+    !  And, please, indent your code.
+
+    !  Write the self-consistent field procedure in a subroutine.
+    write(output_unit, '(a)') 'Here could start a Hartree-Fock calculation'
+
+end subroutine scf_prog
+
+
+end module scf_main
