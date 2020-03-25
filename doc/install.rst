@@ -7,6 +7,12 @@ Depending on the platform and operating systems you are using the steps
 differ but eventually you should be able to use the course material independently
 of your platform.
 
+.. important::
+
+   If you are working at a CIP pool computer in the Mulliken Center for
+   Theoretical Chemistry we have taken care for you about the setup
+   and you can immediately continue with the next chapter.
+
 .. contents::
 
 Ubuntu
