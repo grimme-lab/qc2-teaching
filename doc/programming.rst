@@ -867,7 +867,7 @@ In the above program we have separated the implementation of the summation
 to an external function called ``sum_func`` we provided an ``interface`` to
 allow our main program to access the new function. We have to introduce a
 dummy argument (called ``vector``) and have to specify its ``intent``, here
-it is ``in`` because we do have to modify it (other intents are ``out`` and
+it is ``in`` because we do not modify it (other intents are ``out`` and
 ``inout``). When invoking the function we pass ``vec`` as ``vector`` to our
 summation function which returns the sum for us.
 
@@ -893,6 +893,26 @@ the ``use`` statement to the main program.
    2. Write functions to perform the scalar product between two vectors and
       reuse it to write a function for matrix-vector multiplications.
       Compare to the intrinsic functions ``dot_product`` and ``matmul``.
+
+When writing functions like the above ones, we follow a specific scheme, all
+arguments are not modified (``intent(in)``) and we return a single variable.
+There are cases were we do not want to return a value, in this case we would
+return nothing, functions of this kind are called subroutines
+
+.. literalinclude:: src/sum_sub.1.f90
+   :language: fortran
+   :caption: sum_sub.f90
+   :linenos:
+
+On the first glance, subroutines have several disadvantages compared to
+functions, we need to explicitly declare a temporary variable, also we
+cannot use them inline with another instruction.
+This holds true for short and simple operations, here functions should be
+preferred over subroutines.
+On the other hand, if the code in the subroutine gets more complicated and the
+number of dummy arguments grows, we should prefer subroutines, because
+they are more visible in the code, especially due to the explicit ``call``
+keyword.
 
 Character Constants and Variables
 ---------------------------------
@@ -980,7 +1000,7 @@ To perform this task you need to open and close your files.
      implicit none
      integer :: io
      integer :: ndim
-     real(8) :: var1, var2
+     real :: var1, var2
      open(file='name.inp', newunit=io)
      read(io,*) ndim, var1, var2
      close(io)
