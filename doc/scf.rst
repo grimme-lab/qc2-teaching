@@ -178,22 +178,21 @@ The final call in your program might look somewhat similar to this:
 
 .. code-block:: fortran
 
-   call slater_expansion(ng, zeta, exponents, coefficients)
+   call expand_slater(ng, zeta, exponents, coefficients)
 
-To understand why the ``subroutine slater_expansion`` takes four arguments,
+To understand why the ``subroutine expand_slater`` takes four arguments,
 we look up its ``interface``:
 
 .. code-block:: fortran
 
    interface
-   subroutine slater_expansion(ng, zeta, exponents, coefficients, normalize)
+   subroutine expand_slater(ng, zeta, exponents, coefficients)
    import wp
    integer,  intent(in)  :: ng   !< number of primitive Gaussian functions
    real(wp), intent(in)  :: zeta !< exponent of slater function
-   real(wp), intent(out) :: exponents(ng)    !< of primitive Gaussian functions
-   real(wp), intent(out) :: coefficients(ng) !< of primitive Gaussian functions
-   logical,  intent(in), optional :: normalize  !< default: .true.
-   end subroutine slater_expansion
+   real(wp), intent(out) :: exponents(:)    !< of primitive Gaussian functions
+   real(wp), intent(out) :: coefficients(:) !< of primitive Gaussian functions
+   end subroutine expand_slater
    end interface
 
 An ``interface`` provides the necessary information on how to
@@ -246,22 +245,19 @@ over contracted Gaussian orbitals, let's check out the ``interface``:
 
    interface
    !> one electron integrals over spherical Gaussian functions
-   subroutine oneint(npa,npb,nat,xyz,chrg,r_a,r_b,alp,bet,ci,cj,sab,tab,vab)
+   subroutine oneint(xyz, chrg, r_a, r_b, alp, bet, ca, cb, sab, tab, vab)
       import wp
-      integer, intent(in)  :: npa !< number of primitives on center a
-      integer, intent(in)  :: npb !< number of primitives on center b
-      integer, intent(in)  :: nat !< number of atoms in the system
-      real(wp),intent(in)  :: xyz(3,nat) !< position of all atoms in atomic units
-      real(wp),intent(in)  :: chrg(nat) !< nuclear charges
-      real(wp),intent(in)  :: r_a(3) !< aufpunkt of orbital a
-      real(wp),intent(in)  :: r_b(3) !< aufpunkt of orbital b
-      real(wp),intent(in)  :: alp(npa) !< Gaussian exponents of the primitives at a
-      real(wp),intent(in)  :: bet(npb) !< Gaussian exponents of the primitives at b
-      real(wp),intent(in)  :: ca(npa) !< contraction coeffients of primitives at a
-      real(wp),intent(in)  :: cb(npb) !< contraction coeffients of primitives at b
-      real(wp),intent(out) :: sab !< overlap integral <a|b>
-      real(wp),intent(out) :: tab !< kinetic energy integral <a|T|b>
-      real(wp),intent(out) :: vab !< nuclear attraction integrals <a|Σ z/r|b>
+      real(wp), intent(in)  :: xyz(:, :) !< position of all atoms in atomic units
+      real(wp), intent(in)  :: chrg(:) !< nuclear charges
+      real(wp), intent(in)  :: r_a(:) !< aufpunkt of orbital a, dim: 3
+      real(wp), intent(in)  :: r_b(:) !< aufpunkt of orbital b, dim: 3
+      real(wp), intent(in)  :: alp(:) !< Gaussian exponents of the primitives at a
+      real(wp), intent(in)  :: bet(:) !< Gaussian exponents of the primitives at b
+      real(wp), intent(in)  :: ca(:) !< contraction coeffients of primitives at a
+      real(wp), intent(in)  :: cb(:) !< contraction coeffients of primitives at b
+      real(wp), intent(out) :: sab !< overlap integral <a|b>
+      real(wp), intent(out) :: tab !< kinetic energy integral <a|T|b>
+      real(wp), intent(out) :: vab !< nuclear attraction integrals <a|Σ z/r|b>
    end subroutine oneint
    end interface
 
