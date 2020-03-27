@@ -70,6 +70,88 @@ Note that all input in the terminal is case-sensitive.
    ehlert@c01:~> pwd
    /home/ehlert
 
+Next thing we want to know is what is inside our current location, for this
+we use the command ``ls``, short for list:
+
+.. code:: none
+
+   ehlert@c01:~> ls
+   Desktop     Music      QCII
+   Documents   Pictures   Templates
+   Downloads   Public     Videos
+
+We can add options to the ``ls`` command like ``-l`` to use the
+use a long listing format:
+
+.. code:: none
+
+   ehlert@c01:~> ls
+   total 574500
+   drwxr-xr-x  2 ehlert thch      4096 Jun  7  2018 Desktop
+   drwxr-xr-x  2 ehlert thch      4096 Jun  7  2018 Documents
+   drwxr-xr-x  2 ehlert thch      4096 Jun  7  2018 Downloads
+   drwxr-xr-x  2 ehlert thch      4096 Jun  7  2018 Music
+   drwxr-xr-x  2 ehlert thch      4096 Jun  7  2018 Pictures
+   drwxr-xr-x  2 ehlert thch      4096 Jun  7  2018 Public
+   drwxr-xr-x  4 ehlert thch      4096 Jan 14 09:09 QCII
+   drwxr-xr-x  2 ehlert thch      4096 Jun  7  2018 Templates
+   drwxr-xr-x  2 ehlert thch      4096 Jun  7  2018 Videos
+
+Alternatively we can provide ``ls`` with a path, it will then list all the
+files within this directory
+
+.. code:: none
+
+   ehlert@c01:~> ls QCII
+   tutorial   scf
+
+Of course we can also combine options and paths for ``ls``.
+
+You might wonder what a path is, we will go into more detail above them now
+as they are important for working with Linux. Whenever we refer to a file or
+a directory on the commandline we are in fact referring to its path.
+A path is identifying a particular file or directory on the system.
+Your filesystem starts at the root ``/`` and can be referenced absolutely
+from this root or relative from your current working directory.
+Every directory has at least to links to other directories, to itself ``.`` (dot)
+and to its parent ``..`` (dotdot), which can be used to build paths to reference
+to any file or directory on your system.
+
+Up to now we only looked around, but we can also change the directory, which
+is done by the command ``cd``, short for change directory.
+
+.. code:: none
+
+   ehlert@c01:~> cd QCII
+   ehlert@c01:~/QCII> cd .
+   ehlert@c01:~/QCII> cd ../..
+   ehlert@c01:/home> cd -
+   /home/ehlert/QCII
+   ehlert@c01:~/QCII> cd
+   ehlert@c01:~>
+
+What did just happen?
+
+1. We changed to the QCII directory.
+   Our prompt helpfully reports that we are now in the QCII directory, so usually
+   there is no need to use ``pwd``.
+2. Next we change to the directory itself using its dot link, and we stay in the
+   same directory as expected.
+3. Now we change to the parent directory of the QCII parent directory, which
+   is the parent directory of our home directory.
+   You can easily chain links together using the slash character ``/``.
+4. In case a change directory brings you to the wrong place you can always go
+   back to the last directory you visited by ``cd -``.
+   The absolute path of the directory is also printed so we can be sure to be
+   in the right place.
+5. To go back to your home directory use ``cd`` without an argument.
+
+We differenciated files and directories above, which is not quite true, in Linux
+everything is a file, also a directory, even your keyboard is a file (one which
+is only read from), your monitor is also a file (one which is only written to).
+It will not affect us when working with Linux but it is helps to keep it in mind
+when trying to understand how Linux manages files and directories.
+
 A standard set of commands is shown in the following table:
 
 +-----------------------+----------------------------------------------+
