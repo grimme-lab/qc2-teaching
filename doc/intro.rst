@@ -226,6 +226,7 @@ Atom
 
 ``atom`` is a rather heavyweight but easy-to-use editor, which is built on-top
 of the ``electron`` framework and has comparable capabilities to a web browser.
+It is available for Linux, macOS and Windows.
 Since we are dealing here with electrons and atoms the choice of programs
 could not have been better, unfortunately, they do not know much about quantum
 chemistry.
@@ -258,6 +259,12 @@ previously learned.
 
 .. image:: img/atom-terminal.png
    :alt: Quicklaunch terminal
+
+.. note::
+
+   If you are using atom in Windows and have installed WSL, you can start a
+   Unix shell by typing ``wsl`` or ``bash`` in the command line of the terminal
+   you just opened in ``atom``.
 
 Later you can use it to compile and execute your programs without leaving
 your editor. For example, we write a simple Fortran program to print a line

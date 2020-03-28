@@ -140,7 +140,7 @@ For example, we could write
 Now the *declaration section* of our program in line 1-3, the second line
 declares that we want to declare all our variables explicitly.
 Implicit typing is a leftover from the earliest version of Fortran
-and should be avoided at all cost, therefore you will but the line
+and should be avoided at all cost, therefore you will put the line
 ``implicit none`` in every declaration you write from now on.
 The third line declares the variable ``my_number`` as type ``integer``.
 
@@ -149,7 +149,7 @@ a value to ``my_number``, then we are printing it to the screen.
 
 .. admonition:: Exercise 2
 
-   Make a new directory and save create the file ``numbers.f90`` where
+   Make a new directory and create the file ``numbers.f90`` where
    you type in the above program. Then translate it with ``gfortran``
    with
 
@@ -162,8 +162,7 @@ a value to ``my_number``, then we are printing it to the screen.
    Despite being a bit oddly formatted the program correctly returned the
    number we have written in ``numbers.f90``.
    ``numbers_prog`` will now always return the same number, to make
-   the program useful, we have to want to have the program
-   *read* in our number.
+   the program useful, we want to have the program *read* in our number.
 
    Use the ``read(*, *)`` statement to provide the number to the program,
    which works similar to the ``write(*, *)`` statement.
@@ -283,7 +282,7 @@ program again.
        about what kind of input is to be entered by them.
 
     2. Read values from the console into the variables ``a`` and ``b``,
-       which are then *multiplied* and printed out?
+       which are then *multiplied* and printed out.
        For error checking, print out the values ``a`` and ``b`` in the course
        of your program.
 
@@ -565,7 +564,7 @@ Now we want to solve for the roots of the quadratic equation
 :math:`x^2 + px + q = 0`, we know that we can easily solve it by
 
 .. math::
-   x = -\frac{p}{2} \pm \sqrt{\frac{p^2}{4} - c}
+   x = -\frac{p}{2} \pm \sqrt{\frac{p^2}{4} - q}
 
 but we have to consider different cases for the number of roots we obtain
 from this equation (or we use ``complex`` numbers).
