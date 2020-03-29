@@ -25,6 +25,8 @@ done by starting a terminal-emulator, which is called
 quick start icon directly on the desktop. By clicking on this icon, a window is
 opened which allows you to communicate with the PC in a command-line mode.
 
+.. _Shell in a nutshell:
+
 Shell in a nutshell
 -------------------
 
