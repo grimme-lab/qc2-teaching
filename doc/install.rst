@@ -116,3 +116,32 @@ Unzip the ``course-material.zip`` archive to your home directory and
 you are setup to start with the next chapter.
 
 .. _course material: https://github.com/grimme-lab/qc2-teaching/releases/latest
+
+MacOS using homebrew
+--------------------
+
+You can manage packages for your Mac using `homebrew <https://brew.sh>`_.
+To install homebrew download the installation script from the official
+homebrew channel at GitHub:
+
+.. code-block:: bash
+
+   curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh > install-homebrew.sh
+   /bin/bash install-homebrew.sh
+
+The script will ask you a few questions to complete the installation process,
+for more information on the homebrew installation check their
+`documentation <https://docs.brew.sh/Installation>`_.
+
+We will install three formulas for this course: ``gcc``, ``make`` and ``vim``
+and additionally the ``atom`` cask.
+
+.. code-block::
+
+   brew install gcc make vim
+   brew cask install atom
+
+After having installed the necessary software, you need to download the
+`course material`_.
+Unzip the ``course-material.zip`` archive to your home directory and
+you are setup to start with the next chapter.
