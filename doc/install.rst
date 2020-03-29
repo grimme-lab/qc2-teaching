@@ -136,7 +136,7 @@ for more information on the homebrew installation check their
 We will install three formulas for this course: ``gcc``, ``make`` and ``vim``
 and additionally the ``atom`` cask.
 
-.. code-block::
+.. code-block:: bash
 
    brew install gcc make vim
    brew cask install atom
