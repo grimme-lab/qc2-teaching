@@ -91,13 +91,13 @@ a password. Those are equivalent to the ones you would choose on a real Ubuntu m
 Your new console will now show ``linuxusername@hostname:/some/path$``, similar to
 an Ubuntu console. ``linuxusername`` is your chosen username in the Linux distribution
 and ``hostname`` the name of your computer. The directory in which the window is
-opened (``/some/path``) will probably be your Linux home directory ``~`` (see "Working
-on Linux"). Note that this home directory can not simply be accessed via the Windows
-explorer. But the other way around, you can find your Windows home directory in
-``/mnt/c/Users/windowsusername``, where ``windowsusername`` is your username on
-your Windows computer. If you want to open new files with some Windows program,
-we recommend to create and save all new files in the mentioned directory or subfolders
-of it.
+opened (``/some/path``) will probably be your Linux home directory ``~`` (see
+:ref:`Shell in a nutshell`). Note that this home directory can not simply be accessed
+via the Windows explorer. But the other way around, you can find your Windows home
+directory in ``/mnt/c/Users/windowsusername``, where ``windowsusername`` is your
+username on your Windows computer. If you want to open new files with some Windows
+program, we recommend to create and save all new files in the mentioned directory
+or subfolders of it.
 
 You can now also access your Linux console through a Windows console such as CMD.
 To open CMD, just type ``cmd`` in the search field of the Windows taskbar and press
