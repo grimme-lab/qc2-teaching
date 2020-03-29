@@ -33,7 +33,7 @@ Shell in a nutshell
 After executing the terminal-emulator you will end up with a window, which
 looks similar to the following image:
 
-.. code:: none
+.. code-block:: none
 
    ehlert@c01:~> pwd
    /home/ehlert
@@ -67,7 +67,7 @@ Since you are in your home directory, this will print the path to that home
 directory to the screen.
 Note that all input in the terminal is case-sensitive.
 
-.. code:: none
+.. code-block:: none
 
    ehlert@c01:~> pwd
    /home/ehlert
@@ -75,7 +75,7 @@ Note that all input in the terminal is case-sensitive.
 Next thing we want to know is what is inside our current location, for this
 we use the command ``ls``, short for list:
 
-.. code:: none
+.. code-block:: none
 
    ehlert@c01:~> ls
    Desktop     Music      QCII
@@ -85,9 +85,9 @@ we use the command ``ls``, short for list:
 We can add options to the ``ls`` command like ``-l`` to use the
 use a long listing format:
 
-.. code:: none
+.. code-block:: none
 
-   ehlert@c01:~> ls
+   ehlert@c01:~> ls -l
    total 574500
    drwxr-xr-x  2 ehlert thch      4096 Jun  7  2018 Desktop
    drwxr-xr-x  2 ehlert thch      4096 Jun  7  2018 Documents
@@ -102,7 +102,7 @@ use a long listing format:
 Alternatively we can provide ``ls`` with a path, it will then list all the
 files within this directory
 
-.. code:: none
+.. code-block:: none
 
    ehlert@c01:~> ls QCII
    tutorial   scf
@@ -122,7 +122,7 @@ to any file or directory on your system.
 Up to now we only looked around, but we can also change the directory, which
 is done by the command ``cd``, short for change directory.
 
-.. code:: none
+.. code-block:: none
 
    ehlert@c01:~> cd QCII
    ehlert@c01:~/QCII> cd .
