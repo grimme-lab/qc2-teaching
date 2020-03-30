@@ -20,6 +20,12 @@ program main_prog
     !> Unit for reading the input from
     integer :: io_unit
 
+    !> Error status from opening file for IO
+    integer :: error
+
+    !> Error message from opening file for IO
+    character(len=256) :: message
+
     !> This code snippet optionally opens a file or allows reading from STDIN
     !> In case of no command line arguments, you read from the STDIN
     if (command_argument_count() == 0) then
@@ -36,7 +42,12 @@ program main_prog
             error stop 1
         end if
         !> If the file exist, we open it to a new unit an pass it to the scf
-        open(file=input_file, newunit=io_unit)
+        open(file=input_file, newunit=io_unit, status='old', &
+            & iomsg=message, iostat=error)
+        if (error /= 0) then
+            write(error_unit, '("ERROR:", 1x, a)') trim(message)
+            error stop 1
+        end if
     end if
 
     !> This is the entry point for the student program
