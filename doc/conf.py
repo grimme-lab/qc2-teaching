@@ -17,7 +17,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'QC2 Teaching'
+project = 'Advanced Quantum Chemistry Methods'
 copyright = '2020, Grimme group'
 author = 'Grimme group'
 
