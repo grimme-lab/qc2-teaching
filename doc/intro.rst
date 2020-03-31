@@ -192,7 +192,7 @@ a complete summary can be found in its manual page by ``man <command>``.
    To get familiar with the shell try to achieve the following task
 
    1. change to the ``QCII`` directory
-   2. find the ``tutorial`` directory in ``QCII``
+   2. find or create the ``tutorial`` directory in ``QCII``
    3. rename the ``tutorial`` directory to ``shell tutorial``
    4. change to the newly created directory
 
