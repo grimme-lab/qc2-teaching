@@ -1,5 +1,3 @@
-" >>> QC2 >>>
-" !! Contents within this block is provided by your lab assistents !!
 " Defaults for new vim users.
 source $VIMRUNTIME/defaults.vim
 " Ignore this filetypes in the wildmenu
@@ -17,4 +15,3 @@ set expandtab
 " Fortran specific options
 let fortran_do_enddo=1
 let fortran_free_source=1
-" <<< QC2 <<<

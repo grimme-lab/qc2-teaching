@@ -307,8 +307,13 @@ with ``vim``.
 .. attention::
    Don't read past this note without finishing ``vimtutor``!
 
-To make working with ``vim`` easier for you, we changed some of the default
-settings for you. Type ``vim ~/.vimrc`` to look into our setup, if you are
+To make working with ``vim`` easier for you, we provide this ``.vimrc`` for you:
+
+.. literalinclude:: ../config/.vimrc
+   :caption: ~/.vimrc
+   :language: vim
+
+In case it is not yet in your ``.vimrc`` we recommend copying, if you are
 not happy with something we put in here, feel free to modify or replace it,
 you can also add new configurations if you like.
 
