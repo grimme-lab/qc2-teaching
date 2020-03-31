@@ -1,5 +1,5 @@
-QC2 -- Quantum Chemistry II
-===========================
+QC2 -- Advanced Quantum Chemistry Methods
+=========================================
 
 This is the guide to the practical course for QC2.
 
