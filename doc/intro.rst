@@ -9,6 +9,15 @@ First of all, you will be provided with a **username** and a **password**.
 This represents your user account for the whole lab course and all the data you
 produce is available with this information.
 
+.. note::
+
+   Some of the keyboard shortcuts in this chapter are targeted at the
+   setup of the CIP Pool computers in the Mulliken Center for Theoretical
+   Chemistry and might not work as expected for you.
+
+   In case you use KDE, everything will probably work just fine, if you
+   use another OS or window manager commands might differ slightly.
+
 Login
 -----
 

@@ -117,8 +117,48 @@ you are setup to start with the next chapter.
 
 .. _course material: https://github.com/grimme-lab/qc2-teaching/releases/latest
 
-MacOS using homebrew
---------------------
+MacOS
+-----
+
+To setup your MacOS for the course follow this steps
+
+1. Install Xcode from the the App Store
+2. Open a terminal from /Applications/Utilities/
+3. Install command line tools with
+
+   .. code-block:: none
+
+      xcode-select --install
+
+4. Install ``gfortran`` either by installing it from `here <https://gcc.gnu.org/wiki/GFortranBinariesMacOS>`_
+   or by using Homebrew (see :ref:`gfortran from homebrew`)
+5. Download and install `atom <https://atom.io/>`_.
+
+.. important::
+
+   The default shell on MacOS is not ``bash``, but a ``zsh``, but they should
+   be mostly compatible. In case you want to follow the course with a ``bash``
+   start a new ``bash`` instance after opening your terminal with
+
+   .. code-block:: none
+
+      exec bash
+
+After having installed the necessary software, you need to download the
+`course material`_.
+Unzip the ``course-material.zip`` archive to your home directory and
+you are setup to start with the next chapter.
+
+.. note::
+
+   Some of the keyboard shortcuts in the next chapter are targeted at
+   Linux OS, you probably have to use the ``cmd`` key instead of the
+   ``ctrl`` key.
+
+.. _gfortran from homebrew:
+
+Installing ``gfortran`` with Homebrew
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can manage packages for your Mac using `homebrew <https://brew.sh>`_.
 To install homebrew download the installation script from the official
@@ -133,15 +173,9 @@ The script will ask you a few questions to complete the installation process,
 for more information on the homebrew installation check their
 `documentation <https://docs.brew.sh/Installation>`_.
 
-We will install three formulas for this course: ``gcc``, ``make`` and ``vim``
-and additionally the ``atom`` cask.
+To install ``gfortran`` we will install the ``gcc`` formula, where it is
+included, with
 
 .. code-block:: bash
 
-   brew install gcc make vim
-   brew cask install atom
-
-After having installed the necessary software, you need to download the
-`course material`_.
-Unzip the ``course-material.zip`` archive to your home directory and
-you are setup to start with the next chapter.
+   brew install gcc
