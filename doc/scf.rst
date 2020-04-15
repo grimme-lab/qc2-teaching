@@ -262,11 +262,12 @@ over contracted Gaussian orbitals, let's check out the ``interface``:
    end interface
 
 The most important information is we need *two* centers for the calculation,
-meaning we have to implement it as a loop over all atom pairs.
+meaning we have to implement it as a loop over all orbital pairs (= pairs of basis
+functions).
 
 .. admonition:: Exercise 5
 
-   1. Which matrices do can you compute from the one-electron integrals?
+   1. Which matrices can you compute from the one-electron integrals?
    2. Allocate space for the necessary matrices.
    3. Loop over all pairs and calculate all the matrix elements.
 
@@ -319,8 +320,8 @@ The eigenvalue problem we have to solve is a general one given by
 
 where **F** is the Fock matrix, **C** is the matrix of the eigenvectors,
 **S** is the overlap matrix and **ε** is a diagonal matrix of the eigenvalues.
-While this in principle possible with a more elaborated solver routine,
-we want to solve the problem instead:
+While this is in principle possible with a more elaborated solver routine,
+we want to solve the following problem instead:
 
 .. math::
    \mathbf F^\prime \mathbf C^\prime = \mathbf C^\prime \boldsymbol\varepsilon
@@ -342,8 +343,8 @@ eigenvalues **s**.
 .. admonition:: Exercise 7
 
    1. Use **F'** = **X**:sup:`T` **FX** and **C** = **XC'** to show that the
-      general and eigenvalue problem and the transformed one are equivalent.
-   2. write a ``subroutine`` to calculate the symmetric orthonormalizer
+      general eigenvalue problem and the transformed one are equivalent.
+   2. Write a ``subroutine`` to calculate the symmetric orthonormalizer
       **X** from the overlap matrix.
    3. Make sure that **X**:sup:`T` **SX** = **1** and that you are not overwriting
       your overlap matrix in the diagonalization.
