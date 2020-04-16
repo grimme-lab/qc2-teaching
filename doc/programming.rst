@@ -598,7 +598,7 @@ enclosing true and false values).
     stores a ``logical`` in 32 bits (4 bytes) similar to an
     ``integer`` and that true and false are not 1 and 0.
 
-You already saw two operators, greater than ``>`` and lesser than ``<``,
+You already saw two operators, greater than ``>`` and less than ``<``,
 for a complete list of all operators see the following table.
 They always come in two versions but have the same meaning.
 
