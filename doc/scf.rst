@@ -362,7 +362,7 @@ If you happen to have converged orbitals around, the first method would be
 the most suitable.
 Alternatively, you can provide a model Hamiltonian, usually a tight-binding
 or extended Hückel Hamiltonian is used here.
-The simplest possible model Hamiltonian we have readily available in the
+The simplest possible model Hamiltonian we have readily available is the
 core Hamiltonian **H**:sub:`0` = **T** + **V**.
 
 The initial density matrix **P** is obtained from the orbital coefficients by
@@ -383,7 +383,7 @@ and zero for virtual orbitals.
    2. Add the initial guess to your program.
    3. Diagonalize the initial Fock matrix (use the symmetric orthonormalizer)
       to obtain a set of guess orbital coefficients **C**.
-   4. Calculate the initial density matrix **P** resulting from this orbital
+   4. Calculate the initial density matrix **P** resulting from those orbital
       coefficients.
 
 Hartree-Fock Energy
@@ -392,7 +392,7 @@ Hartree-Fock Energy
 The Hartree-Fock energy is given by
 
 .. math::
-    E_\text{HF} = \frac12\mathrm{Tr}\{(\mathbf H + \mathbf F) \mathbf P\}
+    E_\text{HF} = \frac12\mathrm{Tr}\{(\mathbf H_0 + \mathbf F) \mathbf P\}
 
 where Tr denotes the trace.
 
@@ -407,11 +407,11 @@ where Tr denotes the trace.
 Two-Electron Integrals
 ~~~~~~~~~~~~~~~~~~~~~~
 
-We have ignored the two-electron integrals for a while now, up to know
+We have ignored the two-electron integrals for a while now, up to now
 they were not important, but we will now need to calculate them to
 perform a self-consistent field procedure.
 The four-center two-electron integrals are the most expensive quantity
-in any Hartree-Fock calculation and there exist many clever algorithms
+in every Hartree-Fock calculation and there exist many clever algorithms
 to avoid calculating them all together, we will again go the straight-forward
 way and calculate them the naive way.
 
