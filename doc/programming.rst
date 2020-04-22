@@ -466,7 +466,7 @@ but with different kinds of literals.
 If we run the program now we find surprisingly that only ``a`` has the expected
 value, while all others are off. We can easily explain the result for ``c``,
 the actual calculation is happening in integer arithmetic which yields 0
-and is then * cast* into a real number ``0.0``.
+and is then *cast* into a real number ``0.0``.
 
 .. code-block:: none
 
