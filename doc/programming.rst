@@ -609,8 +609,8 @@ equals         ``==``    ``.eq.``  ``var == 1``,  ``var.eq.1``
 not equals     ``/=``    ``.ne.``  ``var /= 5``,  ``var.ne.5``
 greater than   ``>``     ``.gt.``  ``var > 0``,   ``var.gt.0``
 greater equal  ``>=``    ``.ge.``  ``var >= 10``, ``var.ge.10``
-lesser than    ``<``     ``.lt.``  ``var < 3``,   ``var.lt.3``
-lesser equal   ``<=``    ``.ge.``  ``var <= 8``,  ``var.le.8``
+less than      ``<``     ``.lt.``  ``var < 3``,   ``var.lt.3``
+less equal     ``<=``    ``.ge.``  ``var <= 8``,  ``var.le.8``
 =============  =======   ========  ======================================
 
 .. note::
