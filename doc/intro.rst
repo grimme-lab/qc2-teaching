@@ -18,6 +18,8 @@ produce is available with this information.
    In case you use KDE, everything will probably work just fine, if you
    use another OS or window manager commands might differ slightly.
 
+.. contents::
+
 Login
 -----
 

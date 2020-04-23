@@ -1,7 +1,9 @@
 Introduction to Fortran
 =======================
 
-General principles
+.. contents::
+
+General Principles
 ------------------
 
 Programming is the art of telling a computer what to do, usually to perform
@@ -20,7 +22,7 @@ the Quantum Chemistry I module.
 We will thus concern ourselves with the problems of translating an algorithm
 or a formula, spelled out on paper, to something the computer understands first.
 
-Compiling and running a program
+Compiling and Running a Program
 -------------------------------
 
 Before beginning to write computer code or *to code* in short, one needs to
@@ -231,7 +233,7 @@ a value to ``my_number``, then we are printing it to the screen.
    by clearly communicating with the user of the program what we are
    expecting.
 
-Performing simple computing tasks
+Performing Simple Computing Tasks
 ---------------------------------
 
 Next, you will make your program perform simple computational tasks -- in this
@@ -551,7 +553,7 @@ to convert it first, which is called *casting*.
    but we will always declare all the intrinsic functions we are using
    here such that you know they are, indeed, intrinsic functions.
 
-Logical constructs
+Logical Constructs
 ------------------
 
 Our programs so far had one line of execution.
@@ -625,7 +627,7 @@ To negate a logical expression we use prepend ``.not.`` to the expression
 and to test multiple expressions we can use ``.or.`` and ``.and.``
 which have the same meaning as their equivalent operators in logic.
 
-Repeating tasks
+Repeating Tasks
 ---------------
 
 Consider this simple program for summing up its input

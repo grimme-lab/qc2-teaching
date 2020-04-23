@@ -4,6 +4,8 @@ Introduction to Quantum Chemistry
 The main objective of this course is to write a working restricted Hartree--Fock
 program.
 
+.. contents::
+
 Restricted Hartree--Fock
 ------------------------
 
@@ -161,7 +163,7 @@ nuclear repulsion energy. It is strongly recommended to perform such
 calculations before starting with the self-consistent field procedure,
 since an error afterward can ruin an expensive calculation.
 
-Basis set setup
+Basis Set Setup
 ~~~~~~~~~~~~~~~
 
 This Hartree-Fock program will use contracted Gaussian-type orbitals to

@@ -20,6 +20,8 @@ This introduction will cover details on compiling and linking programs.
 Especially we will outline the usage of build systems to automate this process,
 in particular ``make`` and ``meson``.
 
+.. contents::
+
 Compiling and Linking
 ---------------------
 
