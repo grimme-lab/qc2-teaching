@@ -44,7 +44,7 @@ in multiples of the electron charge (which is the atomic unit of charge)
 and specify the number of electrons separately.
 
 Having put some thoughts in the geometric representation of the system,
-we now have to tackle the electronic representation, we need a basis set
+we now have to tackle the electronic representation, that is, we need a basis set
 to expand our wavefunction.
 There are many possible choices, like atom centered basis functions
 (Slater-type, Gaussian-type, ...) plain waves, wavelets, ...
