@@ -24,7 +24,7 @@ What maybe is not that obvious, we have to decide on a unit system for
 the coordinates, usually we would follow IUPAC recommendations and use
 SI units like meters, but if you think about a molecule on the length
 scale in meters it becomes quite inconvenient.
-To get into the right ballpark we could choose Ångström which have an
+To get into the right ballpark we could choose Ångström which has an
 obvious relation to the SI unit, but here we will use Bohr which is
 the length unit of the atomic units system.
 Atomic units have the advantage that a lot of constants drop out of the
