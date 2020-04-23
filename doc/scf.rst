@@ -31,7 +31,7 @@ Atomic units have the advantage that a lot of constants drop out of the
 equations we want to code up and we can convert them easily back,
 in fact, we provide a conversion routine back to SI units for you.
 
-This were the considerations we have to put in the geometry, now we have
+These are the considerations we have to put in the geometry, now we have
 to identify the atoms/nuclei in our molecule. Chemical identity like the
 element is given by the nuclear charge and the number of electrons.
 It is quite popular to specify both with the element symbol which
