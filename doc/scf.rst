@@ -156,7 +156,7 @@ the Coulomb energy between the nuclei.
    4. Check what happens if calculate the nuclear repulsion energy for
       a single atom. Do you get the expected result?
 
-Classical contributions to the total energy are totally independent from
+Classical contributions to the total energy are independent from
 the density or wavefunction. Beside the nuclear repulsion energy,
 correction terms like dispersion are often calculated along with the
 nuclear repulsion energy. It is strongly recommended to perform such
