@@ -159,9 +159,9 @@ the Coulomb energy between the nuclei.
 Classical contributions to the total energy do not dependent on
 the density or wavefunction and can already be calculated before
 starting with the self-consistent field procedure.
-It is usually a good idea to evaluate these contributions first
-as they are usually less expensive to compute and for the purpose
-of this course easier to implement.
+It is usually a good idea to evaluate these contributions first,
+because they are less expensive to compute and, for the purpose
+of this course, easier to implement.
 
 Basis Set Setup
 ~~~~~~~~~~~~~~~
