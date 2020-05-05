@@ -454,6 +454,12 @@ Self Consistent Field Procedure
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Now you have everything together to build the self-consistent field loop.
+Remember, the Fock matrix in terms of the two-electron integrals is given by
+
+.. math::
+   F_{\mu\nu} = H_{\mu\nu} + \sum_\lambda \sum_\kappa \left( 
+   2 P_{\lambda\kappa} \cdot (\mu\nu|\kappa\lambda)
+   - P_{\lambda\kappa} \cdot (\mu\lambda|\kappa\nu) \right)
 
 .. admonition:: Exercise 12
 
