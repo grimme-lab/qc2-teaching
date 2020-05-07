@@ -36,9 +36,7 @@ subroutine write_vector(vector, name, unit)
 
     do j = 1, d
         write(iunit, '(i6)', advance='no') j
-        do k = i, l
-            write(iunit, '(1x,f15.8)', advance='no') vector(j)
-        end do
+        write(iunit, '(1x,f15.8)', advance='no') vector(j)
         write(iunit, '(a)')
     end do
 
