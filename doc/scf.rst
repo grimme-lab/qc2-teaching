@@ -458,8 +458,11 @@ Remember, the Fock matrix in terms of the two-electron integrals is given by
 
 .. math::
    F_{\mu\nu} = H_{\mu\nu} + \sum_\lambda \sum_\kappa \left( 
-   2 P_{\lambda\kappa} \cdot (\mu\nu|\kappa\lambda)
-   - P_{\lambda\kappa} \cdot (\mu\lambda|\kappa\nu) \right)
+   P_{\lambda\kappa} \cdot (\mu\nu|\kappa\lambda)
+   - \frac12 P_{\lambda\kappa} \cdot (\mu\lambda|\kappa\nu) \right)
+   
+Make sure your definition of the density matrix matches the definition of the
+Fockian.
 
 .. admonition:: Exercise 12
 
