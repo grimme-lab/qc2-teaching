@@ -1,5 +1,5 @@
-Electron Correlation
-====================
+Exercises
+=========
 
 .. contents::
 
