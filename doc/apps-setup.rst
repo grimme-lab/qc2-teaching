@@ -48,7 +48,7 @@ And for visualization purposes:
 - ``t2x``: Convert a coord file to \*.xyz
 - ``tm2molden``: Generate a molden input
 
-**IMPORTANT:** Each TURBOMOLE calculation needs its own directory.
+.. important:: Each TURBOMOLE calculation needs its own directory.
 
 ``cefine``
 ~~~~~~~~~~
@@ -106,7 +106,7 @@ The input file is generally structured as follows:
   * xyzfile <charge> <multiplicity> <filename.xyz>        
   *
 
-**IMPORTANT:** Multiplicity = 2S+1 with S being the total spin.
+.. important:: Multiplicity = 2S+1 with S being the total spin.
 
 A short reference of ORCA keywords can be found in the section :ref:`Short ORCA reference`.
 Further information is accesible from: https://sites.google.com/site/orcainputlibrary/.
@@ -152,7 +152,8 @@ Be sure to create a directory called ``bin`` in your home directory by typing:
   mkdir ~/bin
 .. export TURBODIR=/home/abt-grimme/TURBOMOLE.7.0.2
 
-**IMPORTANT:** All changes apply to shells opened afterwards.
+.. important:: All changes apply to shells opened afterwards.
+
 If you want to apply the changes to your current shell, you 
 need to run:
 
