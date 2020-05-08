@@ -1,0 +1,4 @@
+.. This is the definition for some extra symbols needed in the documents.
+
+.. |angst| unicode:: U+00C5 .. angstrom unit symbol
+.. |mult|  unicode:: U+22C5 .. multiplication dot operator
