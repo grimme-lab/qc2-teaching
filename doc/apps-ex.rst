@@ -655,7 +655,187 @@ Noble Gas |mult| |mult| |mult| Methane
 Spectroscopy
 ------------
 
-under construction
+IR-Spectrum of 1,4-Benzoquinone
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. admonition:: Exercise 7.1
+
+   Calculate the IR-spectrum of 1,4-Benzoquinone using
+   DFT and HF, and compare the results to the experimental
+   spectrum given below.
+
+**Approach**
+
+1. Create a ``coord`` file for 1,4-Benzoquinone.
+
+2. Optimize the geometry on the HF-D3/def2-SVP level of theory.
+
+3. Calculate the normal modes with ``aoforce``.
+
+4. Check the normal modes with ``molden``. (Use ``tm2molden`` and ``molden``. The normal
+   modes can be visualized by clicking on "Norm. Mode" on the right side of the menu.)
+
+5. Assign each dipole-allowed normal mode to an experimental one
+   and calculate the scaling factor :math:`f_\text{scal}=\nu_\text{exp}/\nu_\text{calc}`.
+
+6. Repeat everything with TPSS-D3/def2-SVP and discuss your findings.
+
+.. figure:: img/benzoquinone.png
+   :align: center
+   :width: 800px
+
+   IR spectrum of 1,4-Benzoquinone in KBr.
+
+.. hint::
+
+   This exercise contains a small, technical "trap" when
+   setting up the calculations. Try to avoid it and contact
+   the lab assistant if you obtain imaginary frequencies.
+
+The Color of Indigo
+~~~~~~~~~~~~~~~~~~~
+
+.. admonition:: Exercise 7.2
+
+   Calculate the color of indigo with three different methods:
+   time-dependent Hartree-Fock (TD-HF) and
+   time-dependent DFT (TD-DFT) with two different functionals (PBE and PBE0).
+
+**Approach**
+
+1. Create the geometry of indigo (figure below) and optimize it with TURBOMOLE on the
+   TPSS-D3/def2-SVP level. Make sure to use the correct symmetry.
+
+   .. figure:: img/indigo.png
+      :align: center
+      :width: 250px
+
+      Structure of indigo.
+
+2. Do a HF-D3/def2-SVP singlepoint calculation. Use ``-nori`` in ``cefine`` and run ``dscf``.
+   In order to do the TD-HF calculation, edit the ``control`` file and add the following lines
+   (before ``$end``):
+
+   .. code-block:: none
+      :linenos:
+
+      $scfinstab rpas
+      $soes
+        bu 1
+
+   Then, call ``escf`` and forward the output into a file.
+
+3. For the TD-DFT calculations repeat the above procedure with PBE-D3/def2-SVP and
+   PBE0-D3/def2-SVP. Use the proper ``cefine`` calls and run ``ridft`` and ``escf`` afterwards.
+
+4. Discuss the excitation energies for all three methods; which method
+   would predict (at least approximately) the correct color for indigo?
+   How do you explain the errors?
+
+NMR Parameters
+~~~~~~~~~~~~~~
+
+The computation of NMR parameters can be done with the ORCA program package. A simple input for
+the calculation of the NMR chemical shielding of CH\ :sub:`3`\ NH\ :sub:`2` with the PBE
+functional and a pcSseg-2 basis set is presented below. The pcSseg-*n* basis sets are special
+segmented contracted basis sets otimized for the calculation of NMR shieldlings.
+(For more information see: Jensen, F., *J. Chem. Theory Comput.* **2015**, *11*, 132 - 138.)
+
+.. code-block:: none
+   :linenos:
+
+   !PBE RI pcSseg-2 def2/J NMR
+ 
+   *xyzfile 0 1 input.xyz
+
+| At the end of the ORCA output a summary of the calculated NMR absolute chemical shieldings can be found.
+|
+| Exemplary output for CH\ :sub:`3`\ NH\ :sub:`2`:
+
+.. code-block:: none
+   :linenos:
+
+   --------------------------
+   CHEMICAL SHIELDING SUMMARY (ppm)
+   --------------------------
+
+
+     Nucleus  Element    Isotropic     Anisotropy
+     -------  -------  ------------   ------------
+         0       C          152.992         46.821
+         1       H           29.025          8.165
+         2       H           28.567         10.286
+         3       N          242.339         43.497
+         4       H           29.033          8.176
+         5       H           31.095         13.580
+         6       H           31.120         13.593
+
+.. admonition:: Exercise 7.3
+
+   Calculate the :sup:`13`\ C-NMR chemical shifts |delta| for a number of organic compounds
+   and compare the results to experimental data. In addition,
+   investigate the correlation of the |pi|-electron density with |delta|.
+
+.. figure:: img/nmr2018.png
+   :align: center
+   :width: 500px
+
+   Lewis structures of seven organic compounds **A** -- **G** with their experimentally obtained chemical shift as well as four aromatic compounds **Ar-1** - **Ar-4**.
+
+**Approach**
+
+1. Optimize the geometry of the compounds **A** -- **G** and the reference molecule Si(CH\ :sub:`3`)\ :sub:`4` (TMS)
+   on the PBEh-3c level of theory (how to use PBEh-3c is explained in the ORCA manual).
+
+2. Calculate the :sup:`13`\ C-NMR chemical shieldings and shifts |delta| for compounds **A** -- **G** with TMS as reference at PBE/pcSseg-2 level of theory.
+   Given the NMR shielding constants :math:`\sigma` of the compound (:math:`\text{c}`) and the reference (:math:`\text{ref.}`), the chemical shift
+   :math:`\delta _\text{c,ref.}` is defined as
+
+   .. math::
+
+      \delta _\text{c,ref.} = \sigma _\text{ref.} - \sigma _c .
+
+   .. hint::
+
+      Computational time can be saved by calculating the shieldings only for carbon atoms instead of all atoms.
+      How to do so is described in the ORCA manual.
+
+3. Compare your results with the experimental values and calculate the mean deviation (MD) and the mean absolute deviation (MAD).
+
+   .. math::
+
+      \text{MD} = \frac{1}{N} \sum_{i=1}^N (\delta _\text{calc.} - \delta _\text{exp.}) \hspace{1.5cm} \text{MAD} = \frac{1}{N} \sum_{i=1}^N (|\delta _\text{calc.} - \delta _\text{exp.}|)
+ 
+4. Repeat the calculations for the four aromatic compounds **Ar-1** -- **Ar-4**
+   and plot the calculated chemical shift against the formal |pi|-electron
+   density (:math:`\rho_\pi = n_{el^\pi}/n_{at^\pi}`). Discuss your results.
+
+5. The experimental :sup:`17`\ O- and :sup:`13`\ C-NMR chemical shifts of the carbonyl function in acetone are shifted by
+   75.5 and -18.9 ppm, respectively, if an acetone molecule is transferred from the gas phase to aqueous solution.
+   Try to reproduce these values by considering solvation effects by the implicit solvent model CPCM. You can switch on
+   the implicit solvent by adding the ``CPCM(<solvent>)`` keyword (example: ``CPCM(toluene)``) to your ORCA input.
+   For carbon, the reference is TMS, for oxygen it is water.
+
+6. Try to estimate which effect is larger -- the inclusion of an implicit solvation in the NMR calculation or the
+   inclusion of the implicit solvent in the geometry optimization.
+
+   .. hint::
+
+      There are two options (gas/solution) for each calculation, the geometry optimization and the shielding calculation. Compare all possibilities.
+  
+7. Calculate the :sup:`1`\ H-NMR chemical shifts for **H** and **I** in the gas-phase at PBE/pcSseg-2 level of theory.
+   Discuss your observations regarding the chemical shift of the methine proton in both compounds.
+   Give a short explanation of your findings.
+
+   .. figure:: img/nmr2018_2.png
+      :align: center
+      :width: 500px
+
+      Lewis structures of *in*- (**H**) and *out*- (**I**) [3\ :sup:`4,10`][7]Metacyclophane.
+
+   .. hint::
+
+      The NMR chemical shielding calculations for **H** and **I** may be time consuming, consider to run them over night.
 
 Basis Set Convergence
 ---------------------
