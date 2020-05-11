@@ -2,3 +2,5 @@
 
 .. |angst| unicode:: U+00C5 .. angstrom unit symbol
 .. |mult|  unicode:: U+22C5 .. multiplication dot operator
+.. |lrarr| unicode:: U+2194 .. like \leftrightarrow in LaTeX
+.. |eqarr| unicode:: U+21CC .. arrow for chemical equilibrium reaction
