@@ -29,7 +29,7 @@ pipe the output into a file, *e.g.*:
 
 .. code-block:: none
 
-  ridft > ridft.out &
+   ridft > ridft.out &
 
 The most important scripts are:
 
@@ -59,7 +59,7 @@ provide) in the directory where it is called. The basic command is:
 
 .. code-block:: none
 
-  cefine -<method> -bas <basis>
+   cefine -<method> -bas <basis>
 
 where ``<method>`` defines the type of calculation and ``<basis>``
 the desired basis set.
@@ -67,7 +67,7 @@ To get an overview over the most important command line options, use
 
 .. code-block:: none
 
-  cefine -h
+   cefine -h
 
 In the following exercises, the proper options will always be given
 in the text. Additionally, you can find a short list of the options
@@ -80,31 +80,32 @@ ORCA needs an input file (*e.g.* ``myinput.inp``) to run. A typical call to perf
 
 .. code-block:: none
 
-  orca myinput.inp > myinput.out &
+   orca myinput.inp > myinput.out &
 
 The input file is generally structured as follows:
 
 .. code-block:: none
+   :linenos:
 
-  # Comment lines are marked with an '#' and are possible everywhere
-  ! Method Basis and further options
+   # Comment lines are marked with an '#' and are possible everywhere
+   ! Method Basis and further options
 
-  # Input is organized in blocks which start with '%'
-  # e.g.
-  %scf
-          MaxIter 150 #maximum number of iteration steps in the scf,
-                      #default = 50
-  end
-  # definition of input geometry 
-  * xyz <charge> <multiplicity>
-          cartesian coordinates (Angstroms)
-  *
-  or:
-  * int <charge> <multiplicity>
-          Z-Matrix
-  or:
-  * xyzfile <charge> <multiplicity> <filename.xyz>        
-  *
+   # Input is organized in blocks which start with '%'
+   # e.g.
+   %scf
+           MaxIter 150 #maximum number of iteration steps in the scf,
+                       #default = 50
+   end
+   # definition of input geometry 
+   * xyz <charge> <multiplicity>
+           cartesian coordinates (Angstroms)
+   *
+   or:
+   * int <charge> <multiplicity>
+           Z-Matrix
+   or:
+   * xyzfile <charge> <multiplicity> <filename.xyz>        
+   *
 
 .. important:: Multiplicity = 2S+1 with S being the total spin.
 
@@ -125,31 +126,32 @@ are usually set in the ``.bashrc``. In order to gain access to all the
 needed software, add the following lines to your ``.bashrc``:
 
 .. code-block:: none
+   :linenos:
 
-  # AKbin
-  export PATH=/home/abt-grimme/AK-bin:$PATH
-  export PATH=/home/$USER/bin:$PATH
+   # AKbin
+   export PATH=/home/abt-grimme/AK-bin:$PATH
+   export PATH=/home/$USER/bin:$PATH
 
-  # TURBOMOLE
-  export TURBODIR=/software/turbomole702
-  export PATH=$TURBODIR/scripts:$PATH
-  export PATH=$TURBODIR/bin/`sysname`:$PATH
+   # TURBOMOLE
+   export TURBODIR=/software/turbomole702
+   export PATH=$TURBODIR/scripts:$PATH
+   export PATH=$TURBODIR/bin/`sysname`:$PATH
 
-  # ORCA
-  ORCABINPATH=/home/software/orca-4.0.0
-  PATH=$ORCABINPATH:$PATH
+   # ORCA
+   ORCABINPATH=/home/software/orca-4.0.0
+   PATH=$ORCABINPATH:$PATH
 
-  # XTB
-  export OMP_NUM_THREADS=2
-  export MKL_NUM_THREADS=2
-  export OMP_STACKSIZE=500m
-  ulimit -s unlimited
+   # XTB
+   export OMP_NUM_THREADS=2
+   export MKL_NUM_THREADS=2
+   export OMP_STACKSIZE=500m
+   ulimit -s unlimited
 
 Be sure to create a directory called ``bin`` in your home directory by typing:
 
 .. code-block:: none
 
-  mkdir ~/bin
+   mkdir ~/bin
 .. export TURBODIR=/home/abt-grimme/TURBOMOLE.7.0.2
 
 .. important:: All changes apply to shells opened afterwards.
@@ -159,7 +161,7 @@ need to run:
 
 .. code-block:: none
 
-  source ~/.bashrc
+   source ~/.bashrc
 
 General Recommendations
 -----------------------
@@ -195,50 +197,50 @@ You can always call a complete list of options with:
 
 .. code-block:: none
 
-  cefine -h
+   cefine -h
 
 Computational Methods
 ~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: none
 
-  -func <fname>
+   -func <fname>
 
 DFT with functional ``<fname>``
 
 .. code-block:: none
 
-  -hf
+   -hf
 
 Hartree-Fock
 
 .. code-block:: none
 
-  -mp2
+   -mp2
 
 MP2 (also sets up a HF calculation)
 
 .. code-block:: none
 
-  -cc
+   -cc
 
 CCSD(T) (also sets up a HF calculation)
 
 .. code-block:: none
 
-  -d3
+   -d3
 
 Use DFT-D3 (DFT with added dispersion).
 
 .. code-block:: none
 
-  -novdw
+   -novdw
 
 Disables the dispersion contribution.
 
 .. code-block:: none
 
-  -cosmo <epsilon>
+   -cosmo <epsilon>
 
 Cosmo continuum solvation with a given dielectric constant ``<epsilon>``
 
@@ -247,13 +249,13 @@ Basis set and RI-Approximation
 
 .. code-block:: none
 
-  -bas <basname>
+   -bas <basname>
 
 Use basis ``<basname>``.
 
 .. code-block:: none
 
-  -ri / -nori
+   -ri / -nori
 
 Use RI approximation (program ``ridft``, default) / use no RI approximation (program ``dscf``).
 
@@ -262,45 +264,45 @@ Symmetry, Optimization, Convergence
 
 .. code-block:: none
 
-  -sym <pointgroup>
+   -sym <pointgroup>
 
 Use ``<pointgroup>`` symmetry (if the symmetry is not found, it will be created by adding images of the
 input coordinates). Normally, ``cefine`` finds the symmetry by itself and this is not needed.
 
 .. code-block:: none
 
-  -noopt
+   -noopt
 
 Special options for single point calculations. Does not call the definition of internal redundant coordinates 
 (which can cause problems for *e.g.* linear molecules).
 
 .. code-block:: none
 
-  -abel
+   -abel
 
 Reduce the symmetry used to an abelian symmetry (max. D\ :sub:`2h`).
 
 .. code-block:: none
 
-  -opt
+   -opt
 
 Used to set up an MP2-optimization.
 
 .. code-block:: none
 
-  -ts
+   -ts
 
 Sets up a transition state search.
 
 .. code-block:: none
 
-  -scfconv <integer>
+   -scfconv <integer>
 
 Sets SCF energy convergence criterion to :math:`10^{-{\tt <integer>}}`.
 
 .. code-block:: none
 
- -grid <griddef>
+   -grid <griddef>
 
 Sets the DFT integration grid to ``<griddef>``.
 
@@ -309,13 +311,13 @@ Electronic Information
 
 .. code-block:: none
 
-  -uhf <integer>
+   -uhf <integer>
 
 Open shell calculation with ``<integer>`` unpaired electrons.
 
 .. code-block:: none
 
-  -chrg <integer>
+   -chrg <integer>
 
 Used to define the molecular charge as ``<integer>``.
 

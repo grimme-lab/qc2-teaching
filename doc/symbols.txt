@@ -3,4 +3,6 @@
 .. |angst| unicode:: U+00C5 .. angstrom unit symbol
 .. |mult|  unicode:: U+22C5 .. multiplication dot operator
 .. |lrarr| unicode:: U+2194 .. like \leftrightarrow in LaTeX
+.. |irarr| unicode:: U+2192 .. arrow for irreversible chemical reaction
 .. |eqarr| unicode:: U+21CC .. arrow for chemical equilibrium reaction
+.. |eps|   unicode:: U+03B5 .. lowercase epsilon
