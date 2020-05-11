@@ -153,33 +153,33 @@ specified otherwise we will use the RI approximation throughout.
 
 4. Discuss your findings and compare them to the experiment.
 
-**Technical Hints**
+.. hint::
 
-- Command line option for a triplet state in cefine: ``-uhf 2`` (``uhf <number of unpaired electrons>``)
-- To calculate without a dispersion correction add ``-novdw`` to your ``cefine`` call, which disables the default dispersion correction within the TURBOMOLE input.
-- Method selection in cefine: ``-cc`` (CCSD(T)), ``-mp2`` (MP2), ``-hf`` (HF), ``-func b3-lyp/pw6b95/tpss``
-  for B3-LYP, PW6B95 or TPSS.
-- Geometry optimizations (DFT, HF) are done with the program ``jobex``.
-- For MP2 geometry optimizations, set up your calculation with the additional ``cefine`` keyword ``-opt`` and run ``jobex -level cc2``.
-- Energies after geometry optimizations can be found in the files ``job.last``. HF and DFT energies
-  for each SCF-cycle are additionally written in the file ``energy``.
-- For CCSD(T) (singlepoint calculation on MP2 geometries) run first ``ridft > ridft.out`` (for the HF-SCF),
-  and then ``ccsdf12 > ccsdf12.out`` (for the correlated calculation).
-  The energies can be found in ``ccsdf12.out``.
-- In order to measure the angles, use either ``coordgl`` or ``molden``:
+   - Command line option for a triplet state in cefine: ``-uhf 2`` (``uhf <number of unpaired electrons>``)
+   - To calculate without a dispersion correction add ``-novdw`` to your ``cefine`` call, which disables the default dispersion correction within the TURBOMOLE input.
+   - Method selection in cefine: ``-cc`` (CCSD(T)), ``-mp2`` (MP2), ``-hf`` (HF), ``-func b3-lyp/pw6b95/tpss``
+     for B3-LYP, PW6B95 or TPSS.
+   - Geometry optimizations (DFT, HF) are done with the program ``jobex``.
+   - For MP2 geometry optimizations, set up your calculation with the additional ``cefine`` keyword ``-opt`` and run ``jobex -level cc2``.
+   - Energies after geometry optimizations can be found in the files ``job.last``. HF and DFT energies
+     for each SCF-cycle are additionally written in the file ``energy``.
+   - For CCSD(T) (singlepoint calculation on MP2 geometries) run first ``ridft > ridft.out`` (for the HF-SCF),
+     and then ``ccsdf12 > ccsdf12.out`` (for the correlated calculation).
+     The energies can be found in ``ccsdf12.out``.
+   - In order to measure the angles, use either ``coordgl`` or ``molden``:
 
-  .. code-block:: none
+     .. code-block:: none
 
-     tm2molden
-     molden molden.input
+        tm2molden
+        molden molden.input
 
-  or with a small TURBOMOLE script called ``bend``:
+     or with a small TURBOMOLE script called ``bend``:
 
-  .. code-block:: none
+     .. code-block:: none
 
-     bend i j k
+        bend i j k
 
-  with atom numbers ``i,j,k``.
+     with atom numbers ``i,j,k``.
 
 Thermochemistry
 ---------------
@@ -308,10 +308,10 @@ Reaction Enthalpies of Gas-Phase Reactions
 
 6. Tabulate your results and compare to the experimental values.
 
-**Technical Hints**
+.. hint::
 
-- In order to do a double hybrid calculation, you will need to run ``ridft`` first
-  and then ``ricc2`` subsequently. The energy can be found in the output of ``ricc2``.
+   In order to do a double hybrid calculation, you will need to run ``ridft`` first
+   and then ``ricc2`` subsequently. The energy can be found in the output of ``ricc2``.
 
 Kinetics
 --------
@@ -329,11 +329,11 @@ Kinetic Isotope Effect
 
      \frac{k_\text{H}}{k_\text{D}} = e^{-\frac{\Delta H^{\neq}_\text{H}-\Delta H^{\neq}_\text{D}}{RT}}.
 
-  .. figure:: img/ch4_oh.png
-     :align: center
-     :width: 200px
+.. figure:: img/ch4_oh.png
+   :align: center
+   :width: 250px
 
-     Geometry of the transition state.
+   Geometry of the transition state.
 
 **Approach**
 
@@ -518,19 +518,139 @@ S\ :sub:`N`\ 2-Reaction
 3. Plot the two curves together (normalize the curves reasonably) and discuss the
    results. Estimate the activation barrier for both cases.
 
-**Technical Hints**
+.. hint::
 
-- Sometimes ``cefine`` crashes can occur at very large distances. Often limiting the script to distances up to 8.25 Bohr might help solving the problem without loosing significant information.
+   Sometimes ``cefine`` crashes can occur at very large distances. Often limiting the script to
+   distances up to 8.25 Bohr might help solving the problem without loosing significant information.
 
 Actication Energies
 -------------------
 
-under construction
+Rearrangement and dimerization reactions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. admonition:: Exercise 5.1
+
+   Estimate the activation energy for the Claisen rearrangement of allyl-vinyl ether.
+   Estimate the activation energy for the dimerization of cyclopentadiene (Diels-Alder).
+   
+.. Ggf. besser Strukturen hinterlegen, Änderungen auf GFN-xTB?
+.. (You can ask the lab assistent for a dimer structure of cyclopentadien.)
+
+**Approach**
+
+1. Construct the geometry of reactant and product for each reaction (*e.g.* using ``Avogadro``).
+
+2. Optimize the geometries using PBEh-3c. Use the following call.
+   
+   .. code-block:: none
+
+      cefine -sym c1
+
+3. Ensure that the sequence of atoms is the same in every pair of reactant and
+   product structure.
+
+4. Prepare a reaction path search:
+   
+   (a) Prepare a folder for each reaction.
+   (b) Have your reactant and product structure sorted and available in ``coord``
+       format (*e.g.* starting structure ``coord``, ending structure ``coord.2``).
+   (c) Set up a calculation for the starting strucutre. Employ PBEh-3c as before.
+   (d) Merge reactant and product ``coord`` files into a file called ``coords``
+       (*e.g.* ``cat coord coord.2 >> coords``) and call ``woelfling``.
+   (e) Check your initial path. It is available in the ``path.xyz`` file.
+   (f) If everything was okay, check the ``control`` file. On the bottom a block
+       appeared that starts with ``woelfling``.
+   (g) Three of the parameters are of importance. ``ninter`` controls the number
+       of points on the path, ``maxit`` controls the number of refinement iterations
+       and ``thr`` controls the convergence of the path. Set ``ninter`` to 40, ``maxit``
+       to 40 and ``thr`` to 5\ |mult|\10\ :sup:`-4`.
+   (h) Start the optimization with ``woelfling-job_xtb``. Every optimization iteration is saved in a ``path-n`` file.
+       Be aware, that you are using a modified woelfling-job file that calculates energies and gradients with the
+       semi-empirical tight-binding based GFN-xTB method even if you used PBEh-3c to set up your input files.
+       This is a common method to speed up your reaction path investigations.
+
+5. Calculate the activation energy for each reaction.
+
+6. How would you proceed further to gain more reliable numbers?
+
+7. How feasible is this approach? Where do you see its limits in applicability and usefulness?
+
+8. Prepare relative energy diagrams for both reactions (relative energy vs. reaction coordinate), depict the molecular
+   structures of both transition states and highlight the most important bond distances.
+
+.. hint::
+
+   Preparing good input structures for transition state searches is absolutely essential, often you can easily
+   create a product structure from your reactant. Furthermore, this generally easens the sorting of the atoms.
 
 Noncovalent Interactions
 ------------------------
 
-under construction
+Noble Gas |mult| |mult| |mult| Methane
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. admonition:: Exercise 6.1
+
+   Calculate potential energy curves of the "weak" interactions between the noble gases Ar or Kr and methane.
+
+.. figure:: img/ng_ch4.png
+   :align: center
+   :width: 250px
+
+   Geometry of the CH\ :sub:`4` |mult| |mult| |mult| Ar complex.
+
+**Approach**
+
+1. Calculate the potential energy curve at the B-LYP-D3/def2-QZVP
+   level for Ar |mult| |mult| |mult| HCH\ :sub:`3` by performing a geometry
+   optimization with a fixed Ar and H atom.
+   Do this for :math:`R_\text{(Ar-H)}` = 4.5 - 15.0 Bohr with a stepsize of 0.25 Bohr.
+   Use the following ``template`` file to create the ``coord`` files:
+
+   .. code-block:: none
+      :linenos:
+
+      $coord
+          0.00000000000000      0.00000000000000      XXXX                  ar f
+          0.00000000000000      0.00000000000000      0.00000000000000      h f 
+          0.00000000000000      0.00000000000000     -2.06945348098289      c   
+          0.97576020317533      1.69006623336522     -2.75977586481614      h   
+          0.97576020317533     -1.69006623336522     -2.75977586481614      h   
+         -1.95152040635065      0.00000000000000     -2.75977586481614      h   
+      $end
+
+   Use the same script as in exercise 4.1 and adopt it to this task. The loop should now
+   work for distances from 4.5 to 15 Bohr and the stepsize should be 0.25 Bohr.
+   You also have to modify the directory names. For the B-LYP-D3/def2-QZVP calculations
+   use the following ``cefine`` call:
+
+   .. code-block:: none
+
+      cefine -bas def2-QZVP -func b-lyp -d3 -sym c1 
+
+   ``-d3`` denotes that the D3 dispersion correction will be used.
+   ``-novdw`` denotes that no dispersion correction will be employed.
+
+2. Repeat the calculations for B-LYP/def2-QZVP and MP2/def2-QZVP.
+   For MP2 use the following ``cefine`` and ``jobex`` call in the script:
+
+   .. code-block:: none
+
+      cefine -mp2 -bas def2-QZVP -opt -sym c1
+      jobex -level cc2 -c 50
+
+   To get the final MP2 energy for each distance use the command:
+
+   .. code-block:: none
+
+      grep "Total Energy" job.last | gawk '{print $4}'
+
+3. Repeat the calculations for Kr |mult| |mult| |mult| HCH\ :sub:`3`
+   (substitute Ar with Kr in the ``template`` file) with
+   B-LYP-D3/def2-QZVP, B-LYP/def2-QZVP and MP2/def2-QZVP.
+
+4. Plot the curves (**normalize to the dissociation limit**) and discuss your findings.
 
 Spectroscopy
 ------------
@@ -540,4 +660,33 @@ under construction
 Basis Set Convergence
 ---------------------
 
-under construction
+Formic Acid Dimer
+~~~~~~~~~~~~~~~~~
+
+.. admonition:: Exercise 8.1
+
+   Investigate the basis set convergence behavior of different methods
+   for the formic acid dimer.
+
+**Approach**
+
+1. Create geometries for the formic acid dimer and monomer and optimize them
+   on the TPSS-D3/def2-TZVP level of theory.
+
+2. Calculate the dimerization energy with HF, TPSS-D3 and MP2 employing the
+   cc-pVXZ (X = D, T, Q) basis sets and their augmented counterparts (aug-cc-pVXZ).
+
+3. Tabulate your results and plot the total energies versus the cardinal number
+   of the basis set for each method (use *e.g.* ``xmgrace`` or ``gnuplot``).
+
+4. Discuss your findings with respect to the BSSE and BSIE. Which methods can
+   be considered as converged towards the basis set limit when used with a
+   quadruple-|zeta| basis?
+
+.. hint::
+
+   - The calculations with quadruple-|zeta| basis can be quite time consuming. Be sure
+     to use the correct symmetry.
+
+   - Remember that you get HF results for free when doing MP2.
+
