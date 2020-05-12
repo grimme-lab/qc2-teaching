@@ -181,13 +181,46 @@ specified otherwise we will use the RI approximation throughout.
 
      with atom numbers ``i,j,k``.
 
+Basis Set Convergence
+---------------------
+
+Formic Acid Dimer
+~~~~~~~~~~~~~~~~~
+
+.. admonition:: Exercise 2.1
+
+   Investigate the basis set convergence behavior of different methods
+   for the formic acid dimer.
+
+**Approach**
+
+1. Create geometries for the formic acid dimer and monomer and optimize them
+   on the TPSS-D3/def2-TZVP level of theory.
+
+2. Calculate the dimerization energy with HF, TPSS-D3 and MP2 employing the
+   cc-pVXZ (X = D, T, Q) basis sets and their augmented counterparts (aug-cc-pVXZ).
+
+3. Tabulate your results and plot the total energies versus the cardinal number
+   of the basis set for each method (use *e.g.* ``xmgrace`` or ``gnuplot``).
+
+4. Discuss your findings with respect to the BSSE and BSIE. Which methods can
+   be considered as converged towards the basis set limit when used with a
+   quadruple-|zeta| basis?
+
+.. hint::
+
+   - The calculations with quadruple-|zeta| basis can be quite time consuming. Be sure
+     to use the correct symmetry.
+
+   - Remember that you get HF results for free when doing MP2.
+
 Thermochemistry
 ---------------
 
 Heat of Formation of C\ :sub:`60`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. admonition:: Exercise 2.1
+.. admonition:: Exercise 3.1
 
    Calculate the heat of formation :math:`\Delta H_f^0` of the C\ :sub:`60` molecule
    by using different methods.
@@ -262,7 +295,7 @@ Heat of Formation of C\ :sub:`60`
 Reaction Enthalpies of Gas-Phase Reactions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. admonition:: Exercise 2.2
+.. admonition:: Exercise 3.2
 
    For small molecules, highly accurate thermochemical results are
    reachable in quantum chemistry. This means *chemical accuracy*
@@ -319,7 +352,7 @@ Kinetics
 Kinetic Isotope Effect
 ~~~~~~~~~~~~~~~~~~~~~~
 
-.. admonition:: Exercise 3.1
+.. admonition:: Exercise 4.1
 
    Calculate the kinetic isotope effect for the reaction
    CH\ :sub:`4` + HO\ |mult| |irarr| |mult|\ CH\ :sub:`3` + H\ :sub:`2`\ O. From transition
@@ -436,7 +469,7 @@ Solvation
 S\ :sub:`N`\ 2-Reaction
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-.. admonition:: Exercise 4.1
+.. admonition:: Exercise 5.1
 
    Calculate the potential energy curve for the S\ :sub:`N`\ 2-reaction of chloromethane
    with a flouride anion in the gas-phase and in methanol (|eps| = 32) between
@@ -529,7 +562,7 @@ Actication Energies
 Rearrangement and dimerization reactions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. admonition:: Exercise 5.1
+.. admonition:: Exercise 6.1
 
    Estimate the activation energy for the Claisen rearrangement of allyl-vinyl ether.
    Estimate the activation energy for the dimerization of cyclopentadiene (Diels-Alder).
@@ -590,7 +623,7 @@ Noncovalent Interactions
 Noble Gas |mult| |mult| |mult| Methane
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. admonition:: Exercise 6.1
+.. admonition:: Exercise 7.1
 
    Calculate potential energy curves of the "weak" interactions between the noble gases Ar or Kr and methane.
 
@@ -620,7 +653,7 @@ Noble Gas |mult| |mult| |mult| Methane
          -1.95152040635065      0.00000000000000     -2.75977586481614      h   
       $end
 
-   Use the same script as in exercise 4.1 and adopt it to this task. The loop should now
+   Use the same script as in exercise 5.1 and adopt it to this task. The loop should now
    work for distances from 4.5 to 15 Bohr and the stepsize should be 0.25 Bohr.
    You also have to modify the directory names. For the B-LYP-D3/def2-QZVP calculations
    use the following ``cefine`` call:
@@ -658,7 +691,7 @@ Spectroscopy
 IR-Spectrum of 1,4-Benzoquinone
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. admonition:: Exercise 7.1
+.. admonition:: Exercise 8.1
 
    Calculate the IR-spectrum of 1,4-Benzoquinone using
    DFT and HF, and compare the results to the experimental
@@ -695,7 +728,7 @@ IR-Spectrum of 1,4-Benzoquinone
 The Color of Indigo
 ~~~~~~~~~~~~~~~~~~~
 
-.. admonition:: Exercise 7.2
+.. admonition:: Exercise 8.2
 
    Calculate the color of indigo with three different methods:
    time-dependent Hartree-Fock (TD-HF) and
@@ -770,7 +803,7 @@ segmented contracted basis sets otimized for the calculation of NMR shieldlings.
          5       H           31.095         13.580
          6       H           31.120         13.593
 
-.. admonition:: Exercise 7.3
+.. admonition:: Exercise 8.3
 
    Calculate the :sup:`13`\ C-NMR chemical shifts |delta| for a number of organic compounds
    and compare the results to experimental data. In addition,
@@ -836,37 +869,4 @@ segmented contracted basis sets otimized for the calculation of NMR shieldlings.
    .. hint::
 
       The NMR chemical shielding calculations for **H** and **I** may be time consuming, consider to run them over night.
-
-Basis Set Convergence
----------------------
-
-Formic Acid Dimer
-~~~~~~~~~~~~~~~~~
-
-.. admonition:: Exercise 8.1
-
-   Investigate the basis set convergence behavior of different methods
-   for the formic acid dimer.
-
-**Approach**
-
-1. Create geometries for the formic acid dimer and monomer and optimize them
-   on the TPSS-D3/def2-TZVP level of theory.
-
-2. Calculate the dimerization energy with HF, TPSS-D3 and MP2 employing the
-   cc-pVXZ (X = D, T, Q) basis sets and their augmented counterparts (aug-cc-pVXZ).
-
-3. Tabulate your results and plot the total energies versus the cardinal number
-   of the basis set for each method (use *e.g.* ``xmgrace`` or ``gnuplot``).
-
-4. Discuss your findings with respect to the BSSE and BSIE. Which methods can
-   be considered as converged towards the basis set limit when used with a
-   quadruple-|zeta| basis?
-
-.. hint::
-
-   - The calculations with quadruple-|zeta| basis can be quite time consuming. Be sure
-     to use the correct symmetry.
-
-   - Remember that you get HF results for free when doing MP2.
 
