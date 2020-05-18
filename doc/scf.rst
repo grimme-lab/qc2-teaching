@@ -569,6 +569,24 @@ Modify the provided ``bash`` script to calculate a dissociation curve:
    1. The above script only contains dummies and can be executed without performing
       a calculation. Perform such a dry-run to understand how the script is working.
    2. Modify it to match your program and plot the resulting dissociation curve.
+   
+.. note::
+
+   In case the script exits an error message like
+
+   .. code-block:: text
+
+      script.bash: Zeile 34: printf: 1.4: Ungültige Zahl.
+      script.bash: Zeile 34: printf: 5.0: Ungültige Zahl.
+      Scanning from 1,000 Bohr to 5,000 Bohr in 37 steps
+      
+   your language settings might be set to something other then English (in this case German).
+   To overwrite the localisation settings run the script with
+   
+   .. code-block:: text
+
+      LC_NUMERIC=en_US.UTF-8 bash script.bash
+
 
 Properties
 ----------
