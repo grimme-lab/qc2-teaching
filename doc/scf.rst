@@ -628,7 +628,7 @@ where *K*\ :sub:`AB` is given by
 .. math::
 
    K_{AB} = \left(\frac{2\alpha\beta}{(\alpha+\beta)\pi}\right)^{\frac34}
-   \exp[-\alpha\beta/(\alpha+\beta)R^2_{AB}]
+   \exp[-\alpha\beta/(\alpha+\beta)\cdot R^2_{AB}]
 
 Note that the norming constants of the Gaussians have been absorbed into the
 contraction coefficients already.
