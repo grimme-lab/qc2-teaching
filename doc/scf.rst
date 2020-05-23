@@ -715,7 +715,7 @@ iteration. Choose *η* to get smooth, fast convergence.
 
    1. Optimize the geometry of HeH\ :sup:`+` in a minimal basis set.
    2. Optimize the Slater exponents of Be and H\ :sub:`2` (*R*:sub:`HH` = 1.4 Bohr)
-      2n a full double-ζ basis set.
+      in a full double-ζ basis set.
       Compare to energies for the est. HF basis set limit:
 
       =========== ===================
