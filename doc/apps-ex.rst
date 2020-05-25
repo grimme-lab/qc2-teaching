@@ -94,6 +94,9 @@ Multireference Methods
 
 5. Plot the curves relative to the energies of the individual atoms and discuss your results
    (particularly the energies at large distances).
+   
+.. hint::
+   Have a closer look at the UHF dissociation curve. Does it look as you would expect it? Try to explain the "strange" behavior in terms of symmetry breaking.   
 
 Carbenes
 ~~~~~~~~
@@ -721,9 +724,8 @@ IR-Spectrum of 1,4-Benzoquinone
 
 .. hint::
 
-   This exercise contains a small, technical "trap" when
-   setting up the calculations. Try to avoid it and contact
-   the lab assistant if you obtain imaginary frequencies.
+   If you obtain imaginary frequencies, try to start the geometry optimization from a slightly distorted structure.
+   Check if the imaginary frequencies vanish.
 
 The Color of Indigo
 ~~~~~~~~~~~~~~~~~~~
