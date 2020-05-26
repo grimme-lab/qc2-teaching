@@ -2,8 +2,8 @@
 Recommendations
 ================
 
-X-Server or How to make your graphical connection work
-========================================================
+X-Server or How to make your graphical connection work (optional)
+====================================================================
 Sometimes it is easier to directly have a look at strucutres or plots, instead of copying everything to your local computer. Therefore, we recommend an application that enables you to open graphical interfaces on the CIP Pool computers in the Mulliken Center and see the opened windows on your home computer. For anyone, who is interested, just google "X-Server connection windows linux" or some similar combination and try to install this on your own. 
 For all others: Install `Xming <https://xming.en.softonic.com/>`_, a free Windows stand-alone program, and follow the setup there. Afterward, always ensure, that ``Xming`` is running, when you open a shell and try to open some visualization software. For that, you only have to start ``Xming`` (press the Windows button, type ``Xming`` and press enter), then the ``Xming`` symbol will appear at your taskbar. 
 Now open a shell and type:
