@@ -25,6 +25,6 @@ This is the guide to the practical course for QC2.
    :maxdepth: 3
    :caption: Applications
 
-   recommondations_application-part
+   recommendations_application-part
    apps-setup
    apps-ex
