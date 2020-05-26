@@ -105,4 +105,4 @@ Check you *.bashrc* of your local Linux distribution and add ``export DISPLAY=lo
 
 [2] `<https://avogadro.cc/>`_
 
-[3] `<https://avogadro.cc/>`_
+[3] `<http://cheminf.cmbi.ru.nl/molden/>`_
