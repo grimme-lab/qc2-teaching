@@ -18,7 +18,7 @@ If you now want to login to a computer at the Mulliken Center, you have to enabl
 .. code-block:: none
 
    ssh -Y $user@ssh5.thch.uni-bonn.de
-   ssh -Y /path/to/local/computer
+   ssh -Y /path/to/MCTC/computer
 
 Without the *-Y*, the graphical connection will not work. 
 
