@@ -98,7 +98,7 @@ Check you *.bashrc* of your local Linux distribution and add ``export DISPLAY=lo
 +------------+--------------+--------------------------------------------+-----------+
 | molden     | local / MCTC | `[3] <http://cheminf.cmbi.ru.nl/molden/>`_ | no        |
 +------------+--------------+--------------------------------------------+-----------+
-| gnuplot    | MCTC         | [-]                                        | no        |
+| gnuplot    | MCTC         | [-]                                        | yes       |
 +------------+--------------+--------------------------------------------+-----------+
 
 [1] `<https://xming.en.softonic.com>`_
