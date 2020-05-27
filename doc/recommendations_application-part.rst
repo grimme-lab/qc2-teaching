@@ -92,17 +92,11 @@ Check you *.bashrc* of your local Linux distribution and add ``export DISPLAY=lo
 +------------+--------------+--------------------------------------------+-----------+
 | Program    | local / MCTC | Links (if local installation needed)       | optional? |
 +============+==============+============================================+===========+
-| Xming      | local        | `[1] <https://xming.en.softonic.com>`_     | yes       |
+| Xming      | local        | `<https://xming.en.softonic.com>`_         | yes       |
 +------------+--------------+--------------------------------------------+-----------+
-| avogadro   | local / MCTC | `[2] <https://avogadro.cc/>`_              | no        |
+| avogadro   | local / MCTC | `<https://avogadro.cc/>`_                  | no        |
 +------------+--------------+--------------------------------------------+-----------+
-| molden     | local / MCTC | `[3] <http://cheminf.cmbi.ru.nl/molden/>`_ | no        |
+| molden     | local / MCTC | `<http://cheminf.cmbi.ru.nl/molden/>`_     | no        |
 +------------+--------------+--------------------------------------------+-----------+
 | gnuplot    | MCTC         | [-]                                        | yes       |
 +------------+--------------+--------------------------------------------+-----------+
-
-[1] `<https://xming.en.softonic.com>`_
-
-[2] `<https://avogadro.cc/>`_
-
-[3] `<http://cheminf.cmbi.ru.nl/molden/>`_
