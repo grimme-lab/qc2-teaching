@@ -206,139 +206,79 @@ Many programs may cause many problems, therefore you should follow some simple g
 Short ``cefine`` Reference
 --------------------------
 
-You can always call a complete list of options with:
+In general, you can list all desired options for ``cefine`` after the program command:
+
+.. code-block:: none
+
+   cefine <option1> <option2> ...
+
+You can always call a complete list of options with the ``-h`` option:
 
 .. code-block:: none
 
    cefine -h
 
-Computational Methods
-~~~~~~~~~~~~~~~~~~~~~
+The following table lists the most important ``cefine`` options that are intersting for this course.
 
-.. code-block:: none
-
-   -func <fname>
-
-DFT with functional ``<fname>``
-
-.. code-block:: none
-
-   -hf
-
-Hartree-Fock
-
-.. code-block:: none
-
-   -mp2
-
-MP2 (also sets up a HF calculation)
-
-.. code-block:: none
-
-   -cc
-
-CCSD(T) (also sets up a HF calculation)
-
-.. code-block:: none
-
-   -d3
-
-Use DFT-D3 (DFT with added dispersion).
-
-.. code-block:: none
-
-   -novdw
-
-Disables the dispersion contribution.
-
-.. code-block:: none
-
-   -cosmo <epsilon>
-
-Cosmo continuum solvation with a given dielectric constant ``<epsilon>``
-
-Basis set and RI-Approximation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: none
-
-   -bas <basname>
-
-Use basis ``<basname>``.
-
-.. code-block:: none
-
-   -ri / -nori
-
-Use RI approximation (program ``ridft``, default) / use no RI approximation (program ``dscf``).
-
-Symmetry, Optimization, Convergence
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: none
-
-   -sym <pointgroup>
-
-Use ``<pointgroup>`` symmetry (if the symmetry is not found, it will be created by adding images of the
-input coordinates). Normally, ``cefine`` finds the symmetry by itself and this is not needed.
-
-.. code-block:: none
-
-   -noopt
-
-Special options for single point calculations. Does not call the definition of internal redundant coordinates 
-(which can cause problems for *e.g.* linear molecules).
-
-.. code-block:: none
-
-   -abel
-
-Reduce the symmetry used to an abelian symmetry (max. D\ :sub:`2h`).
-
-.. code-block:: none
-
-   -opt
-
-Used to set up an MP2-optimization.
-
-.. code-block:: none
-
-   -ts
-
-Sets up a transition state search.
-
-.. code-block:: none
-
-   -scfconv <integer>
-
-Sets SCF energy convergence criterion to :math:`10^{-{\tt <integer>}}`.
-
-.. code-block:: none
-
-   -grid <griddef>
-
-Sets the DFT integration grid to ``<griddef>``.
-
-Electronic Information
-~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: none
-
-   -uhf <integer>
-
-Open shell calculation with ``<integer>`` unpaired electrons.
-
-.. code-block:: none
-
-   -chrg <integer>
-
-Used to define the molecular charge as ``<integer>``.
++------------------------+---------------------------------------------------------------------------------------+
+| Command                | Functionality                                                                         |
++========================+=======================================================================================+
+| *Computational Methods*                                                                                        |
++------------------------+---------------------------------------------------------------------------------------+
+| ``-func <fname>``      | DFT calculation with the ``<fname>`` functional                                       |
++------------------------+---------------------------------------------------------------------------------------+
+| ``-hf``                | HF calculation                                                                        |
++------------------------+---------------------------------------------------------------------------------------+
+| ``-mp2``               | MP2 calculation (also sets up HF calculation)                                         |
++------------------------+---------------------------------------------------------------------------------------+
+| ``-cc``                | CCSD(T) calculation (also sets up HF calculation)                                     |
++------------------------+---------------------------------------------------------------------------------------+
+| ``-d3``                | DFT-D3 calculation (DFT with added dispersion)                                        |
++------------------------+---------------------------------------------------------------------------------------+
+| ``-novdw``             | Disables the dispersion contribution.                                                 |
++------------------------+---------------------------------------------------------------------------------------+
+| ``-cosmo <epsilon>``   | COSMO continuum solvation with a given dielectric constant ``<epsilon>``              |
++------------------------+---------------------------------------------------------------------------------------+
+| *Basis Set and RI Approximation*                                                                               |
++------------------------+---------------------------------------------------------------------------------------+
+| ``-bas <bname>``       | Use the ``<bname>`` basis set.                                                        |
++------------------------+---------------------------------------------------------------------------------------+
+| ``-ri`` / ``-nori``    | | Use RI approximation (program ``ridft``, default) / use no RI approximation         |
+|                        | | (program dscf).                                                                     |
++------------------------+---------------------------------------------------------------------------------------+
+| *Symmetry, Optimization, Convergence*                                                                          |
++------------------------+---------------------------------------------------------------------------------------+
+| ``-sym <pointgroup>``  | | Use ``<pointgroup>`` symmetry (if the symmetry is not found, it will be created     |
+|                        | | by adding images of the input coordinates). Normally, ``cefine`` finds the symmetry |
+|                        | | by itself and this is not needed.                                                   |
++------------------------+---------------------------------------------------------------------------------------+
+| ``-noopt``             | | Special options for single point calculations. Does not call the definition of      |
+|                        | | internal redundant coordinates (which can cause problems *e.g.* for linear          |
+|                        | | molecules).                                                                         |
++------------------------+---------------------------------------------------------------------------------------+
+| ``-abel``              | Reduce the symmetry used to an abelian symmetry (max. D\ :sub:`2h`)                   |
++------------------------+---------------------------------------------------------------------------------------+
+| ``-opt``               | Used to set up an MP2-optimization.                                                   |
++------------------------+---------------------------------------------------------------------------------------+
+| ``-ts``                | Sets up an transistion state search.                                                  |
++------------------------+---------------------------------------------------------------------------------------+
+| ``-scfconv <integer>`` | Sets SCF energy convergence criterion to :math:`10^{-{\tt <integer>}}`.               |
++------------------------+---------------------------------------------------------------------------------------+
+| ``-grid <griddef>``    | Sets the DFT integration grid to ``<griddef>``.                                       |
++------------------------+---------------------------------------------------------------------------------------+
+| *Electronic Information*                                                                                       |
++------------------------+---------------------------------------------------------------------------------------+
+| ``-uhf <integer>``     | Open shell calculation with ``<integer>`` unpaired electrons.                         |
++------------------------+---------------------------------------------------------------------------------------+
+| ``-chrg <integer>``    | Used to define the molecular charge as ``<integer>``.                                 |
++------------------------+---------------------------------------------------------------------------------------+
 
 .. _Short ORCA Reference:
 
 Short ORCA Reference
 --------------------
 
+You can find a rough summary of the most important ORCA keywords in the following table.
 For a complete reference, consult the manual at https://orcaforum.kofo.mpg.de/.
 
 +----------+------------------------------------------------------------+
