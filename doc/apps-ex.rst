@@ -81,13 +81,9 @@ Multireference Methods
 
       orca *.inp > *.out
 
-3. Plot the resulting potential energy curves using ``xmgrace`` or ``gnuplot``. To do 
-   this, delete the first line in the files ``<filename>.trj*.dat`` and
-   read them directly with ``xmgrace`` (find out which file is the right one yourself):
-
-   .. code-block:: none
-
-      xmgrace trj*.dat
+3. Plot the resulting potential energy curves using *e.g.* with ``gnuplot`` (see section
+   :ref:`Plotting`). To do so, delete the first line in the files ``<filename>.trj*.dat``
+   to read them (find out which file is the right one yourself).
 
 4. Calculate the energies for hydrogen and fluorine atoms for all given methods.
    Which methods will yield the identical energies for the hydrogen atom?
@@ -125,9 +121,10 @@ specified otherwise we will use the RI approximation throughout.
       ...
       $end
 
-   You can either create the files by hand or use the program ``molden``
-   for this purpose. The program ``molden`` uses |angst| as unit, but the unit for the ``coord`` file
-   has to be Bohr (atomic units). To convert a \*.xyz file into a coord file you can use the command
+   You can either create the files by hand or use the program ``Avogadro`` for this purpose
+   (see section :ref:`Software for visualization of molecules`). ``Avogadro`` uses
+   |angst| as unit, but the unit for the ``coord`` file has to be Bohr (atomic units). To
+   convert a \*.xyz file into a coord file you can use the command
 
    .. code-block:: none
 
@@ -145,44 +142,53 @@ specified otherwise we will use the RI approximation throughout.
 
 2. **Methylene**: Optimize the geometries of the singlet and the triplet state
    with the given methods (HF, TPSS, B3LYP, PW6B95, MP2) and the basis set def2-TZVP.
-   Note down the HCH-angle and total energies for each method, as well as the singlet-triplet
-   splitting (:math:`\Delta E_{S-T} = E_{singlet} - E_{triplet}`). In the case of CCSD(T), do a singlepoint
-   calculation on the MP2 geometries.
-   The experimental value for the splitting is 9.0 kcal\ |mult|\ mol\ :sup:`-1`. The experimentally found angles are
-   102.4° for the singlet and 135.5° for the triplet.
+   The following command line is an example and calls ``cefine`` with the correct
+   options for a B3LYP/def2-TZVP calculation of the triplet (= 2 unpaired electrons) state.
 
-3. **p-Benzyne**: Repeat the same calculations for *p*-benzyne. The experimental value
-   for the splitting is -4.2 kcal\ |mult|\ mol\ :sup:`-1`.
+   .. code-block:: none
 
-4. Discuss your findings and compare them to the experiment.
+      cefine -bas def2-TZVP -func b3-lyp -uhf 2 -novdw
 
-.. hint::
+   | To generate the input for the other calculations, please look at the table provided in section :ref:`Short cefine reference`. Add the ``-opt`` option for setting up the ``-mp2`` calculation.
+   | Geometry optimizations (DFT, HF) are done with the program ``jobex``:
 
-   - Command line option for a triplet state in cefine: ``-uhf 2`` (``uhf <number of unpaired electrons>``)
-   - To calculate without a dispersion correction add ``-novdw`` to your ``cefine`` call, which disables the default dispersion correction within the TURBOMOLE input.
-   - Method selection in cefine: ``-cc`` (CCSD(T)), ``-mp2`` (MP2), ``-hf`` (HF), ``-func b3-lyp/pw6b95/tpss``
-     for B3-LYP, PW6B95 or TPSS.
-   - Geometry optimizations (DFT, HF) are done with the program ``jobex``.
-   - For MP2 geometry optimizations, set up your calculation with the additional ``cefine`` keyword ``-opt`` and run ``jobex -level cc2``.
-   - Energies after geometry optimizations can be found in the files ``job.last``. HF and DFT energies
-     for each SCF-cycle are additionally written in the file ``energy``.
-   - For CCSD(T) (singlepoint calculation on MP2 geometries) run first ``ridft > ridft.out`` (for the HF-SCF),
-     and then ``ccsdf12 > ccsdf12.out`` (for the correlated calculation).
-     The energies can be found in ``ccsdf12.out``.
-   - In order to measure the angles, use either ``coordgl`` or ``molden``:
+   .. code-block:: none
 
-     .. code-block:: none
+      jobex > jobex.out
 
-        tm2molden
-        molden molden.input
+   Note that for MP2 geometry optimizations, you have to add the ``-level cc`` option.
+   Energies after geometry optimizations can be found in the file ``job.last``. HF and DFT
+   energies for each SCF-cycle are additionally written in the file ``energy``.
+   In the case of CCSD(T), do not perform a geometry optimization, but do a sinlgepoint
+   calculation on the MP2 optimized geometries. Before performing the actual CCSD(T)
+   calculation, you have do run a HF-SCF:
 
-     or with a small TURBOMOLE script called ``bend``:
+   .. code-block:: none
+
+      ridft > ridft.out
+      ccsdf12 > ccsdf12.out
+
+   The energies can then be found in ``ccsdf12.out``.
+
+3. In order to measure the angles of the optimized structures, you can use ``Avogadro``
+   or a small TURBOMOLE script called ``bend``:
 
      .. code-block:: none
 
         bend i j k
 
-     with atom numbers ``i,j,k``.
+   | with atom numbers ``i``, ``j``, ``k``.
+   | Note down the HCH-angle and total energies for each method, as well as the singlet-triplet splitting (:math:`\Delta E_\text{S-T} = E_\text{singlet} - E_\text{triplet}`). The experimental value for the splitting is 9.0 kcal\ |mult|\ mol\ :sup:`-1`. The experimentally found angles are 102.4° for the singlet and 135.5° for the triplet.
+
+4. **p-Benzyne**: Repeat the same calculations for *p*-benzyne. The experimental value
+   for the splitting is -4.2 kcal\ |mult|\ mol\ :sup:`-1`.
+
+5. Discuss your findings and compare them to the experiment.
+
+.. hint::
+
+   Method selection in cefine: ``-func b3-lyp/pw6b95/tpss`` (B3LYP/PW6B95/TPSS), ``-hf`` (HF),
+   ``-mp2`` (MP2), ``-cc`` (CCSD(T)).
 
 Basis Set Convergence
 ---------------------

@@ -82,22 +82,38 @@ pipe the output into a file, *e.g.*:
 
    ridft > ridft.out &
 
-The most important scripts are:
+The most important scripts that come along with the TURBOMOLE program package are listed
+in the following table.
 
-- ``ridft``: DFT and HF SCF calculations with the RI-approximation
-- ``dscf``:  DFT and HF SCF calculations without the RI-approximation 
-- ``ricc2``: Module for correlated WF methods (MP2, CCSD(T), ...)
-- ``rdgrad``, ``grad``: Calculate gradients (with and without RI)
-- ``aoforce``: Calculate analytical vibrational frequencies
-- ``statpt``: Coordinate/Hessian update for stationary point searches
-- ``jobex``: Script for geometry optimizations 
-
-And for visualization purposes:
-
-- ``eiger``: Show the orbital energies and the HOMO-LUMO gap
-- ``x2t``: Convert a \*.xyz file to coord
-- ``t2x``: Convert a coord file to \*.xyz
-- ``tm2molden``: Generate a molden input
++----------------------+----------------------------------------------------------+
+| TURBOMOLE script     | Functionality                                            |
++======================+==========================================================+
+| *Most important scripts for calculations*                                       |
++----------------------+----------------------------------------------------------+
+| ``ridft``            | DFT and HF SCF calculations with the RI-approximation    |
++----------------------+----------------------------------------------------------+
+| ``dscf``             | DFT and HF SCF calculations without the RI-approximation |
++----------------------+----------------------------------------------------------+
+| ``ricc2``            | Module for correlated WF methods (MP2, CCSD(T), ...)     |
++----------------------+----------------------------------------------------------+
+| ``rdgrad``, ``grad`` | Calculate gradients (with and without RI)                |
++----------------------+----------------------------------------------------------+
+| ``aoforce``          | Calculate analytical vibrational frequencies             |
++----------------------+----------------------------------------------------------+
+| ``statpt``           | Coordinate/Hessian update for stationary point searches  |
++----------------------+----------------------------------------------------------+
+| ``jobex``            | Script for geometry optimizations                        |
++----------------------+----------------------------------------------------------+
+| *Scripts for visualization purposes*                                            |
++----------------------+----------------------------------------------------------+
+| ``eiger``            | Show the orbital energies and the HOMO-LUMO gap          |
++----------------------+----------------------------------------------------------+
+| ``x2t``              | Convert a \*.xyz file to coord                           |
++----------------------+----------------------------------------------------------+
+| ``t2x``              | Convert a coord file to \*.xyz                           |
++----------------------+----------------------------------------------------------+
+| ``tm2molden``        | Generate a molden input                                  |
++----------------------+----------------------------------------------------------+
 
 .. important:: Each TURBOMOLE calculation needs its own directory.
 

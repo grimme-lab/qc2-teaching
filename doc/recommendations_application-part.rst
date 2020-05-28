@@ -22,12 +22,15 @@ If you now want to login to a computer at the Mulliken Center, you have to enabl
 
 Without the *-Y*, the graphical connection will not work. 
 
+.. _Software for visualization of molecules:
 
 Software for visualization of molecules
 ========================================
 A quantum chemical calculation always needs a structure as input (and will often result in a modified structure as output), so you need some kind of visualization program to create the desired molecule or to look at it. We recommend the use of the program `Avogadro <https://avogadro.cc/>`_ to generate and manipulate molecules. 
 Next, you will need the program `molden <http://cheminf.cmbi.ru.nl/molden/>`_ for some exercises. You can also use ``molden`` for generation and manipulation of molecules, but we recommend the use of ``Avogadro``. 
 Of course you can also use any other visualization software you know. Please remember that for some exercises it is important to keep the atom count during the manipulation of the molecule geometry, which some of the more common programs do not do (``Avogadro`` keeps it). 
+
+.. _Plotting:
 
 Plotting
 ==============
