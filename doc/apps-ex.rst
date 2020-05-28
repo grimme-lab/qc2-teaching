@@ -256,14 +256,14 @@ Reaction Enthalpies of Gas-Phase Reactions
 
    .. code-block:: none
 
-      aoforce > force.out
+      aoforce > aoforce.out
 
 3. Then, calculate the thermal corrections to :math:`\Delta H_{298.15}` with the program
    ``thermo``. Pipe the output into a separate file, *e.g.*:
    
    .. code-block:: none
    
-      ``thermo > thermo.out``.
+      thermo > thermo.out
 
    ``thermo`` needs a ``.thermorc`` input file from your home directory. Create this
    file using the following content:

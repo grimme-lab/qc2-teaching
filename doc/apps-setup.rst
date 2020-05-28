@@ -6,6 +6,57 @@ Chemistry programs that will be used in this practical course.
 
 .. contents::
 
+Setting up the Software
+-----------------------
+
+In order to gain access to the needed software packages, you need to
+make some changes to your system. The ``.bashrc`` file located
+in your home directory is sourced every time you open a new shell.
+While you can directly execute any program by giving the full path,
+it is more convenient to tell the system where to look for the
+binaries by saving the location in the ``$PATH`` variable.
+Additionally, some programs need global variables. All those
+are usually set in the ``.bashrc``. In order to gain access to all the 
+needed software, add the following lines to your ``.bashrc``:
+
+.. code-block:: none
+   :linenos:
+
+   # AKbin
+   export PATH=/home/abt-grimme/AK-bin:$PATH
+   export PATH=/home/$USER/bin:$PATH
+
+   # TURBOMOLE
+   export TURBODIR=/software/turbomole702
+   export PATH=$TURBODIR/scripts:$PATH
+   export PATH=$TURBODIR/bin/`sysname`:$PATH
+
+   # ORCA
+   ORCABINPATH=/home/software/orca-4.0.0
+   PATH=$ORCABINPATH:$PATH
+
+   # XTB
+   export OMP_NUM_THREADS=2
+   export MKL_NUM_THREADS=2
+   export OMP_STACKSIZE=500m
+   ulimit -s unlimited
+
+Be sure to create a directory called ``bin`` in your home directory by typing:
+
+.. code-block:: none
+
+   mkdir ~/bin
+.. export TURBODIR=/home/abt-grimme/TURBOMOLE.7.0.2
+
+.. important:: All changes apply to shells opened afterwards.
+
+If you want to apply the changes to your current shell, you 
+need to run:
+
+.. code-block:: none
+
+   source ~/.bashrc
+
 Program Packages
 ----------------
 
@@ -52,6 +103,19 @@ And for visualization purposes:
 
 ``cefine``
 ~~~~~~~~~~
+
+.. important::
+
+   In this course, we will only use the current version of the below mentioned program
+   called ``cefine_current``, but we will call it ``cefine`` in the following text.
+   You can either type ``cefine_current`` instead everytime ``cefine`` is mentioned or
+   (the recommended procedure) set up a symlink via typing the following line:
+
+   .. code-block:: none
+
+      ln -s /home/abt-grimme/AK-bin/cefine_current ~/bin/cefine
+
+   Now you can type the lines given in this script as they appear.
 
 ``cefine`` is a command line tool that prepares the necessary input files
 for TURBOMOLE. By default, it reads the ``coord`` file (the only file you have to
@@ -111,57 +175,6 @@ The input file is generally structured as follows:
 
 A short reference of ORCA keywords can be found in the section :ref:`Short ORCA reference`.
 Further information is accesible from: https://sites.google.com/site/orcainputlibrary/.
-
-Setting up the Software
------------------------
-
-In order to gain access to the needed software packages, you need to
-make some changes to your system. The ``.bashrc`` file located
-in your home directory is sourced every time you open a new shell.
-While you can directly execute any program by giving the full path,
-it is more convenient to tell the system where to look for the
-binaries by saving the location in the ``$PATH`` variable.
-Additionally, some programs need global variables. All those
-are usually set in the ``.bashrc``. In order to gain access to all the 
-needed software, add the following lines to your ``.bashrc``:
-
-.. code-block:: none
-   :linenos:
-
-   # AKbin
-   export PATH=/home/abt-grimme/AK-bin:$PATH
-   export PATH=/home/$USER/bin:$PATH
-
-   # TURBOMOLE
-   export TURBODIR=/software/turbomole702
-   export PATH=$TURBODIR/scripts:$PATH
-   export PATH=$TURBODIR/bin/`sysname`:$PATH
-
-   # ORCA
-   ORCABINPATH=/home/software/orca-4.0.0
-   PATH=$ORCABINPATH:$PATH
-
-   # XTB
-   export OMP_NUM_THREADS=2
-   export MKL_NUM_THREADS=2
-   export OMP_STACKSIZE=500m
-   ulimit -s unlimited
-
-Be sure to create a directory called ``bin`` in your home directory by typing:
-
-.. code-block:: none
-
-   mkdir ~/bin
-.. export TURBODIR=/home/abt-grimme/TURBOMOLE.7.0.2
-
-.. important:: All changes apply to shells opened afterwards.
-
-If you want to apply the changes to your current shell, you 
-need to run:
-
-.. code-block:: none
-
-   source ~/.bashrc
 
 General Recommendations
 -----------------------
