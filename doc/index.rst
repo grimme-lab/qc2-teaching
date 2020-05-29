@@ -20,3 +20,11 @@ This is the guide to the practical course for QC2.
    programming
    scf
    make
+
+.. toctree::
+   :maxdepth: 3
+   :caption: Applications
+
+   recommendations_application-part
+   apps-setup
+   apps-ex
