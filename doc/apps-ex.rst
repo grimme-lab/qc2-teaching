@@ -599,7 +599,7 @@ S\ :sub:`N`\ 2-Reaction
 Activation Energies
 -------------------
 
-Rearrangement and dimerization reactions
+Rearrangement and Dimerization Reactions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. admonition:: Exercise 6.1
