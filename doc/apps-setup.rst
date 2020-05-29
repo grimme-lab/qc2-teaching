@@ -117,8 +117,8 @@ in the following table.
 
 .. important:: Each TURBOMOLE calculation needs its own directory.
 
-``cefine``
-~~~~~~~~~~
+cefine
+~~~~~~
 
 .. important::
 
@@ -191,33 +191,6 @@ The input file is generally structured as follows:
 
 A short reference of ORCA keywords can be found in the section :ref:`Short ORCA reference`.
 Further information is accesible from: https://sites.google.com/site/orcainputlibrary/.
-
-General Recommendations
------------------------
-
-1. Work on the exercises in the given successive order. In the first exercises you will learn some basic
-   routines and procedures which you will need again later but which will not be explained once more.
-        
-2. Read the whole exercise before you start to working on it. Often technical hints are given at the end.
-  
-3. Programs can crash. So check your outputs as soon as possible to make sure your calculations actually did work.
-   And sometimes preparing the input and running the program is much faster than finding the right number
-   in the output. 
-        
-4. Prepare an LibreOffice sheet (or similar) with a collection of your results. Checking them this way is much easier for us.
-        
-Trouble shooting
-~~~~~~~~~~~~~~~~
-
-Many programs may cause many problems, therefore you should follow some simple guidelines to identify their origins:
-
-- "Crap in, crap out": Always check your input (input structures, file formats, input file, chosen keywords etc.) before you start a calculation.
-- If a calculation stops abnormally check the output (*e.g.* orca.out, job.last etc.) and error files first. Always make sure that you pipe all needed output data into files if its not done by default.
-- Read your output and error files carefully. Especially check the last lines of the output file for error messages that give a hint what may caused the problem.
-- If you identified the problem (maybe you have to start at the first point again), check the program manual for additional options or trouble shooting help, fix the problem and restart your calculation.
-- If the calculations still stops abnormally and all other possibilities and options are exhausted, prepare a detailed description of the problem, the output/error messages and contact one of the tutors.
-
-.. _Short cefine reference:
 
 Short ``cefine`` Reference
 --------------------------
