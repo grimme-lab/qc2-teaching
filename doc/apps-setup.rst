@@ -241,7 +241,8 @@ The following table lists the most important ``cefine`` options that are interst
 +========================+=======================================================================================+
 | *Computational Methods*                                                                                        |
 +------------------------+---------------------------------------------------------------------------------------+
-| ``-func <fname>``      | DFT calculation with the ``<fname>`` functional                                       |
+| ``-func <fname>``      | | DFT calculation with the ``<fname>`` functional. Note that the BYLP, B3YLP and      |
+|                        | | B2PLYP functionals are named ``b-lyp``, ``b3-lyp`` and ``b2-plyp``, respectively.   |
 +------------------------+---------------------------------------------------------------------------------------+
 | ``-hf``                | HF calculation                                                                        |
 +------------------------+---------------------------------------------------------------------------------------+

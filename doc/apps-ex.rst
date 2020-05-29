@@ -79,7 +79,7 @@ Multireference Methods
    
    .. code-block:: none
 
-      orca *.inp > *.out
+      orca <file>.inp > <file>.out
 
 3. Plot the resulting potential energy curves using *e.g.* with ``gnuplot`` (see section
    :ref:`Plotting`). To do so, delete the first line in the files ``<filename>.trj*.dat``
@@ -203,18 +203,28 @@ Formic Acid Dimer
 
 **Approach**
 
-1. Create geometries for the formic acid dimer and monomer and optimize them
-   on the TPSS-D3/def2-TZVP level of theory.
+1. Create separate directories for the formic acid dimer and monomer and set up geometry
+   optimizations on the TPSS-D3/def2-TZVP level of theory. To do so, create structures
+   using *e.g.* ``Avogadro`` and convert them to ``coord`` files. Prepare the calculations
+   and start the optimizations the same way as in exercise 1.2. Keep in mind the ``-d3``
+   option for **DFT** geometry optimizations and energy calculations:
 
-2. Calculate the dimerization energy with HF, TPSS-D3 and MP2 employing the
-   cc-pVXZ (X = D, T, Q) basis sets and their augmented counterparts (aug-cc-pVXZ).
+   .. code-block:: none
+
+      cefine -bas def2-TZVP -func tpss -d3
+      jobex > jobex.out
+   
+2. Calculate the dimerization energy (energy difference of one dimer and two monomers)
+   with HF, TPSS-D3 and MP2 employing the cc-pVXZ (X = D, T, Q) basis sets and their
+   augmented counterparts (aug-cc-pVXZ). Refer to the table of ``cefine`` options given
+   in section :ref:`Short cefine reference`.
 
 3. Tabulate your results and plot the total energies versus the cardinal number
-   of the basis set for each method (use *e.g.* ``xmgrace`` or ``gnuplot``).
+   of the basis set for each method (*e.g.* with ``gnuplot``).
 
-4. Discuss your findings with respect to the BSSE and BSIE. Which methods can
-   be considered as converged towards the basis set limit when used with a
-   quadruple-|zeta| basis?
+4. Discuss your findings with respect to the basis set superposition error (BSSE) and
+   the basis set incompleteness (BSIE). Which methods can be considered as converged
+   towards the basis set limit when used with a quadruple-|zeta| basis?
 
 .. hint::
 
@@ -255,53 +265,52 @@ Reaction Enthalpies of Gas-Phase Reactions
 
 **Approach**
 
-1. Optimize the reactants and products using TPSS-D3/def2-TZVP (to activate the D3 dispersion correction for **DFT** geometry optimizations and energy calculations use the ``-d3`` keyword in cefine).
+1. Optimize the reactants and products using TPSS-D3/def2-TZVP (see earlier exercises
+   and section :ref:`Short cefine reference`, keep in mind the ``-d3`` option).
   
-2. In order to get the thermal corrections from energy to enthalpy at 298.15 K, do a frequency calculation first.
-   Use the program ``aoforce`` to calculate the vibrational frequencies:
+2. In order to get the thermal corrections from energy to enthalpy at 298.15 K, do a
+   frequency calculation first. Use the program ``aoforce`` to calculate the vibrational
+   frequencies in TURBOMOLE:
 
    .. code-block:: none
 
       aoforce > aoforce.out
 
 3. Then, calculate the thermal corrections to :math:`\Delta H_{298.15}` with the program
-   ``thermo``. Pipe the output into a separate file, *e.g.*:
+   ``thermo``. It needs a ``.thermorc`` input file from your home directory. Create this
+   file by typing:
+
+   .. code-block:: none
+
+      echo "0.0  298.15  1.0" > ~/.thermorc
+
+   The first number is an internal threshold, the second the temperature in Kelvin and
+   the third the scaling factor for the vibrational frequencies (1.0 for TPSS). Pipe the
+   output into a separate file, *e.g.*:
    
    .. code-block:: none
    
       thermo > thermo.out
 
-   ``thermo`` needs a ``.thermorc`` input file from your home directory. Create this
-   file using the following content:
-
-   .. code-block:: none
-      :linenos:
-
-      0.0  298.15  1.0
-
-   The first number is an internal threshold, the second the temperature in Kelvin and the third
-   the scaling factor for the vibrational frequencies (1.0 for TPSS).
-
-4. Repeat the optimization for the molecules involved in the Haber-Bosch process with MP2/def2-TZVP. Calculate the deviation of these differently
-   optimized structures by computing the root mean square deviation of the coordinates:
+4. Repeat the optimization for the molecules involved in the Haber-Bosch process with
+   MP2/def2-TZVP. Calculate the deviation of these differently optimized structures by
+   computing the root mean square deviation of the coordinates:
 
    .. code-block:: none
 
       rmsd <tpss-geometry> <mp2-geometry>
 
-5. Calculate singlepoint energies with the hybrid functional B3-LYP-D3/def2-TZVP and with MP2/def2-TZVP.
-   Use the TPSS-D3 geometries and thermal corrections to calculate the reaction enthalpies.
+5. Calculate singlepoint energies with the hybrid functional B3LYP-D3/def2-TZVP and with
+   MP2/def2-TZVP. Use the TPSS-D3 geometries and thermal corrections to calculate the
+   reaction enthalpies.
 
-6. Calculate singlepoint energies with the double hybrid B2-PLYP-D3/def2-QZVP
-   and with CCSD(T)/def2-QZVP. Use the TPSS geometries and thermal corrections to
-   calculate the reaction enthalpies.
+6. Calculate singlepoint energies with the double hybrid B2PLYP-D3/def2-QZVP and with
+   CCSD(T)/def2-QZVP. Use the TPSS geometries and thermal corrections to calculate the
+   reaction enthalpies. Keep in mind that you have to run an SCF first with ``ridft``.
+   Afterwards, use ``ricc2`` for the double-hybrid and ``ccsdf12`` for the coupled cluster
+   calculation. The energies can be found in the respective output.
 
 7. Tabulate your results and compare to the experimental values.
-
-.. hint::
-
-   In order to do a double hybrid calculation, you will need to run ``ridft`` first
-   and then ``ricc2`` subsequently. The energy can be found in the output of ``ricc2``.
 
 Heat of Formation of C\ :sub:`60` (optional)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -330,12 +339,14 @@ Heat of Formation of C\ :sub:`60` (optional)
 
       cefine -bas def2-SVP -func tpss -sym ih -d3
 
-   Defining the point group will automatically generate symmetry equivalent atoms (``-sym <point group>``, the point group is given with the corresponding Schoenflies symbol, *e.g.* ``c1``, ``c2v`` etc.).
+   Defining the point group will automatically generate symmetry equivalent atoms (the point
+   group is given with the corresponding Schoenflies symbol, *e.g.* ``c1``, ``c2v`` etc.).
 
-2. Calculate the energy of C\ :sub:`60` on TPSS/def2-SVP level without D3 corrections, use the TPSS-D3/def2-SVP optimized geometry.
+2. Calculate the energy of C\ :sub:`60` on TPSS/def2-SVP level without D3 corrections, use the
+   TPSS-D3/def2-SVP optimized geometry.
 
 3. Calculate the frequencies of C\ :sub:`60` and the thermal corrections the same way as in
-   exercise 3.1
+   exercise 3.1.
 
 4. Now, calculate the energy of a single carbon atom on the TPSS/def2-SVP
    level of theory and the thermal corrections to :math:`\Delta H_{298.15}` (use C\ :sub:`1` symmetry).
@@ -392,21 +403,20 @@ Kinetic Isotope Effect
 
    In order to find the transition state, use the following steps:
 
-   (a) Call ``cefine``:
-
-       .. code-block:: none
-
-          cefine -bas def2-TZVP -func b3-lyp -d3
+   (a) Prepare the calculation with ``cefine``. Use the B3LYP-D3/def2-TZVP level
+       of theory. Look at section :ref:`Short cefine reference` if you are unsure.
 
    (b) Consecutively, calculate energy, gradient and hessian:
 
        .. code-block:: none
 
-          ridft; rdgrad; aoforce
+          ridft > ridft.out
+          rdgrad > rdgrad.out
+          aoforce > aoforce.out
 
    (c) Verify that there is at least one, relatively large imaginary frequency
-       in the output of ``aoforce``. Then, in the control file, change the first line
-       after ``$statpt`` to:
+       in the output of ``aoforce`` (it also appears in the ``vibspectrum`` file).
+       Then, in the ``control`` file, change the first line after ``$statpt`` to:
 
        .. code-block:: none
           :linenos:
@@ -419,18 +429,22 @@ Kinetic Isotope Effect
    
        .. code-block:: none
 
-          jobex -trans
+          jobex -trans > jobex.out
 
-2. When the search is successful (``GEO_OPT_CONVERGED`` in the directory),
-   calculate the vibrational frequencies of the transition state (``aoforce``)
-   and verify that there is only one imaginary frequency. You can have a look
-   at that corresponding normal mode by calling:
+2. When the search is successful (a ``GEO_OPT_CONVERGED`` file has been created
+   in the directory), calculate the vibrational frequencies of the transition
+   state (``aoforce``) and verify that there is only one imaginary frequency.
+   You can have a look at that corresponding normal mode by calling:
 
    .. code-block:: none
 
-      tm2molden; molden molden.input
-
-   The normal modes can be visualized by clicking on "Norm. Mode" on the right side of the menu.
+      tm2molden
+    
+   Choose your desired options in the short interactive experience. You do not need
+   to pick a name for the input file or to save the MO data, the latter will make
+   the file rather large (but obviously save the frequency data). You can open the
+   resulting file (default: ``molden.input``) with ``gmolden``. The normal modes can
+   be visualized by clicking on "Norm. Mode" on the right side of the menu.
    
 3. Call the program ``thermo`` and note down the thermal corrections to enthalpy.
 
@@ -492,23 +506,22 @@ S\ :sub:`N`\ 2-Reaction
 
 **Approach**
 
-1. Calculate the energies of the reactants (one calculation for each reactant)
-   in the gas-phase and at |eps| = 32. Use the hybrid functional PW6B95
-   with a def2-TZVP basis and D3 dispersion correction. Example cefine call:
+1. Create structures and calculate the energies of the reactants (one calculation
+   for each reactant) in the gas-phase and at |eps| = 32 (methanol). Use the hybrid
+   functional PW6B95 with a def2-TZVP basis and D3 dispersion correction. Example
+   for the preparation:
 
    .. code-block:: none
 
       cefine -bas def2-TZVP -func pw6b95 -chrg -1.0 -cosmo 32.0 -d3
 
-2. To create the potential energy curves, use the shell script ``run-scan`` below.
-   The script loops over all distances. For each distance it creates a new directory,
-   calls ``cefine``, performs the constrained geometry optimization with ``jobex`` and writes
-   the electronic energy (not necessarily your final reaction energy) from the
-   ``energy`` file into a file called ``results.dat``.
-   Copy the script and the file ``template`` into a new directory and
-   create subdirectories (*e.g.* ``scan-vac`` and ``scan-cosmo``) for each potential
-   energy curve. You will have to adapt the script to your directory names.
-
+2. To create the potential energy curves, use the shell script below. The script
+   loops over all distances. For each distance it creates a new directory, calls
+   ``cefine``, performs the constrained geometry optimization and writes the electronic
+   energy (not necessarily your final reaction energy) into a file called ``results.dat``.
+   Create a new directory and cCopy and paste the script to a file named ``run-scan.sh``
+   and the template below to a file named ``template``.
+   
    .. code-block:: none
       :linenos:
 
@@ -546,7 +559,8 @@ S\ :sub:`N`\ 2-Reaction
         cd ../ 
       done
 
-   Template for the ``coord`` file:
+   Template for the ``coord`` file (the ``f`` after the atom specification tells
+   TURBOMOLE to keep the coordinates fixed for that atom):
 
    .. code-block:: none
       :linenos:
@@ -560,8 +574,19 @@ S\ :sub:`N`\ 2-Reaction
         2.00808733      0.00000000     -0.62462166  h
       $end
 
-   The ``f`` after the atom specification tells TURBOMOLE to keep the
-   coordinates fixed for that atom.
+   In order to use the script, you habe to make it executable by typing:
+
+   .. code-block:: none
+
+      chmod 744 run-scan.sh
+
+   Create subdirectories (*e.g.* ``scan-vac`` and ``scan-cosmo``) for each potential
+   energy curve. You will have to adapt the script to your directory names.
+   Execute the script by typing:
+
+   .. code-block:: none
+
+      ./run-scan.sh
 
 3. Plot the two curves together (normalize the curves reasonably) and discuss the
    results. Estimate the activation barrier for both cases.
@@ -579,8 +604,8 @@ Rearrangement and dimerization reactions
 
 .. admonition:: Exercise 6.1
 
-   Estimate the activation energy for the Claisen rearrangement of allyl-vinyl ether.
-   Estimate the activation energy for the dimerization of cyclopentadiene (Diels-Alder).
+   Estimate the activation energy for the Claisen rearrangement of allyl-vinyl ether
+   and the dimerization of cyclopentadiene (Diels-Alder).
    
 .. Ggf. besser Strukturen hinterlegen, Änderungen auf GFN-xTB?
 .. (You can ask the lab assistent for a dimer structure of cyclopentadien.)
@@ -589,7 +614,7 @@ Rearrangement and dimerization reactions
 
 1. Construct the geometry of reactant and product for each reaction (*e.g.* using ``Avogadro``).
 
-2. Optimize the geometries using PBEh-3c. Use the following call.
+2. Optimize the geometries using PBEh-3c and C\ :sub:`1` symmetry. Prepare the calculation using:
    
    .. code-block:: none
 
@@ -600,23 +625,48 @@ Rearrangement and dimerization reactions
 
 4. Prepare a reaction path search:
    
-   (a) Prepare a folder for each reaction.
-   (b) Have your reactant and product structure sorted and available in ``coord``
+   (a) Create a directory for each reaction.
+   (b) Have your reactant and product structure sorted and available in TURBOMOLE
        format (*e.g.* starting structure ``coord``, ending structure ``coord.2``).
    (c) Set up a calculation for the starting strucutre. Employ PBEh-3c as before.
-   (d) Merge reactant and product ``coord`` files into a file called ``coords``
-       (*e.g.* ``cat coord coord.2 >> coords``) and call ``woelfling``.
+   (d) Merge reactant and product structures files into a file called ``coords``
+       *e.g.* by typing:
+       
+       .. code-block:: none
+
+          cat coord coord.2 >> coords
+
+       Afterwards, call:
+
+       .. code-block:: none
+
+          woelfling
+
    (e) Check your initial path. It is available in the ``path.xyz`` file.
-   (f) If everything was okay, check the ``control`` file. On the bottom a block
-       appeared that starts with ``woelfling``.
-   (g) Three of the parameters are of importance. ``ninter`` controls the number
-       of points on the path, ``maxit`` controls the number of refinement iterations
-       and ``thr`` controls the convergence of the path. Set ``ninter`` to 40, ``maxit``
-       to 40 and ``thr`` to 5\ |mult|\10\ :sup:`-4`.
-   (h) Start the optimization with ``woelfling-job_xtb``. Every optimization iteration is saved in a ``path-n`` file.
-       Be aware, that you are using a modified woelfling-job file that calculates energies and gradients with the
-       semi-empirical tight-binding based GFN-xTB method even if you used PBEh-3c to set up your input files.
-       This is a common method to speed up your reaction path investigations.
+   (f) If everything was okay, check the ``control`` file. On the bottom, a block
+       appeared that starts with ``$woelfling``.
+   (g) Three of the parameters listed there are of importance. ``ninter`` controls
+       the number of points on the path, ``maxit`` controls the number of refinement
+       iterations and ``thr`` controls the convergence of the path. Modify them to the
+       following values:
+       
+       .. code-block:: none
+
+          ninter     40
+          maxit      40
+          thr        5.0E-04
+       
+   (h) Start the optimization by typing
+
+       .. code-block:: none
+
+          woelfling-job_xtb > woelfling.out
+   
+       Every optimization iteration is saved in a ``path-<n>.xyz`` file. Be aware that
+       you are using a modified ``woelfling-job`` file that calculates energies and
+       gradients with the semi-empirical tight-binding based GFN-xTB method even if you
+       used PBEh-3c to set up your input files. This is a common method to speed up your
+       reaction path investigations.
 
 5. Calculate the activation energy for each reaction.
 
@@ -650,7 +700,7 @@ Noble Gas |mult| |mult| |mult| Methane
 
 **Approach**
 
-1. Calculate the potential energy curve at the B-LYP-D3/def2-QZVP
+1. Calculate the potential energy curve at the BLYP-D3/def2-QZVP
    level for Ar |mult| |mult| |mult| HCH\ :sub:`3` by performing a geometry
    optimization with a fixed Ar and H atom.
    Do this for :math:`R_\text{(Ar-H)}` = 4.5 - 15.0 Bohr with a stepsize of 0.25 Bohr.
@@ -668,35 +718,34 @@ Noble Gas |mult| |mult| |mult| Methane
          -1.95152040635065      0.00000000000000     -2.75977586481614      h   
       $end
 
-   Use the same script as in exercise 5.1 and adopt it to this task. The loop should now
-   work for distances from 4.5 to 15 Bohr and the stepsize should be 0.25 Bohr.
-   You also have to modify the directory names. For the B-LYP-D3/def2-QZVP calculations
-   use the following ``cefine`` call:
+   Use the ``run-scan.sh`` script from exercise 5.1 and adopt it to this task. You also
+   have to modify the directory names. Prepare the BLYP-D3/def2-QZVP calculations with
+   the following options:
 
    .. code-block:: none
+      :linenos:
 
       cefine -bas def2-QZVP -func b-lyp -d3 -sym c1 
 
-   ``-d3`` denotes that the D3 dispersion correction will be used.
-   ``-novdw`` denotes that no dispersion correction will be employed.
-
-2. Repeat the calculations for B-LYP/def2-QZVP and MP2/def2-QZVP.
-   For MP2 use the following ``cefine`` and ``jobex`` call in the script:
+2. Repeat the calculations for BLYP/def2-QZVP and MP2/def2-QZVP. For BLYP, exchange ``-d3``
+   by ``-novdw`` and for MP2, use the following calls in the script:
 
    .. code-block:: none
+      :linenos:
 
       cefine -mp2 -bas def2-QZVP -opt -sym c1
       jobex -level cc2 -c 50
 
-   To get the final MP2 energy for each distance use the command:
+   To get the final MP2 energy for each distance use the following command:
 
    .. code-block:: none
+      :linenos:
 
       grep "Total Energy" job.last | gawk '{print $4}'
 
 3. Repeat the calculations for Kr |mult| |mult| |mult| HCH\ :sub:`3`
    (substitute Ar with Kr in the ``template`` file) with
-   B-LYP-D3/def2-QZVP, B-LYP/def2-QZVP and MP2/def2-QZVP.
+   BLYP-D3/def2-QZVP, BLYP/def2-QZVP and MP2/def2-QZVP.
 
 4. Plot the curves (**normalize to the dissociation limit**) and discuss your findings.
 
@@ -716,12 +765,12 @@ IR-Spectrum of 1,4-Benzoquinone
 
 1. Create a ``coord`` file for 1,4-Benzoquinone.
 
-2. Optimize the geometry on the HF-D3/def2-SVP level of theory.
+2. Optimize the geometry with TURBOMOLE on the HF-D3/def2-SVP level of theory.
 
 3. Calculate the normal modes with ``aoforce``.
 
-4. Check the normal modes with ``molden``. (Use ``tm2molden`` and ``molden``. The normal
-   modes can be visualized by clicking on "Norm. Mode" on the right side of the menu.)
+4. Call ``tm2molden`` and check the normal modes with ``gmolden`` the same way as
+   in exercise 4.1.
 
 5. Assign each dipole-allowed normal mode to an experimental one
    and calculate the scaling factor :math:`f_\text{scal}=\nu_\text{exp}/\nu_\text{calc}`.
@@ -759,7 +808,13 @@ The Color of Indigo
 
       Structure of indigo.
 
-2. Do a HF-D3/def2-SVP singlepoint calculation. Use ``-nori`` in ``cefine`` and run ``dscf``.
+2. Do a HF-D3/def2-SVP singlepoint calculation. Use the ``-nori`` option for the preparation
+   with ``cefine`` and run:
+
+   .. code-block:: none
+
+      dscf > dscf.out
+
    In order to do the TD-HF calculation, edit the ``control`` file and add the following lines
    (before ``$end``):
 
@@ -770,10 +825,19 @@ The Color of Indigo
       $soes
         bu 1
 
-   Then, call ``escf`` and forward the output into a file.
+   Then, run:
+   
+   .. code-block:: none
+   
+      escf > escf.out
 
 3. For the TD-DFT calculations repeat the above procedure with PBE-D3/def2-SVP and
-   PBE0-D3/def2-SVP. Use the proper ``cefine`` calls and run ``ridft`` and ``escf`` afterwards.
+   PBE0-D3/def2-SVP. Use the proper ``cefine`` calls and run
+   
+   .. code-block:: none
+   
+      ridft > ridft.out
+      escf > escf.out
 
 4. Discuss the excitation energies for all three methods; which method
    would predict (at least approximately) the correct color for indigo?
@@ -795,9 +859,9 @@ segmented contracted basis sets otimized for the calculation of NMR shieldlings.
  
    *xyzfile 0 1 input.xyz
 
-| At the end of the ORCA output a summary of the calculated NMR absolute chemical shieldings can be found.
-|
-| Exemplary output for CH\ :sub:`3`\ NH\ :sub:`2`:
+At the end of the ORCA output, a summary of the calculated NMR absolute chemical shieldings can be found.
+
+Exemplary output for CH\ :sub:`3`\ NH\ :sub:`2`:
 
 .. code-block:: none
    :linenos:
@@ -831,7 +895,7 @@ segmented contracted basis sets otimized for the calculation of NMR shieldlings.
 
 **Approach**
 
-1. Optimize the geometry of the compounds **A** -- **G** and the reference molecule Si(CH\ :sub:`3`)\ :sub:`4` (TMS)
+1. Optimize the geometries of the compounds **A** -- **G** and the reference molecule Si(CH\ :sub:`3`)\ :sub:`4` (TMS)
    on the PBEh-3c level of theory (how to use PBEh-3c is explained in the ORCA manual).
 
 2. Calculate the :sup:`13`\ C-NMR chemical shieldings and shifts |delta| for compounds **A** -- **G** with TMS as reference at PBE/pcSseg-2 level of theory.

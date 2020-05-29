@@ -1,9 +1,8 @@
-================
-Recommendations
-================
+Software Recommendations
+========================
 
 X-Server or How to make your graphical connection work (optional)
-====================================================================
+-----------------------------------------------------------------
 Sometimes it is easier to directly have a look at strucutres or plots, instead of copying everything to your local computer. Therefore, we recommend an application that enables you to open graphical interfaces on the CIP Pool computers in the Mulliken Center and see the opened windows on your home computer. For anyone, who is interested, just google "X-Server connection windows linux" or some similar combination and try to install this on your own. 
 For all others: Install `Xming <https://xming.en.softonic.com/>`_, a free Windows stand-alone program, and follow the setup there. Afterward, always ensure, that ``Xming`` is running, when you open a shell and try to open some visualization software. For that, you only have to start ``Xming`` (press the Windows button, type ``Xming`` and press enter), then the ``Xming`` symbol will appear at your taskbar. 
 Now open a shell and type:
@@ -25,15 +24,22 @@ Without the *-Y*, the graphical connection will not work.
 .. _Software for visualization of molecules:
 
 Software for visualization of molecules
-========================================
+---------------------------------------
 A quantum chemical calculation always needs a structure as input (and will often result in a modified structure as output), so you need some kind of visualization program to create the desired molecule or to look at it. We recommend the use of the program `Avogadro <https://avogadro.cc/>`_ to generate and manipulate molecules. 
-Next, you will need the program `molden <http://cheminf.cmbi.ru.nl/molden/>`_ for some exercises. You can also use ``molden`` for generation and manipulation of molecules, but we recommend the use of ``Avogadro``. 
+Next, you will need the program `molden <http://cheminf.cmbi.ru.nl/molden/>`_ for some exercises (we recommend the version ``gmolden``). You can open an input file (*e.g.* ``molden.input`` or a ``*.xyz`` file) by typing:
+
+.. code-block:: none
+
+   gmolden <input>
+
+For Windows users that have unpacked the linked .rar file, we recommend open the input file by right-clicking on it and selecting "Open with", then choose the unpacked ``gmolden.exe`` file.
+You can also use ``gmolden`` for generation and manipulation of molecules, but we recommend the use of ``Avogadro``. 
 Of course you can also use any other visualization software you know. Please remember that for some exercises it is important to keep the atom count during the manipulation of the molecule geometry, which some of the more common programs do not do (``Avogadro`` keeps it). 
 
 .. _Plotting:
 
 Plotting
-==============
+--------
 For some exercises you have to create proper plots. In our group we usually use ``gnuplot`` for this, a powerful program if you can handle it. ``gnuplot`` scripts for any plotting problem you can imagine (and much more) are easy to find on the Internet. In general, you tell the program via a small script in which format you want your final picture, you name your axis and then plot directly from an extern file. In the following, you will find a small script called plot.gp to plot your data points as a line with ``gnuplot``.
 
 .. code-block:: none
@@ -88,9 +94,9 @@ All figures in your final report must have captions that adequately describe the
    If you do not immediately understand your own plot after two days, it is probably bad. Rethink.
 
 Summary
-==========
+-------
 
-Check you *.bashrc* of your local Linux distribution and add ``export DISPLAY=localhost:0.0``, if you want to use a graphical interface to the MCTC computers. 
+Check the ``.bashrc`` of your local Linux distribution and add ``export DISPLAY=localhost:0.0``, if you want to use a graphical interface to the MCTC computers. 
 
 +------------+--------------+--------------------------------------------+-----------+
 | Program    | local / MCTC | Links (if local installation needed)       | optional? |
