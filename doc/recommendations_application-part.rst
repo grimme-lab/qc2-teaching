@@ -65,9 +65,13 @@ Next, you will need the program `molden <http://cheminf.cmbi.ru.nl/molden/>`_ fo
 
    gmolden <input>
 
-For Windows users that have unpacked the above linked .rar file, we recommend opening the input file by right-clicking on it and selecting "Open with", then choose the unpacked ``gmolden.exe`` file.
+For Windows users that have unpacked the above linked .rar file, we recommend opening the input file (``molden.input`` or ``*.xyz``) by right-clicking on it and selecting "Open with", then choose the unpacked ``gmolden.exe`` file. 
 You can also use ``gmolden`` for generation and manipulation of molecular structures, but we recommend the use of ``Avogadro``. 
 Of course you can also use any other visualization software you know. Please remember that for some exercises it is important to keep the atom count during the manipulation of the molecule geometry, which some of the more common programs do not do (``Avogadro`` keeps it). 
+
+.. note:: 
+
+   During testing ``gmolden`` with Windows 10, we encountered problems if the path contains blanks or umlauts (*e.g.* C:\Program Files\molden). If you cannot open ``gmolden`` on your windows computer, copy the *molden folder* to you desktop and try again. 
 
 .. _Plotting:
 
