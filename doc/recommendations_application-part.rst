@@ -60,6 +60,10 @@ To setup a similar prompt in your shell set the following in your bashrc (note t
 
    PS1='[\u@\h \W]\$ '
 
+.. admonition:: Note for Windows Users
+
+   Don't worry if you are using WSL under Windows. You can do all the following steps as described.
+   Just find the notes when things behave a bit special.
 
 The easy way
 ^^^^^^^^^^^^
@@ -114,6 +118,24 @@ We start on your local machine, we create the ssh directory in your home by
    [awvwgk@saw2570 ~] $ chmod 700 .ssh
 
 The last step ensures that you and only you have access to your ssh keys, never allow anyone else access to this directory!
+
+.. admonition:: Note for Windows Users
+
+   Using WSL, you might have two ``.ssh`` directories. The Linux one is the same as above and found in:
+   
+   .. code-block:: none
+
+      ~/.ssh
+
+   The Windows one can be found in your Windows home directory (assuming ``awvwgk`` is your Windows username):
+
+   .. code-block:: none
+
+      /mnt/c/Users/awvwgk/.ssh
+
+   Don't get confused by that and decide upon one of these directories (*e.g.* the Linux one) for the next steps.
+   If something doesn't work, check if there are perhaps doubled files interfering each other.
+
 We enter the ssh directory to create a new ssh-keypair, we recommend using elliptic curve keys because they are short and fast:
 
 .. code-block:: none
@@ -223,8 +245,28 @@ We do so by opening a separate terminal and running:
 
    [awvwgk@saw2570 ~] $ ssh -L 12345:c00:22 ehlert@ssh3.thch.uni-bonn.de cat -
 
-Your done with this terminal, the port 22 of ``c00`` is now forwarded to your local 12345 port.
+You're done with this terminal, the port 22 of ``c00`` is now forwarded to your local 12345 port.
 Choose any number you like, but try to not use one of the crucial ports from your system (22 and 80 happen to be bad ideas).
+
+.. admonition:: Note for Windows Users
+
+   To make this work via WSL, you have to add the address of ``c00`` in the file in ``/etc/hosts``.
+   Changes to this file won't last long as it is overwritten from the Windows hosts file.
+   You can find the file in your Windows directory:
+
+   .. code-block:: none
+
+      /mnt/c/Windows/System32/drivers/etc/hosts
+
+   Open this file with some text editor as administrator and add the following line *e.g.*
+   at the end (replace ``c00`` by your computer):
+
+   .. code-block:: none
+
+      127.0.0.1     c00
+
+   After closing and opening the terminal again, the file ``/etc/hosts`` should now also contain
+   this line and you can open the above mentioned ssh tunnel.
 
 Now we generate another keypair (always use a new keypair for each connection) and register the connection like before:
 
