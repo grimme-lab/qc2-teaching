@@ -354,7 +354,7 @@ For the three machine setup we had a configuration file like the following would
       Port 12345
       IdentityFile ~/.ssh/id_c00
 
-Now logging in to ssh3 will automatically put in the specified user name and forward port 22 of ``c00`` to the expected local one for you.
+Now logging in to the ssh-server will automatically put in the specified user name and forward port 22 of ``c00`` to the expected local one for you.
 
 
 X-Server or How to make your graphical connection work (optional)
