@@ -260,6 +260,7 @@ Now we generate another keypair (always use a new keypair for each connection) a
 Finally we want to automate the process a bit more by adding the following lines to our ssh-config:
 
 .. code-block:: none
+   :linenos:
 
    Host c00
       Hostname localhost
@@ -291,6 +292,7 @@ The ssh-config file is quite nice to deal with several use cases, if you do not 
 For the three machine setup we had a configuration file like the following would be appropriate:
 
 .. code-block:: none
+   :linenos:
 
    Host ssh3.thch.uni-bonn.de
       User ehlert
