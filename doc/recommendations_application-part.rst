@@ -179,8 +179,8 @@ We only executed a command on the ssh-server and ended the session afterwards, y
    [ehlert@ssh3 ~] $ mkdir .ssh
    [ehlert@ssh3 ~] $ chmod 700 .ssh
    [ehlert@ssh3 ~] $ cd .ssh
-   [ehlert@ssh3 ~] $ vim authorized_keys
-   [ehlert@ssh3 ~] $ logout
+   [ehlert@ssh3 .ssh] $ vim authorized_keys
+   [ehlert@ssh3 .ssh] $ logout
    Connection to ssh3.thch.uni-bonn.de closed.
    [awvwgk@saw2570 .ssh] $
 
