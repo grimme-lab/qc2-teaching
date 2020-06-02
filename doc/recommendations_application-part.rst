@@ -190,7 +190,14 @@ And paste the content from ``id_ssh3.pub`` into the file (you might need a secon
 
    Always use the public key of the keypair (the one ending with ``.pub``!), the private key (the one without an extension) stays in relative safety on your machine and *only* your machine!
 
-We need to register the ssh-server now in our configuration file, we will use ``vim`` but feel free to edit the file with your preferred editor and add the lines:
+We need to register the ssh-server now in our configuration file
+
+.. code-block:: none
+   :linenos:
+
+   [awvwgk@saw2570 .ssh] $ vim config
+
+We will use ``vim`` here but feel free to edit the file with your preferred editor and add the lines:
 
 .. code-block:: none
    :linenos:
