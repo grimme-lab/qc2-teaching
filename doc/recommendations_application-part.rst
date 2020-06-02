@@ -50,9 +50,9 @@ If you now want to login to a computer at the Mulliken Center, you have to enabl
 .. code-block:: none
 
    ssh -Y $user@ssh5.thch.uni-bonn.de
-   ssh -Y /path/to/MCTC/computer
+   ssh -Y c(number)
 
-Without the *-Y*, the graphical connection will not work. 
+Exchange c(number) with your computer number, that was given to you. Without the *-Y*, the graphical connection will not work. 
 
 .. _Software for visualization of molecules:
 
