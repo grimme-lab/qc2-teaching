@@ -75,23 +75,23 @@ The request will be gone if you log in a second time.
    :linenos:
    :emphasize-lines: 4, 6, 10, 12, 16, 18
 
-   [awvwgk@saw2570 ~] $ ssh -Y ehlert@ssh5.thch.uni-bonn.de
-   The authenticity of host 'ssh5.thch.uni-bonn.de (131.220.44.130)' can't be established.
+   [awvwgk@saw2570 ~] $ ssh -Y ehlert@ssh3.thch.uni-bonn.de
+   The authenticity of host 'ssh3.thch.uni-bonn.de (131.220.44.130)' can't be established.
    ECDSA key fingerprint is SHA256:eEdQpqyV6oP0Ddra7H2QDI6kC9rX3XQRAlWxX6LfA6U.
    Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
-   Warning: Permanently added 'ssh5.thch.uni-bonn.de,131.220.44.130' (ECDSA) to the list of known hosts.
+   Warning: Permanently added 'ssh3.thch.uni-bonn.de,131.220.44.130' (ECDSA) to the list of known hosts.
    Password:
-   [ehlert@ssh5 ~] $ ssh -Y ehlert@c00
+   [ehlert@ssh3 ~] $ ssh -Y ehlert@c00
    The authenticity of host 'c00 (172.17.3.20)' can't be established.
    ECDSA key fingerprint is 23:66:63:60:8e:17:e0:b3:83:75:03:09:12:39:51:8d [MD5].
    Are you sure you want to continue connecting (yes/no)? yes
    Warning: Permanently added 'c00,172.17.3.20' (ECDSA) to the list of known hosts.
    Password:
    [ehlert@c00 ~] $ logout
-   [ehlert@ssh5 ~] $ logout
-   [awvwgk@saw2570 ~] $ ssh -Y ehlert@ssh5.thch.uni-bonn.de
+   [ehlert@ssh3 ~] $ logout
+   [awvwgk@saw2570 ~] $ ssh -Y ehlert@ssh3.thch.uni-bonn.de
    Password:
-   [ehlert@ssh5 ~] $ ssh -Y ehlert@c00
+   [ehlert@ssh3 ~] $ ssh -Y ehlert@c00
    Password:
    [ehlert@c00 ~] $
 
@@ -145,11 +145,11 @@ We enter the ssh directory to create a new ssh-keypair, we recommend using ellip
    [awvwgk@saw2570 ~] $ cd .ssh
    [awvwgk@saw2570 .ssh] $ ssh-keygen -t ed25519
    Generating public/private ed25519 key pair.
-   Enter file in which to save the key (/home/awvwgk/.ssh/id_ed25519): id_ssh5
+   Enter file in which to save the key (/home/awvwgk/.ssh/id_ed25519): id_ssh3
    Enter passphrase (empty for no passphrase):
    Enter same passphrase again:
-   Your identification has been saved in id_ssh5
-   Your public key has been saved in id_ssh5.pub
+   Your identification has been saved in id_ssh3
+   Your public key has been saved in id_ssh3.pub
    The key fingerprint is:
    SHA256:ewn6KOiOmALh6wOa9Jo/kda125Wp4w+NmCU//r8f/Pk awvwgk@saw2570
    The key's randomart image is:
@@ -166,7 +166,7 @@ We enter the ssh directory to create a new ssh-keypair, we recommend using ellip
    +----[SHA256]-----+
 
 The key-generator will prompt you a to enter a filename, we will name the key
-``id_ssh5``, choose any name you find appropriate.
+``id_ssh3``, choose any name you find appropriate.
 
 .. tip::
 
@@ -178,13 +178,13 @@ Now we log in at the ssh-server to establish the new connection and setup the ke
    :linenos:
    :emphasize-lines: 2, 6, 8
 
-   [awvwgk@saw2570 .ssh] $ ssh ehlert@ssh5.thch.uni-bonn.de <<EOF
-   mkdir -p .ssh && chmod 700 .ssh && cd .ssh && echo $(cat id_ssh5.pub) >> authorized_keys
+   [awvwgk@saw2570 .ssh] $ ssh ehlert@ssh3.thch.uni-bonn.de <<EOF
+   mkdir -p .ssh && chmod 700 .ssh && cd .ssh && echo $(cat id_ssh3.pub) >> authorized_keys
    EOF
-   The authenticity of host 'ssh5.thch.uni-bonn.de (131.220.44.130)' can't be established.
+   The authenticity of host 'ssh3.thch.uni-bonn.de (131.220.44.130)' can't be established.
    ECDSA key fingerprint is SHA256:eEdQpqyV6oP0Ddra7H2QDI6kC9rX3XQRAlWxX6LfA6U.
    Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
-   Warning: Permanently added 'ssh5.thch.uni-bonn.de,131.220.44.130' (ECDSA) to the list of known hosts.
+   Warning: Permanently added 'ssh3.thch.uni-bonn.de,131.220.44.130' (ECDSA) to the list of known hosts.
    Password:
    [awvwgk@saw2570 .ssh] $
 
@@ -196,21 +196,21 @@ We only executed a command on the ssh-server and ended the session afterwards, y
    :linenos:
    :emphasize-lines: 4, 6, 10
 
-   [awvwgk@saw2570 .ssh] $ ssh ehlert@ssh5.thch.uni-bonn.de
-   The authenticity of host 'ssh5.thch.uni-bonn.de (131.220.44.130)' can't be established.
+   [awvwgk@saw2570 .ssh] $ ssh ehlert@ssh3.thch.uni-bonn.de
+   The authenticity of host 'ssh3.thch.uni-bonn.de (131.220.44.130)' can't be established.
    ECDSA key fingerprint is SHA256:eEdQpqyV6oP0Ddra7H2QDI6kC9rX3XQRAlWxX6LfA6U.
    Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
-   Warning: Permanently added 'ssh5.thch.uni-bonn.de,131.220.44.130' (ECDSA) to the list of known hosts.
+   Warning: Permanently added 'ssh3.thch.uni-bonn.de,131.220.44.130' (ECDSA) to the list of known hosts.
    Password:
-   [ehlert@ssh5 ~] $ mkdir .ssh
-   [ehlert@ssh5 ~] $ chmod 700 .ssh
-   [ehlert@ssh5 ~] $ cd .ssh
-   [ehlert@ssh5 .ssh] $ vim authorized_keys
-   [ehlert@ssh5 .ssh] $ logout
-   Connection to ssh5.thch.uni-bonn.de closed.
+   [ehlert@ssh3 ~] $ mkdir .ssh
+   [ehlert@ssh3 ~] $ chmod 700 .ssh
+   [ehlert@ssh3 ~] $ cd .ssh
+   [ehlert@ssh3 .ssh] $ vim authorized_keys
+   [ehlert@ssh3 .ssh] $ logout
+   Connection to ssh3.thch.uni-bonn.de closed.
    [awvwgk@saw2570 .ssh] $
 
-And paste the content from ``id_ssh5.pub`` into the file (you might need a second terminal now).
+And paste the content from ``id_ssh3.pub`` into the file (you might need a second terminal now).
 
 .. important::
 
@@ -228,16 +228,16 @@ We will use ``vim`` here but feel free to edit the file with your preferred edit
 .. code-block:: none
    :linenos:
 
-   Host ssh5.thch.uni-bonn.de
-      IdentityFile ~/.ssh/id_ssh5
+   Host ssh3.thch.uni-bonn.de
+      IdentityFile ~/.ssh/id_ssh3
 
 Now we will try again, to see if our connection is correctly established.
 
 .. code-block:: none
    :linenos:
 
-   [awvwgk@saw2570 .ssh] $ ssh ehlert@ssh5.thch.uni-bonn.de
-   [ehlert@ssh5 ~] $
+   [awvwgk@saw2570 .ssh] $ ssh ehlert@ssh3.thch.uni-bonn.de
+   [ehlert@ssh3 ~] $
 
 If you are prompted for a password your setup is wrong and you have to retry.
 
@@ -247,7 +247,7 @@ We do so by opening a separate terminal and running:
 .. code-block:: none
    :linenos:
 
-   [awvwgk@saw2570 ~] $ ssh -L 12345:c00:22 ehlert@ssh5.thch.uni-bonn.de cat -
+   [awvwgk@saw2570 ~] $ ssh -L 12345:c00:22 ehlert@ssh3.thch.uni-bonn.de cat -
 
 You're done with this terminal, the port 22 of ``c00`` is now forwarded to your local 12345 port.
 Choose any number you like, but try to not use one of the crucial ports from your system (22 and 80 happen to be bad ideas).
@@ -353,9 +353,9 @@ For the three machine setup we had a configuration file like the following would
 .. code-block:: none
    :linenos:
 
-   Host ssh5.thch.uni-bonn.de
+   Host ssh3.thch.uni-bonn.de
       User ehlert
-      IdentityFile ~/.ssh/id_ssh5
+      IdentityFile ~/.ssh/id_ssh3
       LocalForward 12345 c00:22
 
    Host c00
@@ -403,14 +403,7 @@ Now open a shell and type:
    echo "export DISPLAY=localhost:0.0" >> ~/.bashrc
    source ~/.bashrc
 
-If you now want to login to a computer at the Mulliken Center, you have to enable the graphical connection (remember to run ``Xming``!):
-
-.. code-block:: none
-
-   ssh -Y $user@ssh5.thch.uni-bonn.de
-   ssh -Y c(number)
-
-Exchange c(number) with your computer number, that was given to you. Without the *-Y*, the graphical connection will not work.
+Now you can login as described above (remember to have ``Xming`` running). 
 
 .. _Software for visualization of molecules:
 
