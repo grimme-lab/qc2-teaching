@@ -56,16 +56,18 @@ Your local username might also be different from the one in the facility, we wil
 
 .. important:: 
 
-   When following the steps described afterward, you always have to change the respective names. 
-   You will **not** use the ssh3 machine, but the ssh5 machine, so make sure to replace ``ssh3`` with ``ssh5`` in every step. 
-   Consequently, copy and paste won't work with this tutorial! 
+   When following the steps described afterward, you have to change the respective names (both usernames and hostnames), of course.
+   You will *not* be able to use ``ssh3`` to log in the ssh server, but a different machine (most likely ``ssh5``).
+
+   Please read the tutorial and the code snippets carefully, understand what is shown and adapt the commands accordingly.
+   *A copy and paste approach on this tutorial will fail!*
 
 We will always show a prompt with username and hostname to illustrate who and where we are.
 To setup a similar prompt in your shell set the following in your bashrc (note that you will have several bashrcs, one on each machine).
 
 .. code-block:: bash
 
-   PS1='[\u@\h \W]\$ '
+   PS1='[\u@\h \W] \$ '
 
 .. admonition:: Note for Windows Users
 
@@ -421,7 +423,7 @@ Just add this lines to your bashrc (if you always want a full path use ``\w`` in
    if ${use_color} ; then
      if [[ ${EUID} == 0 ]] ; then
        # show a red prompt if we are root
-       PS1='\[\033[01;31m\][\h\[\033[01;36m\] \W\[\033[01;31m\]]\$\[\033[00m\] '
+       PS1='\[\033[01;31m\][\h\[\033[01;36m\] \W\[\033[01;31m\]] \$\[\033[00m\] '
      else
        PS1='\[\033[01;32m\][\u@\h \W] \$\[\033[01;37m\] '
      fi
