@@ -522,7 +522,7 @@ S\ :sub:`N`\ 2-Reaction
    Create a new directory and cCopy and paste the script to a file named ``run-scan.sh``
    and the template below to a file named ``template``.
 
-   .. code-block:: none
+   .. code-block:: bash
       :linenos:
 
       #!/bin/bash
