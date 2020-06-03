@@ -53,6 +53,13 @@ You will receive an account on one of the ssh-servers as well.
 First, we will work with three machines in this tutorial, your local machine (``saw2570``), the ssh-server instance (``ssh3``) and the CIP computer (``c00``).
 ``c00`` is an existing machine, you can log in there as well, it is also the least powerful machine, therefore, just do not use this machine for computations, use the one you were assigned.
 Your local username might also be different from the one in the facility, we will use ``awvwgk`` for the user on the local machine and ``ehlert`` for the user at the facility.
+
+.. important:: 
+
+   When following the steps described afterward, you always have to change the respective names. 
+   You will **not** use the ssh3 machine, but the ssh5 machine, so make sure to replace ``ssh3`` with ``ssh5`` in every step. 
+   Consequently, copy and paste won't work with this tutorial! 
+
 We will always show a prompt with username and hostname to illustrate who and where we are.
 To setup a similar prompt in your shell set the following in your bashrc (note that you will have several bashrcs, one on each machine).
 
