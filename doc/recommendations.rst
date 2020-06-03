@@ -54,7 +54,7 @@ First, we will work with three machines in this tutorial, your local machine (``
 ``c00`` is an existing machine, you can log in there as well, it is also the least powerful machine, therefore, just do not use this machine for computations, use the one you were assigned.
 Your local username might also be different from the one in the facility, we will use ``awvwgk`` for the user on the local machine and ``ehlert`` for the user at the facility.
 
-.. important:: 
+.. attention:: 
 
    When following the steps described afterward, you have to change the respective names (both usernames and hostnames), of course.
    You will *not* be able to use ``ssh3`` to log in the ssh server, but a different machine (most likely ``ssh5``).
