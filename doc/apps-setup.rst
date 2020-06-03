@@ -128,7 +128,7 @@ cefine
    In this course, we will only use the current version of the below mentioned program
    called ``cefine_current``, but we will call it ``cefine`` in the following text.
    You can either type ``cefine_current`` instead everytime ``cefine`` is mentioned or
-   (the recommended procedure) set up a symlink via typing the following line:
+   (the recommended procedure) set up a symbolic link via typing the following line:
 
    .. code-block:: none
 
@@ -194,7 +194,7 @@ The input file is generally structured as follows:
 .. important:: Multiplicity = 2S+1 with S being the total spin.
 
 A short reference of ORCA keywords can be found in the section :ref:`Short ORCA reference`.
-Further information is accesible from: https://sites.google.com/site/orcainputlibrary/.
+Further information is accessible from: https://sites.google.com/site/orcainputlibrary/.
 
 
 .. _Short cefine reference:
@@ -214,7 +214,7 @@ You can always call a complete list of options with the ``-h`` option:
 
    cefine -h
 
-The following table lists the most important ``cefine`` options that are intersting for this course.
+The following table lists the most important ``cefine`` options that are interesting for this course.
 
 +------------------------+---------------------------------------------------------------------------------------+
 | Command                | Functionality                                                                         |
@@ -257,7 +257,7 @@ The following table lists the most important ``cefine`` options that are interst
 +------------------------+---------------------------------------------------------------------------------------+
 | ``-opt``               | Used to set up an MP2-optimization.                                                   |
 +------------------------+---------------------------------------------------------------------------------------+
-| ``-ts``                | Sets up an transistion state search.                                                  |
+| ``-ts``                | Sets up an transition state search.                                                   |
 +------------------------+---------------------------------------------------------------------------------------+
 | ``-scfconv <integer>`` | Sets SCF energy convergence criterion to :math:`10^{-{\tt <integer>}}`.               |
 +------------------------+---------------------------------------------------------------------------------------+
@@ -297,7 +297,7 @@ For a complete reference, consult the manual at https://orcaforum.kofo.mpg.de/.
 | Opt      | Do a geometry optimization.                                |
 +----------+------------------------------------------------------------+
 | NumFreq  | | Calculate second derivatives (vibrational frequencies).  |
-|          | | Also gives an IR spectum and thermal corrections + ZPE.  |
+|          | | Also gives an IR spectrum and thermal corrections + ZPE. |
 +----------+------------------------------------------------------------+
 | TightSCF | Increases the convergence criterion for the SCF.           |
 +----------+------------------------------------------------------------+

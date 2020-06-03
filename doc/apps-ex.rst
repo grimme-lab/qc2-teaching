@@ -5,6 +5,7 @@ Exercises
 
 .. contents::
 
+
 Electron Correlation
 --------------------
 
@@ -16,8 +17,8 @@ Multireference Methods
    Electron correlation is very important in dissociation processes
    to get qualitatively and quantitatively correct results.
    Calculate the potential energy curves for the dissociation of
-   HF with the singlereference methods RHF, UHF, MP2, CCSD(T) and CASSCF,
-   which is a multireference method. Compare the results.
+   HF with the single-reference methods RHF, UHF, MP2, CCSD(T) and CASSCF,
+   which is a multi-reference method. Compare the results.
 
 **Approach**
 
@@ -94,6 +95,7 @@ Multireference Methods
 .. hint::
    Have a closer look at the UHF dissociation curve. Does it look as you would expect it? Try to explain the "strange" behavior in terms of symmetry breaking.
 
+
 Carbenes
 ~~~~~~~~
 
@@ -159,7 +161,7 @@ specified otherwise we will use the RI approximation throughout.
    Note that for MP2 geometry optimizations, you have to add the ``-level cc`` option.
    Energies after geometry optimizations can be found in the file ``job.last``. HF and DFT
    energies for each SCF-cycle are additionally written in the file ``energy``.
-   In the case of CCSD(T), do not perform a geometry optimization, but do a sinlgepoint
+   In the case of CCSD(T), do not perform a geometry optimization, but do a singlepoint
    calculation on the MP2 optimized geometries. Before performing the actual CCSD(T)
    calculation, you have do run a HF-SCF:
 
@@ -189,6 +191,7 @@ specified otherwise we will use the RI approximation throughout.
 
    Method selection in cefine: ``-func b3-lyp/pw6b95/tpss`` (B3LYP/PW6B95/TPSS), ``-hf`` (HF),
    ``-mp2`` (MP2), ``-cc`` (CCSD(T)).
+
 
 Basis Set Convergence
 ---------------------
@@ -232,6 +235,7 @@ Formic Acid Dimer
      to use the correct symmetry.
 
    - Remember that you get HF results for free when doing MP2.
+
 
 Thermochemistry
 ---------------
@@ -312,6 +316,7 @@ Reaction Enthalpies of Gas-Phase Reactions
 
 7. Tabulate your results and compare to the experimental values.
 
+
 Heat of Formation of C\ :sub:`60` (optional)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -371,6 +376,7 @@ Heat of Formation of C\ :sub:`60` (optional)
       dftd3 coord -func tpss -bj
 
 8. Discuss your results.
+
 
 Kinetics
 --------
@@ -492,6 +498,7 @@ Kinetic Isotope Effect
   show reasonable agreement with field observations of the 13CH4/12CH4 ratio in
   the lowermost stratosphere, and also reproduce the observed CH3D/CH4 ratio.
 
+
 Solvation
 ---------
 
@@ -519,22 +526,38 @@ S\ :sub:`N`\ 2-Reaction
    loops over all distances. For each distance it creates a new directory, calls
    ``cefine``, performs the constrained geometry optimization and writes the electronic
    energy (not necessarily your final reaction energy) into a file called ``results.dat``.
-   Create a new directory and cCopy and paste the script to a file named ``run-scan.sh``
-   and the template below to a file named ``template``.
+   Create a new directory and copy and paste the script to a file named ``run-scan.sh``.
 
    .. code-block:: bash
       :linenos:
 
-      #!/bin/bash
+      #!/usr/bin/env bash
 
       # Choose directory here
-      cd scan_vac
+      calc_dir=scan_vac
+      # Choose options for the calculation
+      options="-bas def2-TZVP -func pw6b95 -chrg -1.0 -d3"
+
+      cd $calc_dir
       if [ -f ./results.dat ]
       then
         rm results.dat
       fi
 
-      for dist in $(seq 2.25 0.25 10.00)
+      read -r -d 'END' template <<-EOF
+      \$coord
+        0.00000000      0.00000000      0.00000000  c f
+        0.00000000      0.00000000     -3.36989165  cl
+        0.00000000      0.00000000      DIST        f f
+       -1.00404366      1.73905464     -0.62462166  h
+       -1.00404366     -1.73905464     -0.62462166  h
+        2.00808733      0.00000000     -0.62462166  h
+      \$end
+      END
+      EOF
+
+
+      for dist in $(seq 2.25 0.25 10.00 | sed s/,/./)
       do
 
         # Check for existence of folder
@@ -543,12 +566,10 @@ S\ :sub:`N`\ 2-Reaction
           rm -r $dist
         fi
         mkdir $dist
-        cd $dist
-        echo $dist
-        sed 's/XXXX/'$dist'/' ../../template > coord
+        pushd $dist
+        echo "$template" | sed "s/DIST/$dist/" > coord
 
-        # Choose options for the calculation
-        cefine -bas def2-TZVP -func pw6b95 -chrg -1.0 -d3
+        cefine $options
         jobex -c 50
 
         # Get final energy
@@ -556,11 +577,11 @@ S\ :sub:`N`\ 2-Reaction
 
         # Write energy to a file
         echo $dist $e >> ../results.dat
-        cd ../
+        popd
       done
 
-   Template for the ``coord`` file (the ``f`` after the atom specification tells
-   TURBOMOLE to keep the coordinates fixed for that atom):
+   Template for the ``coord`` file is given directly inline in the script, we will repeat it here to explain a few details.
+   The ``f`` after the atom specification tells TURBOMOLE to keep the coordinates fixed for that atom:
 
    .. code-block:: none
       :linenos:
@@ -568,17 +589,17 @@ S\ :sub:`N`\ 2-Reaction
       $coord
         0.00000000      0.00000000      0.00000000  c f
         0.00000000      0.00000000     -3.36989165  cl
-        0.00000000      0.00000000      XXXX        f f
+        0.00000000      0.00000000      DIST        f f
        -1.00404366      1.73905464     -0.62462166  h
        -1.00404366     -1.73905464     -0.62462166  h
         2.00808733      0.00000000     -0.62462166  h
       $end
 
-   In order to use the script, you habe to make it executable by typing:
+   In order to use the script, you have to make it executable by typing:
 
    .. code-block:: none
 
-      chmod 744 run-scan.sh
+      chmod +x run-scan.sh
 
    Create subdirectories (*e.g.* ``scan-vac`` and ``scan-cosmo``) for each potential
    energy curve. You will have to adapt the script to your directory names.
@@ -595,6 +616,7 @@ S\ :sub:`N`\ 2-Reaction
 
    Sometimes ``cefine`` crashes can occur at very large distances. Often limiting the script to
    distances up to 8.25 Bohr might help solving the problem without loosing significant information.
+
 
 Activation Energies
 -------------------
@@ -680,7 +702,8 @@ Rearrangement and Dimerization Reactions
 .. hint::
 
    Preparing good input structures for transition state searches is absolutely essential, often you can easily
-   create a product structure from your reactant. Furthermore, this generally easens the sorting of the atoms.
+   create a product structure from your reactant. Furthermore, this generally eases the sorting of the atoms.
+
 
 Noncovalent Interactions
 ------------------------
@@ -749,6 +772,7 @@ Noble Gas |mult| |mult| |mult| Methane
 
 4. Plot the curves (**normalize to the dissociation limit**) and discuss your findings.
 
+
 Spectroscopy
 ------------
 
@@ -787,6 +811,7 @@ IR-Spectrum of 1,4-Benzoquinone
 
    If you obtain imaginary frequencies, try to start the geometry optimization from a slightly distorted structure.
    Check if the imaginary frequencies vanish.
+
 
 The Color of Indigo
 ~~~~~~~~~~~~~~~~~~~
@@ -843,13 +868,14 @@ The Color of Indigo
    would predict (at least approximately) the correct color for indigo?
    How do you explain the errors?
 
+
 NMR Parameters
 ~~~~~~~~~~~~~~
 
 The computation of NMR parameters can be done with the ORCA program package. A simple input for
 the calculation of the NMR chemical shielding of CH\ :sub:`3`\ NH\ :sub:`2` with the PBE
 functional and a pcSseg-2 basis set is presented below. The pcSseg-*n* basis sets are special
-segmented contracted basis sets otimized for the calculation of NMR shieldlings.
+segmented contracted basis sets otimized for the calculation of NMR shieldings.
 (For more information see: Jensen, F., *J. Chem. Theory Comput.* **2015**, *11*, 132 - 138.)
 
 .. code-block:: none
