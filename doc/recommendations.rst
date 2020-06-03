@@ -356,6 +356,28 @@ For the three machine setup we had a configuration file like the following would
 
 Now logging in to the ssh-server will automatically put in the specified user name and forward port 22 of ``c00`` to the expected local one for you.
 
+If you like the prompt style and want to use it for your bash as well, there is also a colorful version available.
+Just add this lines to your bashrc (if you always want a full path use ``\w`` instead of ``\W``).
+
+.. code-block:: bash
+   :linenos:
+
+   if ${use_color} ; then
+     if [[ ${EUID} == 0 ]] ; then
+       # show a red prompt if we are root
+       PS1='\[\033[01;31m\][\h\[\033[01;36m\] \W\[\033[01;31m\]]\$\[\033[00m\] '
+     else
+       PS1='\[\033[01;32m\][\u@\h\[\033[01;37m\] \W\[\033[01;32m\]]\$\[\033[00m\] '
+     fi
+   else
+     if [[ ${EUID} == 0 ]] ; then
+       # show root@ when we don't have colors
+       PS1='[\u@\h \W]\$ '
+     else
+       PS1='[\u@\h \W]\$ '
+     fi
+   fi
+
 
 X-Server or How to make your graphical connection work (optional)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
