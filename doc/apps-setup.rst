@@ -6,6 +6,7 @@ Chemistry programs that will be used in this practical course.
 
 .. contents::
 
+
 Setting up the Software
 -----------------------
 
@@ -16,7 +17,7 @@ While you can directly execute any program by giving the full path,
 it is more convenient to tell the system where to look for the
 binaries by saving the location in the ``$PATH`` variable.
 Additionally, some programs need global variables. All those
-are usually set in the ``.bashrc``. In order to gain access to all the 
+are usually set in the ``.bashrc``. In order to gain access to all the
 needed software, add the following lines to your ``.bashrc``:
 
 .. code-block:: none
@@ -50,12 +51,13 @@ Be sure to create a directory called ``bin`` in your home directory by typing:
 
 .. important:: All changes apply to shells opened afterwards.
 
-If you want to apply the changes to your current shell, you 
+If you want to apply the changes to your current shell, you
 need to run:
 
 .. code-block:: none
 
    source ~/.bashrc
+
 
 Program Packages
 ----------------
@@ -117,6 +119,7 @@ in the following table.
 
 .. important:: Each TURBOMOLE calculation needs its own directory.
 
+
 cefine
 ~~~~~~
 
@@ -153,6 +156,7 @@ In the following exercises, the proper options will always be given
 in the text. Additionally, you can find a short list of the options
 in the section :ref:`Short cefine reference`.
 
+
 ORCA
 ~~~~
 
@@ -176,7 +180,7 @@ The input file is generally structured as follows:
            MaxIter 150 #maximum number of iteration steps in the scf,
                        #default = 50
    end
-   # definition of input geometry 
+   # definition of input geometry
    * xyz <charge> <multiplicity>
            cartesian coordinates (Angstroms)
    *
@@ -184,13 +188,16 @@ The input file is generally structured as follows:
    * int <charge> <multiplicity>
            Z-Matrix
    or:
-   * xyzfile <charge> <multiplicity> <filename.xyz>        
+   * xyzfile <charge> <multiplicity> <filename.xyz>
    *
 
 .. important:: Multiplicity = 2S+1 with S being the total spin.
 
 A short reference of ORCA keywords can be found in the section :ref:`Short ORCA reference`.
 Further information is accesible from: https://sites.google.com/site/orcainputlibrary/.
+
+
+.. _Short cefine reference:
 
 Short ``cefine`` Reference
 --------------------------
@@ -263,6 +270,7 @@ The following table lists the most important ``cefine`` options that are interst
 | ``-chrg <integer>``    | Used to define the molecular charge as ``<integer>``.                                 |
 +------------------------+---------------------------------------------------------------------------------------+
 
+
 .. _Short ORCA Reference:
 
 Short ORCA Reference
@@ -293,4 +301,3 @@ For a complete reference, consult the manual at https://orcaforum.kofo.mpg.de/.
 +----------+------------------------------------------------------------+
 | TightSCF | Increases the convergence criterion for the SCF.           |
 +----------+------------------------------------------------------------+
-

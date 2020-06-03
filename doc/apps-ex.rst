@@ -16,7 +16,7 @@ Multireference Methods
    Electron correlation is very important in dissociation processes
    to get qualitatively and quantitatively correct results.
    Calculate the potential energy curves for the dissociation of
-   HF with the singlereference methods RHF, UHF, MP2, CCSD(T) and CASSCF,           
+   HF with the singlereference methods RHF, UHF, MP2, CCSD(T) and CASSCF,
    which is a multireference method. Compare the results.
 
 **Approach**
@@ -34,7 +34,7 @@ Multireference Methods
       %paras R= 4.0,0.5,35 end
 
       * xyz 0 1
-      H 0 0 0 
+      H 0 0 0
       F 0 0 {R}
       *
 
@@ -53,14 +53,14 @@ Multireference Methods
    .. code-block:: none
       :linenos:
 
-      ! RHF MP2 def2-TZVP TightSCF 
+      ! RHF MP2 def2-TZVP TightSCF
 
    CCSD(T):
 
    .. code-block:: none
       :linenos:
 
-      ! RHF CCSD(T) def2-TZVP TightSCF 
+      ! RHF CCSD(T) def2-TZVP TightSCF
 
    CASSCF (2 active electrons in 2 orbitals):
 
@@ -76,7 +76,7 @@ Multireference Methods
    Calculate the potential energy curve by a CASSCF calculation with 6 electrons (``nel``) in 6 active orbitals (``norb``) as well.
 
 2. Call ORCA with the command
-   
+
    .. code-block:: none
 
       orca <file>.inp > <file>.out
@@ -90,14 +90,14 @@ Multireference Methods
 
 5. Plot the curves relative to the energies of the individual atoms and discuss your results
    (particularly the energies at large distances).
-   
+
 .. hint::
-   Have a closer look at the UHF dissociation curve. Does it look as you would expect it? Try to explain the "strange" behavior in terms of symmetry breaking.   
+   Have a closer look at the UHF dissociation curve. Does it look as you would expect it? Try to explain the "strange" behavior in terms of symmetry breaking.
 
 Carbenes
 ~~~~~~~~
 
-All following calculations will be done with TURBOMOLE if not stated otherwise. Also, if not 
+All following calculations will be done with TURBOMOLE if not stated otherwise. Also, if not
 specified otherwise we will use the RI approximation throughout.
 
 .. admonition:: Exercise 1.2
@@ -108,7 +108,7 @@ specified otherwise we will use the RI approximation throughout.
 **Approach**
 
 1. Create the file ``coord`` with starting geometries for Methylene and *p*-Benzyne.
-   
+
    The syntax is:
 
    .. code-block:: none
@@ -213,7 +213,7 @@ Formic Acid Dimer
 
       cefine -bas def2-TZVP -func tpss -d3
       jobex > jobex.out
-   
+
 2. Calculate the dimerization energy (energy difference of one dimer and two monomers)
    with HF, TPSS-D3 and MP2 employing the cc-pVXZ (X = D, T, Q) basis sets and their
    augmented counterparts (aug-cc-pVXZ). Refer to the table of ``cefine`` options given
@@ -249,7 +249,7 @@ Reaction Enthalpies of Gas-Phase Reactions
    .. How can I center the following two lines of text?
 
    .. line-block::
-  
+
       CH\ :sub:`4` + H\ :sub:`2`\ O |eqarr| CO + 3 H\ :sub:`2` (steam reforming of methane)
       N\ :sub:`2` + 3 H\ :sub:`2` |eqarr| 2 NH\ :sub:`3` (Haber-Bosch process)
 
@@ -267,7 +267,7 @@ Reaction Enthalpies of Gas-Phase Reactions
 
 1. Optimize the reactants and products using TPSS-D3/def2-TZVP (see earlier exercises
    and section :ref:`Short cefine reference`, keep in mind the ``-d3`` option).
-  
+
 2. In order to get the thermal corrections from energy to enthalpy at 298.15 K, do a
    frequency calculation first. Use the program ``aoforce`` to calculate the vibrational
    frequencies in TURBOMOLE:
@@ -287,9 +287,9 @@ Reaction Enthalpies of Gas-Phase Reactions
    The first number is an internal threshold, the second the temperature in Kelvin and
    the third the scaling factor for the vibrational frequencies (1.0 for TPSS). Pipe the
    output into a separate file, *e.g.*:
-   
+
    .. code-block:: none
-   
+
       thermo > thermo.out
 
 4. Repeat the optimization for the molecules involved in the Haber-Bosch process with
@@ -422,11 +422,11 @@ Kinetic Isotope Effect
           :linenos:
 
           itrvec 1
-        
+
        (in general the frequency mode describing the motion of the reaction)
-        
+
    (d) Start the transition state search:
-   
+
        .. code-block:: none
 
           jobex -trans > jobex.out
@@ -439,13 +439,13 @@ Kinetic Isotope Effect
    .. code-block:: none
 
       tm2molden
-    
+
    Choose your desired options in the short interactive experience. You do not need
    to pick a name for the input file or to save the MO data, the latter will make
    the file rather large (but obviously save the frequency data). You can open the
    resulting file (default: ``molden.input``) with ``gmolden``. The normal modes can
    be visualized by clicking on "Norm. Mode" on the right side of the menu.
-   
+
 3. Call the program ``thermo`` and note down the thermal corrections to enthalpy.
 
 4. In the ``control`` file, change the mass of the 4 hydrogen atoms at the carbon. Example:
@@ -490,7 +490,7 @@ Kinetic Isotope Effect
   used to simulate the effective kinetic isotope effect for the stratosphere with
   a two-dimensional, time dependent chemical transport model. The model results
   show reasonable agreement with field observations of the 13CH4/12CH4 ratio in
-  the lowermost stratosphere, and also reproduce the observed CH3D/CH4 ratio. 
+  the lowermost stratosphere, and also reproduce the observed CH3D/CH4 ratio.
 
 Solvation
 ---------
@@ -521,7 +521,7 @@ S\ :sub:`N`\ 2-Reaction
    energy (not necessarily your final reaction energy) into a file called ``results.dat``.
    Create a new directory and cCopy and paste the script to a file named ``run-scan.sh``
    and the template below to a file named ``template``.
-   
+
    .. code-block:: none
       :linenos:
 
@@ -533,30 +533,30 @@ S\ :sub:`N`\ 2-Reaction
       then
         rm results.dat
       fi
-       
+
       for dist in $(seq 2.25 0.25 10.00)
       do
-    
+
         # Check for existence of folder
-        if [ -d $dist ] 
+        if [ -d $dist ]
         then
           rm -r $dist
-        fi  
+        fi
         mkdir $dist
         cd $dist
         echo $dist
         sed 's/XXXX/'$dist'/' ../../template > coord
-    
+
         # Choose options for the calculation
         cefine -bas def2-TZVP -func pw6b95 -chrg -1.0 -d3
         jobex -c 50
-      
+
         # Get final energy
         e=$(sdg energy | tail -1 | gawk '{printf $2}')
-    
+
         # Write energy to a file
         echo $dist $e >> ../results.dat
-        cd ../ 
+        cd ../
       done
 
    Template for the ``coord`` file (the ``f`` after the atom specification tells
@@ -606,7 +606,7 @@ Rearrangement and Dimerization Reactions
 
    Estimate the activation energy for the Claisen rearrangement of allyl-vinyl ether
    and the dimerization of cyclopentadiene (Diels-Alder).
-   
+
 .. Ggf. besser Strukturen hinterlegen, Änderungen auf GFN-xTB?
 .. (You can ask the lab assistent for a dimer structure of cyclopentadien.)
 
@@ -615,7 +615,7 @@ Rearrangement and Dimerization Reactions
 1. Construct the geometry of reactant and product for each reaction (*e.g.* using ``Avogadro``).
 
 2. Optimize the geometries using PBEh-3c and C\ :sub:`1` symmetry. Prepare the calculation using:
-   
+
    .. code-block:: none
 
       cefine -sym c1
@@ -624,14 +624,14 @@ Rearrangement and Dimerization Reactions
    product structure.
 
 4. Prepare a reaction path search:
-   
+
    (a) Create a directory for each reaction.
    (b) Have your reactant and product structure sorted and available in TURBOMOLE
        format (*e.g.* starting structure ``coord``, ending structure ``coord.2``).
    (c) Set up a calculation for the starting strucutre. Employ PBEh-3c as before.
    (d) Merge reactant and product structures files into a file called ``coords``
        *e.g.* by typing:
-       
+
        .. code-block:: none
 
           cat coord coord.2 >> coords
@@ -649,19 +649,19 @@ Rearrangement and Dimerization Reactions
        the number of points on the path, ``maxit`` controls the number of refinement
        iterations and ``thr`` controls the convergence of the path. Modify them to the
        following values:
-       
+
        .. code-block:: none
 
           ninter     40
           maxit      40
           thr        5.0E-04
-       
+
    (h) Start the optimization by typing
 
        .. code-block:: none
 
           woelfling-job_xtb > woelfling.out
-   
+
        Every optimization iteration is saved in a ``path-<n>.xyz`` file. Be aware that
        you are using a modified ``woelfling-job`` file that calculates energies and
        gradients with the semi-empirical tight-binding based GFN-xTB method even if you
@@ -711,11 +711,11 @@ Noble Gas |mult| |mult| |mult| Methane
 
       $coord
           0.00000000000000      0.00000000000000      XXXX                  ar f
-          0.00000000000000      0.00000000000000      0.00000000000000      h f 
-          0.00000000000000      0.00000000000000     -2.06945348098289      c   
-          0.97576020317533      1.69006623336522     -2.75977586481614      h   
-          0.97576020317533     -1.69006623336522     -2.75977586481614      h   
-         -1.95152040635065      0.00000000000000     -2.75977586481614      h   
+          0.00000000000000      0.00000000000000      0.00000000000000      h f
+          0.00000000000000      0.00000000000000     -2.06945348098289      c
+          0.97576020317533      1.69006623336522     -2.75977586481614      h
+          0.97576020317533     -1.69006623336522     -2.75977586481614      h
+         -1.95152040635065      0.00000000000000     -2.75977586481614      h
       $end
 
    Use the ``run-scan.sh`` script from exercise 5.1 and adopt it to this task. You also
@@ -725,7 +725,7 @@ Noble Gas |mult| |mult| |mult| Methane
    .. code-block:: none
       :linenos:
 
-      cefine -bas def2-QZVP -func b-lyp -d3 -sym c1 
+      cefine -bas def2-QZVP -func b-lyp -d3 -sym c1
 
 2. Repeat the calculations for BLYP/def2-QZVP and MP2/def2-QZVP. For BLYP, exchange ``-d3``
    by ``-novdw`` and for MP2, use the following calls in the script:
@@ -826,16 +826,16 @@ The Color of Indigo
         bu 1
 
    Then, run:
-   
+
    .. code-block:: none
-   
+
       escf > escf.out
 
 3. For the TD-DFT calculations repeat the above procedure with PBE-D3/def2-SVP and
    PBE0-D3/def2-SVP. Use the proper ``cefine`` calls and run
-   
+
    .. code-block:: none
-   
+
       ridft > ridft.out
       escf > escf.out
 
@@ -856,7 +856,7 @@ segmented contracted basis sets otimized for the calculation of NMR shieldlings.
    :linenos:
 
    !PBE RI pcSseg-2 def2/J NMR
- 
+
    *xyzfile 0 1 input.xyz
 
 At the end of the ORCA output, a summary of the calculated NMR absolute chemical shieldings can be found.
@@ -916,7 +916,7 @@ Exemplary output for CH\ :sub:`3`\ NH\ :sub:`2`:
    .. math::
 
       \text{MD} = \frac{1}{N} \sum_{i=1}^N (\delta _\text{calc.} - \delta _\text{exp.}) \hspace{1.5cm} \text{MAD} = \frac{1}{N} \sum_{i=1}^N (|\delta _\text{calc.} - \delta _\text{exp.}|)
- 
+
 4. Repeat the calculations for the four aromatic compounds **Ar-1** -- **Ar-4**
    and plot the calculated chemical shift against the formal |pi|-electron
    density (:math:`\rho_\pi = n_{el^\pi}/n_{at^\pi}`). Discuss your results.
@@ -933,7 +933,7 @@ Exemplary output for CH\ :sub:`3`\ NH\ :sub:`2`:
    .. hint::
 
       There are two options (gas/solution) for each calculation, the geometry optimization and the shielding calculation. Compare all possibilities.
-  
+
 7. Calculate the :sup:`1`\ H-NMR chemical shifts for **H** and **I** in the gas-phase at PBE/pcSseg-2 level of theory.
    Discuss your observations regarding the chemical shift of the methine proton in both compounds.
    Give a short explanation of your findings.

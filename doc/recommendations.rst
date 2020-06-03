@@ -29,10 +29,10 @@ Many programs may cause many problems, therefore you should follow some simple g
 - If you identified the problem (maybe you have to start at the first point again), check the program manual for additional options or trouble shooting help, fix the problem and restart your calculation.
 - If the calculations still stops abnormally and all other possibilities and options are exhausted, prepare a detailed description of the problem, the output/error messages and contact one of the tutors.
 
-.. _Short cefine reference:
 
 Software Recommendations
 ------------------------
+
 
 Logging in to your work machine
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
