@@ -333,6 +333,12 @@ From now on, you can also copy files from and to your work machine.
    [awvwgk@saw2570 ~] $ scp .bashrc ehlert@c00:~/.bashrc
    [awvwgk@saw2570 ~] $ scp ehlert@c00:~/QC2/orca.out QC2/
 
+.. note:: 
+
+   For now on, if you want to use this path, you always have to open two shells. 
+   In the first one, you have to open your tunnel (``ssh -L 12345:c00:22 $user@ssh3.thch.uni-bonn.de cat -``).
+   Now you can login in the second shell (``ssh -Y $user@c00``) and work in this shell. 
+   Do not close the first shell until you want to log out. 
 
 Tips and Tricks
 ^^^^^^^^^^^^^^^
