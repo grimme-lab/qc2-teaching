@@ -344,7 +344,7 @@ As a short recap, you should now be able to log in with just to commands.
 .. code-block:: none
    :linenos:
 
-   [awvwgk@saw2570 ~] $ ssh -N ehlert@ssh3.thch.uni-bonn.de &
+   [awvwgk@saw2570 ~] $ ssh -L 12345:c00:22 -N ehlert@ssh3.thch.uni-bonn.de &
    [1] 20640
    [awvwgk@saw2570 ~] $ ssh -Y ehlert@c00
    [ehlert@c00 ~] $
