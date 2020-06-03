@@ -247,10 +247,12 @@ We do so by opening a separate terminal and running:
 .. code-block:: none
    :linenos:
 
-   [awvwgk@saw2570 ~] $ ssh -L 12345:c00:22 ehlert@ssh3.thch.uni-bonn.de cat -
+   [awvwgk@saw2570 ~] $ ssh -L 12345:c00:22 -N ehlert@ssh3.thch.uni-bonn.de &
 
-You're done with this terminal, the port 22 of ``c00`` is now forwarded to your local 12345 port.
+We created a local port forwarding (a tunnel) to the port 22 of ``c00`` which is now forwarded to your local 12345 port.
 Choose any number you like, but try to not use one of the crucial ports from your system (22 and 80 happen to be bad ideas).
+You either run this command in a separate terminal and keep it in the foreground (remove the ambersand than) or put the process in the background of your current terminal.
+Remember, the process will stop if you close the terminal even if a process is still running in the background and the tunnel will be closed.
 
 .. admonition:: Note for Windows Users
 
@@ -337,12 +339,18 @@ From now on, you can also copy files from and to your work machine.
    [awvwgk@saw2570 ~] $ scp .bashrc ehlert@c00:~/.bashrc
    [awvwgk@saw2570 ~] $ scp ehlert@c00:~/QC2/orca.out QC2/
 
-.. note:: 
+As a short recap, you should now be able to log in with just to commands.
 
-   For now on, if you want to use this path, you always have to open two shells. 
-   In the first one, you have to open your tunnel (``ssh -L 12345:c00:22 $user@ssh3.thch.uni-bonn.de cat -``).
-   Now you can login in the second shell (``ssh -Y $user@c00``) and work in this shell. 
-   Do not close the first shell until you want to log out. 
+.. code-block:: none
+   :linenos:
+
+   [awvwgk@saw2570 ~] $ ssh -N ehlert@ssh3.thch.uni-bonn.de &
+   [1] 20640
+   [awvwgk@saw2570 ~] $ ssh -Y ehlert@c00
+   [ehlert@c00 ~] $
+
+Remember you always have to keep the ssh process alive that provides the tunnel.
+
 
 Tips and Tricks
 ^^^^^^^^^^^^^^^
@@ -365,6 +373,37 @@ For the three machine setup we had a configuration file like the following would
       IdentityFile ~/.ssh/id_c00
 
 Now logging in to the ssh-server will automatically put in the specified user name and forward port 22 of ``c00`` to the expected local one for you.
+
+
+If do not to use a separate terminal or a background process for your ssh-tunnel, you can detach the process from your terminal.
+You can create a detached process with
+
+.. code-block:: none
+   :linenos:
+
+   [awvwgk@saw2570 ~] $ nohup ssh -N ssh3.thch.uni-bonn.de &> /dev/null &
+   [1] 20640
+   [awvwgk@saw2570 ~] $ exit
+
+To close the tunnel again, you have to kill the process by its process ID.
+Usually one does not remember the process ID, but we can easily find it again.
+
+.. code-block:: none
+   :linenos:
+
+   [awvwgk@saw2570 ~] $ pgrep -la ssh
+   20662 ssh -N ssh3.thch.uni-bonn.de
+   [awvwgk@saw2570 ~] $ kill 20662
+   [awvwgk@saw2570 ~] $
+
+.. note::
+
+   ``nohup`` is also a useful to run commands on your work machine that should continue even if you log out from the ssh-session.
+
+   More lengthy calculations with quantum chemistry software are a potential target for this approach.
+   But think first before adapting the above command, because you probably want to keep the output instead of scrapping it to ``/dev/null``.
+   Also, you won't have to kill your program in the end, because it will terminate on its own.
+
 
 If you like the prompt style and want to use it for your bash as well, there is also a colorful version available.
 Just add this lines to your bashrc (if you always want a full path use ``\w`` instead of ``\W``).
