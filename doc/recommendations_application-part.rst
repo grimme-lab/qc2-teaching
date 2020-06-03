@@ -258,7 +258,7 @@ Choose any number you like, but try to not use one of the crucial ports from you
 
       /mnt/c/Windows/System32/drivers/etc/hosts
 
-   Open this file with some text editor as administrator and add the following line *e.g.*
+   Open your shell as administrator, then open this file with some text editor and add the following line *e.g.*
    at the end (replace ``c00`` by your computer):
 
    .. code-block:: none
