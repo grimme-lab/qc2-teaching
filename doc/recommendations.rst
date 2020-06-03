@@ -367,7 +367,7 @@ Just add this lines to your bashrc (if you always want a full path use ``\w`` in
        # show a red prompt if we are root
        PS1='\[\033[01;31m\][\h\[\033[01;36m\] \W\[\033[01;31m\]]\$\[\033[00m\] '
      else
-       PS1='\[\033[01;32m\][\u@\h \W] \$ '
+       PS1='\[\033[01;32m\][\u@\h \W] \$\[\033[01;37m\] '
      fi
    else
      if [[ ${EUID} == 0 ]] ; then
