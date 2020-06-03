@@ -168,6 +168,10 @@ We enter the ssh directory to create a new ssh-keypair, we recommend using ellip
 The key-generator will prompt you a to enter a filename, we will name the key
 ``id_ssh5``, choose any name you find appropriate.
 
+.. tip::
+
+   A very good read on the generation of ssh-keypairs is the `Arch Linux wiki page on ssh-keys <https://wiki.archlinux.org/index.php/SSH_keys#Generating_an_SSH_key_pair>`_.
+
 Now we log in at the ssh-server to establish the new connection and setup the keypair.
 
 .. code-block:: none
