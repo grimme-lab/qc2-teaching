@@ -158,7 +158,7 @@ specified otherwise we will use the RI approximation throughout.
 
       jobex > jobex.out
 
-   Note that for MP2 geometry optimizations, you have to add the ``-level cc`` option.
+   Note that for MP2 geometry optimizations, you have to add the ``-level cc2`` option.
    Energies after geometry optimizations can be found in the file ``job.last``. HF and DFT
    energies for each SCF-cycle are additionally written in the file ``energy``.
    In the case of CCSD(T), do not perform a geometry optimization, but do a singlepoint
