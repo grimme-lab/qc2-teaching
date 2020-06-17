@@ -272,7 +272,7 @@ Reaction Enthalpies of Gas-Phase Reactions
 1. Optimize the reactants and products using TPSS-D3/def2-TZVP (see earlier exercises
    and section :ref:`Short cefine reference`, keep in mind the ``-d3`` option).
 
-2. In order to get the thermal corrections from energy to enthalpy at 298.15 K, do a
+2. In order to get the thermal corrections from energy to enthalpy at 298 K, do a
    frequency calculation first. Use the program ``aoforce`` to calculate the vibrational
    frequencies in TURBOMOLE:
 
@@ -280,7 +280,7 @@ Reaction Enthalpies of Gas-Phase Reactions
 
       aoforce > aoforce.out
 
-3. Then, calculate the thermal corrections to :math:`\Delta H_{298.15}` with the program
+3. Then, calculate the thermal corrections to :math:`\Delta H_{298}` with the program
    ``thermo``. It needs a ``.thermorc`` input file from your home directory. Create this
    file by typing:
 
