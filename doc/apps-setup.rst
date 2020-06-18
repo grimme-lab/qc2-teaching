@@ -96,7 +96,9 @@ in the following table.
 +----------------------+----------------------------------------------------------+
 | ``dscf``             | DFT and HF SCF calculations without the RI-approximation |
 +----------------------+----------------------------------------------------------+
-| ``ricc2``            | Module for correlated WF methods (MP2, CCSD(T), ...)     |
+| ``ricc2``            | Module for second-order correlated WF methods (MP2, CC2) |
++----------------------+----------------------------------------------------------+
+| ``ccsdf12``          | Module for coupled cluster methods (CCSD, CCSD(T), ...)  |
 +----------------------+----------------------------------------------------------+
 | ``rdgrad``, ``grad`` | Calculate gradients (with and without RI)                |
 +----------------------+----------------------------------------------------------+
