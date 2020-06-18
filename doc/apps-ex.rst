@@ -217,10 +217,10 @@ Formic Acid Dimer
       cefine -bas def2-TZVP -func tpss -d3
       jobex > jobex.out
 
-2. Calculate the dimerization energy (energy difference of one dimer and two monomers)
-   with HF, TPSS-D3 and MP2 employing the cc-pVXZ (X = D, T, Q) basis sets and their
-   augmented counterparts (aug-cc-pVXZ). Refer to the table of ``cefine`` options given
-   in section :ref:`Short cefine reference`.
+2. Using the optimized geometries, calculate the dimerization energy (energy difference
+   of one dimer and two monomers) with HF, TPSS-D3 and MP2 employing the cc-pVXZ (X = D, T, Q)
+   basis sets and their augmented counterparts (aug-cc-pVXZ). Refer to the table of ``cefine``
+   options given in section :ref:`Short cefine reference`.
 
 3. Tabulate your results and plot the total energies versus the cardinal number
    of the basis set for each method (*e.g.* with ``gnuplot``).
@@ -234,7 +234,8 @@ Formic Acid Dimer
    - The calculations with quadruple-|zeta| basis can be quite time consuming. Be sure
      to use the correct symmetry.
 
-   - Remember that you get HF results for free when doing MP2.
+   - Remember that you have to perform a HF singlepoint calculation (using ``ridft``) before
+     you can start the MP2 calculation with ``ricc2`` in the same directory.
 
 
 Thermochemistry
