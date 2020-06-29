@@ -298,8 +298,12 @@ For a complete reference, consult the manual at https://orcaforum.kofo.mpg.de/.
 +----------+------------------------------------------------------------+
 | Opt      | Do a geometry optimization.                                |
 +----------+------------------------------------------------------------+
+| RI       | Use the resolution of the identity approximation.          |
++----------+------------------------------------------------------------+
 | NumFreq  | | Calculate second derivatives (vibrational frequencies).  |
 |          | | Also gives an IR spectrum and thermal corrections + ZPE. |
++----------+------------------------------------------------------------+
+| NMR      | Calculate nuclear magnetic shielding tensors.              |
 +----------+------------------------------------------------------------+
 | TightSCF | Increases the convergence criterion for the SCF.           |
 +----------+------------------------------------------------------------+
