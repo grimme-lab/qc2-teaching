@@ -636,6 +636,13 @@ Rearrangement and Dimerization Reactions
 **Approach**
 
 1. Construct the geometry of reactant and product for each reaction (*e.g.* using ``Avogadro``).
+   Ensure that the sequence of atoms is the same in every pair of reactant and product structure.
+
+   .. hint::
+
+      Preparing good input structures for transition state searches is absolutely essential,
+      often you can easily create a product structure from your reactant. Furthermore, this
+      generally eases the sorting of the atoms.
 
 2. Optimize the geometries using PBEh-3c and C\ :sub:`1` symmetry. Prepare the calculation using:
 
@@ -643,10 +650,9 @@ Rearrangement and Dimerization Reactions
 
       cefine -sym c1
 
-3. Ensure that the sequence of atoms is the same in every pair of reactant and
-   product structure.
+3. Verify that the sequence of atoms is still the same in every pair of reactant and product structure.
 
-4. Prepare a reaction path search:
+4. Perform a reaction path search:
 
    (a) Create a directory for each reaction.
    (b) Have your reactant and product structure sorted and available in TURBOMOLE
@@ -679,7 +685,7 @@ Rearrangement and Dimerization Reactions
           maxit      40
           thr        5.0E-04
 
-   (h) Start the optimization by typing
+   (h) Start the optimization by typing:
 
        .. code-block:: none
 
@@ -691,19 +697,15 @@ Rearrangement and Dimerization Reactions
        used PBEh-3c to set up your input files. This is a common method to speed up your
        reaction path investigations.
 
-5. Calculate the activation energy for each reaction.
+5. Prepare relative energy diagrams for both reactions (relative energy vs. reaction coordinate),
+   depict the molecular structures of both transition states and highlight the most important
+   bond distances.
 
-6. How would you proceed further to gain more reliable numbers?
+6. Calculate the activation energy for each reaction.
 
-7. How feasible is this approach? Where do you see its limits in applicability and usefulness?
+7. How would you proceed further to gain more reliable numbers?
 
-8. Prepare relative energy diagrams for both reactions (relative energy vs. reaction coordinate), depict the molecular
-   structures of both transition states and highlight the most important bond distances.
-
-.. hint::
-
-   Preparing good input structures for transition state searches is absolutely essential, often you can easily
-   create a product structure from your reactant. Furthermore, this generally eases the sorting of the atoms.
+8. How feasible is this approach? Where do you see its limits in applicability and usefulness?
 
 
 Noncovalent Interactions
