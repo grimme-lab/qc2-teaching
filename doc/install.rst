@@ -117,6 +117,11 @@ you are setup to start with the next chapter.
 
 .. _course material: https://github.com/grimme-lab/qc2-teaching/releases/latest
 
+.. tip::
+
+   The content of the archive might be potentially important as a starting
+   point for your SCF program later.
+
 MacOS
 -----
 
