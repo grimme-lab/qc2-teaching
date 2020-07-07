@@ -1,3 +1,5 @@
+.. _building:
+
 Building Programs
 =================
 
@@ -376,7 +378,7 @@ with ``meson setup build``, you should see output somewhat similar to this
    The Meson build system
    Version: 0.53.2
    Source dir: /home/awvwgk/Lehre/QC2/test
-   Build dir: /home/awvwgk/Lehre/QC2/test
+   Build dir: /home/awvwgk/Lehre/QC2/test/build
    Build type: native build
    Project name: my_proj
    Project version: undefined

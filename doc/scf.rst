@@ -6,6 +6,19 @@ program.
 
 .. contents::
 
+.. note::
+
+   Start by extracting the ``course-material.zip`` which you downloaded earlier.
+   You should find a ``scf/`` directory containing the starting code for your
+   program.
+   To make building your program easier and give you more time to focus on
+   the actual programming we put some build automation there as well.
+   To use it just invoke ``make`` and find everything else taken care for.
+
+   For more details on building software and how we automated this process
+   you can find a guide at :ref:`building`.
+
+
 Restricted Hartree--Fock
 ------------------------
 
