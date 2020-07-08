@@ -915,6 +915,42 @@ number of dummy arguments grows, we should prefer subroutines, because
 they are more visible in the code, especially due to the explicit ``call``
 keyword.
 
+
+Multidimensional Arrays
+~~~~~~~~~~~~~~~~~~~~~~~
+
+We will be dealing in the following chapter with multidimensional arrays,
+usually in form of rank two arrays (matrices). Matrices are stored continuously
+in memory following a row major ordering, this means the innermost index
+of any higher rank array will represent continuous memory.
+
+Reading a rank two array should be done by
+
+.. literalinclude:: src/array_rank.1.f90
+   :language: fortran
+   :caption: array_rank.f90
+   :linenos:
+
+This ensures that the complete array is filled in unit strides, *i.e.* visiting
+all elements of the array in exactly the order they are stored in memory.
+Making sure the memory access is in unit strides usually allows compilers
+to produce more efficient programs.
+
+.. tip::
+
+   Array slices should preferrably used on continuous memory, practically
+   this means a colon should only be present in the innermost dimensions of
+   an array.
+
+   .. code-block:: fortran
+
+      array2 = array3(:, :, i)
+
+   Storing data, like cartesian coordinates, should follow the same considerations.
+   It is always preferrable to have the three cartesian components of the position
+   close to each other in memory.
+
+
 Character Constants and Variables
 ---------------------------------
 
