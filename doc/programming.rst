@@ -921,7 +921,7 @@ Multidimensional Arrays
 
 We will be dealing in the following chapter with multidimensional arrays,
 usually in form of rank two arrays (matrices). Matrices are stored continuously
-in memory following a row major ordering, this means the innermost index
+in memory following a column major ordering, this means the innermost index
 of any higher rank array will represent continuous memory.
 
 Reading a rank two array should be done by
