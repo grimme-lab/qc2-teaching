@@ -10,6 +10,8 @@ program array_rank
 
   read(*, *) d1, d2
 
+  allocate(arr2(d1, d2))
+
   do i = 1, size(arr2, 2)
     read(*, *) arr2(:, i)
   end do
