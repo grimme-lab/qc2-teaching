@@ -12,7 +12,7 @@ module linear_algebra
 
     !> interfaces to lapack
     interface
-        pure subroutine dspev(jobz, uplo, n, ap, w, z, ldz, work, info)
+        subroutine dspev(jobz, uplo, n, ap, w, z, ldz, work, info)
             import wp
             integer, intent(in) :: ldz
             real(wp), intent(inout) :: ap(*)
@@ -24,37 +24,31 @@ module linear_algebra
             integer, intent(in) :: n
             real(wp), intent(inout) :: work(*)
         end subroutine dspev
-        pure subroutine xerbla(name,info)
-            character(len=*), intent(in) :: name
-            integer, intent(in) :: info
-        end subroutine xerbla
     end interface
 
 
 contains
 
 
-pure subroutine solve_spev(a,w,v,info_out)
+subroutine solve_spev(matrix, eigval, eigvec, stat)
     !> plain lapack call:
-    !  dspev(jobz,uplo,n,a,w,v,n,work,info)
+    !  dspev(jobz,uplo,n,matrix,eigval,eigvec,n,work,info)
 
     implicit none
 
-    !> symmetric matrix a is diagonalized by this routine
-    !  eigenvalues of a are written to w
-    !  eigenvectors are written to v if provided
-    real(wp), intent(inout) :: a(:)
-    real(wp), intent(out) :: w(:)
-    real(wp), intent(out) :: v(:, :)
-    integer, intent(out), optional :: info_out
-    !> for xerbla output
-    character(len=*), parameter :: thisis = 'dspev'
+    !> symmetric matrix is diagonalized by this routine
+    real(wp), intent(inout) :: matrix(:)
+    !> eigenvalues of matrix are written to eigval
+    real(wp), intent(out) :: eigval(:)
+    !> eigenvectors are written to eigvec if provided
+    real(wp), intent(out) :: eigvec(:, :)
+    !> error status
+    integer, intent(out), optional :: stat
     !> local variables
     character, parameter :: jobz = 'v'
     character, parameter :: uplo = 'u'
     integer :: info
-    integer :: n
-    integer :: np
+    integer :: n, np, ldz
     !> workspace for dspev
     real(wp), allocatable :: work(:)
 
@@ -62,32 +56,30 @@ pure subroutine solve_spev(a,w,v,info_out)
 
     info = 0
 
-    n  = max(1, size(w, 1))
-    np = max(1, size(a, 1))
+    n   = max(1, size(eigval, 1))
+    np  = max(1, size(matrix, 1))
+    ldz = max(1, size(eigvec, 1))
 
     ! dimension missmatch
-    if (np /= n*(n+1)/2) then
+    if (np /= n*(n+1)/2 .or. ldz /= n) then
         info = 1000
     endif
 
-    !  allocate work arrays with requested size
-    allocate(work(3*n), stat=info)
+    if (info == 0) then
+       ! allocate work arrays with requested size
+       allocate(work(3*n), stat=info)
+    end if
 
-    !  call lapack routine
+    ! call lapack routine
     if(info == 0) then
-        call dspev(jobz,uplo,n,a,w,v,n,work,info)
-    else
-        info = 1000
+        call dspev(jobz, uplo, n, matrix, eigval, eigvec, ldz, work, info)
     endif
 
-    !  deallocate work arrays with requested sizes
-    deallocate(work, stat=info)
-
-    !  error handler
-    if (present(info_out)) then
-        info_out = info
+    ! error handler
+    if (present(stat)) then
+        stat = info
     else if(info.ne.0) then
-        call xerbla(thisis,info)
+        error stop "[LAPACK] Solving eigenvalue problem failed!"
     endif
 
 end subroutine solve_spev
