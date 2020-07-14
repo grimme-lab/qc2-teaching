@@ -20,3 +20,5 @@ To ease the reuse of this project, the source code contained in this project is 
    :target: http://creativecommons.org/publicdomain/zero/1.0/
 
 To the extent possible under law, Sebastian Ehlert who associated CC0 with this project has waived all copyright and related or neighboring rights to the source code in this project.
+
+This project contains a `minimal, redistributed version of LAPACK <http://www.netlib.org/lapack/>`_.

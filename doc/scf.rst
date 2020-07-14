@@ -262,8 +262,8 @@ over contracted Gaussian orbitals, let's check out the ``interface``:
    !> one electron integrals over spherical Gaussian functions
    subroutine oneint(xyz, chrg, r_a, r_b, alp, bet, ca, cb, sab, tab, vab)
       import wp
-      real(wp), intent(in)  :: xyz(:, :) !< position of all atoms in atomic units
-      real(wp), intent(in)  :: chrg(:) !< nuclear charges
+      real(wp), intent(in)  :: xyz(:, :) !< position of all atoms in atomic units, dim: [3, nat]
+      real(wp), intent(in)  :: chrg(:) !< nuclear charges, dim: nat
       real(wp), intent(in)  :: r_a(:) !< aufpunkt of orbital a, dim: 3
       real(wp), intent(in)  :: r_b(:) !< aufpunkt of orbital b, dim: 3
       real(wp), intent(in)  :: alp(:) !< Gaussian exponents of the primitives at a
@@ -364,6 +364,39 @@ eigenvalues **s**.
    3. Make sure that **X**:sup:`T` **SX** = **1** and that you are not overwriting
       your overlap matrix in the diagonalization.
    4. Do you see why **X** is called symmetric orthonormalizer?
+
+To solve the actual eigenvalue problem we will use the linear algebra package
+(LAPACK), namely the subroutine ``dspev``, which stands for double precision,
+symmetric packed eigenvalue problem, for more details you can look up the
+`documentation <http://www.netlib.org/lapack/explore-html/d4/d0f/dspev_8f.html>`_.
+Since LAPACK routines can be somewhat unintuitive to work with on the first
+encounter we provide a wrapper called ``solve_spev``.
+As usual we checkout the interface in ``lib/linear_algebra.f90``:
+
+.. code-block:: fortran
+
+   interface
+   subroutine solve_spev(matrix, eigval, eigvec, stat)
+     import wp
+     !> symmetric packed matrix to diagonalize, dim: n*(n+1)/2
+     !  matrix is overwritten by the LAPACK solver
+     real(wp), intent(inout) :: matrix(:)
+     !> contains eigenvalues on exit, dim: n
+     real(wp), intent(out) :: eigval(:)
+     !> contains eigenvectors on exit, dim: [n, n]
+     real(wp), intent(out) :: eigvec(:, :)
+     !> error status, if not provided the routine will stop the program
+     integer, intent(out), optional :: stat
+   end subroutine solve_spev
+   end interface
+
+.. note::
+
+   The linear algebra package (LAPACK) and the basic linear algebra subprograms
+   (BLAS) are commonly used libraries in many quantum chemical programs,
+   as they provide a computationally efficient and uniform interface to many
+   linear algebra problems.
+
 
 Initial Guess
 ~~~~~~~~~~~~~
