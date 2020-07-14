@@ -21,4 +21,4 @@ To ease the reuse of this project, the source code contained in this project is 
 
 To the extent possible under law, Sebastian Ehlert who associated CC0 with this project has waived all copyright and related or neighboring rights to the source code in this project.
 
-This project contains a `minimal, redistributed version of LAPACK <http://www.netlib.org/lapack/>`_.
+This project contains a `minimal, redistributed version of LAPACK <http://www.netlib.org/lapack/>`_, which is available under a BSD 3 clause license.
