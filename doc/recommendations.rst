@@ -348,7 +348,7 @@ From now on, you can also copy files from and to your work machine.
    [awvwgk@saw2570 ~] $ scp .bashrc ehlert@c00:~/.bashrc
    [awvwgk@saw2570 ~] $ scp ehlert@c00:~/QC2/orca.out QC2/
 
-As a short recap, you should now be able to log in with just to commands.
+As a short recap, you should now be able to log in with just two commands.
 
 .. code-block:: none
    :linenos:
