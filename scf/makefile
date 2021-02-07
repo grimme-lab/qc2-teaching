@@ -23,7 +23,7 @@ FC := gfortran
 LD := $(FC)
 RM := rm -f
 BUILD := build
-vpath %.f90 .:lib
+vpath %.f90 src:app
 # use -O0 for debugging, -O2 is fine for production runs
 FFLAGS := -O
 FFLAGS += -ffree-form
@@ -47,7 +47,7 @@ all: setup $(PROG)
 ifeq ($(HAS_LAPACK),yes)
 LIBS := -llapack
 else
-vpath %.f lib
+vpath %.f src
 LAPACK_OBJS := $(BUILD)/lapack.f.o
 $(BUILD)/lapack.f.o: lapack.f
 	$(FC) -O2 -ffixed-form -c $< -o $@
