@@ -16,7 +16,8 @@ program.
    To use it just invoke ``make`` and find everything else taken care for.
 
    For more details on building software and how we automated this process
-   you can find a guide at :ref:`building`.
+   you can find a guide at the
+   `fortran-lang learning page <https://fortran-lang.org/learn/building_programs>`_.
 
 
 Restricted Hartree--Fock

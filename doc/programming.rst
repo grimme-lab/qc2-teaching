@@ -3,6 +3,35 @@ Introduction to Fortran
 
 .. contents::
 
+.. note::
+
+   To learn any new programming language good learning resources are
+   important. This introduction covers the basic language features you will
+   need for this course but Fortran offers much more functionality.
+
+   Good resources can be found at `fortran-lang.org <https://fortran-lang.org>`_.
+   Especially the `learn category <https://fortran-lang.org/learn>`_ offers
+   useful introductory material to Fortran programming and links to additional
+   resources.
+
+   The `fortran90.org <https://www.fortran90.org>`_ offers a rich portfolio
+   of Fortran learning material. For students with prior experience in other
+   programming languages like Python the
+   `Rosetta Stone <https://www.fortran90.org/src/rosetta.html>`_ might offer
+   a good starting point as well.
+
+   Also, the `Fortran Wiki <http://fortranwiki.org/>`_ has plenty of good
+   material on Fortran and offers a comprehensive overview over many language
+   features and programming models.
+
+   An active forum of the Fortran community is the
+   `fortran-lang discourse <https://fortran-lang.discourse.group/>`_.
+   While we offer our own forum solution for this course to discuss and troubleshoot,
+   you are more than welcome to engage with the Fortran community there as well.
+   Just be mindful when starting threads specific to this course and tag them
+   as *Help* or *Homework*.
+
+
 General Principles
 ------------------
 

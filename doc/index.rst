@@ -19,7 +19,6 @@ This is the guide to the practical course for QC2.
    intro
    programming
    scf
-   make
 
 .. toctree::
    :maxdepth: 3
