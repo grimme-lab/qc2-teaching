@@ -10,7 +10,7 @@ program.
 
    Start by extracting the ``course-material.zip`` which you downloaded earlier.
    You should find a ``scf/`` directory containing the starting code for your
-   program.
+   program (see ``scf/app/main.f90``).
    To make building your program easier and give you more time to focus on
    the actual programming we put some build automation there as well.
    To use it just invoke ``make`` and find everything else taken care for.
@@ -372,7 +372,7 @@ symmetric packed eigenvalue problem, for more details you can look up the
 `documentation <http://www.netlib.org/lapack/explore-html/d4/d0f/dspev_8f.html>`_.
 Since LAPACK routines can be somewhat unintuitive to work with on the first
 encounter we provide a wrapper called ``solve_spev``.
-As usual we checkout the interface in ``lib/linear_algebra.f90``:
+As usual we checkout the interface in ``src/linear_algebra.f90``:
 
 .. code-block:: fortran
 
@@ -465,7 +465,7 @@ to avoid calculating them all together, we will again go the straight-forward
 way and calculate them the naive way.
 
 Again we will check the ``interface`` of the ``twoint`` routine
-in ``lib/integrals.f90``.
+in ``src/integrals.f90``.
 
 .. admonition:: Exercise 10
 

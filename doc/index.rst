@@ -3,7 +3,7 @@ QC2 -- Advanced Quantum Chemistry Methods
 
 This is the guide to the practical course for QC2.
 
-.. literalinclude:: ../scf/main.f90
+.. literalinclude:: ../scf/app/main.f90
    :language: fortran
 
 .. toctree::
