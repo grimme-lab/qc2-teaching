@@ -14,7 +14,7 @@ Introduction to Fortran
    useful introductory material to Fortran programming and links to additional
    resources.
 
-   The `fortran90.org <https://www.fortran90.org`_ offers a rich portfolio
+   The `fortran90.org <https://www.fortran90.org>`_ offers a rich portfolio
    of Fortran learning material. For students with prior experience in other
    programming languages like Python the
    `Rosetta Stone <https://www.fortran90.org/src/rosetta.html>`_ might offer
