@@ -15,8 +15,18 @@ of your platform.
 
 .. contents::
 
+
 Windows 10
 ----------
+
+There are multiple ways to enable your Windows system for development.
+For this course we will present two methods, either running natively
+(see :ref:`msys2`) or with a virtualisation of a Linux subsystem (see :ref:`wsl`).
+
+
+.. _wsl:
+Install WSL
+~~~~~~~~~~~
 
 With Windows 10 comes the possibility to integrate a Linux Console to your Windows
 PC via the Windows Subsystem for Linux (WSL). This is in particular useful for you
@@ -26,9 +36,6 @@ you to complete all the tasks of the course (it is basically a shortened version
 of the `Microsoft documentation for installing WSL`_).
 
 .. _Microsoft documentation for installing WSL: https://docs.microsoft.com/en-us/windows/wsl/install-win10
-
-Install WSL
-~~~~~~~~~~~
 
 In order to install WSL, you first have to enable the optional WSL feature. Open
 the Windows PowerShell as administrator (for example by typing ``powershell`` in
@@ -43,6 +50,7 @@ Type the following command in PowerShell and press ``<Enter>``:
    Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
 
 Afterwards please restart your computer if you are asked to.
+
 
 Install Linux Distribution
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -86,8 +94,61 @@ console in your current directory which is your Windows home directory.
 .. _Windows Terminal: https://github.com/Microsoft/Terminal
 
 You have now successfully installed a Linux console on your Windows computer and
-can continue with the Ubuntu part of this documentation.
+can continue with the Ubuntu part of this documentation (see :ref:`ubuntu`).
 
+
+.. _msys2:
+Install MSYS2
+~~~~~~~~~~~~~
+
+The `MSYS2 project <https://www.msys2.org>`_ provides a package manager and
+makes many common Unix tools available for Windows.
+It comes with its own bash-like shell which allows to easily follow this course.
+
+Download the ``msys2-x86_64-YYYYMMDD.exe`` installer from the MSYS2 webpage
+and run the installer. MSYS2 will create three new desktop shortcuts:
+*MSYS terminal*, *MinGW64 terminal* and *MinGW32 terminal* (more information
+on MSYS2 terminals is available `here <https://www.msys2.org/docs/terminals/>`_).
+
+You can either use the *MSYS terminal* or the *MinGW64 terminal* for this course
+we recommend to use the latter.
+
+Open a new terminal and update your installation with
+
+.. code-block:: none
+
+   pacman -Syu
+
+You might have to update MSYS2 and ``pacman`` first, restart the terminal and run
+the above command again to update the installed packages.
+
+If you are using the *MinGW64 terminal* you can install the required software with
+
+.. code-block:: none
+
+   pacman -S git mingw-w64-x86_64-gcc-fortran mingw-w64-x86_64-make vim
+
+If you use the *MSYS terminal* leave out the ``mingw-w64-x86_64`` prefixes to install
+the required software.
+
+After having installed the necessary software, you need to download the
+`course material`_.
+Unzip the ``course-material.zip`` archive to your home directory and
+you are setup to start with the next chapter.
+
+.. note::
+
+   Your home directories ``C:\Users\<name>`` will be accessible under
+   ``/c/Users/<name>`` in the MSYS2 terminals, look there if you are
+   searching for your downloaded files.
+
+.. tip::
+
+   The content of the archive might be potentially important as a starting
+   point for your SCF program later.
+
+
+.. _ubuntu:
 Ubuntu
 ------
 
@@ -121,6 +182,7 @@ you are setup to start with the next chapter.
 
    The content of the archive might be potentially important as a starting
    point for your SCF program later.
+
 
 MacOS
 -----
@@ -160,8 +222,8 @@ you are setup to start with the next chapter.
    Linux OS, you probably have to use the ``cmd`` key instead of the
    ``ctrl`` key.
 
-.. _gfortran from homebrew:
 
+.. _gfortran from homebrew:
 Installing ``gfortran`` with Homebrew
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
