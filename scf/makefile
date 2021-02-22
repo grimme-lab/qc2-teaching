@@ -45,12 +45,11 @@ all: setup $(PROG)
 
 # libraries you want to use
 ifeq ($(HAS_LAPACK),yes)
-LIBS := -llapack
+LIBS := -llapack -lblas
 else
-vpath %.f src
-LAPACK_OBJS := $(BUILD)/lapack.f.o
-$(BUILD)/lapack.f.o: lapack.f
-	$(FC) -O2 -ffixed-form -c $< -o $@
+LAPACK_OBJS := $(BUILD)/lapack.f90.o
+$(BUILD)/lapack.f90.o: lapack.f90
+	$(FC) -O2 -c $< -o $@
 endif
 
 # this defines how to build your program
