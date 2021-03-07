@@ -9,7 +9,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - run: sudo apt install -yq --no-install-recommends gfortran make python3-sphinx python3-sphinx-rtd-theme
+    - run: sudo apt install -yq --no-install-recommends gfortran make
     - run: make FC=gfortran -C doc/src
     - run: make -C scf
-    - run: make html

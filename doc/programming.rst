@@ -199,7 +199,7 @@ a value to ``my_number``, then we are printing it to the screen.
    which works similar to the ``write(*, *)`` statement.
 
 .. admonition:: Solutions 2
-   :class: tip
+   :class: tip, toggle
 
    We replace the assignment in line 4 with the ``read(*, *) my_number``
    and then translate it to a program.
@@ -323,7 +323,7 @@ program again.
        Attempt to obtain a fraction.
 
 .. admonition:: Solutions 3
-   :class: tip
+   :class: tip, toggle
 
    As before we add a line like ``write(*, *) "Enter two numbers to add"``
    before the read statement. We can do something similar like in numbers
@@ -448,7 +448,7 @@ specified significant digits.
       Replace kind with the number you determined in ``kinds.f90``.
 
 .. admonition:: Solutions 4
-   :class: tip
+   :class: tip, toggle
 
    The output of the second write statement should be ``8`` on most machines.
 
@@ -680,7 +680,7 @@ or equal to zero).
       such that it also takes negative values and breaks at zero.
 
 .. admonition:: Solutions 6
-   :class: tip
+   :class: tip, toggle
 
    You might have tried to exchange the condition for ``i = 0``, but since
    the equal sign is reserved for the assignment ``gfortran`` will throw
@@ -839,7 +839,7 @@ function.
    2. What happens when you read or write out side the bounds of the array?
 
 .. admonition:: Solutions 10
-   :class: tip
+   :class: tip, toggle
 
    Let's try to read one element past the size of the array and add this
    elements to the sum (``do i = 1, size(vec)+1``):

@@ -120,6 +120,7 @@ basis functions for this particular atom.
       basis set on both atoms and an exponent of 1.25 for each atom.
 
 .. admonition:: Solutions 1
+   :class: tip, toggle
 
    For a single atom the choice of the position is unimportant, so we
    can write something like
