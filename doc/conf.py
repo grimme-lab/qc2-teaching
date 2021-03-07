@@ -60,6 +60,7 @@ html_theme = 'sphinx_book_theme'
 html_title = project
 html_theme_options = {
     "repository_url": "https://github.com/grimme-lab/qc2-teaching",
+    "repository_branch": "main",
     "path_to_docs": "doc",
     "use_edit_page_button": True,
     "use_download_button": False,
