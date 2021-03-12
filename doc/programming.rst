@@ -62,12 +62,11 @@ some have very special data structures like census data, some are rather new
 and follow very modern principles, some have a long history and thus rely
 on time-tested concepts.
 
-In the case of this module, the Fortran language was chosen because it still
-is in frequent use in the field of quantum chemistry and scientific computing
-in general. It also makes for code that is rather rapidly written. The name
-Fortran is derived from Formula Translation
-and indicates that the language is designed for the task at hand, translating
-scientific equations into computer code.
+In the case of this module, the Fortran programming language is chosen because
+it makes for code that is rather rapidly written with decent performance.
+It is also in frequent use in the field of quantum chemistry and scientific computing.
+The name Fortran is derived from Formula Translation and indicates that the language
+is designed for the task at hand, translating scientific equations into computer code.
 
 Let's take a look at a complete Fortran program.
 
