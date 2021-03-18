@@ -26,15 +26,8 @@ needed software, add the following lines to your ``.bashrc``:
    # AKbin
    export PATH=/home/abt-grimme/AK-bin:$PATH
    export PATH=/home/$USER/bin:$PATH
-
-   # TURBOMOLE
-   export TURBODIR=/software/turbomole702
-   export PATH=$TURBODIR/scripts:$PATH
-   export PATH=$TURBODIR/bin/`sysname`:$PATH
-
-   # ORCA
-   ORCABINPATH=/home/software/orca-4.0.0
-   PATH=$ORCABINPATH:$PATH
+   
+   module load turbomole orca
 
    # XTB
    export OMP_NUM_THREADS=2
