@@ -146,6 +146,74 @@ The double quotes enclosing the sentence make the program recognize that
 the following characters are just that, *i.e.*, a sequence of characters
 (called a string) and not programming directives or variables.
 
+The Fortran package manager
+---------------------------
+
+The Fortran package manager (fpm) is a recent advancement introduced by the
+Fortran community. It helps to abstract common tasks when developing Fortran
+applications like building and running executables or creating new projects.
+
+.. warning::
+
+   The Fortran package manager is still a relatively new project.
+   Using new and recent software always has some risks of running into
+   unexpected issues. We have carefully evaluated fpm and the advantage
+   of the simple user interface seemed to outweight the potential risks.
+
+   Still, this course is structured such that it can be completed with
+   or without using fpm.
+
+.. note::
+
+   If you are doing this course on a machine in the Mulliken center you
+   have to activate the fpm installation by using the following commands:
+
+   .. code:: shell
+
+      module use /home/abt-grimme/modulefiles
+      module load fpm
+
+To create a new program with fpm run
+
+.. code-block:: none
+
+   fpm new --app myprogram
+
+This will initialize a new Fortran project with an simple program setup.
+Enter the newly created directory and run it with
+
+.. code-block:: none
+
+   cd myprogram
+   fpm run
+   ...
+    hello from project myprogram
+
+You can inspect the scaffold generated in ``app/main.f90`` and will find
+a similar setup to your very first Fortran program:
+
+.. literalinclude:: src/fpm.1.f90
+   :language: fortran
+   :caption: app/main.f90
+   :linenos:
+
+You can modify the source code with your editor of choice and simply invoke
+fpm run again. You will find that fpm takes care of automatically rebuilding
+your program before running it.
+
+.. tip::
+
+   By default fpm enables compile time checks and run time checks that
+   are absent in the plain compiler invokation. You will find that those
+   can help you catch and avoid common errors when developing in Fortran.
+
+   To read more on the capabilities of fpm check the output of
+
+   .. code-block::
+
+      fpm help
+
+
 Introducing Variables
 ---------------------
 
@@ -183,11 +251,21 @@ a value to ``my_number``, then we are printing it to the screen.
    you type in the above program. Then translate it with ``gfortran``
    with
 
-   .. code-block:: none
+   .. tabbed:: gfortran
 
-      gfortran numbers.f90 -o numbers_prog
-      ./numbers_prog
-       My number is          42
+      .. code-block:: none
+
+         gfortran numbers.f90 -o numbers_prog
+         ./numbers_prog
+          My number is          42
+
+   .. tabbed:: fpm
+
+      .. code-block:: none
+
+         fpm run
+          + build/gfortran_debug/app/myproject
+          My number is          42
 
    Despite being a bit oddly formatted the program correctly returned the
    number we have written in ``numbers.f90``.
@@ -203,12 +281,23 @@ a value to ``my_number``, then we are printing it to the screen.
    We replace the assignment in line 4 with the ``read(*, *) my_number``
    and then translate it to a program.
 
-   .. code-block:: none
+   .. tabbed:: gfortran
 
-      gfortran numbers.f90 -o numbers_prog
-      ./numbers_prog
-      31
-       My number is          31
+      .. code-block:: none
+
+         gfortran numbers.f90 -o numbers_prog
+         ./numbers_prog
+         31
+          My number is          31
+
+   .. tabbed:: fpm
+
+      .. code-block:: none
+
+         fpm run
+          + build/gfortran_debug/app/myproject
+         31
+          My number is          31
 
    If you now execute ``numbers_prog`` the shell freezes.
    We are now exactly at the read statement and the ``numbers_prog`` is waiting
@@ -216,28 +305,54 @@ a value to ``my_number``, then we are printing it to the screen.
 
    You might be tempted to type something like ``four``:
 
-   .. code-block:: none
-      :emphasize-lines: 4
+   .. tabbed:: gfortran
 
-      ./numbers_prog
-      four
-      At line 4 of file numbers.f90 (unit = 5, file = 'stdin')
-      Fortran runtime error: Bad integer for item 1 in list input
+      .. code-block:: none
+         :emphasize-lines: 4
 
-      Error termination. Backtrace:
-      #0  0x7efe31de5e1b in read_integer
-         at /build/gcc/src/gcc/libgfortran/io/list_read.c:1099
-      #1  0x7efe31de8e29 in list_formatted_read_scalar
-         at /build/gcc/src/gcc/libgfortran/io/list_read.c:2171
-      #2  0x7efe31def535 in wrap_scalar_transfer
-         at /build/gcc/src/gcc/libgfortran/io/transfer.c:2369
-      #3  0x7efe31def535 in wrap_scalar_transfer
-         at /build/gcc/src/gcc/libgfortran/io/transfer.c:2346
-      #4  0x56338a59f23b in ???
-      #5  0x56338a59f31a in ???
-      #6  0x7efe31867ee2 in ???
-      #7  0x56338a59f0fd in ???
-      #8  0xffffffffffffffff in ???
+         ./numbers_prog
+         four
+         At line 4 of file numbers.f90 (unit = 5, file = 'stdin')
+         Fortran runtime error: Bad integer for item 1 in list input
+
+         Error termination. Backtrace:
+         #0  0x7efe31de5e1b in read_integer
+            at /build/gcc/src/gcc/libgfortran/io/list_read.c:1099
+         #1  0x7efe31de8e29 in list_formatted_read_scalar
+            at /build/gcc/src/gcc/libgfortran/io/list_read.c:2171
+         #2  0x7efe31def535 in wrap_scalar_transfer
+            at /build/gcc/src/gcc/libgfortran/io/transfer.c:2369
+         #3  0x7efe31def535 in wrap_scalar_transfer
+            at /build/gcc/src/gcc/libgfortran/io/transfer.c:2346
+         #4  0x56338a59f23b in ???
+         #5  0x56338a59f31a in ???
+         #6  0x7efe31867ee2 in ???
+         #7  0x56338a59f0fd in ???
+         #8  0xffffffffffffffff in ???
+
+   .. tabbed:: fpm
+
+      .. code-block:: none
+         :emphasize-lines: 6
+
+         fpm run
+          + build/gfortran_debug/app/numbers
+          Enter an integer value
+         four
+         At line 5 of file app/main.f90 (unit = 5, file = 'stdin')
+         Fortran runtime error: Bad integer for item 1 in list input
+
+         Error termination. Backtrace:
+         #0  0x7fb170e6ffdb in read_integer
+            at /build/gcc/src/gcc/libgfortran/io/list_read.c:1099
+         #1  0x7fb170e73229 in list_formatted_read_scalar
+            at /build/gcc/src/gcc/libgfortran/io/list_read.c:2171
+         #2  0x561f44a562a0 in numbers
+            at app/main.f90:5
+         #3  0x561f44a5637f in main
+            at app/main.f90:7
+          Command failed
+         ERROR STOP
 
    So we got an error here, the program is printing a lot of cryptic information,
    but the most useful lines are near to our input of ``four``.
@@ -329,22 +444,44 @@ program again.
    for both ``a`` and ``b`` to echo their values, the resulting shell history
    should look similar to this
 
-   .. code-block:: none
+   .. tabbed:: gfortran
 
-      gfortran add -o add_prog
-      ./add_prog
-       Enter two numbers to add
-      11 31
-       The value of a is          11
-       The value of b is          31
-       The result is          42
-      ./add_prog
-       Enter two numbers to add
-      -8
-      298
-       The value of a is          -8
-       The value of b is         298
-       The result is         290
+      .. code-block:: none
+
+         gfortran add -o add_prog
+         ./add_prog
+          Enter two numbers to add
+         11 31
+          The value of a is          11
+          The value of b is          31
+          The result is          42
+         ./add_prog
+          Enter two numbers to add
+         -8
+         298
+          The value of a is          -8
+          The value of b is         298
+          The result is         290
+
+   .. tabbed:: fpm
+
+      .. code-block:: none
+
+         fpm run
+          + build/gfortran_debug/app/add
+          Enter two numbers to add
+         11 31
+          The value of a is          11
+          The value of b is          31
+          The result is          42
+         fpm run
+          + build/gfortran_debug/app/add
+          Enter two numbers to add
+         -8
+         298
+          The value of a is          -8
+          The value of b is         298
+          The result is         290
 
    The input seems to be quite forgiving and we can also add negative numbers.
    While this sounds obvious it is a common pitfall in other languages,
@@ -361,14 +498,28 @@ program again.
    for the multiplication, since there is nothing worse than a program called
    ``add_prog`` performing multiplications).
 
-   .. code-block:: none
+   .. tabbed:: gfortran
 
-      ./multiply_prog
-       Enter two numbers to multiply
-      1000000 1000000
-       The value of a is     1000000
-       The value of b is     1000000
-       The result is  -727379968
+      .. code-block:: none
+
+         ./multiply_prog
+          Enter two numbers to multiply
+         1000000 1000000
+          The value of a is     1000000
+          The value of b is     1000000
+          The result is  -727379968
+
+   .. tabbed:: fpm
+
+      .. code-block:: none
+
+         fpm run
+          + build/gfortran_debug/app/muliply
+          Enter two numbers to multiply
+         1000000 1000000
+          The value of a is     1000000
+          The value of b is     1000000
+          The result is  -727379968
 
    which is kind of surprising. Take a piece of paper or perform the
    multiplication in your head, you will probably something pretty close
@@ -411,13 +562,25 @@ Let us consider the following program using ``real`` variables
 We translate ``accuracy.f90`` to an executable and run it to find that
 it is not that accurate
 
-.. code-block:: none
+.. tabbed:: gfortran
 
-   gfortran accuracy.f90 -o accuracy_test
-   ./accuracy.test
-    a is   1.00000000
-    b is   6.00000000
-    c is  0.166666672
+   .. code-block:: none
+
+      gfortran accuracy.f90 -o accuracy_test
+      ./accuracy.test
+       a is   1.00000000
+       b is   6.00000000
+       c is  0.166666672
+
+.. tabbed:: fpm
+
+   .. code-block:: none
+
+      fpm run
+       + build/gfortran_debug/app/accuracy
+       a is   1.00000000
+       b is   6.00000000
+       c is  0.166666672
 
 Similar to our integer arithmetic test, real (floating point) arithmetic has
 also limitation. The default representation uses 32 bits (4 bytes) to represent
@@ -464,13 +627,25 @@ specified significant digits.
    we got more digits printed and also a more accurate, but still
    not perfect result
 
-   .. code-block:: none
+   .. tabbed:: gfortran
 
-      gfortran accuracy.f90 -o accuracy_test
-      ./accuracy.test
-       a is   1.00000000000000
-       b is   6.00000000000000
-       c is  0.166666666666667
+      .. code-block:: none
+
+         gfortran accuracy.f90 -o accuracy_test
+         ./accuracy.test
+          a is   1.00000000000000
+          b is   6.00000000000000
+          c is  0.166666666666667
+
+   .. tabbed:: fpm
+
+      .. code-block:: none
+
+         fpm run
+          + build/gfortran_debug/app/accuracy
+          a is   1.00000000000000
+          b is   6.00000000000000
+          c is  0.166666666666667
 
    It is important to notice here that we cannot get the same result
    we would evaluate on a piece of paper since the precision is still
@@ -500,7 +675,6 @@ and is then *cast* into a real number ``0.0``.
 
 .. code-block:: none
 
-   ./literals_prog
     a is  0.16666666666666666
     b is  0.16666667163372040
     c is  0.00000000000000000
@@ -551,9 +725,8 @@ to convert it first, which is called *casting*.
    interesting one:
 
    .. code-block:: none
-      :emphasize-lines: 6
+      :emphasize-lines: 5
 
-      gfortran accuracy.f90
       accuracy.f90:7:7:
 
           7 |   real(wp) :: a, b, c
@@ -686,9 +859,8 @@ or equal to zero).
    an error like this one
 
    .. code-block:: none
-      :emphasize-lines: 6
+      :emphasize-lines: 5
 
-      gfortran loop.f90
       loop.f90:9:10:
 
           9 |     if (i = 0) then
@@ -849,6 +1021,11 @@ function.
       10
       1 1 1 1 1 1 1 1 1 1
        Sum of all elements         331
+
+   .. tip::
+
+      Using fpm would have caught this error by default. You would see
+      the run time error message shown below already at this stage.
 
    Since we provided ten elements which are all one, we expect 10 as result,
    but get a different number. So what is element 11 of our array of size 10?

@@ -31,6 +31,7 @@ release = 'SoSe2020'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    "sphinx_panels",
     "sphinx_copybutton",
     "sphinx_togglebutton",
 ]

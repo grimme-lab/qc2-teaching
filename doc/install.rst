@@ -24,7 +24,63 @@ For this course we will present two methods, either running natively
 (see :ref:`msys2`) or with a virtualisation of a Linux subsystem (see :ref:`wsl`).
 
 
+.. _msys2:
+
+Install MSYS2
+~~~~~~~~~~~~~
+
+The `MSYS2 project <https://www.msys2.org>`_ provides a package manager and
+makes many common Unix tools available for Windows.
+It comes with its own bash-like shell which allows to easily follow this course.
+
+Download the ``msys2-x86_64-YYYYMMDD.exe`` installer from the MSYS2 webpage
+and run the installer. MSYS2 will create three new desktop shortcuts:
+*MSYS terminal*, *MinGW64 terminal* and *MinGW32 terminal* (more information
+on MSYS2 terminals is available `here <https://www.msys2.org/docs/terminals/>`_).
+
+You can either use the *MSYS terminal* or the *MinGW64 terminal* for this course
+we recommend to use the latter.
+
+Open a new terminal and update your installation with
+
+.. code-block:: none
+
+   pacman -Syu
+
+You might have to update MSYS2 and ``pacman`` first, restart the terminal and run
+the above command again to update the installed packages.
+
+If you are using the *MinGW64 terminal* you can install the required software with
+
+.. code-block:: none
+
+   pacman -S git mingw-w64-x86_64-gcc-fortran mingw-w64-x86_64-make vim
+
+If you use the *MSYS terminal* leave out the ``mingw-w64-x86_64`` prefixes to install
+the required software.
+
+For this course we will use the Fortran package manager (fpm), which can
+be installed following the instructions `here <https://github.com/awvwgk/mingw-w64-fpm-pkgbuild>`_.
+
+After having installed the necessary software, you need to download the
+`course material`_.
+Unzip the ``course-material.zip`` archive to your home directory and
+you are setup to start with the next chapter.
+
+.. note::
+
+   Your home directories ``C:\Users\<name>`` will be accessible under
+   ``/c/Users/<name>`` in the MSYS2 terminals, look there if you are
+   searching for your downloaded files.
+
+.. tip::
+
+   The content of the archive might be potentially important as a starting
+   point for your SCF program later.
+
+
 .. _wsl:
+
 Install WSL
 ~~~~~~~~~~~
 
@@ -97,64 +153,14 @@ You have now successfully installed a Linux console on your Windows computer and
 can continue with the Ubuntu part of this documentation (see :ref:`ubuntu`).
 
 
-.. _msys2:
-Install MSYS2
-~~~~~~~~~~~~~
-
-The `MSYS2 project <https://www.msys2.org>`_ provides a package manager and
-makes many common Unix tools available for Windows.
-It comes with its own bash-like shell which allows to easily follow this course.
-
-Download the ``msys2-x86_64-YYYYMMDD.exe`` installer from the MSYS2 webpage
-and run the installer. MSYS2 will create three new desktop shortcuts:
-*MSYS terminal*, *MinGW64 terminal* and *MinGW32 terminal* (more information
-on MSYS2 terminals is available `here <https://www.msys2.org/docs/terminals/>`_).
-
-You can either use the *MSYS terminal* or the *MinGW64 terminal* for this course
-we recommend to use the latter.
-
-Open a new terminal and update your installation with
-
-.. code-block:: none
-
-   pacman -Syu
-
-You might have to update MSYS2 and ``pacman`` first, restart the terminal and run
-the above command again to update the installed packages.
-
-If you are using the *MinGW64 terminal* you can install the required software with
-
-.. code-block:: none
-
-   pacman -S git mingw-w64-x86_64-gcc-fortran mingw-w64-x86_64-make vim
-
-If you use the *MSYS terminal* leave out the ``mingw-w64-x86_64`` prefixes to install
-the required software.
-
-After having installed the necessary software, you need to download the
-`course material`_.
-Unzip the ``course-material.zip`` archive to your home directory and
-you are setup to start with the next chapter.
-
-.. note::
-
-   Your home directories ``C:\Users\<name>`` will be accessible under
-   ``/c/Users/<name>`` in the MSYS2 terminals, look there if you are
-   searching for your downloaded files.
-
-.. tip::
-
-   The content of the archive might be potentially important as a starting
-   point for your SCF program later.
-
-
 .. _ubuntu:
+
 Ubuntu
 ------
 
 Starting with a fresh version of `Ubuntu 18.04`_ we have to install a few programs
 first.
-You have to install the packages: ``gfortran``, ``make``, ``atom`` and ``vim``.
+You have to install the packages: ``git``, ``gfortran``, ``make``, ``atom`` and ``vim``.
 We will assume you are working with ``apt`` to install packages, in case you
 prefer another package manager, feel free to install the packages listed here
 with this one (see `Ubuntu install & remove software`_).
@@ -164,12 +170,16 @@ with this one (see `Ubuntu install & remove software`_).
 
 .. code-block:: bash
 
-   sudo apt install gfortran make atom vim
+   sudo apt install git gfortran make atom vim
 
 .. note::
 
    Some packages, especially ``vim`` and ``make`` might already be installed on
    your system, but it does not harm to include them here again.
+
+For the programming course we recommend to use the Fortran package manager (fpm),
+which can be downloaded from `here <https://github.com/fortran-lang/fpm/releases>`
+or setup from conda-forge as described in :ref:`fpm from conda`.
 
 After having installed the necessary software, you need to download the
 `course material`_.
@@ -182,6 +192,52 @@ you are setup to start with the next chapter.
 
    The content of the archive might be potentially important as a starting
    point for your SCF program later.
+
+
+.. _fpm from conda:
+
+Fortran package manager from conda
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can install the Fortran package manager (fpm) easily from conda-forge,
+a large scientific software repository. To do so, download a mambaforge installer
+from the `conda-forge project <https://github.com/conda-forge/miniforge/releases/latest>`_.
+For Ubuntu ``Mambaforge-Linux-x86_64.sh`` is the correct choice.
+Run the installer as user (no sudo required) to setup your conda base environment:
+
+.. code-block:: bash
+
+   sh Mambaforge-Linux-x86_64.sh
+
+Your prompt should now show a ``(base)`` label in front, which signals you that you
+now have access to the mamba package manager and the conda environment manager.
+
+.. note::
+
+   Those two tools, mamba and conda, are very powerful to create reproducable
+   development and production environments for scientific work.
+   For this course they allow us to easily install difficult to install software
+   or softare which is not yet available in all Linux distributions.
+   Many of our groups software is available over conda-forge as well.
+
+To add Fortran package manager (fpm) to your base environment run
+
+.. code-block:: bash
+
+   mamba install fpm
+
+.. tip::
+
+   Alternatively, you can create a separate environment for fpm with
+
+   .. code-block:: bash
+
+      mamba create -n fpm fpm
+      conda activate fpm
+
+   When creating a separate environment, you will always have to activate it after
+   when starting a new shell, but it allows you more fine grained control over
+   your installed software.
 
 
 MacOS
@@ -199,7 +255,9 @@ To setup your MacOS for the course follow this steps
 
 4. Install ``gfortran`` either by installing it from `here <https://gcc.gnu.org/wiki/GFortranBinariesMacOS>`_
    or by using Homebrew (see :ref:`gfortran from homebrew`)
-5. Download and install `atom <https://atom.io/>`_.
+5. Install the Fortran package manager from conda (see :ref:`fpm from conda`)
+   or homebrew (see :ref:`gfortran from homebrew`)
+6. Download and install `atom <https://atom.io/>`_.
 
 .. important::
 
@@ -224,8 +282,9 @@ you are setup to start with the next chapter.
 
 
 .. _gfortran from homebrew:
-Installing ``gfortran`` with Homebrew
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Installing with Homebrew
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can manage packages for your Mac using `homebrew <https://brew.sh>`_.
 To install homebrew download the installation script from the official
@@ -246,3 +305,10 @@ included, with
 .. code-block:: bash
 
    brew install gcc
+
+Additionally, install the Fortran package manager (fpm) with
+
+.. code-block:: bash
+
+   brew tap awvwgk/fpm
+   brew install fpm
