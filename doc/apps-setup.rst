@@ -66,8 +66,8 @@ To run a calculation with TURBOMOLE, you will need the following files:
 - ``mos`` or ``alpha`` and ``beta``: Orbitals (MO-coefficients) for restricted and unrestricted treatment, respectively
 
 To manually prepare a calculation, use ``define``. However, in this course,
-we will employ a tool that automatically runs ``define`` with the proper
-input: ``cefine``.
+all calculations can be prepared manually by only providing a ``control`` file
+containing all the necessary information.
 
 TURBOMOLE has different binaries and scripts for different jobs.
 While they do not need an explicit input file when called, you should **always**
@@ -113,6 +113,13 @@ in the following table.
 +----------------------+----------------------------------------------------------+
 
 .. important:: Each TURBOMOLE calculation needs its own directory.
+
+
+The ``control`` file
+~~~~~~~~~~~~~~~~~~~~
+
+To prepare a simple calculation in TURBOMOLE, a proper ``control`` file must be provided.
+It contains keywords starting with ``$`` ...
 
 
 cefine
