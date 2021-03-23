@@ -151,7 +151,7 @@ specified otherwise we will use the RI approximation throughout.
 
       cefine -bas def2-TZVP -func b3-lyp -uhf 2 -novdw
 
-   | To generate the input for the other calculations, please look at the table provided in section :ref:`Short cefine reference`. Add the ``-opt`` option for setting up the ``-mp2`` calculation.
+   | To generate the input for the other calculations, please look at the table provided in section :ref:`Keywords in control`. Add the ``-opt`` option for setting up the ``-mp2`` calculation.
    | Geometry optimizations (DFT, HF) are done with the program ``jobex``:
 
    .. code-block:: none
@@ -220,7 +220,7 @@ Formic Acid Dimer
 2. Using the optimized geometries, calculate the dimerization energy (energy difference
    of one dimer and two monomers) with HF, TPSS-D3 and MP2 employing the cc-pVXZ (X = D, T, Q)
    basis sets and their augmented counterparts (aug-cc-pVXZ). Refer to the table of ``cefine``
-   options given in section :ref:`Short cefine reference`.
+   options given in section :ref:`Keywords in control`.
 
 3. Tabulate your results and plot the total energies versus the cardinal number
    of the basis set for each method (*e.g.* with ``gnuplot``).
@@ -271,7 +271,7 @@ Reaction Enthalpies of Gas-Phase Reactions
 **Approach**
 
 1. Optimize the reactants and products using TPSS-D3/def2-TZVP (see earlier exercises
-   and section :ref:`Short cefine reference`, keep in mind the ``-d3`` option).
+   and section :ref:`Keywords in control`, keep in mind the ``-d3`` option).
 
 2. In order to get the thermal corrections from energy to enthalpy at 298 K, do a
    frequency calculation first. Use the program ``aoforce`` to calculate the vibrational
@@ -411,7 +411,7 @@ Kinetic Isotope Effect
    In order to find the transition state, use the following steps:
 
    (a) Prepare the calculation with ``cefine``. Use the B3LYP-D3/def2-TZVP level
-       of theory. Look at section :ref:`Short cefine reference` if you are unsure.
+       of theory. Look at section :ref:`Keywords in control` if you are unsure.
 
    (b) Consecutively, calculate energy, gradient and hessian:
 
