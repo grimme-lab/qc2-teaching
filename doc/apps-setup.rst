@@ -228,10 +228,10 @@ The following table shows the most important keywords that are interesting for t
 +--------------------------------------+------------------------------------------------------------------------------------------+
 | *DFT calculations*                                                                                                              |
 +--------------------------------------+------------------------------------------------------------------------------------------+
-| .. code-block:: none                 | Perform a DFT calculation using the functional ``<func>``                                |
-|                                      |                                                                                          |
-|    $dft                              |                                                                                          |
-|      functional <func>               |                                                                                          |
+| .. code-block:: none                 | | Perform a DFT calculation using the functional ``<func>``. Note that the BYLP, B3YLP   |
+|                                      |   and B2PLYP functionals are named ``b-lyp``, ``b3-lyp`` and ``b2-plyp``, respectively.  |
+|    $dft                              | | For double-hybrid functionals, also include the settings for MP2 calculations          |
+|      functional <func>               |   listed below (``$ricc2`` and ``$denconv`` blocks).                                     |
 +--------------------------------------+------------------------------------------------------------------------------------------+
 | .. code-block:: none                 | *(optional)* Defines the grid ``<grid>``, default is ``m4``.                             |
 |                                      |                                                                                          |
@@ -269,6 +269,10 @@ The following table shows the most important keywords that are interesting for t
 | .. code-block:: none                 | Use the symmetry of pointgroup ``<sym>``, e.g. ``c2v`` for pointgroup C\ :sub:`2v`.      |
 |                                      |                                                                                          |
 |    $symmetry <sym>                   |                                                                                          |
++--------------------------------------+------------------------------------------------------------------------------------------+
+| .. code-block:: none                 | Defines the maximum number of iterations in an SCF calculation (default ``<limit>`` is   |
+|                                      | 30). If an SCF did not converge, try increasing this value, e.g. to 100.                 |
+|    $scfiterlimit <limit>             |                                                                                          |
 +--------------------------------------+------------------------------------------------------------------------------------------+
 | .. code-block:: none                 | Specify the number of imaginary vibrational frequencies ``<imag>`` that shall be         |
 |                                      | obtained by a geometry optimization (default is ``itrvec 0`` for minimum structures).    |
