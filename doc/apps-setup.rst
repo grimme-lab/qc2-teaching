@@ -217,9 +217,9 @@ The following table shows the most important keywords that are interesting for t
 |                                      | extended Hückel guess and the entire rest of the calculation.                            |
 |    $eht charge=<chrg> unpaired=<uhf> |                                                                                          |
 +--------------------------------------+------------------------------------------------------------------------------------------+
-| .. code-block:: none                 | Use the resolution of the identity (RI) approximation. Note that you then have to use    |
-|                                      | ``ridft`` for single-point calculations and the ``-ri`` option for ``jobex``.            |
-|    $rij                              |                                                                                          |
+| .. code-block:: none                 | | Use the resolution of the identity (RI) approximation. Note that you then have to use  |
+|                                      |   ``ridft`` for single-point calculations and the ``-ri`` option for ``jobex``.          |
+|    $rij                              | | We recommend using the RI approximation for all exercises in this course.              |
 +--------------------------------------+------------------------------------------------------------------------------------------+
 | .. code-block:: none                 | For geometry optimizations: The energies and gradient of all optimization cycles will be |
 |                                      | saved in the files ``energy`` and ``gradient``.                                          |
@@ -266,12 +266,12 @@ The following table shows the most important keywords that are interesting for t
 |    $cosmo                            |                                                                                          |
 |      epsilon=<epsilon>               |                                                                                          |
 +--------------------------------------+------------------------------------------------------------------------------------------+
-| .. code-block:: none                 | Use the symmetry of pointgroup ``<sym>``, e.g. ``c2v`` for pointgroup C\ :sub:`2v`.      |
+| .. code-block:: none                 | Use the symmetry of pointgroup ``<sym>``, *e.g.* ``c2v`` for pointgroup C\ :sub:`2v`.    |
 |                                      |                                                                                          |
 |    $symmetry <sym>                   |                                                                                          |
 +--------------------------------------+------------------------------------------------------------------------------------------+
 | .. code-block:: none                 | Defines the maximum number of iterations in an SCF calculation (default ``<limit>`` is   |
-|                                      | 30). If an SCF did not converge, try increasing this value, e.g. to 100.                 |
+|                                      | 30). If an SCF did not converge, try increasing this value, *e.g.* to 100.               |
 |    $scfiterlimit <limit>             |                                                                                          |
 +--------------------------------------+------------------------------------------------------------------------------------------+
 | .. code-block:: none                 | Specify the number of imaginary vibrational frequencies ``<imag>`` that shall be         |

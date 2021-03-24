@@ -519,17 +519,21 @@ S\ :sub:`N`\ 2-Reaction
 
 1. Create structures and calculate the energies of the reactants (one calculation
    for each reactant) in the gas-phase and at |eps| = 32 (methanol). Use the hybrid
-   functional PW6B95 with a def2-TZVP basis and D3 dispersion correction. Example
-   for the preparation:
+   functional PW6B95 with a def2-TZVP basis and D3 dispersion correction. Keep in
+   mind that you also have to specify the charge and the solvent model in the ``control``
+   file, *e.g.*:
 
    .. code-block:: none
+      :linenos:
 
-      cefine -bas def2-TZVP -func pw6b95 -chrg -1.0 -cosmo 32.0 -d3
+      $eht charge=-1 unpaired=0
+      $cosmo
+        epsilon=32.0
 
 2. To create the potential energy curves, use the shell script below. The script
-   loops over all distances. For each distance it creates a new directory, calls
-   ``cefine``, performs the constrained geometry optimization and writes the electronic
-   energy (not necessarily your final reaction energy) into a file called ``results.dat``.
+   loops over all distances. For each distance it creates a new directory, performs
+   the constrained geometry optimization and writes the electronic energy (not
+   necessarily your final reaction energy) into a file called ``results.dat``.
    Create a new directory and copy and paste the script to a file named ``run-scan.sh``.
 
    .. code-block:: bash
@@ -539,8 +543,6 @@ S\ :sub:`N`\ 2-Reaction
 
       # Choose directory here
       calc_dir=scan_vac
-      # Choose options for the calculation
-      options="-bas def2-TZVP -func pw6b95 -chrg -1.0 -d3"
 
       cd $calc_dir
       if [ -f ./results.dat ]
@@ -560,7 +562,6 @@ S\ :sub:`N`\ 2-Reaction
       END
       EOF
 
-
       for dist in $(seq 2.25 0.25 10.00 | sed s/,/./)
       do
 
@@ -570,11 +571,11 @@ S\ :sub:`N`\ 2-Reaction
           rm -r $dist
         fi
         mkdir $dist
+        cp control $dist
         pushd $dist
         echo "$template" | sed "s/DIST/$dist/" > coord
 
-        cefine $options
-        jobex -c 50
+        jobex -ri -c 50
 
         # Get final energy
         e=$(sdg energy | tail -1 | gawk '{printf $2}')
@@ -582,13 +583,16 @@ S\ :sub:`N`\ 2-Reaction
         # Write energy to a file
         echo $dist $e >> ../results.dat
         popd
+
       done
 
-   Template for the ``coord`` file is given directly inline in the script, we will repeat it here to explain a few details.
-   The ``f`` after the atom specification tells TURBOMOLE to keep the coordinates fixed for that atom:
+   A template for the ``coord`` file is given directly inline in the script, we will
+   repeat it here to explain a few details. The ``f`` after the atom specification
+   tells TURBOMOLE to keep the coordinates fixed for that atom. ``DIST`` ist a placeholder
+   which will be substituted by the C--F distance.
 
    .. code-block:: none
-      :linenos:
+      :lineno-start: 13
 
       $coord
         0.00000000      0.00000000      0.00000000  c f
@@ -606,7 +610,9 @@ S\ :sub:`N`\ 2-Reaction
       chmod +x run-scan.sh
 
    Create subdirectories (*e.g.* ``scan-vac`` and ``scan-cosmo``) for each potential
-   energy curve. You will have to adapt the script to your directory names.
+   energy curve and place a proper ``control`` file in each of these subdirectories.
+   You will have to adapt the script to your directory names (name in line 4). The
+   ``results.dat`` file will be written to the respective subdirectory.
    Execute the script by typing:
 
    .. code-block:: none
@@ -618,8 +624,13 @@ S\ :sub:`N`\ 2-Reaction
 
 .. hint::
 
-   Sometimes ``cefine`` crashes can occur at very large distances. Often limiting the script to
-   distances up to 8.25 bohr might help solving the problem without loosing significant information.
+   If the execution of such a script takes some longer time, consider calling it with:
+
+   .. code-block:: none
+
+      nohup ./run-scan.sh &
+
+   Then, you can log out of your shell without killing the calculation.
 
 
 Activation Energies
