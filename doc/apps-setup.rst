@@ -230,17 +230,17 @@ The following table shows the most important keywords that are interesting for t
 +--------------------------------------+------------------------------------------------------------------------------------------+
 | .. code-block:: none                 | | Perform a DFT calculation using the functional ``<func>``. Note that the BYLP, B3YLP   |
 |                                      |   and B2PLYP functionals are named ``b-lyp``, ``b3-lyp`` and ``b2-plyp``, respectively.  |
-|    $dft                              | | For double-hybrid functionals, also include the settings for MP2 calculations          |
-|      functional <func>               |   listed below (``$ricc2`` and ``$denconv`` blocks).                                     |
-+--------------------------------------+------------------------------------------------------------------------------------------+
-| .. code-block:: none                 | *(optional)* Defines the grid ``<grid>``, default is ``m4``.                             |
-|                                      |                                                                                          |
-|    $dft                              |                                                                                          |
-|      grid <grid>                     |                                                                                          |
+|    $dft                              |   Define the integration grid ``<grid>`` (optional, the default is ``m4``).              |
+|      functional <func>               | | For double-hybrid functionals, also include the settings for MP2 calculations          |
+|      grid <grid>                     |   listed below (``$ricc2`` and ``$denconv`` blocks).                                     |
 +--------------------------------------+------------------------------------------------------------------------------------------+
 | .. code-block:: none                 | Use the D3 dispersion correction with Becke-Johnson damping.                             |
 |                                      |                                                                                          |
 |    $disp3 -bj                        |                                                                                          |
++--------------------------------------+------------------------------------------------------------------------------------------+
+| .. note::                                                                                                                       |
+|                                                                                                                                 |
+|    If the ``$dft`` block is missing, a HF calculation will be performed.                                                        |
 +--------------------------------------+------------------------------------------------------------------------------------------+
 | *Post HF calculations*                                                                                                          |
 +--------------------------------------+------------------------------------------------------------------------------------------+

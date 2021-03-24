@@ -552,12 +552,12 @@ S\ :sub:`N`\ 2-Reaction
 
       read -r -d 'END' template <<-EOF
       \$coord
-        0.00000000      0.00000000      0.00000000  c f
-        0.00000000      0.00000000     -3.36989165  cl
-        0.00000000      0.00000000      DIST        f f
-       -1.00404366      1.73905464     -0.62462166  h
-       -1.00404366     -1.73905464     -0.62462166  h
-        2.00808733      0.00000000     -0.62462166  h
+         0.00000000      0.00000000      0.00000000  c f
+         0.00000000      0.00000000     -3.36989165  cl
+         0.00000000      0.00000000      DIST        f f
+        -1.00404366      1.73905464     -0.62462166  h
+        -1.00404366     -1.73905464     -0.62462166  h
+         2.00808733      0.00000000     -0.62462166  h
       \$end
       END
       EOF
@@ -595,12 +595,12 @@ S\ :sub:`N`\ 2-Reaction
       :lineno-start: 13
 
       $coord
-        0.00000000      0.00000000      0.00000000  c f
-        0.00000000      0.00000000     -3.36989165  cl
-        0.00000000      0.00000000      DIST        f f
-       -1.00404366      1.73905464     -0.62462166  h
-       -1.00404366     -1.73905464     -0.62462166  h
-        2.00808733      0.00000000     -0.62462166  h
+         0.00000000      0.00000000      0.00000000  c f
+         0.00000000      0.00000000     -3.36989165  cl
+         0.00000000      0.00000000      DIST        f f
+        -1.00404366      1.73905464     -0.62462166  h
+        -1.00404366     -1.73905464     -0.62462166  h
+         2.00808733      0.00000000     -0.62462166  h
       $end
 
    In order to use the script, you have to make it executable by typing:
@@ -658,11 +658,20 @@ Rearrangement and Dimerization Reactions
       often you can easily create a product structure from your reactant. Furthermore, this
       generally eases the sorting of the atoms.
 
-2. Optimize the geometries using PBEh-3c and C\ :sub:`1` symmetry. Prepare the calculation using:
+2. Optimize the geometries using PBEh-3c and C\ :sub:`1` symmetry. PBEh-3c is a composite
+   density functional method that uses a hybrid functional, correction schemes and the
+   pre-defined modified basis set def2-mSVP. To invoke the correct method and (auxiliary)
+   basis set in the ``control`` file, as well as the desired C\ :sub:`1` symmetry, please use:
 
    .. code-block:: none
+      :linenos:
 
-      cefine -sym c1
+      $atoms
+        basis=def2-mSVP
+        jbas=universal
+      $dft
+        functional pbeh-3c
+      $symmetry c1
 
 3. Verify that the sequence of atoms is still the same in every pair of reactant and product structure.
 
@@ -672,7 +681,7 @@ Rearrangement and Dimerization Reactions
    (b) Have your reactant and product structure sorted and available in TURBOMOLE
        format (*e.g.* starting structure ``coord``, ending structure ``coord.2``).
    (c) Set up a calculation for the starting strucutre. Employ PBEh-3c as before.
-   (d) Merge reactant and product structures files into a file called ``coords``
+   (d) Merge reactant and product structure files into a file called ``coords``
        *e.g.* by typing:
 
        .. code-block:: none
@@ -740,52 +749,49 @@ Noble Gas |mult| |mult| |mult| Methane
 
 **Approach**
 
-1. Calculate the potential energy curve at the BLYP-D3/def2-QZVP
-   level for Ar |mult| |mult| |mult| HCH\ :sub:`3` by performing a geometry
-   optimization with a fixed Ar and H atom.
-   Do this for :math:`R_\text{(Ar-H)}` = 4.5 - 15.0 bohr with a stepsize of 0.25 bohr.
-   Use the following ``template`` file to create the ``coord`` files:
-
+1. | Calculate the potential energy curve at the BLYP-D3/def2-QZVP level for Ar
+     |mult| |mult| |mult| HCH\ :sub:`3` by performing a geometry optimization with a
+     fixed Ar and H atom. Do this for :math:`R_\text{(Ar-H)}` = 4.5 - 15.0 bohr with
+     a stepsize of 0.25 bohr.
+   | Use the ``run-scan.sh`` script from exercise 5.1 and adopt it to this task.
+     Substitute the template molecular geometry by the following one:
+   
    .. code-block:: none
-      :linenos:
+      :lineno-start: 13
 
       $coord
-          0.00000000000000      0.00000000000000      XXXX                  ar f
-          0.00000000000000      0.00000000000000      0.00000000000000      h f
-          0.00000000000000      0.00000000000000     -2.06945348098289      c
-          0.97576020317533      1.69006623336522     -2.75977586481614      h
-          0.97576020317533     -1.69006623336522     -2.75977586481614      h
-         -1.95152040635065      0.00000000000000     -2.75977586481614      h
+         0.00000000000000      0.00000000000000      DIST                  ar f
+         0.00000000000000      0.00000000000000      0.00000000000000      h f
+         0.00000000000000      0.00000000000000     -2.06945348098289      c
+         0.97576020317533      1.69006623336522     -2.75977586481614      h
+         0.97576020317533     -1.69006623336522     -2.75977586481614      h
+        -1.95152040635065      0.00000000000000     -2.75977586481614      h
       $end
 
-   Use the ``run-scan.sh`` script from exercise 5.1 and adopt it to this task. You also
-   have to modify the directory names. Prepare the BLYP-D3/def2-QZVP calculations with
-   the following options:
+   You also have to modify the directory names and the distances. Prepare a ``control`` file
+   for the BLYP-D3/def2-QZVP calculations including the ``$disp3 -bj`` and ``$symmetry c1``
+   keywords.
+
+2. Repeat the calculations for BLYP/def2-QZVP and MP2/def2-QZVP. For BLYP, just omit
+   the ``$disp3`` block. For MP2, clear the ``$dft`` and ``$disp3`` blocks and instert proper
+   settings under ``$ricc2`` and ``$denconv``. In the latter case, don't forget to change
+   the ``jobex`` command in the script to:
 
    .. code-block:: none
-      :linenos:
+      :lineno-start: 37
 
-      cefine -bas def2-QZVP -func b-lyp -d3 -sym c1
+        jobex -ri -level cc2 -c 50
 
-2. Repeat the calculations for BLYP/def2-QZVP and MP2/def2-QZVP. For BLYP, exchange ``-d3``
-   by ``-novdw`` and for MP2, use the following calls in the script:
-
-   .. code-block:: none
-      :linenos:
-
-      cefine -mp2 -bas def2-QZVP -opt -sym c1
-      jobex -level cc2 -c 50
-
-   To get the final MP2 energy for each distance use the following command:
+   To get the final MP2 energy for each distance, also change the ``sdg`` command to:
 
    .. code-block:: none
-      :linenos:
+      :lineno-start: 40
 
-      grep "Total Energy" job.last | gawk '{print $4}'
+        e=$(grep "Total Energy" job.last | gawk '{print $4}')
 
 3. Repeat the calculations for Kr |mult| |mult| |mult| HCH\ :sub:`3`
-   (substitute Ar with Kr in the ``template`` file) with
-   BLYP-D3/def2-QZVP, BLYP/def2-QZVP and MP2/def2-QZVP.
+   (substitute ``ar`` by ``kr`` in the template) with BLYP-D3/def2-QZVP,
+   BLYP/def2-QZVP and MP2/def2-QZVP.
 
 4. Plot the curves (**normalize to the dissociation limit**) and discuss your findings.
 
@@ -798,13 +804,13 @@ IR-Spectrum of 1,4-Benzoquinone
 
 .. admonition:: Exercise 8.1
 
-   Calculate the IR-spectrum of 1,4-Benzoquinone using
+   Calculate the IR-spectrum of 1,4-benzoquinone using
    DFT and HF, and compare the results to the experimental
    spectrum given below.
 
 **Approach**
 
-1. Create a ``coord`` file for 1,4-Benzoquinone.
+1. Create a ``coord`` file for 1,4-benzoquinone.
 
 2. Optimize the geometry with TURBOMOLE on the HF-D3/def2-SVP level of theory.
 
@@ -822,7 +828,7 @@ IR-Spectrum of 1,4-Benzoquinone
    :align: center
    :width: 800px
 
-   IR spectrum of 1,4-Benzoquinone in KBr.
+   IR spectrum of 1,4-benzoquinone in KBr.
 
 .. hint::
 
@@ -839,6 +845,13 @@ The Color of Indigo
    time-dependent Hartree-Fock (TD-HF) and
    time-dependent DFT (TD-DFT) with two different functionals (PBE and PBE0).
 
+.. attention::
+
+   There is an unsolved problem in this exercise! The point group of the molecule is
+   C\ :sub:`2h`, but setting ``$symmetry c2h`` in the ``dscf`` calculation produces an
+   error. Turbomole still thinks this is C\ :sub:`1` symmetry. How can we solve this
+   issue? ``cefine`` correctly sets the symmetry.
+
 **Approach**
 
 1. Create the geometry of indigo (figure below) and optimize it with TURBOMOLE on the
@@ -850,15 +863,16 @@ The Color of Indigo
 
       Structure of indigo.
 
-2. Do a HF-D3/def2-SVP single-point calculation. Use the ``-nori`` option for the preparation
-   with ``cefine`` and run:
+2. Do a HF-D3/def2-SVP single-point calculation. In ``control``, use the ``$denconv 1.0d-7``
+   keyword to ensure that the SCF is well-converged for the excited state calculation.
+   Do not use the RI approximation, so omit the ``$rij`` keyword and run:
 
    .. code-block:: none
 
       dscf > dscf.out
 
-   In order to do the TD-HF calculation, edit the ``control`` file and add the following lines
-   (before ``$end``):
+   In order to do the TD-HF calculation, add the following two blocks so the ``control``
+   file:
 
    .. code-block:: none
       :linenos:
@@ -874,7 +888,7 @@ The Color of Indigo
       escf > escf.out
 
 3. For the TD-DFT calculations repeat the above procedure with PBE-D3/def2-SVP and
-   PBE0-D3/def2-SVP. Use the proper ``cefine`` calls and run
+   PBE0-D3/def2-SVP (now with RI approximation). Use proper settings in ``control`` and run
 
    .. code-block:: none
 
@@ -942,7 +956,7 @@ Exemplary output for CH\ :sub:`3`\ NH\ :sub:`2`:
    on the PBEh-3c level of theory (how to use PBEh-3c is explained in the ORCA manual).
 
 2. Calculate the :sup:`13`\ C-NMR chemical shieldings and shifts |delta| for compounds **A** -- **G** with TMS as reference at PBE/pcSseg-2 level of theory.
-   Given the NMR shielding constants :math:`\sigma` of the compound (:math:`\text{c}`) and the reference (:math:`\text{ref.}`), the chemical shift
+   Given the isotropic NMR shielding constants :math:`\sigma` of the compound (:math:`\text{c}`) and the reference (:math:`\text{ref.}`), the chemical shift
    :math:`\delta _\text{c,ref.}` is defined as
 
    .. math::
@@ -977,7 +991,7 @@ Exemplary output for CH\ :sub:`3`\ NH\ :sub:`2`:
 
       There are two options (gas/solution) for each calculation, the geometry optimization and the shielding calculation. Compare all possibilities.
 
-7. Calculate the :sup:`1`\ H-NMR chemical shifts for **H** and **I** in the gas-phase at PBE/pcSseg-2 level of theory.
+7. Calculate the :sup:`1`\ H-NMR chemical shifts for **H** and **I** in the gas-phase at the PBE/pcSseg-2 level of theory.
    Discuss your observations regarding the chemical shift of the methine proton in both compounds.
    Give a short explanation of your findings.
 
