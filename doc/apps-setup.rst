@@ -249,10 +249,11 @@ The following table shows the most important keywords that are interesting for t
 |    $scfconv 7                        |                                                                                          |
 |    $denconv 1.0d-7                   |                                                                                          |
 +--------------------------------------+------------------------------------------------------------------------------------------+
-| .. code-block:: none                 | Perform an MP2 single-point calculation.                                                 |
-|                                      | If a geometry optimization on the MP2 level is desired, add ``geoopt model=mp2`` to      |
-|    $ricc2                            | the ``$ricc2`` block.                                                                    |
+| .. code-block:: none                 | | Perform an MP2 single-point calculation.                                               |
+|                                      | | The ``geoopt model=mp2`` keyword is only necessary if a geometry optimization on the   |
+|    $ricc2                            |   MP2 level is desired.                                                                  |
 |      mp2                             |                                                                                          |
+|      geoopt model=mp2                |                                                                                          |
 +--------------------------------------+------------------------------------------------------------------------------------------+
 | .. code-block:: none                 | Perform a CCSD(T) single-point calculation.                                              |
 |                                      |                                                                                          |

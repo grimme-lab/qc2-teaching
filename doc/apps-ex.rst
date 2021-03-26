@@ -32,6 +32,7 @@ Multireference Methods
       :linenos:
 
       ! RHF def2-TZVP TightSCF
+
       %paras R= 4.0,0.5,35 end
 
       * xyz 0 1
@@ -47,6 +48,7 @@ Multireference Methods
       :linenos:
 
       ! UHF def2-TZVP TightSCF
+
       %scf BrokenSym 1,1 end
 
    MP2:
@@ -69,10 +71,12 @@ Multireference Methods
       :linenos:
 
       ! RHF def2-TZVP TightSCF Conv
-      %casscf nel 2
-              norb 2
-              switchstep nr
-              end
+
+      %casscf
+        nel 2
+        norb 2
+        switchstep nr
+      end
 
    Calculate the potential energy curve by a CASSCF calculation with 6 electrons (``nel``) in 6 active orbitals (``norb``) as well.
 
@@ -93,7 +97,20 @@ Multireference Methods
    (particularly the energies at large distances).
 
 .. hint::
-   Have a closer look at the UHF dissociation curve. Does it look as you would expect it? Try to explain the "strange" behavior in terms of symmetry breaking.
+
+   Have a closer look at the UHF dissociation curve. Does it look as you would expect it?
+   Try to explain the "strange" behavior in terms of symmetry breaking.
+
+.. hint::
+
+   If you encounter convergence problems in the CAS(6,6) calculations, try increasing the
+   maximum number of macro-iterations for CASSCF by adding the following keyword in the
+   ``%casscf`` block:
+
+   .. code-block:: none
+      :lineno-start: 6
+
+        maxiter 1000
 
 
 Carbenes
