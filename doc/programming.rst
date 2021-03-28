@@ -158,28 +158,27 @@ applications like building and running executables or creating new projects.
    The Fortran package manager is still a relatively new project.
    Using new and recent software always has some risks of running into
    unexpected issues. We have carefully evaluated fpm and the advantage
-   of the simple user interface seemed to outweight the potential risks.
+   of the simple user interface outweigh potential issues.
 
-   Still, this course is structured such that it can be completed with
-   or without using fpm.
+   This course is structured such that it can be completed with or without using fpm.
 
 .. note::
 
    If you are doing this course on a machine in the Mulliken center you
-   have to activate the fpm installation by using the following commands:
+   have to activate the fpm installation by using the ``module`` commands:
 
    .. code:: shell
 
       module use /home/abt-grimme/modulefiles
       module load fpm
 
-To create a new program with fpm run
+Create a new project with fpm by
 
 .. code-block:: none
 
    fpm new --app myprogram
 
-This will initialize a new Fortran project with an simple program setup.
+This will initialize a new Fortran project with a simple program setup.
 Enter the newly created directory and run it with
 
 .. code-block:: none
@@ -189,25 +188,25 @@ Enter the newly created directory and run it with
    ...
     hello from project myprogram
 
-You can inspect the scaffold generated in ``app/main.f90`` and will find
-a similar setup to your very first Fortran program:
+You can inspect the scaffold generated in ``app/main.f90`` and find
+a similar program unit as in your very first Fortran program:
 
 .. literalinclude:: src/fpm.1.f90
    :language: fortran
    :caption: app/main.f90
    :linenos:
 
-You can modify the source code with your editor of choice and simply invoke
-fpm run again. You will find that fpm takes care of automatically rebuilding
+Modify the source code with your editor of choice and simply invoke fpm run again.
+You will find that fpm takes care of automatically rebuilding
 your program before running it.
 
 .. tip::
 
    By default fpm enables compile time checks and run time checks that
-   are absent in the plain compiler invokation. You will find that those
-   can help you catch and avoid common errors when developing in Fortran.
+   are absent in the plain compiler invocation. Those can help you catch
+   and avoid common errors when developing in Fortran.
 
-   To read more on the capabilities of fpm check the output of
+   To read more on the capabilities of fpm check the help page with
 
    .. code-block::
 

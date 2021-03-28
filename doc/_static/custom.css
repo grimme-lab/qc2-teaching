@@ -9,3 +9,15 @@
    padding-bottom: 2px;
    padding-left: 5px;
 }
+
+.admonition.important {
+   border-left-color: #37c8ab;
+}
+
+.admonition.important .admonition-title {
+    background-color: #d7f4ee;
+}
+
+.admonition.important .admonition-title::before {
+    color: #37c8ab;
+}
