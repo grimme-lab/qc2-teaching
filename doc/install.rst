@@ -178,7 +178,7 @@ with this one (see `Ubuntu install & remove software`_).
    your system, but it does not harm to include them here again.
 
 For the programming course we recommend to use the Fortran package manager (fpm),
-which can be downloaded from `here <https://github.com/fortran-lang/fpm/releases>`
+which can be downloaded from `here <https://github.com/fortran-lang/fpm/releases>`_.
 or setup from conda-forge as described in :ref:`fpm from conda`.
 
 After having installed the necessary software, you need to download the
@@ -216,8 +216,8 @@ now have access to the mamba package manager and the conda environment manager.
 
    Those two tools, mamba and conda, are very powerful to create reproducable
    development and production environments for scientific work.
-   For this course they allow us to easily install difficult to install software
-   or softare which is not yet available in all Linux distributions.
+   For this course they allow us to easily install software, that would be difficult
+   to install otherwise or software which is not yet available in all Linux distributions.
    Many of our groups software is available over conda-forge as well.
 
 To add Fortran package manager (fpm) to your base environment run
@@ -236,7 +236,7 @@ To add Fortran package manager (fpm) to your base environment run
       conda activate fpm
 
    When creating a separate environment, you will always have to activate it after
-   when starting a new shell, but it allows you more fine grained control over
+   starting a new shell, but it allows you more fine grained control over
    your installed software.
 
 
