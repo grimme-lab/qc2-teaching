@@ -158,7 +158,7 @@ applications like building and running executables or creating new projects.
    The Fortran package manager is still a relatively new project.
    Using new and recent software always has some risks of running into
    unexpected issues. We have carefully evaluated fpm and the advantage
-   of the simple user interface outweigh potential issues.
+   of the simple user interface outweighs potential issues.
 
    This course is structured such that it can be completed with or without using fpm.
 
