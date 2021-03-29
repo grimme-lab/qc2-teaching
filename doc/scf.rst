@@ -114,6 +114,69 @@ In the lines after position and identity, we find the exponents of our basis
 functions, the number of lines following corresponds to the number of
 basis functions for this particular atom.
 
+.. tabbed:: make
+
+   .. important::
+
+      You can compile your program using
+
+      .. code-block:: text
+
+         make
+         ...
+         gfortran ... -o ./scf
+
+      The resulting binary will be placed in the current working directory.
+      Run it with
+
+      .. code-block:: text
+
+         ./scf
+         Here could start a Hartree-Fock calculation
+
+      The starting code provides the possibility to pass the input file
+      as command line argument to your program with
+
+      .. code-block:: text
+
+         ./scf molecules/h2.in
+         Here could start a Hartree-Fock calculation
+
+      The input file will always be opened to the ``input`` unit in ``app/main.f90``.
+
+.. tabbed:: fpm
+
+   .. important::
+
+      The starting code is already setup as fpm project.
+      The package manifest should contain the following content
+
+      .. literalinclude:: ../scf/fpm.toml
+         :caption: fpm.toml
+         :language: toml
+
+      You can run your program with
+
+      .. code-block:: text
+
+         fpm run
+         ...
+          + build/gfortran_debug/app/scf
+         Here could start a Hartree-Fock calculation
+
+      The starting code provides the possibility to pass the input file
+      as command line argument to your program with
+
+      .. code-block:: text
+
+         fpm run -- molecules/h2.in
+         ...
+          + build/gfortran_debug/app/scf "molecules/h2.in"
+         Here could start a Hartree-Fock calculation
+
+      The input file will always be opened to the ``input`` unit in ``app/main.f90``.
+
+
 .. admonition:: Exercise 1
 
    Before you start coding the input reader for this format, try
@@ -558,7 +621,10 @@ Modify the provided ``bash`` script to calculate a dissociation curve:
    # stop on errors
    set -eu
 
-   # put the name of your program here
+   # Ensure non-localized printout
+   expot LC_NUMERIC=en_US.UTF-8
+
+   # put the name of your program here ("./scf" or "fpm run --")
    program=echo
    # unique pattern to find the final energy
    pattern='final SCF energy'
