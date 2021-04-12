@@ -849,8 +849,8 @@ IR-Spectrum of 1,4-Benzoquinone
 
 .. hint::
 
-   If you obtain imaginary frequencies, try to start the geometry optimization from a slightly distorted structure.
-   Check if the imaginary frequencies vanish.
+   If you obtain imaginary frequencies, try to start the geometry optimization from a
+   slightly distorted structure. Check if the imaginary frequencies vanish.
 
 
 The Color of Indigo
@@ -862,34 +862,74 @@ The Color of Indigo
    time-dependent Hartree-Fock (TD-HF) and
    time-dependent DFT (TD-DFT) with two different functionals (PBE and PBE0).
 
-.. attention::
-
-   There is an unsolved problem in this exercise! The point group of the molecule is
-   C\ :sub:`2h`, but setting ``$symmetry c2h`` in the ``dscf`` calculation produces an
-   error. Turbomole still thinks this is C\ :sub:`1` symmetry. How can we solve this
-   issue? ``cefine`` correctly sets the symmetry.
-
 **Approach**
 
-1. Create the geometry of indigo (figure below) and optimize it with TURBOMOLE on the
-   TPSS-D3/def2-SVP level. Make sure to use the correct symmetry.
-
+1. In this exercise, please use TURBOMOLE's interactive input generator ``define`` to
+   to create the ``control`` file. To do so, create the geometry of an indigo molecule
+   (figure below) and place the ``coord`` file in its own directory.
+   
    .. figure:: img/indigo.png
       :align: center
       :width: 250px
 
       Structure of indigo.
 
-2. Do a HF-D3/def2-SVP single-point calculation. In ``control``, use the ``$denconv 1.0d-7``
-   keyword to ensure that the SCF is well-converged for the excited state calculation.
-   Do not use the RI approximation, so omit the ``$rij`` keyword and run:
+   To start the input generator, navigate to the directory containing the ``coord`` file,
+   type the following command and answer all questions that appear.
 
+   .. code-block:: none
+
+      define
+
+   Prepare an input on the TPSS-D3/def2-SVP level and optimize the geometry. In the define
+   dialogue, you can skip the first two questions, then choose the input geometry file via:
+
+   .. code-block:: none
+
+      a coord
+
+   | In this menu, you will find a header telling you the number of atoms of your molecule
+     and its symmetry point group (Schoenflies symbol). If this is not yet correct (the
+     molecule does not have C\ :sub:`1` symmetry), type ``desy 1d-3`` or some larger value
+     to loosen the symmetry determination threshold until the correct point group is recognized.
+   | Leave the molecular geometry menu and then do not choose internal coordinates. In the
+     atomic attribute definition menu, you can choose the same basis for all atoms by
+     typing *e.g.*:
+
+   .. code-block:: none
+
+      b all def2-SVP
+
+   Afterwards, choose an extended Hückel guess for the MOs with default parameters (don't
+   worry about a small HOMO/LUMO gap). In the last general menu, go to the ``dft`` submenu
+   and type *e.g.*:
+
+   .. code-block:: none
+
+      on
+      func tpss
+
+   Don't forget to also choose the ``bj`` option in the ``dsp`` submenu for the D3 disperion
+   correction (activating the RI approximation in the ``ri`` submenu is also recommended).
+   When you are finished, you will find a ``control`` file in your directory containing all
+   keywords you already know and more. If everything is correct, you are now ready to run
+   the geometry optimization.
+
+   .. hint::
+
+      Try to navigate through the ``define`` dialogue a few times and explore it by yourself
+      to get familiar with it. If you still can't figure out a certain aspect, feel free
+      to ask your lab assistant.
+   
+2. Prepare a HF-D3/def2-SVP single-point calculation in the same way by using ``define``,
+   but do not turn on the ``dft`` option. Do not use the RI approximation here and run:
+  
    .. code-block:: none
 
       dscf > dscf.out
 
-   In order to do the TD-HF calculation, add the following two blocks so the ``control``
-   file:
+   In order to do the subsequent TD-HF calculation, add the following two blocks so the
+   ``control`` file:
 
    .. code-block:: none
       :linenos:
@@ -905,7 +945,8 @@ The Color of Indigo
       escf > escf.out
 
 3. For the TD-DFT calculations repeat the above procedure with PBE-D3/def2-SVP and
-   PBE0-D3/def2-SVP (now with RI approximation). Use proper settings in ``control`` and run
+   PBE0-D3/def2-SVP (now with RI approximation). Use proper settings during the ``define``
+   dialogue as well as in ``control`` and run:
 
    .. code-block:: none
 
