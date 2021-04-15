@@ -1,3 +1,5 @@
+.. include:: symbols.txt
+
 Quantum Chemistry Software
 ==========================
 
@@ -58,16 +60,21 @@ Program Packages
 TURBOMOLE
 ~~~~~~~~~
 
-To run a calculation with TURBOMOLE, you will need the following files:
+To run a basic calculation with TURBOMOLE, you will only need the following two files:
 
 - ``coord``: Molecular geometry in atomic units
 - ``control``: All data required for the calculation (method, parameters, ... )
-- ``basis`` (and ``auxbasis``): Basis set (and auxiliary basis set for RI)
-- ``mos`` or ``alpha`` and ``beta``: Orbitals (MO-coefficients) for restricted and unrestricted treatment, respectively
 
-To manually prepare a calculation, use ``define``. However, in this course,
-we will employ a tool that automatically runs ``define`` with the proper
-input: ``cefine``.
+For more sophisticated calculation settings, TURBOMOLE provides an interactive input generator
+called ``define`` which only needs the ``coord`` file to create the ``control`` file.
+Basis set and orbital files, that are also necessary for the calculation, are created
+during the calculation or by ``define``, respectively. These are:
+
+- ``basis`` (and ``auxbasis``): Basis set (and auxiliary basis set for RI)
+- ``mos`` or ``alpha`` and ``beta``: Orbitals (MO coefficients) for restricted and unrestricted treatment, respectively
+
+In this course, all calculations can be prepared manually by only providing a ``coord``
+and a ``control`` file containing all the necessary information.
 
 TURBOMOLE has different binaries and scripts for different jobs.
 While they do not need an explicit input file when called, you should **always**
@@ -105,9 +112,9 @@ in the following table.
 +----------------------+----------------------------------------------------------+
 | ``eiger``            | Show the orbital energies and the HOMO-LUMO gap          |
 +----------------------+----------------------------------------------------------+
-| ``x2t``              | Convert a \*.xyz file to coord                           |
+| ``x2t``              | Convert a \*.xyz (in |angst|) file to coord (in bohr)    |
 +----------------------+----------------------------------------------------------+
-| ``t2x``              | Convert a coord file to \*.xyz                           |
+| ``t2x``              | Convert a coord (in bohr) file to \*.xyz (in |angst|)    |
 +----------------------+----------------------------------------------------------+
 | ``tm2molden``        | Generate a molden input                                  |
 +----------------------+----------------------------------------------------------+
@@ -115,41 +122,29 @@ in the following table.
 .. important:: Each TURBOMOLE calculation needs its own directory.
 
 
-cefine
-~~~~~~
+The ``control`` file
+********************
 
-.. important::
-
-   In this course, we will only use the current version of the below mentioned program
-   called ``cefine_current``, but we will call it ``cefine`` in the following text.
-   You can either type ``cefine_current`` instead everytime ``cefine`` is mentioned or
-   (the recommended procedure) set up a symbolic link via typing the following line:
-
-   .. code-block:: none
-
-      ln -s /home/abt-grimme/AK-bin/cefine_current ~/bin/cefine
-
-   Now you can type the lines given in this script as they appear.
-
-``cefine`` is a command line tool that prepares the necessary input files
-for TURBOMOLE. By default, it reads the ``coord`` file (the only file you have to
-provide) in the directory where it is called. The basic command is:
+While ``coord`` stores the molecular geometry, the ``control`` file contains all the
+specifications and settings for the desired calculation. It contains keywords indicated
+with a ``$`` symbol followed by some setting. Related specifications sometimes follow
+in the next line and are indented. Every ``control`` file must end with the ``$end``
+keyword in the last line. An example input for a simple DFT calculation on the
+BLYP/def2-TZVP level of theory can look as follows:
 
 .. code-block:: none
+   :linenos:
 
-   cefine -<method> -bas <basis>
+   $coord file=coord
+   $atoms
+     basis = def2-TZVP
+   $dft
+     functional b-lyp
+   $end
 
-where ``<method>`` defines the type of calculation and ``<basis>``
-the desired basis set.
-To get an overview over the most important command line options, use
-
-.. code-block:: none
-
-   cefine -h
-
-In the following exercises, the proper options will always be given
-in the text. Additionally, you can find a short list of the options
-in the section :ref:`Short cefine reference`.
+In the following exercises, some proper TURBOMOLE input will always be given (at
+least partially) in the text. Additionally, you can find a short list of all
+keywords needed in this course in the :ref:`Keywords in control` section below.
 
 
 ORCA
@@ -192,78 +187,99 @@ A short reference of ORCA keywords can be found in the section :ref:`Short ORCA 
 Further information is accessible from: https://sites.google.com/site/orcainputlibrary/.
 
 
-.. _Short cefine reference:
+.. _Keywords in control:
 
-Short ``cefine`` Reference
---------------------------
+Keywords in ``control``
+-----------------------
 
-In general, you can list all desired options for ``cefine`` after the program command:
+The ``control`` file contains all specifications and settings for a calculation with
+TURBOMOLE. Keywords start with ``$`` and sub-settings are indented. The last line of
+the file must always be ``$end``.
+The following table shows the most important keywords that are interesting for this course.
 
-.. code-block:: none
-
-   cefine <option1> <option2> ...
-
-You can always call a complete list of options with the ``-h`` option:
-
-.. code-block:: none
-
-   cefine -h
-
-The following table lists the most important ``cefine`` options that are interesting for this course.
-
-+------------------------+---------------------------------------------------------------------------------------+
-| Command                | Functionality                                                                         |
-+========================+=======================================================================================+
-| *Computational Methods*                                                                                        |
-+------------------------+---------------------------------------------------------------------------------------+
-| ``-func <fname>``      | | DFT calculation with the ``<fname>`` functional. Note that the BYLP, B3YLP and      |
-|                        | | B2PLYP functionals are named ``b-lyp``, ``b3-lyp`` and ``b2-plyp``, respectively.   |
-+------------------------+---------------------------------------------------------------------------------------+
-| ``-hf``                | HF calculation                                                                        |
-+------------------------+---------------------------------------------------------------------------------------+
-| ``-mp2``               | MP2 calculation (also sets up HF calculation)                                         |
-+------------------------+---------------------------------------------------------------------------------------+
-| ``-cc``                | CCSD(T) calculation (also sets up HF calculation)                                     |
-+------------------------+---------------------------------------------------------------------------------------+
-| ``-d3``                | DFT-D3 calculation (DFT with added dispersion)                                        |
-+------------------------+---------------------------------------------------------------------------------------+
-| ``-novdw``             | Disables the dispersion contribution.                                                 |
-+------------------------+---------------------------------------------------------------------------------------+
-| ``-cosmo <epsilon>``   | COSMO continuum solvation with a given dielectric constant ``<epsilon>``              |
-+------------------------+---------------------------------------------------------------------------------------+
-| *Basis Set and RI Approximation*                                                                               |
-+------------------------+---------------------------------------------------------------------------------------+
-| ``-bas <bname>``       | Use the ``<bname>`` basis set.                                                        |
-+------------------------+---------------------------------------------------------------------------------------+
-| ``-ri`` / ``-nori``    | | Use RI approximation (program ``ridft``, default) / use no RI approximation         |
-|                        | | (program dscf).                                                                     |
-+------------------------+---------------------------------------------------------------------------------------+
-| *Symmetry, Optimization, Convergence*                                                                          |
-+------------------------+---------------------------------------------------------------------------------------+
-| ``-sym <pointgroup>``  | | Use ``<pointgroup>`` symmetry (if the symmetry is not found, it will be created     |
-|                        | | by adding images of the input coordinates). Normally, ``cefine`` finds the symmetry |
-|                        | | by itself and this is not needed.                                                   |
-+------------------------+---------------------------------------------------------------------------------------+
-| ``-noopt``             | | Special options for single point calculations. Does not call the definition of      |
-|                        | | internal redundant coordinates (which can cause problems *e.g.* for linear          |
-|                        | | molecules).                                                                         |
-+------------------------+---------------------------------------------------------------------------------------+
-| ``-abel``              | Reduce the symmetry used to an abelian symmetry (max. D\ :sub:`2h`)                   |
-+------------------------+---------------------------------------------------------------------------------------+
-| ``-opt``               | Used to set up an MP2-optimization.                                                   |
-+------------------------+---------------------------------------------------------------------------------------+
-| ``-ts``                | Sets up an transition state search.                                                   |
-+------------------------+---------------------------------------------------------------------------------------+
-| ``-scfconv <integer>`` | Sets SCF energy convergence criterion to :math:`10^{-{\tt <integer>}}`.               |
-+------------------------+---------------------------------------------------------------------------------------+
-| ``-grid <griddef>``    | Sets the DFT integration grid to ``<griddef>``.                                       |
-+------------------------+---------------------------------------------------------------------------------------+
-| *Electronic Information*                                                                                       |
-+------------------------+---------------------------------------------------------------------------------------+
-| ``-uhf <integer>``     | Open shell calculation with ``<integer>`` unpaired electrons.                         |
-+------------------------+---------------------------------------------------------------------------------------+
-| ``-chrg <integer>``    | Used to define the molecular charge as ``<integer>``.                                 |
-+------------------------+---------------------------------------------------------------------------------------+
++--------------------------------------+------------------------------------------------------------------------------------------+
+| Command                              | Functionality                                                                            |
++======================================+==========================================================================================+
+| *essential for all calculations*                                                                                                |
++--------------------------------------+------------------------------------------------------------------------------------------+
+| .. code-block:: none                 | Defines the ``coord`` file to be the one containing the molecular structure information. |
+|                                      |                                                                                          |
+|    $coord file=coord                 |                                                                                          |
++--------------------------------------+------------------------------------------------------------------------------------------+
+| .. code-block:: none                 | Defines the basis set for the calculation to be ``<bas>``.                               |
+|                                      |                                                                                          |
+|    $atoms                            |                                                                                          |
+|      basis=<bas>                     |                                                                                          |
++--------------------------------------+------------------------------------------------------------------------------------------+
+| *always recommended*                                                                                                            |
++--------------------------------------+------------------------------------------------------------------------------------------+
+| .. code-block:: none                 | Defines the charge ``<chrg>`` and the number of unpaired electrons ``<uhf>`` for the     |
+|                                      | extended Hückel guess and the entire rest of the calculation.                            |
+|    $eht charge=<chrg> unpaired=<uhf> |                                                                                          |
++--------------------------------------+------------------------------------------------------------------------------------------+
+| .. code-block:: none                 | | Use the resolution of the identity (RI) approximation. Note that you then have to use  |
+|                                      |   ``ridft`` for single-point calculations and the ``-ri`` option for ``jobex``.          |
+|    $rij                              | | We recommend using the RI approximation for all exercises in this course.              |
++--------------------------------------+------------------------------------------------------------------------------------------+
+| .. code-block:: none                 | For geometry optimizations: The energies and gradient of all optimization cycles will be |
+|                                      | saved in the files ``energy`` and ``gradient``.                                          |
+|    $energy file=energy               |                                                                                          |
+|    $grad file=gradient               |                                                                                          |
++--------------------------------------+------------------------------------------------------------------------------------------+
+| *DFT calculations*                                                                                                              |
++--------------------------------------+------------------------------------------------------------------------------------------+
+| .. code-block:: none                 | | Perform a DFT calculation using the functional ``<func>``. Note that the BYLP, B3YLP   |
+|                                      |   and B2PLYP functionals are named ``b-lyp``, ``b3-lyp`` and ``b2-plyp``, respectively.  |
+|    $dft                              |   Define the integration grid ``<grid>`` (optional, the default is ``m4``).              |
+|      functional <func>               | | For double-hybrid functionals, also include the settings for MP2 calculations          |
+|      grid <grid>                     |   listed below (``$ricc2`` and ``$denconv`` blocks).                                     |
++--------------------------------------+------------------------------------------------------------------------------------------+
+| .. code-block:: none                 | Use the D3 dispersion correction with Becke-Johnson damping.                             |
+|                                      |                                                                                          |
+|    $disp3 -bj                        |                                                                                          |
++--------------------------------------+------------------------------------------------------------------------------------------+
+| .. note::                                                                                                                       |
+|                                                                                                                                 |
+|    If the ``$dft`` block is missing, a HF calculation will be performed.                                                        |
++--------------------------------------+------------------------------------------------------------------------------------------+
+| *Post HF calculations*                                                                                                          |
++--------------------------------------+------------------------------------------------------------------------------------------+
+| .. code-block:: none                 | For MP2 and CC calculations, a well-converged SCF run is needed. Therefore, set the      |
+|                                      | convergence threshold of the SCF and the density matrix to :math:`10^{-7}` or less.      |
+|    $scfconv 7                        |                                                                                          |
+|    $denconv 1.0d-7                   |                                                                                          |
++--------------------------------------+------------------------------------------------------------------------------------------+
+| .. code-block:: none                 | | Perform an MP2 single-point calculation.                                               |
+|                                      | | The ``geoopt model=mp2`` keyword is only necessary if a geometry optimization on the   |
+|    $ricc2                            |   MP2 level is desired.                                                                  |
+|      mp2                             |                                                                                          |
+|      geoopt model=mp2                |                                                                                          |
++--------------------------------------+------------------------------------------------------------------------------------------+
+| .. code-block:: none                 | Perform a CCSD(T) single-point calculation.                                              |
+|                                      |                                                                                          |
+|    $ricc2                            |                                                                                          |
+|      ccsd(t)                         |                                                                                          |
++--------------------------------------+------------------------------------------------------------------------------------------+
+| *other settings*                                                                                                                |
++--------------------------------------+------------------------------------------------------------------------------------------+
+| .. code-block:: none                 | Use the condctor like screening model COSMO with the dielectric constant ``<epsilon>``   |
+|                                      | of the solvent.                                                                          |
+|    $cosmo                            |                                                                                          |
+|      epsilon=<epsilon>               |                                                                                          |
++--------------------------------------+------------------------------------------------------------------------------------------+
+| .. code-block:: none                 | Use the symmetry of pointgroup ``<sym>``, *e.g.* ``c2v`` for pointgroup C\ :sub:`2v`.    |
+|                                      |                                                                                          |
+|    $symmetry <sym>                   |                                                                                          |
++--------------------------------------+------------------------------------------------------------------------------------------+
+| .. code-block:: none                 | Defines the maximum number of iterations in an SCF calculation (default ``<limit>`` is   |
+|                                      | 30). If an SCF did not converge, try increasing this value, *e.g.* to 100.               |
+|    $scfiterlimit <limit>             |                                                                                          |
++--------------------------------------+------------------------------------------------------------------------------------------+
+| .. code-block:: none                 | Specify the number of imaginary vibrational frequencies ``<imag>`` that shall be         |
+|                                      | obtained by a geometry optimization (default is ``itrvec 0`` for minimum structures).    |
+|    $statpt                           | Set to ``itrvec 1`` for transition state optimizations.                                  |
+|      itrvec <imag>                   |                                                                                          |
++--------------------------------------+------------------------------------------------------------------------------------------+
 
 
 .. _Short ORCA Reference:

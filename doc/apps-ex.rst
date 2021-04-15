@@ -3,6 +3,12 @@
 Exercises
 =========
 
+.. attention::
+
+   This is a preliminary version of the script for the application part of the practical course
+   and is still under construction. If you plan to start with the calculations before June 1st,
+   2021, be aware that changes might still occur.
+
 .. contents::
 
 
@@ -32,6 +38,7 @@ Multireference Methods
       :linenos:
 
       ! RHF def2-TZVP TightSCF
+
       %paras R= 4.0,0.5,35 end
 
       * xyz 0 1
@@ -47,6 +54,7 @@ Multireference Methods
       :linenos:
 
       ! UHF def2-TZVP TightSCF
+
       %scf BrokenSym 1,1 end
 
    MP2:
@@ -69,10 +77,12 @@ Multireference Methods
       :linenos:
 
       ! RHF def2-TZVP TightSCF Conv
-      %casscf nel 2
-              norb 2
-              switchstep nr
-              end
+
+      %casscf
+        nel 2
+        norb 2
+        switchstep nr
+      end
 
    Calculate the potential energy curve by a CASSCF calculation with 6 electrons (``nel``) in 6 active orbitals (``norb``) as well.
 
@@ -93,7 +103,20 @@ Multireference Methods
    (particularly the energies at large distances).
 
 .. hint::
-   Have a closer look at the UHF dissociation curve. Does it look as you would expect it? Try to explain the "strange" behavior in terms of symmetry breaking.
+
+   Have a closer look at the UHF dissociation curve. Does it look as you would expect it?
+   Try to explain the "strange" behavior in terms of symmetry breaking.
+
+.. hint::
+
+   If you encounter convergence problems in the CAS(6,6) calculations, try increasing the
+   maximum number of macro-iterations for CASSCF by adding the following keyword in the
+   ``%casscf`` block:
+
+   .. code-block:: none
+      :lineno-start: 6
+
+        maxiter 1000
 
 
 Carbenes
@@ -125,7 +148,7 @@ specified otherwise we will use the RI approximation throughout.
 
    You can either create the files by hand or use the program ``Avogadro`` for this purpose
    (see section :ref:`Software for visualization of molecules`). ``Avogadro`` uses
-   |angst| as unit, but the unit for the ``coord`` file has to be Bohr (atomic units). To
+   |angst| as unit, but the unit for the ``coord`` file has to be bohr (atomic units). To
    convert a \*.xyz file into a coord file you can use the command
 
    .. code-block:: none
@@ -144,26 +167,38 @@ specified otherwise we will use the RI approximation throughout.
 
 2. **Methylene**: Optimize the geometries of the singlet and the triplet state
    with the given methods (HF, TPSS, B3LYP, PW6B95, MP2) and the basis set def2-TZVP.
-   The following command line is an example and calls ``cefine`` with the correct
-   options for a B3LYP/def2-TZVP calculation of the triplet (= 2 unpaired electrons) state.
+   The following input is an example of a ``control`` file with the correct options
+   for a B3LYP/def2-TZVP calculation of the triplet (= 2 unpaired electrons) state.
 
    .. code-block:: none
+      :linenos:
 
-      cefine -bas def2-TZVP -func b3-lyp -uhf 2 -novdw
+      $coord file=coord
+      $eht charge=0 unpaired=2
+      $atoms
+        basis=def2-TZVP
+      $dft
+        functional b3-lyp
+      $rij
+      $energy file=energy
+      $grad file=gradient
+      $end
 
-   | To generate the input for the other calculations, please look at the table provided in section :ref:`Short cefine reference`. Add the ``-opt`` option for setting up the ``-mp2`` calculation.
+   | To generate the input for the other calculations, please look at the table provided
+     in section :ref:`Keywords in control`. For the MP2 calculations, exchange the ``$dft``
+     with the proper ``$ricc2`` block and don't forget to specify ``$denconv`` small enough.
    | Geometry optimizations (DFT, HF) are done with the program ``jobex``:
 
    .. code-block:: none
 
-      jobex > jobex.out
+      jobex -ri > jobex.out
 
    Note that for MP2 geometry optimizations, you have to add the ``-level cc2`` option.
    Energies after geometry optimizations can be found in the file ``job.last``. HF and DFT
    energies for each SCF-cycle are additionally written in the file ``energy``.
-   In the case of CCSD(T), do not perform a geometry optimization, but do a singlepoint
-   calculation on the MP2 optimized geometries. Before performing the actual CCSD(T)
-   calculation, you have do run a HF-SCF:
+   In the case of CCSD(T) (also defined via the ``$ricc2`` block), do not perform a geometry
+   optimization, but do a single-point calculation on the MP2 optimized geometries. Before
+   performing the actual CCSD(T) calculation, you have do run a HF-SCF:
 
    .. code-block:: none
 
@@ -189,8 +224,15 @@ specified otherwise we will use the RI approximation throughout.
 
 .. hint::
 
-   Method selection in cefine: ``-func b3-lyp/pw6b95/tpss`` (B3LYP/PW6B95/TPSS), ``-hf`` (HF),
-   ``-mp2`` (MP2), ``-cc`` (CCSD(T)).
+   A HF calculation can be performed by simply omitting the ``$dft`` block in the above
+   input file. For post HF calculations, add the ``$ricc2`` block:
+
+   .. code-block:: none
+      :linenos:
+
+      $ricc2
+        mp2                # or ccsd(t)
+        geoopt level=mp2   # only for MP2 geometry optimizations
 
 
 Basis Set Convergence
@@ -209,18 +251,18 @@ Formic Acid Dimer
 1. Create separate directories for the formic acid dimer and monomer and set up geometry
    optimizations on the TPSS-D3/def2-TZVP level of theory. To do so, create structures
    using *e.g.* ``Avogadro`` and convert them to ``coord`` files. Prepare the calculations
-   and start the optimizations the same way as in exercise 1.2. Keep in mind the ``-d3``
-   option for **DFT** geometry optimizations and energy calculations:
+   in the same way as in exercise 1.2. You can use a similar ``control`` file and add the
+   ``$disp3 -bj`` keyword for the D3 dispersion correction. **DFT** geometry optimizations
+   are performed via:
 
    .. code-block:: none
 
-      cefine -bas def2-TZVP -func tpss -d3
-      jobex > jobex.out
+      jobex -ri > jobex.out
 
 2. Using the optimized geometries, calculate the dimerization energy (energy difference
    of one dimer and two monomers) with HF, TPSS-D3 and MP2 employing the cc-pVXZ (X = D, T, Q)
-   basis sets and their augmented counterparts (aug-cc-pVXZ). Refer to the table of ``cefine``
-   options given in section :ref:`Short cefine reference`.
+   basis sets and their augmented counterparts (aug-cc-pVXZ). Refer to the table of input
+   options given in section :ref:`Keywords in control`.
 
 3. Tabulate your results and plot the total energies versus the cardinal number
    of the basis set for each method (*e.g.* with ``gnuplot``).
@@ -232,9 +274,9 @@ Formic Acid Dimer
 .. hint::
 
    - The calculations with quadruple-|zeta| basis can be quite time consuming. Be sure
-     to use the correct symmetry.
+     to use the correct symmetry in the ``$symmetry`` block.
 
-   - Remember that you have to perform a HF singlepoint calculation (using ``ridft``) before
+   - Remember that you have to perform a HF single-point calculation (using ``ridft``) before
      you can start the MP2 calculation with ``ricc2`` in the same directory.
 
 
@@ -271,7 +313,7 @@ Reaction Enthalpies of Gas-Phase Reactions
 **Approach**
 
 1. Optimize the reactants and products using TPSS-D3/def2-TZVP (see earlier exercises
-   and section :ref:`Short cefine reference`, keep in mind the ``-d3`` option).
+   and section :ref:`Keywords in control`, keep in mind the ``$disp3 -bj`` keyword).
 
 2. In order to get the thermal corrections from energy to enthalpy at 298 K, do a
    frequency calculation first. Use the program ``aoforce`` to calculate the vibrational
@@ -281,7 +323,7 @@ Reaction Enthalpies of Gas-Phase Reactions
 
       aoforce > aoforce.out
 
-3. Then, calculate the thermal corrections to :math:`\Delta H_{298}` with the program
+3. Then, calculate the thermal enthalpy corrections :math:`\Delta H_{298}` with the program
    ``thermo``. It needs a ``.thermorc`` input file from your home directory. Create this
    file by typing:
 
@@ -305,11 +347,11 @@ Reaction Enthalpies of Gas-Phase Reactions
 
       rmsd <tpss-geometry> <mp2-geometry>
 
-5. Calculate singlepoint energies with the hybrid functional B3LYP-D3/def2-TZVP and with
+5. Calculate single-point energies with the hybrid functional B3LYP-D3/def2-TZVP and with
    MP2/def2-TZVP. Use the TPSS-D3 geometries and thermal corrections to calculate the
    reaction enthalpies.
 
-6. Calculate singlepoint energies with the double hybrid B2PLYP-D3/def2-QZVP and with
+6. Calculate single-point energies with the double hybrid B2PLYP-D3/def2-QZVP and with
    CCSD(T)/def2-QZVP. Use the TPSS geometries and thermal corrections to calculate the
    reaction enthalpies. Keep in mind that you have to run an SCF first with ``ridft``.
    Afterwards, use ``ricc2`` for the double-hybrid and ``ccsdf12`` for the coupled cluster
@@ -328,25 +370,10 @@ Heat of Formation of C\ :sub:`60` (optional)
 
 **Approach**
 
-1. Optimize the geometry of C\ :sub:`60` on the TPSS-D3(BJ)/def2-SVP level in I\ :sub:`h`
-   symmetry (D3(BJ) indicates the use of the D3 dispersion correction applying Becke-Johnson
-   damping, in the following abbreviated with D3). In order to do so, use the ``coord`` file
-
-   .. code-block:: none
-      :linenos:
-
-      $coord
-        -2.33   0.00    6.31      c
-      $end
-
-   with the following call of ``cefine``:
-
-   .. code-block:: none
-
-      cefine -bas def2-SVP -func tpss -sym ih -d3
-
-   Defining the point group will automatically generate symmetry equivalent atoms (the point
-   group is given with the corresponding Schoenflies symbol, *e.g.* ``c1``, ``c2v`` etc.).
+1. Optimize the geometry of C\ :sub:`60` on the TPSS-D3/def2-SVP level in I\ :sub:`h`
+   symmetry. In order to do so you can build a ``coord`` file on your own or search for
+   a proper input on the internet. The symmetry can be defined with the ``$symmetry ih``
+   keyword in ``control``.
 
 2. Calculate the energy of C\ :sub:`60` on TPSS/def2-SVP level without D3 corrections, use the
    TPSS-D3/def2-SVP optimized geometry.
@@ -361,13 +388,12 @@ Heat of Formation of C\ :sub:`60` (optional)
    results (599 / 635 kcal/mol). You will need the experimental :math:`\Delta H_f^0`
    of a carbon atom: 170.89 kcal/mol.
 
-6. Calculate singlepoint energies (without dispersion correction) for carbon and C\ :sub:`60` with TPSS and HF
+6. Calculate single-point energies (without dispersion correction) for carbon and C\ :sub:`60` with TPSS and HF
    employing the def2-TZVP and the def2-QZVP basis sets.
    Use the results to calculate the heat of formation. (Use the TPSS-D3/def2-SVP geometries
-   and corrections to :math:`\Delta H_{298.15}` for this purpose.
+   and corrections to :math:`\Delta H_{298.15}` for this purpose.)
 
-   .. To do so add ``-novdw`` to your ``cefine`` call, which disables the dispersion correction within the TURBOMOLE input.
-   .. (If you run into convergence problems setting the option ``scfconv 8`` in the control file and increasing the number of allowed scf iterations slightly ``scfiter 200`` may help.)
+   .. (If you run into convergence problems setting the option ``$scfconv 8`` in the control file and increasing the number of allowed scf iterations to ``$scfiterlimit 200`` may help.)
 
 7. Calculate the D3 dispersion correction to the TPSS/def2-QZVP energy and calculate
    :math:`\Delta H_f^0` again. Use the standalone program ``dftd3``:
@@ -410,8 +436,9 @@ Kinetic Isotope Effect
 
    In order to find the transition state, use the following steps:
 
-   (a) Prepare the calculation with ``cefine``. Use the B3LYP-D3/def2-TZVP level
-       of theory. Look at section :ref:`Short cefine reference` if you are unsure.
+   (a) Prepare a ``control`` file. Use the B3LYP-D3/def2-TZVP level of theory.
+       Look at section :ref:`Keywords in control` if you are unsure. You might
+       need to increase the ``$scfiterlimit`` in this exercise.
 
    (b) Consecutively, calculate energy, gradient and hessian:
 
@@ -423,12 +450,13 @@ Kinetic Isotope Effect
 
    (c) Verify that there is at least one, relatively large imaginary frequency
        in the output of ``aoforce`` (it also appears in the ``vibspectrum`` file).
-       Then, in the ``control`` file, change the first line after ``$statpt`` to:
+       Then, add the following block to the ``control`` file.
 
        .. code-block:: none
           :linenos:
 
-          itrvec 1
+          $statpt
+            itrvec 1
 
        (in general the frequency mode describing the motion of the reaction)
 
@@ -436,7 +464,7 @@ Kinetic Isotope Effect
 
        .. code-block:: none
 
-          jobex -trans > jobex.out
+          jobex -ri -trans > jobex.out
 
 2. When the search is successful (a ``GEO_OPT_CONVERGED`` file has been created
    in the directory), calculate the vibrational frequencies of the transition
@@ -453,25 +481,23 @@ Kinetic Isotope Effect
    resulting file (default: ``molden.input``) with ``gmolden``. The normal modes can
    be visualized by clicking on "Norm. Mode" on the right side of the menu.
 
-3. Call the program ``thermo`` and note down the thermal corrections to enthalpy.
+3. Call the program ``thermo`` and note down the thermal corrections to the enthalpy.
 
-4. In the ``control`` file, change the mass of the 4 hydrogen atoms at the carbon. Example:
+4. Repeat the transition state search with CD\ :sub:`4` and OH. Therefore, take the initial
+   ``control`` file and add an additional non-default atom weight definition to the 4 affected
+   hydrogen atoms in the ``$atoms`` block. You need to look in the ``coord`` file and identify
+   the indices of the ``h`` atoms you want to change to deuterium. Say these hydrogen atoms
+   are atoms 2, 3, 4 and 5, then change the ``$atoms`` block to:
 
    .. code-block:: none
       :linenos:
 
-      h  2-5                             \
-        basis =h def2-TZVP               \
-        jbas  =h def2-TZVP               \
-        mass = 2.014
-      h  7                               \
-        basis =h def2-TZVP               \
-        jbas  =h def2-TZVP
+      $atoms
+        basis=def2-TZVP
+      h 2,3,4,5
+        mass=2.014
 
-   Be careful: The back slashes indicate that the statement is continued in the next line and
-   are essential.
-
-5. Repeat the transition state search with CD\ :sub:`4`.
+5. With this input, repeat all aforementioned steps.
 
 6. Calculate the energies and thermal corrections for CH\ :sub:`4`, CD\ :sub:`4` and OH.
 
@@ -510,23 +536,27 @@ S\ :sub:`N`\ 2-Reaction
 
    Calculate the potential energy curve for the S\ :sub:`N`\ 2-reaction of chloromethane
    with a flouride anion in the gas-phase and in methanol (|eps| = 32) between
-   :math:`r(\text{C}-\text{F})` = 2.25 and 10.00 Bohr with |eps| being the dielectric constant of the solvent.
+   :math:`r(\text{C}-\text{F})` = 2.25 and 10.00 bohr with |eps| being the dielectric constant of the solvent.
 
 **Approach**
 
 1. Create structures and calculate the energies of the reactants (one calculation
    for each reactant) in the gas-phase and at |eps| = 32 (methanol). Use the hybrid
-   functional PW6B95 with a def2-TZVP basis and D3 dispersion correction. Example
-   for the preparation:
+   functional PW6B95 with a def2-TZVP basis and D3 dispersion correction. Keep in
+   mind that you also have to specify the charge and the solvent model in the ``control``
+   file, *e.g.*:
 
    .. code-block:: none
+      :linenos:
 
-      cefine -bas def2-TZVP -func pw6b95 -chrg -1.0 -cosmo 32.0 -d3
+      $eht charge=-1 unpaired=0
+      $cosmo
+        epsilon=32.0
 
 2. To create the potential energy curves, use the shell script below. The script
-   loops over all distances. For each distance it creates a new directory, calls
-   ``cefine``, performs the constrained geometry optimization and writes the electronic
-   energy (not necessarily your final reaction energy) into a file called ``results.dat``.
+   loops over all distances. For each distance it creates a new directory, performs
+   the constrained geometry optimization and writes the electronic energy (not
+   necessarily your final reaction energy) into a file called ``results.dat``.
    Create a new directory and copy and paste the script to a file named ``run-scan.sh``.
 
    .. code-block:: bash
@@ -536,8 +566,6 @@ S\ :sub:`N`\ 2-Reaction
 
       # Choose directory here
       calc_dir=scan_vac
-      # Choose options for the calculation
-      options="-bas def2-TZVP -func pw6b95 -chrg -1.0 -d3"
 
       cd $calc_dir
       if [ -f ./results.dat ]
@@ -547,16 +575,15 @@ S\ :sub:`N`\ 2-Reaction
 
       read -r -d 'END' template <<-EOF
       \$coord
-        0.00000000      0.00000000      0.00000000  c f
-        0.00000000      0.00000000     -3.36989165  cl
-        0.00000000      0.00000000      DIST        f f
-       -1.00404366      1.73905464     -0.62462166  h
-       -1.00404366     -1.73905464     -0.62462166  h
-        2.00808733      0.00000000     -0.62462166  h
+         0.00000000      0.00000000      0.00000000  c f
+         0.00000000      0.00000000     -3.36989165  cl
+         0.00000000      0.00000000      DIST        f f
+        -1.00404366      1.73905464     -0.62462166  h
+        -1.00404366     -1.73905464     -0.62462166  h
+         2.00808733      0.00000000     -0.62462166  h
       \$end
       END
       EOF
-
 
       for dist in $(seq 2.25 0.25 10.00 | sed s/,/./)
       do
@@ -567,11 +594,11 @@ S\ :sub:`N`\ 2-Reaction
           rm -r $dist
         fi
         mkdir $dist
+        cp control $dist
         pushd $dist
         echo "$template" | sed "s/DIST/$dist/" > coord
 
-        cefine $options
-        jobex -c 50
+        jobex -ri -c 50
 
         # Get final energy
         e=$(sdg energy | tail -1 | gawk '{printf $2}')
@@ -579,21 +606,24 @@ S\ :sub:`N`\ 2-Reaction
         # Write energy to a file
         echo $dist $e >> ../results.dat
         popd
+
       done
 
-   Template for the ``coord`` file is given directly inline in the script, we will repeat it here to explain a few details.
-   The ``f`` after the atom specification tells TURBOMOLE to keep the coordinates fixed for that atom:
+   A template for the ``coord`` file is given directly inline in the script, we will
+   repeat it here to explain a few details. The ``f`` after the atom specification
+   tells TURBOMOLE to keep the coordinates fixed for that atom. ``DIST`` ist a placeholder
+   which will be substituted by the C--F distance.
 
    .. code-block:: none
-      :linenos:
+      :lineno-start: 13
 
       $coord
-        0.00000000      0.00000000      0.00000000  c f
-        0.00000000      0.00000000     -3.36989165  cl
-        0.00000000      0.00000000      DIST        f f
-       -1.00404366      1.73905464     -0.62462166  h
-       -1.00404366     -1.73905464     -0.62462166  h
-        2.00808733      0.00000000     -0.62462166  h
+         0.00000000      0.00000000      0.00000000  c f
+         0.00000000      0.00000000     -3.36989165  cl
+         0.00000000      0.00000000      DIST        f f
+        -1.00404366      1.73905464     -0.62462166  h
+        -1.00404366     -1.73905464     -0.62462166  h
+         2.00808733      0.00000000     -0.62462166  h
       $end
 
    In order to use the script, you have to make it executable by typing:
@@ -603,7 +633,9 @@ S\ :sub:`N`\ 2-Reaction
       chmod +x run-scan.sh
 
    Create subdirectories (*e.g.* ``scan-vac`` and ``scan-cosmo``) for each potential
-   energy curve. You will have to adapt the script to your directory names.
+   energy curve and place a proper ``control`` file in each of these subdirectories.
+   You will have to adapt the script to your directory names (name in line 4). The
+   ``results.dat`` file will be written to the respective subdirectory.
    Execute the script by typing:
 
    .. code-block:: none
@@ -615,8 +647,13 @@ S\ :sub:`N`\ 2-Reaction
 
 .. hint::
 
-   Sometimes ``cefine`` crashes can occur at very large distances. Often limiting the script to
-   distances up to 8.25 Bohr might help solving the problem without loosing significant information.
+   If the execution of such a script takes some longer time, consider calling it with:
+
+   .. code-block:: none
+
+      nohup ./run-scan.sh &
+
+   Then, you can log out of your shell without killing the calculation.
 
 
 Activation Energies
@@ -644,11 +681,20 @@ Rearrangement and Dimerization Reactions
       often you can easily create a product structure from your reactant. Furthermore, this
       generally eases the sorting of the atoms.
 
-2. Optimize the geometries using PBEh-3c and C\ :sub:`1` symmetry. Prepare the calculation using:
+2. Optimize the geometries using PBEh-3c and C\ :sub:`1` symmetry. PBEh-3c is a composite
+   density functional method that uses a hybrid functional, correction schemes and the
+   pre-defined modified basis set def2-mSVP. To invoke the correct method and (auxiliary)
+   basis set in the ``control`` file, as well as the desired C\ :sub:`1` symmetry, please use:
 
    .. code-block:: none
+      :linenos:
 
-      cefine -sym c1
+      $atoms
+        basis=def2-mSVP
+        jbas=universal
+      $dft
+        functional pbeh-3c
+      $symmetry c1
 
 3. Verify that the sequence of atoms is still the same in every pair of reactant and product structure.
 
@@ -658,7 +704,7 @@ Rearrangement and Dimerization Reactions
    (b) Have your reactant and product structure sorted and available in TURBOMOLE
        format (*e.g.* starting structure ``coord``, ending structure ``coord.2``).
    (c) Set up a calculation for the starting strucutre. Employ PBEh-3c as before.
-   (d) Merge reactant and product structures files into a file called ``coords``
+   (d) Merge reactant and product structure files into a file called ``coords``
        *e.g.* by typing:
 
        .. code-block:: none
@@ -726,52 +772,49 @@ Noble Gas |mult| |mult| |mult| Methane
 
 **Approach**
 
-1. Calculate the potential energy curve at the BLYP-D3/def2-QZVP
-   level for Ar |mult| |mult| |mult| HCH\ :sub:`3` by performing a geometry
-   optimization with a fixed Ar and H atom.
-   Do this for :math:`R_\text{(Ar-H)}` = 4.5 - 15.0 Bohr with a stepsize of 0.25 Bohr.
-   Use the following ``template`` file to create the ``coord`` files:
-
+1. | Calculate the potential energy curve at the BLYP-D3/def2-QZVP level for Ar
+     |mult| |mult| |mult| HCH\ :sub:`3` by performing a geometry optimization with a
+     fixed Ar and H atom. Do this for :math:`R_\text{(Ar-H)}` = 4.5 - 15.0 bohr with
+     a stepsize of 0.25 bohr.
+   | Use the ``run-scan.sh`` script from exercise 5.1 and adopt it to this task.
+     Substitute the template molecular geometry by the following one:
+   
    .. code-block:: none
-      :linenos:
+      :lineno-start: 13
 
       $coord
-          0.00000000000000      0.00000000000000      XXXX                  ar f
-          0.00000000000000      0.00000000000000      0.00000000000000      h f
-          0.00000000000000      0.00000000000000     -2.06945348098289      c
-          0.97576020317533      1.69006623336522     -2.75977586481614      h
-          0.97576020317533     -1.69006623336522     -2.75977586481614      h
-         -1.95152040635065      0.00000000000000     -2.75977586481614      h
+         0.00000000000000      0.00000000000000      DIST                  ar f
+         0.00000000000000      0.00000000000000      0.00000000000000      h f
+         0.00000000000000      0.00000000000000     -2.06945348098289      c
+         0.97576020317533      1.69006623336522     -2.75977586481614      h
+         0.97576020317533     -1.69006623336522     -2.75977586481614      h
+        -1.95152040635065      0.00000000000000     -2.75977586481614      h
       $end
 
-   Use the ``run-scan.sh`` script from exercise 5.1 and adopt it to this task. You also
-   have to modify the directory names. Prepare the BLYP-D3/def2-QZVP calculations with
-   the following options:
+   You also have to modify the directory names and the distances. Prepare a ``control`` file
+   for the BLYP-D3/def2-QZVP calculations including the ``$disp3 -bj`` and ``$symmetry c1``
+   keywords.
+
+2. Repeat the calculations for BLYP/def2-QZVP and MP2/def2-QZVP. For BLYP, just omit
+   the ``$disp3`` block. For MP2, clear the ``$dft`` and ``$disp3`` blocks and instert proper
+   settings under ``$ricc2`` and ``$denconv``. In the latter case, don't forget to change
+   the ``jobex`` command in the script to:
 
    .. code-block:: none
-      :linenos:
+      :lineno-start: 37
 
-      cefine -bas def2-QZVP -func b-lyp -d3 -sym c1
+        jobex -ri -level cc2 -c 50
 
-2. Repeat the calculations for BLYP/def2-QZVP and MP2/def2-QZVP. For BLYP, exchange ``-d3``
-   by ``-novdw`` and for MP2, use the following calls in the script:
-
-   .. code-block:: none
-      :linenos:
-
-      cefine -mp2 -bas def2-QZVP -opt -sym c1
-      jobex -level cc2 -c 50
-
-   To get the final MP2 energy for each distance use the following command:
+   To get the final MP2 energy for each distance, also change the ``sdg`` command to:
 
    .. code-block:: none
-      :linenos:
+      :lineno-start: 40
 
-      grep "Total Energy" job.last | gawk '{print $4}'
+        e=$(grep "Total Energy" job.last | gawk '{print $4}')
 
 3. Repeat the calculations for Kr |mult| |mult| |mult| HCH\ :sub:`3`
-   (substitute Ar with Kr in the ``template`` file) with
-   BLYP-D3/def2-QZVP, BLYP/def2-QZVP and MP2/def2-QZVP.
+   (substitute ``ar`` by ``kr`` in the template) with BLYP-D3/def2-QZVP,
+   BLYP/def2-QZVP and MP2/def2-QZVP.
 
 4. Plot the curves (**normalize to the dissociation limit**) and discuss your findings.
 
@@ -784,13 +827,13 @@ IR-Spectrum of 1,4-Benzoquinone
 
 .. admonition:: Exercise 8.1
 
-   Calculate the IR-spectrum of 1,4-Benzoquinone using
+   Calculate the IR-spectrum of 1,4-benzoquinone using
    DFT and HF, and compare the results to the experimental
    spectrum given below.
 
 **Approach**
 
-1. Create a ``coord`` file for 1,4-Benzoquinone.
+1. Create a ``coord`` file for 1,4-benzoquinone.
 
 2. Optimize the geometry with TURBOMOLE on the HF-D3/def2-SVP level of theory.
 
@@ -808,12 +851,12 @@ IR-Spectrum of 1,4-Benzoquinone
    :align: center
    :width: 800px
 
-   IR spectrum of 1,4-Benzoquinone in KBr.
+   IR spectrum of 1,4-benzoquinone in KBr.
 
 .. hint::
 
-   If you obtain imaginary frequencies, try to start the geometry optimization from a slightly distorted structure.
-   Check if the imaginary frequencies vanish.
+   If you obtain imaginary frequencies, try to start the geometry optimization from a
+   slightly distorted structure. Check if the imaginary frequencies vanish.
 
 
 The Color of Indigo
@@ -827,24 +870,75 @@ The Color of Indigo
 
 **Approach**
 
-1. Create the geometry of indigo (figure below) and optimize it with TURBOMOLE on the
-   TPSS-D3/def2-SVP level. Make sure to use the correct symmetry.
-
+1. In this exercise, please use TURBOMOLE's interactive input generator ``define`` to
+   to create the ``control`` file. To do so, create the geometry of an indigo molecule
+   (figure below) and place the ``coord`` file in its own directory.
+   
    .. figure:: img/indigo.png
       :align: center
       :width: 250px
 
       Structure of indigo.
 
-2. Do a HF-D3/def2-SVP singlepoint calculation. Use the ``-nori`` option for the preparation
-   with ``cefine`` and run:
+   To start the input generator, navigate to the directory containing the ``coord`` file,
+   type the following command and answer all questions that appear.
 
+   .. code-block:: none
+
+      define
+
+   Prepare an input on the TPSS-D3/def2-SVP level and optimize the geometry. In the define
+   dialogue, you can skip the first two questions, then choose the input geometry file via:
+
+   .. code-block:: none
+
+      a coord
+
+   | In this menu, you will find a header telling you the number of atoms of your molecule
+     and its symmetry point group (Schoenflies symbol). If this is not yet correct (the
+     molecule does not have C\ :sub:`1` symmetry), type ``desy 1d-3`` or some larger value
+     to loosen the symmetry determination threshold until the correct point group is recognized.
+     If the symmetry is still not recognized correctly, you can set the point group manually
+     with the ``sy`` command. In this case make sure TURBOMOLE does not add atoms to your
+     ``coord`` file.
+   | Leave the molecular geometry menu and then do not choose internal coordinates. In the
+     atomic attribute definition menu, you can choose the same basis for all atoms by
+     typing *e.g.*:
+
+   .. code-block:: none
+
+      b all def2-SVP
+
+   Afterwards, choose an extended Hückel guess for the MOs with default parameters (don't
+   worry about a small HOMO/LUMO gap). In the last general menu, go to the ``dft`` submenu
+   and type *e.g.*:
+
+   .. code-block:: none
+
+      on
+      func tpss
+
+   Don't forget to also choose the ``bj`` option in the ``dsp`` submenu for the D3 disperion
+   correction (activating the RI approximation in the ``ri`` submenu is also recommended).
+   When you are finished, you will find a ``control`` file in your directory containing all
+   keywords you already know and more. If everything is correct, you are now ready to run
+   the geometry optimization.
+
+   .. hint::
+
+      Try to navigate through the ``define`` dialogue a few times and explore it by yourself
+      to get familiar with it. If you still can't figure out a certain aspect, feel free
+      to ask your lab assistant.
+   
+2. Prepare a HF-D3/def2-SVP single-point calculation in the same way by using ``define``,
+   but do not turn on the ``dft`` option. Do not use the RI approximation here and run:
+  
    .. code-block:: none
 
       dscf > dscf.out
 
-   In order to do the TD-HF calculation, edit the ``control`` file and add the following lines
-   (before ``$end``):
+   In order to do the subsequent TD-HF calculation, add the following two blocks so the
+   ``control`` file:
 
    .. code-block:: none
       :linenos:
@@ -860,7 +954,8 @@ The Color of Indigo
       escf > escf.out
 
 3. For the TD-DFT calculations repeat the above procedure with PBE-D3/def2-SVP and
-   PBE0-D3/def2-SVP. Use the proper ``cefine`` calls and run
+   PBE0-D3/def2-SVP (now with RI approximation). Use proper settings during the ``define``
+   dialogue as well as in ``control`` and run:
 
    .. code-block:: none
 
@@ -928,7 +1023,7 @@ Exemplary output for CH\ :sub:`3`\ NH\ :sub:`2`:
    on the PBEh-3c level of theory (how to use PBEh-3c is explained in the ORCA manual).
 
 2. Calculate the :sup:`13`\ C-NMR chemical shieldings and shifts |delta| for compounds **A** -- **G** with TMS as reference at PBE/pcSseg-2 level of theory.
-   Given the NMR shielding constants :math:`\sigma` of the compound (:math:`\text{c}`) and the reference (:math:`\text{ref.}`), the chemical shift
+   Given the isotropic NMR shielding constants :math:`\sigma` of the compound (:math:`\text{c}`) and the reference (:math:`\text{ref.}`), the chemical shift
    :math:`\delta _\text{c,ref.}` is defined as
 
    .. math::
@@ -963,7 +1058,7 @@ Exemplary output for CH\ :sub:`3`\ NH\ :sub:`2`:
 
       There are two options (gas/solution) for each calculation, the geometry optimization and the shielding calculation. Compare all possibilities.
 
-7. Calculate the :sup:`1`\ H-NMR chemical shifts for **H** and **I** in the gas-phase at PBE/pcSseg-2 level of theory.
+7. Calculate the :sup:`1`\ H-NMR chemical shifts for **H** and **I** in the gas-phase at the PBE/pcSseg-2 level of theory.
    Discuss your observations regarding the chemical shift of the methine proton in both compounds.
    Give a short explanation of your findings.
 
