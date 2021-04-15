@@ -3,6 +3,12 @@
 Exercises
 =========
 
+.. attention::
+
+   This is a preliminary version of the script for the application part of the practical course
+   and is still under construction. If you plan to start with the calculations before June 1st,
+   2021, be aware that changes might still occur.
+
 .. contents::
 
 
@@ -892,6 +898,9 @@ The Color of Indigo
      and its symmetry point group (Schoenflies symbol). If this is not yet correct (the
      molecule does not have C\ :sub:`1` symmetry), type ``desy 1d-3`` or some larger value
      to loosen the symmetry determination threshold until the correct point group is recognized.
+     If the symmetry is still not recognized correctly, you can set the point group manually
+     with the ``sy`` command. In this case make sure TURBOMOLE does not add atoms to your
+     ``coord`` file.
    | Leave the molecular geometry menu and then do not choose internal coordinates. In the
      atomic attribute definition menu, you can choose the same basis for all atoms by
      typing *e.g.*:
