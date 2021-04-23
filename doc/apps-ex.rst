@@ -704,7 +704,8 @@ Rearrangement and Dimerization Reactions
    (b) Have your reactant and product structure sorted and available in TURBOMOLE
        format (*e.g.* starting structure ``coord``, ending structure ``coord.2``).
    (c) Set up a calculation for the starting strucutre. Employ PBEh-3c as before. For ``woelfling`` to run 
-       without errors, an additional parameter in the control file is needed. 
+       without errors, an additional parameter in the control file is needed. Adjust ``natoms`` to the actual 
+       number of atoms of your reaction.
    
        .. code-block:: none
           :linenos:
@@ -719,7 +720,7 @@ Rearrangement and Dimerization Reactions
           $symmetry c1
           $rij
           $rundimensions 
-            natoms=14
+            natoms=XX
           $end
       
    (d) Merge reactant and product structure files into a file called ``coords``
