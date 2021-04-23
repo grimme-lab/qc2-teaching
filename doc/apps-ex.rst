@@ -705,7 +705,7 @@ Rearrangement and Dimerization Reactions
        format (*e.g.* starting structure ``coord``, ending structure ``coord.2``).
    (c) Set up a calculation for the starting strucutre. Employ PBEh-3c as before. For ``woelfling`` to run without errors, an additional parameter is needed. 
    
-      .. code-block:: none
+   .. code-block:: none
       :linenos:
       
       $coord file=coord
