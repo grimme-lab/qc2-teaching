@@ -705,21 +705,21 @@ Rearrangement and Dimerization Reactions
        format (*e.g.* starting structure ``coord``, ending structure ``coord.2``).
    (c) Set up a calculation for the starting strucutre. Employ PBEh-3c as before. For ``woelfling`` to run without errors, an additional parameter is needed. 
    
-   .. code-block:: none
-      :linenos:
+       .. code-block:: none
+          :linenos:
       
-      $coord file=coord
-      $eht charge=0 unpaired=0
-      $atoms
-        basis=def2-mSVP
-        jbas=universal
-      $dft
-        functional pbeh-3c
-      $symmetry c1
-      $rij
-      $rundimensions 
-        natoms=14
-      $end
+          $coord file=coord
+          $eht charge=0 unpaired=0
+          $atoms
+            basis=def2-mSVP
+            jbas=universal
+          $dft
+            functional pbeh-3c
+          $symmetry c1
+          $rij
+          $rundimensions 
+            natoms=14
+          $end
       
    (d) Merge reactant and product structure files into a file called ``coords``
        *e.g.* by typing:
