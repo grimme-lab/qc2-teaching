@@ -815,7 +815,7 @@ Noble Gas |mult| |mult| |mult| Methane
    keywords.
 
 2. Repeat the calculations for BLYP/def2-QZVP and MP2/def2-QZVP. For BLYP, just omit
-   the ``$disp3`` block. For MP2, clear the ``$dft`` and ``$disp3`` blocks and instert proper
+   the ``$disp3`` block. For MP2, clear the ``$dft`` and ``$disp3`` blocks and insert proper
    settings under ``$ricc2`` and ``$denconv``. In the latter case, don't forget to change
    the ``jobex`` command in the script to:
 
