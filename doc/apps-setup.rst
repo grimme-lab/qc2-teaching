@@ -217,6 +217,10 @@ The following table shows the most important keywords that are interesting for t
 |                                      | extended Hückel guess and the entire rest of the calculation.                            |
 |    $eht charge=<chrg> unpaired=<uhf> |                                                                                          |
 +--------------------------------------+------------------------------------------------------------------------------------------+
+| .. code-block:: none                 | Use the symmetry of pointgroup ``<sym>``. If not stated otherwise, in the scope of this  |
+|                                      | course it is always recommended to use C\ :sub:`1` symmetry to avoid technical issues    |
+|    $symmetry <sym>                   | (choose ``c1``).                                                                         |
++--------------------------------------+------------------------------------------------------------------------------------------+
 | .. code-block:: none                 | | Use the resolution of the identity (RI) approximation. Note that you then have to use  |
 |                                      |   ``ridft`` for single-point calculations and the ``-ri`` option for ``jobex``.          |
 |    $rij                              | | We recommend using the RI approximation for all exercises in this course.              |
@@ -266,10 +270,6 @@ The following table shows the most important keywords that are interesting for t
 |                                      | of the solvent.                                                                          |
 |    $cosmo                            |                                                                                          |
 |      epsilon=<epsilon>               |                                                                                          |
-+--------------------------------------+------------------------------------------------------------------------------------------+
-| .. code-block:: none                 | Use the symmetry of pointgroup ``<sym>``, *e.g.* ``c2v`` for pointgroup C\ :sub:`2v`.    |
-|                                      |                                                                                          |
-|    $symmetry <sym>                   |                                                                                          |
 +--------------------------------------+------------------------------------------------------------------------------------------+
 | .. code-block:: none                 | Defines the maximum number of iterations in an SCF calculation (default ``<limit>`` is   |
 |                                      | 30). If an SCF did not converge, try increasing this value, *e.g.* to 100.               |

@@ -123,7 +123,7 @@ Carbenes
 ~~~~~~~~
 
 All following calculations will be done with TURBOMOLE if not stated otherwise. Also, if not
-specified otherwise we will use the RI approximation throughout.
+specified otherwise we will use the RI approximation and C\ :sub:`1` symmetry throughout.
 
 .. admonition:: Exercise 1.2
 
@@ -175,6 +175,7 @@ specified otherwise we will use the RI approximation throughout.
 
       $coord file=coord
       $eht charge=0 unpaired=2
+      $symmetry c1
       $atoms
         basis=def2-TZVP
       $dft
@@ -273,8 +274,9 @@ Formic Acid Dimer
 
 .. hint::
 
-   - The calculations with quadruple-|zeta| basis can be quite time consuming. Be sure
-     to use the correct symmetry in the ``$symmetry`` block.
+   - The calculations with quadruple-|zeta| basis can be quite time consuming. Exploiting the
+     symmetry by choosing the correct point group in the ``$symmetry`` block might accelerate
+     the calculations.
 
    - Remember that you have to perform a HF single-point calculation (using ``ridft``) before
      you can start the MP2 calculation with ``ricc2`` in the same directory.
@@ -632,7 +634,7 @@ S\ :sub:`N`\ 2-Reaction
 
       chmod +x run-scan.sh
 
-   Create subdirectories (*e.g.* ``scan-vac`` and ``scan-cosmo``) for each potential
+   Create subdirectories (*e.g.* ``scan_vac`` and ``scan_cosmo``) for each potential
    energy curve and place a proper ``control`` file in each of these subdirectories.
    You will have to adapt the script to your directory names (name in line 4). The
    ``results.dat`` file will be written to the respective subdirectory.
@@ -689,12 +691,12 @@ Rearrangement and Dimerization Reactions
    .. code-block:: none
       :linenos:
 
+      $symmetry c1
       $atoms
         basis=def2-mSVP
         jbas=universal
       $dft
         functional pbeh-3c
-      $symmetry c1
 
 3. Verify that the sequence of atoms is still the same in every pair of reactant and product structure.
 
@@ -712,12 +714,12 @@ Rearrangement and Dimerization Reactions
 
           $coord file=coord
           $eht charge=0 unpaired=0
+          $symmetry c1
           $atoms
             basis=def2-mSVP
             jbas=universal
           $dft
             functional pbeh-3c
-          $symmetry c1
           $rij
           $rundimensions 
             natoms=XX
