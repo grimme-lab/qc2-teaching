@@ -892,7 +892,7 @@ The Color of Indigo
 **Approach**
 
 1. In this exercise, please use TURBOMOLE's interactive input generator ``define`` to
-   to create the ``control`` file. To do so, create the geometry of an indigo molecule
+   create the ``control`` file. To do so, create the geometry of an indigo molecule
    (figure below) and place the ``coord`` file in its own directory.
    
    .. figure:: img/indigo.png
