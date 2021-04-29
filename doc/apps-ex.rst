@@ -1043,9 +1043,11 @@ Exemplary output for CH\ :sub:`3`\ NH\ :sub:`2`:
 1. Optimize the geometries of the compounds **A** -- **G** and the reference molecule Si(CH\ :sub:`3`)\ :sub:`4` (TMS)
    on the PBEh-3c level of theory (how to use PBEh-3c is explained in the ORCA manual).
 
-2. Calculate the :sup:`13`\ C-NMR chemical shieldings and shifts |delta| for compounds **A** -- **G** with TMS as reference at PBE/pcSseg-2 level of theory.
-   Given the isotropic NMR shielding constants :math:`\sigma` of the compound (:math:`\text{c}`) and the reference (:math:`\text{ref.}`), the chemical shift
-   :math:`\delta _\text{c,ref.}` is defined as
+2. Calculate the :sup:`13`\ C-NMR chemical shieldings and shifts |delta| for compounds
+   **A** -- **G** with TMS as reference at PBE/pcSseg-2 level of theory (use this level in
+   all the following calculations if not stated otherwise). Given the isotropic NMR shielding
+   constants :math:`\sigma` of the compound (:math:`\text{c}`) and the reference
+   (:math:`\text{ref.}`), the chemical shift :math:`\delta _\text{c,ref.}` is defined as
 
    .. math::
 
@@ -1079,7 +1081,8 @@ Exemplary output for CH\ :sub:`3`\ NH\ :sub:`2`:
 
       There are two options (gas/solution) for each calculation, the geometry optimization and the shielding calculation. Compare all possibilities.
 
-7. Calculate the :sup:`1`\ H-NMR chemical shifts for **H** and **I** in the gas-phase at the PBE/pcSseg-2 level of theory.
+7. Calculate the :sup:`1`\ H-NMR chemical shifts for **H** and **I** in the gas-phase at the
+   PBE/pcSseg-2//PBEh-3c level of theory (again use TMS as the reference).
    Discuss your observations regarding the chemical shift of the methine proton in both compounds.
    Give a short explanation of your findings.
 
