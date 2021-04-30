@@ -67,7 +67,7 @@ html_theme_options = {
     "use_download_button": False,
 }
 html_sidebars = {
-    "**": ["sbt-sidebar-nav.html", "sidebar-search-bs.html"],
+    "**": ["sbt-sidebar-nav.html", "search-field.html"],
 }
 html_css_files = [
     "custom.css",
