@@ -705,7 +705,7 @@ Rearrangement and Dimerization Reactions
    (a) Create a directory for each reaction.
    (b) Have your reactant and product structure sorted and available in TURBOMOLE
        format (*e.g.* starting structure ``coord``, ending structure ``coord.2``).
-   (c) Set up a calculation for the starting strucutre. Employ PBEh-3c as before. For ``woelfling`` to run 
+   (c) Set up a calculation for the starting structure. Employ PBEh-3c as before. For ``woelfling`` to run 
        without errors, an additional parameter in the control file is needed. Adjust ``natoms`` to the actual 
        number of atoms of your reaction.
    
