@@ -538,7 +538,7 @@ S\ :sub:`N`\ 2-Reaction
 
    Calculate the potential energy curve for the S\ :sub:`N`\ 2-reaction of chloromethane
    with a flouride anion in the gas-phase and in methanol (|eps| = 32) between
-   :math:`r(\text{C}-\text{F})` = 2.25 and 10.00 bohr with |eps| being the dielectric constant of the solvent.
+   :math:`r(\text{C}-\text{F})` = 2.25 and 8.00 bohr with |eps| being the dielectric constant of the solvent.
 
 **Approach**
 
@@ -587,7 +587,7 @@ S\ :sub:`N`\ 2-Reaction
       END
       EOF
 
-      for dist in $(seq 2.25 0.25 10.00 | sed s/,/./)
+      for dist in $(seq 2.25 0.25 8.00 | sed s/,/./)
       do
 
         # Check for existence of folder
