@@ -78,6 +78,8 @@ html_css_files = [
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
 
+panels_add_bootstrap_css = False
+
 # other default
 master_doc = 'index'
 
