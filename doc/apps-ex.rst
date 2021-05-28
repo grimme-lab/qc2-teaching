@@ -359,7 +359,9 @@ Reaction Enthalpies of Gas-Phase Reactions
    Afterwards, use ``ricc2`` for the double-hybrid and ``ccsdf12`` for the coupled cluster
    calculation. The energies can be found in the respective output.
 
-7. Tabulate your results and compare to the experimental values.
+7. Tabulate your results and compare to the experimental values. Which method would you expect
+   to show the smallest deviation to the experiment? Do your findings match your expectation?
+   Disscuss your outcome.
 
 
 Heat of Formation of C\ :sub:`60` (optional)
