@@ -458,7 +458,7 @@ Now you can login as described above (remember to have ``Xming`` running).
 Software for Visualization of Molecules
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 A quantum chemical calculation always needs a structure as input (and will often result in a modified structure as output), so you need some kind of visualization program to create the desired molecule or to look at it. We recommend the use of the program `Avogadro <https://avogadro.cc/>`_ to generate and manipulate molecules.
-Next, you will need the program `molden <http://cheminf.cmbi.ru.nl/molden/>`_ for some exercises (we recommend the version ``gmolden``). You can open an input file (*e.g.* ``molden.input`` or a ``*.xyz`` file) by typing:
+Next, you will need the program `molden <https://uni-bonn.sciebo.de/s/XxSEG5DHbzitX7Z>`_ for some exercises (we recommend the version ``gmolden``). You can open an input file (*e.g.* ``molden.input`` or a ``*.xyz`` file) by typing:
 
 .. code-block:: none
 
