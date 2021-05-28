@@ -3,12 +3,6 @@
 Exercises
 =========
 
-.. attention::
-
-   This is a preliminary version of the script for the application part of the practical course
-   and is still under construction. If you plan to start with the calculations before June 1st,
-   2021, be aware that changes might still occur.
-
 .. contents::
 
 

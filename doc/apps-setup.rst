@@ -30,6 +30,7 @@ needed software, add the following lines to your ``.bashrc``:
    export PATH=/home/$USER/bin:$PATH
    
    module load turbomole orca
+   alias molden='/software/bin/molden'
 
    # XTB
    export OMP_NUM_THREADS=2
