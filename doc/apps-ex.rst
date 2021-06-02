@@ -227,7 +227,7 @@ specified otherwise we will use the RI approximation and C\ :sub:`1` symmetry th
 
       $ricc2
         mp2                # or ccsd(t)
-        geoopt level=mp2   # only for MP2 geometry optimizations
+        geoopt model=mp2   # only for MP2 geometry optimizations
 
 
 Basis Set Convergence
