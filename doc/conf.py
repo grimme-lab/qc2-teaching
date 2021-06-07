@@ -18,11 +18,11 @@
 # -- Project information -----------------------------------------------------
 
 project = 'Advanced Quantum Chemistry Methods'
-copyright = '2020, Grimme group'
+copyright = '2020-2021, Grimme group'
 author = 'Grimme group'
 
 # The full version, including alpha/beta/rc tags
-release = 'SoSe2020'
+release = 'SoSe2021'
 
 
 # -- General configuration ---------------------------------------------------
