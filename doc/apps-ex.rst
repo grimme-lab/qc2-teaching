@@ -663,14 +663,14 @@ Rearrangement and Dimerization Reactions
 .. admonition:: Exercise 6.1
 
    Estimate the activation energy for the Claisen rearrangement of allyl-vinyl ether
-   and the dimerization of cyclopentadiene (Diels-Alder).
+   and the dimerization of cyclopentadiene to *endo*-dicyclopentadiene (Diels-Alder).
 
 .. Ggf. besser Strukturen hinterlegen, Änderungen auf GFN-xTB?
 .. (You can ask the lab assistent for a dimer structure of cyclopentadien.)
 
 **Approach**
 
-1. Construct the geometry of reactant and product for each reaction (*e.g.* using ``Avogadro``).
+1. Construct the geometry of reactant(s) and product for each reaction (*e.g.* using ``Avogadro``).
    Ensure that the sequence of atoms is the same in every pair of reactant and product structure.
 
    .. hint::
