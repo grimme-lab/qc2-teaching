@@ -178,9 +178,9 @@ The input file is generally structured as follows:
    or:
    * int <charge> <multiplicity>
            Z-Matrix
+   *
    or:
    * xyzfile <charge> <multiplicity> <filename.xyz>
-   *
 
 .. important:: Multiplicity = 2S+1 with S being the total spin.
 
