@@ -954,8 +954,8 @@ The Color of Indigo
 
       dscf > dscf.out
 
-   In order to do the subsequent TD-HF calculation, add the following two blocks so the
-   ``control`` file:
+   In order to do the subsequent TD-HF (or a TD-DFT) calculation, add the following two blocks
+   so the ``control`` file:
 
    .. code-block:: none
       :linenos:
