@@ -235,7 +235,7 @@ the Coulomb energy between the nuclei.
       distance and compare it with your program.
       Can you run your ``subroutine`` multiple times and get the
       same result? If not recheck your code.
-   4. Check what happens if calculate the nuclear repulsion energy for
+   4. Check what happens if you calculate the nuclear repulsion energy for
       a single atom. Do you get the expected result?
 
 Classical contributions to the total energy do not dependent on
