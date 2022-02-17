@@ -50,9 +50,9 @@ You will receive an account on one of the ssh-servers as well.
    Whatever you do, never copy large files to the ssh-server, it has only very limited disk space.
    Also do not run any resource consuming program on the server (anything that needs a GUI is per definition resource consuming if used on shared resources).
 
-First, we will work with three machines in this tutorial, your local machine (``saw2570``), the ssh-server instance (``ssh3``) and the CIP computer (``c00``).
+First, we will work with three machines in this tutorial, your local machine (``M-Bot``), the ssh-server instance (``ssh3``) and the CIP computer (``c00``).
 ``c00`` is an existing machine, you can log in there as well, it is also the least powerful machine, therefore, just do not use this machine for computations, use the one you were assigned.
-Your local username might also be different from the one in the facility, we will use ``awvwgk`` for the user on the local machine and ``ehlert`` for the user at the facility.
+Your local username might also be different from the one in the facility, we will use ``stahn`` for the user on the local machine as well as for the user at the facility.
 
 .. attention:: 
 
@@ -82,27 +82,33 @@ The request will be gone if you log in a second time.
 
 .. code-block:: none
    :linenos:
-   :emphasize-lines: 4, 6, 10, 12, 16, 18
+   :emphasize-lines: 4, 6, 10, 12, 19, 22
 
-   [awvwgk@saw2570 ~] $ ssh -Y ehlert@ssh3.thch.uni-bonn.de
-   The authenticity of host 'ssh3.thch.uni-bonn.de (131.220.44.130)' can't be established.
-   ECDSA key fingerprint is SHA256:eEdQpqyV6oP0Ddra7H2QDI6kC9rX3XQRAlWxX6LfA6U.
-   Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
-   Warning: Permanently added 'ssh3.thch.uni-bonn.de,131.220.44.130' (ECDSA) to the list of known hosts.
-   Password:
-   [ehlert@ssh3 ~] $ ssh -Y ehlert@c00
-   The authenticity of host 'c00 (172.17.3.20)' can't be established.
-   ECDSA key fingerprint is 23:66:63:60:8e:17:e0:b3:83:75:03:09:12:39:51:8d [MD5].
-   Are you sure you want to continue connecting (yes/no)? yes
-   Warning: Permanently added 'c00,172.17.3.20' (ECDSA) to the list of known hosts.
-   Password:
-   [ehlert@c00 ~] $ logout
-   [ehlert@ssh3 ~] $ logout
-   [awvwgk@saw2570 ~] $ ssh -Y ehlert@ssh3.thch.uni-bonn.de
-   Password:
-   [ehlert@ssh3 ~] $ ssh -Y ehlert@c00
-   Password:
-   [ehlert@c00 ~] $
+      stahn@M-Bot:~/.ssh$ ssh -Y stahn@ssh3.thch.uni-bonn.de
+      The authenticity of host 'ssh3.thch.uni-bonn.de (131.220.44.130)' can't be established.
+      ECDSA key fingerprint is SHA256:eEdQpqyV6oP0Ddra7H2QDI6kC9rX3XQRAlWxX6LfA6U.
+      Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+      Warning: Permanently added 'ssh3.thch.uni-bonn.de' (ECDSA) to the list of known hosts.
+      Password:
+      stahn@ssh3:~> ssh -Y stahn@c00
+      The authenticity of host 'c00 (172.17.3.20)' can't be established.
+      ECDSA key fingerprint is SHA256:ozq72tQ9gROvzDwv+ZFQ7wc+L/Dmu9Fptbfhf2zfd1M.
+      Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+      Warning: Permanently added 'c00,172.17.3.20' (ECDSA) to the list of known hosts.
+      Password: 
+      Have a lot of fun...
+      stahn@c00:~> logout  
+      Connection to c00 closed.
+      stahn@ssh3:~> logout
+      Connection to ssh3.thch.uni-bonn.de closed.
+      stahn@M-Bot:~/.ssh$ ssh -Y stahn@ssh3.thch.uni-bonn.de
+      Password:
+      Last login: Thu Feb 17 16:39:19 2022 from 131.220.44.207
+      stahn@ssh3:~> ssh -Y stahn@c00
+      Password: 
+      Last login: Thu Feb 17 16:39:35 2022 from 131.220.44.130
+      Have a lot of fun...
+      stahn@c00:~> 
 
 .. note::
 
@@ -122,9 +128,9 @@ We start on your local machine, we create the ssh directory in your home by
 .. code-block:: none
    :linenos:
 
-   [awvwgk@saw2570 ~] $ cd ~
-   [awvwgk@saw2570 ~] $ mkdir .ssh
-   [awvwgk@saw2570 ~] $ chmod 700 .ssh
+   stahn@M-Bot:~$ cd ~
+   stahn@M-Bot:~$ mkdir .ssh
+   stahn@M-Bot:~$ chmod 700 .ssh
 
 The last step ensures that you and only you have access to your ssh keys, never allow anyone else access to this directory!
 
@@ -136,11 +142,11 @@ The last step ensures that you and only you have access to your ssh keys, never 
 
       ~/.ssh
 
-   The Windows one can be found in your Windows home directory (assuming ``awvwgk`` is your Windows username):
+   The Windows one can be found in your Windows home directory (assuming ``stahn`` is your Windows username):
 
    .. code-block:: none
 
-      /mnt/c/Users/awvwgk/.ssh
+      /mnt/c/Users/stahn/.ssh
 
    Don't get confused by that and decide upon one of these directories (*e.g.* the Linux one) for the next steps.
    If something doesn't work, check if there are perhaps doubled files interfering each other.
@@ -151,28 +157,28 @@ We enter the ssh directory to create a new ssh-keypair, we recommend using ellip
    :linenos:
    :emphasize-lines: 4
 
-   [awvwgk@saw2570 ~] $ cd .ssh
-   [awvwgk@saw2570 .ssh] $ ssh-keygen -t ed25519
-   Generating public/private ed25519 key pair.
-   Enter file in which to save the key (/home/awvwgk/.ssh/id_ed25519): id_ssh3
-   Enter passphrase (empty for no passphrase):
-   Enter same passphrase again:
-   Your identification has been saved in id_ssh3
-   Your public key has been saved in id_ssh3.pub
-   The key fingerprint is:
-   SHA256:ewn6KOiOmALh6wOa9Jo/kda125Wp4w+NmCU//r8f/Pk awvwgk@saw2570
-   The key's randomart image is:
-   +--[ED25519 256]--+
-   |                 |
-   |                 |
-   |                 |
-   |.      .         |
-   |..  o ..S.  o    |
-   |oo + . o*oo=  .  |
-   |=.+.. .o+==.   o |
-   |==oo.  +.=o     +|
-   |***.... oo+o.oooE|
-   +----[SHA256]-----+
+      stahn@M-Bot:~/.ssh$ ssh-keygen -t ed25519
+      Generating public/private ed25519 key pair.
+      Enter file in which to save the key (/home/stahn/.ssh/id_ed25519): id_ssh0
+      Enter passphrase (empty for no passphrase): 
+      Enter same passphrase again: 
+      Your identification has been saved in id_ssh0
+      Your public key has been saved in id_ssh0.pub
+      The key fingerprint is:
+      SHA256:bDVv26H9hIx1K21pFRZXF2pqfD8Mw9osb2K5opLeOHU stahn@M-Bot
+      The key's randomart image is:
+      +--[ED25519 256]--+
+      |               o*|
+      |              . +|
+      |          o  o o |
+      |       . ..o+ . .|
+      |        S  +o=o o|
+      |       o E..=O*++|
+      |      o .  o=+=X.|
+      |     +o  . +o.+o.|
+      |    .ooo. o.+.  .|
+      +----[SHA256]-----+
+
 
 The key-generator will prompt you a to enter a filename, we will name the key
 ``id_ssh3``, choose any name you find appropriate.
@@ -187,7 +193,7 @@ Now we need to copy the public key to the ssh-server. Since you log in for the f
    :linenos:
    :emphasize-lines: 1, 5, 7
 
-   > ssh-copy-id -i id_ssh3 stahn@ssh3.thch.uni-bonn.de
+   stahn@M-Bot:~/.ssh$ ssh-copy-id -i id_ssh3 stahn@ssh3.thch.uni-bonn.de
    /usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "id_ssh3.pub"
    /usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
    /usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
@@ -208,7 +214,7 @@ You can check, if your key was succesfully added by logging into the machine. Th
    :linenos:
    :emphasize-lines: 1,4,7
 
-   > ssh stahn@ssh3.thch.uni-bonn.de
+   stahn@M-Bot:~/.ssh$ ssh stahn@ssh3.thch.uni-bonn.de
    The authenticity of host 'ssh3.thch.uni-bonn.de (131.220.44.130)' can't be established.
    ECDSA key fingerprint is SHA256:eEdQpqyV6oP0Ddra7H2QDI6kC9rX3XQRAlWxX6LfA6U.
    Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
@@ -221,7 +227,7 @@ We need to register the ssh-server now in our configuration file
 .. code-block:: none
    :linenos:
 
-   [awvwgk@saw2570 .ssh] $ vim config
+   stahn@M-Bot:~/.ssh$ vim config
 
 We will use ``vim`` here but feel free to edit the file with your preferred editor and add the lines:
 
@@ -236,8 +242,8 @@ Now we will try again, to see if our connection is correctly established.
 .. code-block:: none
    :linenos:
 
-   [awvwgk@saw2570 .ssh] $ ssh ehlert@ssh3.thch.uni-bonn.de
-   [ehlert@ssh3 ~] $
+   stahn@M-Bot:~/.ssh$ ssh stahn@ssh3.thch.uni-bonn.de
+   stahn@M-Bot:~/.ssh$
 
 If you are prompted for a password your setup is wrong and you have to retry.
 
@@ -256,7 +262,7 @@ If you are prompted for a password your setup is wrong and you have to retry.
 
    .. code-block:: none
 
-      > ssh ssh3
+      stahn@M-Bot:~/.ssh$ ssh ssh3
       Last login: Thu Feb 17 13:57:03 2022 from 131.220.44.207
       stahn@ssh3:~> 
 
@@ -278,7 +284,7 @@ This enables us to connect to our remote working machine at the facility by a si
    :linenos:
    :emphasize-lines: 1,6,8
 
-      > ssh c00
+      stahn@M-Bot:~/.ssh$ ssh c00
       The authenticity of host 'c00 (<no hostip for proxy command>)' can't be established.
       ECDSA key fingerprint is SHA256:ozq72tQ9gROvzDwv+ZFQ7wc+L/Dmu9Fptbfhf2zfd1M.
       Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
@@ -314,7 +320,7 @@ Now we generate another keypair (always use a new keypair for each connection) a
    :linenos:
    :emphasize-lines: 1, 22, 26, 28
 
-      > ssh-keygen -t ed25519
+      stahn@M-Bot:~/.ssh$ ssh-keygen -t ed25519
       Generating public/private ed25519 key pair.
       Enter file in which to save the key (/home/stahn/.ssh/id_ed25519): id_c00
       Enter passphrase (empty for no passphrase): 
@@ -335,7 +341,7 @@ Now we generate another keypair (always use a new keypair for each connection) a
       |    .+ *         |
       |     .=          |
       +----[SHA256]-----+
-      > ssh-copy-id -i id_c00.pub c00
+      stahn@M-Bot:~/.ssh$ ssh-copy-id -i id_c00.pub c00
       /usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "id_c00.pub"
       /usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
       /usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
@@ -364,7 +370,7 @@ Now try to login to the work machine again (remember to specify the X forwarding
 .. code-block:: none
    :linenos:
 
-      > ssh c00
+      stahn@M-Bot:~/.ssh$ ssh c00
       Last login: Thu Feb 17 15:00:38 2022 from 131.220.44.130
       Have a lot of fun...
       stahn@c00:~> 
@@ -376,15 +382,15 @@ From now on, you can also copy files from and to your work machine.
 .. code-block:: none
    :linenos:
 
-      > scp Lehre/lect3_htm.doc c00:Documents/.
-      > scp c00:Lehre/QC2.pdf ~/Lehre/QC2/.
+      stahn@M-Bot:~/.ssh$ scp Lehre/lect3_htm.doc c00:Documents/.
+      stahn@M-Bot:~/.ssh$ scp c00:Lehre/QC2.pdf ~/Lehre/QC2/.
 
 As a short recap, you should now be able to log in with a single command.
 
 .. code-block:: none
    :linenos:
 
-      > ssh c00
+      stahn@M-Bot:~/.ssh$ ssh c00
       Last login: Thu Feb 17 15:08:55 2022 from 131.220.44.130
       Have a lot of fun...
       stahn@c00:~> 
@@ -414,14 +420,14 @@ You can create a completely detached process by:
 
 .. code-block:: none
 
-   > setsid xtb h2o.xyz > xtb.out
+   stahn@M-Bot:~/.ssh$ setsid xtb h2o.xyz > xtb.out
 
 However, keep in mind, that you have no control at all over this process after starting it. Normally, setting the process to ignore Hangup Signals and rerouting the output of the process is enough to keep it alive.
 You can do so by using nohup.
 
 .. code-block:: none
 
-   > nohup xtb h2o.xyz
+   stahn@M-Bot:~/.ssh$ nohup xtb h2o.xyz
 
 Any output created by the process will be printed to nohup.out.
 
