@@ -322,37 +322,37 @@ Now we generate another keypair (always use a new keypair for each connection) a
    :linenos:
    :emphasize-lines: 1, 22, 26, 28
 
-      stahn@M-Bot:~/.ssh$ ssh-keygen -t ed25519
-      Generating public/private ed25519 key pair.
-      Enter file in which to save the key (/home/stahn/.ssh/id_ed25519): id_c00
-      Enter passphrase (empty for no passphrase): 
-      Enter same passphrase again: 
-      Your identification has been saved in id_c00
-      Your public key has been saved in id_c00.pub
-      The key fingerprint is:
-      SHA256:mUBCFiGUc6kqbb1fspxwQ0k9V0eT8sg59bV80w7jPTM stahn@M-Bot
-      The key's randomart image is:
-      +--[ED25519 256]--+
-      | .oo*+.     ..+. |
-      |  oooo .   ...o..|
-      |   +  o o .. *..+|
-      |  .  . o =  = +++|
-      | o .  o S    o =o|
-      |o o ..        .Eo|
-      |..  ..+ .       +|
-      |    .+ *         |
-      |     .=          |
-      +----[SHA256]-----+
-      stahn@M-Bot:~/.ssh$ ssh-copy-id -i id_c00.pub c00
-      /usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "id_c00.pub"
-      /usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
-      /usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
-      Password: 
+   stahn@M-Bot:~/.ssh$ ssh-keygen -t ed25519
+   Generating public/private ed25519 key pair.
+   Enter file in which to save the key (/home/stahn/.ssh/id_ed25519): id_c00
+   Enter passphrase (empty for no passphrase): 
+   Enter same passphrase again: 
+   Your identification has been saved in id_c00
+   Your public key has been saved in id_c00.pub
+   The key fingerprint is:
+   SHA256:mUBCFiGUc6kqbb1fspxwQ0k9V0eT8sg59bV80w7jPTM stahn@M-Bot
+   The key's randomart image is:
+   +--[ED25519 256]--+
+   | .oo*+.     ..+. |
+   |  oooo .   ...o..|
+   |   +  o o .. *..+|
+   |  .  . o =  = +++|
+   | o .  o S    o =o|
+   |o o ..        .Eo|
+   |..  ..+ .       +|
+   |    .+ *         |
+   |     .=          |
+   +----[SHA256]-----+
+   stahn@M-Bot:~/.ssh$ ssh-copy-id -i id_c00.pub c00
+   /usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "id_c00.pub"
+   /usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+   /usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+   Password: 
       
-      Number of key(s) added: 1
+   Number of key(s) added: 1
       
-      Now try logging into the machine, with:   "ssh 'c00'"
-      and check to make sure that only the key(s) you wanted were added.
+   Now try logging into the machine, with:   "ssh 'c00'"
+   and check to make sure that only the key(s) you wanted were added.
 
 
 
@@ -372,10 +372,10 @@ Now try to login to the work machine again (remember to specify the X forwarding
 .. code-block:: none
    :linenos:
 
-      stahn@M-Bot:~/.ssh$ ssh c00
-      Last login: Thu Feb 17 15:00:38 2022 from 131.220.44.130
-      Have a lot of fun...
-      stahn@c00:~> 
+   stahn@M-Bot:~/.ssh$ ssh c00
+   Last login: Thu Feb 17 15:00:38 2022 from 131.220.44.130
+   Have a lot of fun...
+   stahn@c00:~> 
 
 
 Again, if you have to enter your password, the setup was not correct and you have to retry.
@@ -384,18 +384,18 @@ From now on, you can also copy files from and to your work machine.
 .. code-block:: none
    :linenos:
 
-      stahn@M-Bot:~/.ssh$ scp Lehre/lect3_htm.doc c00:Documents/.
-      stahn@M-Bot:~/.ssh$ scp c00:Lehre/QC2.pdf ~/Lehre/QC2/.
+   stahn@M-Bot:~/.ssh$ scp Lehre/lect3_htm.doc c00:Documents/.
+   stahn@M-Bot:~/.ssh$ scp c00:Lehre/QC2.pdf ~/Lehre/QC2/.
 
 As a short recap, you should now be able to log in with a single command.
 
 .. code-block:: none
    :linenos:
 
-      stahn@M-Bot:~/.ssh$ ssh c00
-      Last login: Thu Feb 17 15:08:55 2022 from 131.220.44.130
-      Have a lot of fun...
-      stahn@c00:~> 
+   stahn@M-Bot:~/.ssh$ ssh c00
+   Last login: Thu Feb 17 15:08:55 2022 from 131.220.44.130
+   Have a lot of fun...
+   stahn@c00:~> 
 
 
 Tips and Tricks
@@ -406,15 +406,15 @@ For the three machine setup we had, a configuration file like the following woul
 .. code-block:: none
    :linenos:
 
-      Host c00
-         User stahn
-         IdentityFile ~/.ssh/id_c00
-         ProxyJump ssh3                                                           
+   Host c00
+     User stahn
+     IdentityFile ~/.ssh/id_c00
+     ProxyJump ssh3                                                           
 
-      Host ssh3                                                                   
-         Hostname ssh3.thch.uni-bonn.de                                           
-         User stahn                                                               
-         IdentityFile ~/.ssh/id_ssh3
+   Host ssh3                                                                   
+     Hostname ssh3.thch.uni-bonn.de                                           
+     User stahn                                                               
+     IdentityFile ~/.ssh/id_ssh3
 
 If you are working remotely over ssh, any process you start with the shell will be terminated as soon as you log out.
 Keeping your process alive, requires that you detach the process from your terminal.
