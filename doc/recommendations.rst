@@ -84,31 +84,32 @@ The request will be gone if you log in a second time.
    :linenos:
    :emphasize-lines: 4, 6, 10, 12, 19, 22
 
-      stahn@M-Bot:~/.ssh$ ssh -Y stahn@ssh3.thch.uni-bonn.de
-      The authenticity of host 'ssh3.thch.uni-bonn.de (131.220.44.130)' can't be established.
-      ECDSA key fingerprint is SHA256:eEdQpqyV6oP0Ddra7H2QDI6kC9rX3XQRAlWxX6LfA6U.
-      Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
-      Warning: Permanently added 'ssh3.thch.uni-bonn.de' (ECDSA) to the list of known hosts.
-      Password:
-      stahn@ssh3:~> ssh -Y stahn@c00
-      The authenticity of host 'c00 (172.17.3.20)' can't be established.
-      ECDSA key fingerprint is SHA256:ozq72tQ9gROvzDwv+ZFQ7wc+L/Dmu9Fptbfhf2zfd1M.
-      Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
-      Warning: Permanently added 'c00,172.17.3.20' (ECDSA) to the list of known hosts.
-      Password: 
-      Have a lot of fun...
-      stahn@c00:~> logout  
-      Connection to c00 closed.
-      stahn@ssh3:~> logout
-      Connection to ssh3.thch.uni-bonn.de closed.
-      stahn@M-Bot:~/.ssh$ ssh -Y stahn@ssh3.thch.uni-bonn.de
-      Password:
-      Last login: Thu Feb 17 16:39:19 2022 from 131.220.44.207
-      stahn@ssh3:~> ssh -Y stahn@c00
-      Password: 
-      Last login: Thu Feb 17 16:39:35 2022 from 131.220.44.130
-      Have a lot of fun...
-      stahn@c00:~> 
+   stahn@M-Bot:~/.ssh$ ssh -Y stahn@ssh3.thch.uni-bonn.de
+   The authenticity of host 'ssh3.thch.uni-bonn.de (131.220.44.130)' can't be established.
+   ECDSA key fingerprint is SHA256:eEdQpqyV6oP0Ddra7H2QDI6kC9rX3XQRAlWxX6LfA6U.
+   Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+   Warning: Permanently added 'ssh3.thch.uni-bonn.de' (ECDSA) to the list of known hosts.
+   Password:
+   stahn@ssh3:~> ssh -Y stahn@c00
+   The authenticity of host 'c00 (172.17.3.20)' can't be established.
+   ECDSA key fingerprint is SHA256:ozq72tQ9gROvzDwv+ZFQ7wc+L/Dmu9Fptbfhf2zfd1M.
+   Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+   Warning: Permanently added 'c00,172.17.3.20' (ECDSA) to the list of known hosts.
+   Password: 
+   Have a lot of fun...
+   stahn@c00:~> logout  
+   Connection to c00 closed.
+   stahn@ssh3:~> logout
+   Connection to ssh3.thch.uni-bonn.de closed.
+   stahn@M-Bot:~/.ssh$ ssh -Y stahn@ssh3.thch.uni-bonn.de
+   Password:
+   Last login: Thu Feb 17 16:39:19 2022 from 131.220.44.207
+   stahn@ssh3:~> ssh -Y stahn@c00
+   Password: 
+   Last login: Thu Feb 17 16:39:35 2022 from 131.220.44.130
+   Have a lot of fun...
+   stahn@c00:~> 
+
 
 .. note::
 
