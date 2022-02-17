@@ -50,9 +50,9 @@ You will receive an account on one of the ssh-servers as well.
    Whatever you do, never copy large files to the ssh-server, it has only very limited disk space.
    Also do not run any resource consuming program on the server (anything that needs a GUI is per definition resource consuming if used on shared resources).
 
-First, we will work with three machines in this tutorial, your local machine (``saw2570``), the ssh-server instance (``ssh3``) and the CIP computer (``c00``).
+First, we will work with three machines in this tutorial, your local machine (``M-Bot``), the ssh-server instance (``ssh3``) and the CIP computer (``c00``).
 ``c00`` is an existing machine, you can log in there as well, it is also the least powerful machine, therefore, just do not use this machine for computations, use the one you were assigned.
-Your local username might also be different from the one in the facility, we will use ``awvwgk`` for the user on the local machine and ``ehlert`` for the user at the facility.
+Your local username might also be different from the one in the facility, we will use ``stahn`` for the user on the local machine as well as for the user at the facility.
 
 .. attention:: 
 
@@ -82,27 +82,34 @@ The request will be gone if you log in a second time.
 
 .. code-block:: none
    :linenos:
-   :emphasize-lines: 4, 6, 10, 12, 16, 18
+   :emphasize-lines: 4, 6, 10, 12, 19, 22
 
-   [awvwgk@saw2570 ~] $ ssh -Y ehlert@ssh3.thch.uni-bonn.de
+   stahn@M-Bot:~/.ssh$ ssh -Y stahn@ssh3.thch.uni-bonn.de
    The authenticity of host 'ssh3.thch.uni-bonn.de (131.220.44.130)' can't be established.
    ECDSA key fingerprint is SHA256:eEdQpqyV6oP0Ddra7H2QDI6kC9rX3XQRAlWxX6LfA6U.
    Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
-   Warning: Permanently added 'ssh3.thch.uni-bonn.de,131.220.44.130' (ECDSA) to the list of known hosts.
+   Warning: Permanently added 'ssh3.thch.uni-bonn.de' (ECDSA) to the list of known hosts.
    Password:
-   [ehlert@ssh3 ~] $ ssh -Y ehlert@c00
+   stahn@ssh3:~> ssh -Y stahn@c00
    The authenticity of host 'c00 (172.17.3.20)' can't be established.
-   ECDSA key fingerprint is 23:66:63:60:8e:17:e0:b3:83:75:03:09:12:39:51:8d [MD5].
-   Are you sure you want to continue connecting (yes/no)? yes
+   ECDSA key fingerprint is SHA256:ozq72tQ9gROvzDwv+ZFQ7wc+L/Dmu9Fptbfhf2zfd1M.
+   Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
    Warning: Permanently added 'c00,172.17.3.20' (ECDSA) to the list of known hosts.
+   Password: 
+   Have a lot of fun...
+   stahn@c00:~> logout  
+   Connection to c00 closed.
+   stahn@ssh3:~> logout
+   Connection to ssh3.thch.uni-bonn.de closed.
+   stahn@M-Bot:~/.ssh$ ssh -Y stahn@ssh3.thch.uni-bonn.de
    Password:
-   [ehlert@c00 ~] $ logout
-   [ehlert@ssh3 ~] $ logout
-   [awvwgk@saw2570 ~] $ ssh -Y ehlert@ssh3.thch.uni-bonn.de
-   Password:
-   [ehlert@ssh3 ~] $ ssh -Y ehlert@c00
-   Password:
-   [ehlert@c00 ~] $
+   Last login: Thu Feb 17 16:39:19 2022 from 131.220.44.207
+   stahn@ssh3:~> ssh -Y stahn@c00
+   Password: 
+   Last login: Thu Feb 17 16:39:35 2022 from 131.220.44.130
+   Have a lot of fun...
+   stahn@c00:~> 
+
 
 .. note::
 
@@ -122,9 +129,9 @@ We start on your local machine, we create the ssh directory in your home by
 .. code-block:: none
    :linenos:
 
-   [awvwgk@saw2570 ~] $ cd ~
-   [awvwgk@saw2570 ~] $ mkdir .ssh
-   [awvwgk@saw2570 ~] $ chmod 700 .ssh
+   stahn@M-Bot:~$ cd ~
+   stahn@M-Bot:~$ mkdir .ssh
+   stahn@M-Bot:~$ chmod 700 .ssh
 
 The last step ensures that you and only you have access to your ssh keys, never allow anyone else access to this directory!
 
@@ -136,11 +143,11 @@ The last step ensures that you and only you have access to your ssh keys, never 
 
       ~/.ssh
 
-   The Windows one can be found in your Windows home directory (assuming ``awvwgk`` is your Windows username):
+   The Windows one can be found in your Windows home directory (assuming ``stahn`` is your Windows username):
 
    .. code-block:: none
 
-      /mnt/c/Users/awvwgk/.ssh
+      /mnt/c/Users/stahn/.ssh
 
    Don't get confused by that and decide upon one of these directories (*e.g.* the Linux one) for the next steps.
    If something doesn't work, check if there are perhaps doubled files interfering each other.
@@ -151,28 +158,29 @@ We enter the ssh directory to create a new ssh-keypair, we recommend using ellip
    :linenos:
    :emphasize-lines: 4
 
-   [awvwgk@saw2570 ~] $ cd .ssh
-   [awvwgk@saw2570 .ssh] $ ssh-keygen -t ed25519
+   stahn@M-Bot:~/.ssh$ ssh-keygen -t ed25519
    Generating public/private ed25519 key pair.
-   Enter file in which to save the key (/home/awvwgk/.ssh/id_ed25519): id_ssh3
-   Enter passphrase (empty for no passphrase):
-   Enter same passphrase again:
-   Your identification has been saved in id_ssh3
-   Your public key has been saved in id_ssh3.pub
+   Enter file in which to save the key (/home/stahn/.ssh/id_ed25519): id_ssh0
+   Enter passphrase (empty for no passphrase): 
+   Enter same passphrase again: 
+   Your identification has been saved in id_ssh0
+   Your public key has been saved in id_ssh0.pub
    The key fingerprint is:
-   SHA256:ewn6KOiOmALh6wOa9Jo/kda125Wp4w+NmCU//r8f/Pk awvwgk@saw2570
+   SHA256:bDVv26H9hIx1K21pFRZXF2pqfD8Mw9osb2K5opLeOHU stahn@M-Bot
    The key's randomart image is:
    +--[ED25519 256]--+
-   |                 |
-   |                 |
-   |                 |
-   |.      .         |
-   |..  o ..S.  o    |
-   |oo + . o*oo=  .  |
-   |=.+.. .o+==.   o |
-   |==oo.  +.=o     +|
-   |***.... oo+o.oooE|
+   |               o*|
+   |              . +|
+   |          o  o o |
+   |       . ..o+ . .|
+   |        S  +o=o o|
+   |       o E..=O*++|
+   |      o .  o=+=X.|
+   |     +o  . +o.+o.|
+   |    .ooo. o.+.  .|
    +----[SHA256]-----+
+
+
 
 The key-generator will prompt you a to enter a filename, we will name the key
 ``id_ssh3``, choose any name you find appropriate.
@@ -181,56 +189,47 @@ The key-generator will prompt you a to enter a filename, we will name the key
 
    A very good read on the generation of ssh-keypairs is the `Arch Linux wiki page on ssh-keys <https://wiki.archlinux.org/index.php/SSH_keys#Generating_an_SSH_key_pair>`_.
 
-Now we log in at the ssh-server to establish the new connection and setup the keypair.
+Now we need to copy the public key to the ssh-server. Since you log in for the first time, you have to provide your password in line 5:
 
 .. code-block:: none
    :linenos:
-   :emphasize-lines: 2, 6, 8
+   :emphasize-lines: 1, 5, 7
 
-   [awvwgk@saw2570 .ssh] $ ssh ehlert@ssh3.thch.uni-bonn.de <<EOF
-   mkdir -p .ssh && chmod 700 .ssh && cd .ssh && echo $(cat id_ssh3.pub) >> authorized_keys
-   EOF
-   The authenticity of host 'ssh3.thch.uni-bonn.de (131.220.44.130)' can't be established.
-   ECDSA key fingerprint is SHA256:eEdQpqyV6oP0Ddra7H2QDI6kC9rX3XQRAlWxX6LfA6U.
-   Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
-   Warning: Permanently added 'ssh3.thch.uni-bonn.de,131.220.44.130' (ECDSA) to the list of known hosts.
-   Password:
-   [awvwgk@saw2570 .ssh] $
+   stahn@M-Bot:~/.ssh$ ssh-copy-id -i id_ssh3 stahn@ssh3.thch.uni-bonn.de
+   /usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "id_ssh3.pub"
+   /usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+   /usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+   Password: 
 
-The ssh-server will probably be unknown to your local machine, therefore, you have to add it to your known hosts list first, type yes when prompted in line 6.
-Since you log in for the first time, you have to provide your password in line 8, after line 2 was executed on the ssh-server your keypair has been authorized.
-We only executed a command on the ssh-server and ended the session afterwards, you can also log in interactively by
+   Number of key(s) added: 1
+
+   Now try logging into the machine, with:   "ssh 'stahn@ssh3.thch.uni-bonn.de'"
+   and check to make sure that only the key(s) you wanted were added.
+
+
+
+
+You can check, if your key was succesfully added by logging into the machine. The ssh-server will probably be unknown to your local machine, therefore, you have to add it to your known hosts list first, type yes when prompted in line 4.
+
 
 .. code-block:: none
    :linenos:
-   :emphasize-lines: 4, 6, 10
+   :emphasize-lines: 1,4,7
 
-   [awvwgk@saw2570 .ssh] $ ssh ehlert@ssh3.thch.uni-bonn.de
+   stahn@M-Bot:~/.ssh$ ssh stahn@ssh3.thch.uni-bonn.de
    The authenticity of host 'ssh3.thch.uni-bonn.de (131.220.44.130)' can't be established.
    ECDSA key fingerprint is SHA256:eEdQpqyV6oP0Ddra7H2QDI6kC9rX3XQRAlWxX6LfA6U.
    Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
-   Warning: Permanently added 'ssh3.thch.uni-bonn.de,131.220.44.130' (ECDSA) to the list of known hosts.
-   Password:
-   [ehlert@ssh3 ~] $ mkdir .ssh
-   [ehlert@ssh3 ~] $ chmod 700 .ssh
-   [ehlert@ssh3 ~] $ cd .ssh
-   [ehlert@ssh3 .ssh] $ vim authorized_keys
-   [ehlert@ssh3 .ssh] $ logout
-   Connection to ssh3.thch.uni-bonn.de closed.
-   [awvwgk@saw2570 .ssh] $
-
-And paste the content from ``id_ssh3.pub`` into the file (you might need a second terminal now).
-
-.. important::
-
-   Always use the public key of the keypair (the one ending with ``.pub``!), the private key (the one without an extension) stays in relative safety on your machine and **only** your machine!
+   Warning: Permanently added 'ssh3.thch.uni-bonn.de' (ECDSA) to the list of known hosts.
+   Last login: Thu Feb 17 13:56:18 2022 from 131.220.44.207
+   stahn@ssh3:~> 
 
 We need to register the ssh-server now in our configuration file
 
 .. code-block:: none
    :linenos:
 
-   [awvwgk@saw2570 .ssh] $ vim config
+   stahn@M-Bot:~/.ssh$ vim config
 
 We will use ``vim`` here but feel free to edit the file with your preferred editor and add the lines:
 
@@ -245,90 +244,127 @@ Now we will try again, to see if our connection is correctly established.
 .. code-block:: none
    :linenos:
 
-   [awvwgk@saw2570 .ssh] $ ssh ehlert@ssh3.thch.uni-bonn.de
-   [ehlert@ssh3 ~] $
+   stahn@M-Bot:~/.ssh$ ssh stahn@ssh3.thch.uni-bonn.de
+   stahn@M-Bot:~/.ssh$
 
 If you are prompted for a password your setup is wrong and you have to retry.
 
-Now we have to repeat the same steps for the machine at the facility, but first we want to setup a local forwarding.
-We do so by opening a separate terminal and running:
-
-.. code-block:: none
-   :linenos:
-
-   [awvwgk@saw2570 ~] $ ssh -L 12345:c00:22 -N ehlert@ssh3.thch.uni-bonn.de &
-
-We created a local port forwarding (a tunnel) to the port 22 of ``c00`` which is now forwarded to your local 12345 port.
-Choose any number you like, but try to not use one of the crucial ports from your system (22 and 80 happen to be bad ideas).
-You either run this command in a separate terminal and keep it in the foreground (remove the ambersand than) or put the process in the background of your current terminal.
-Remember, the process will stop if you close the terminal even if a process is still running in the background and the tunnel will be closed.
-
-.. admonition:: Note for Windows Users
-
-   To make this work via WSL, you have to add the address of ``c00`` in the file in ``/etc/hosts``.
-   Changes to this file won't last long as it is overwritten from the Windows hosts file.
-   You can find the file in your Windows directory:
+.. tip::
+   
+   You can also optionally add your username to the ssh config file and set up a custom Hostname for the ssh-server.
 
    .. code-block:: none
 
-      /mnt/c/Windows/System32/drivers/etc/hosts
+      Host ssh3
+         Hostname ssh3.thch.uni-bonn.de
+         User stahn
+         IdentityFile ~/.ssh3/id_ssh3
 
-   Open your shell as administrator, then open this file with some text editor and add the following line *e.g.*
-   at the end (replace ``c00`` by your computer):
+   This will allow you to easily connect to the ssh-server by just typing:
 
    .. code-block:: none
 
-      127.0.0.1     c00
+      stahn@M-Bot:~/.ssh$ ssh ssh3
+      Last login: Thu Feb 17 13:57:03 2022 from 131.220.44.207
+      stahn@ssh3:~> 
 
-   After closing and opening the terminal again, the file ``/etc/hosts`` should now also contain
-   this line and you can open the above mentioned ssh tunnel.
 
-Now we generate another keypair (always use a new keypair for each connection) and register the connection like before:
-
-.. code-block:: none
-   :linenos:
-   :emphasize-lines: 4, 24, 28, 30
-
-   [awvwgk@saw2570 ~] $ cd .ssh
-   [awvwgk@saw2570 .ssh] $ ssh-keygen -t ed25519
-   Generating public/private ed25519 key pair.
-   Enter file in which to save the key (/home/awvwgk/.ssh/id_ed25519): id_c00
-   Enter passphrase (empty for no passphrase):
-   Enter same passphrase again:
-   Your identification has been saved in id_c00
-   Your public key has been saved in id_c00.pub
-   The key fingerprint is:
-   SHA256:SwLoC0LO9h/pS5wof+2Jn13LJp5d2xpv57kbw3BDNFc awvwgk@saw2570
-   The key's randomart image is:
-   +--[ED25519 256]--+
-   |               oE|
-   |   .          . o|
-   | .. .          . |
-   |+.   .        .  |
-   |o+.   . S    . o |
-   |o...o oo .    + .|
-   | ..o *. .  . o + |
-   |  o +.o.+.=.o =.=|
-   |   ..=+=.+o+ ooB=|
-   +----[SHA256]-----+
-   [awvwgk@saw2570 .ssh] $ ssh -p 12345 ehlert@localhost <<EOF
-   mkdir -p .ssh && chmod 700 .ssh && cd .ssh && echo $(cat id_c00.pub) >> authorized_keys
-   EOF
-   The authenticity of host '[localhost]:12345 ([::1]:12345)' can't be established.
-   ECDSA key fingerprint is SHA256:ozq72tQ9gROvzDwv+ZFQ7wc+L/Dmu9Fptbfhf2zfd1M.
-   Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
-   Warning: Permanently added '[localhost]:12345' (ECDSA) to the list of known hosts.
-   Password:
-   [awvwgk@saw2570 .ssh] $
-
-Finally we want to automate the process a bit more by adding the following lines to our ssh-config:
+Now we have to repeat the same steps for the machine at the facility, but first we need to be able to directly connect to it from our local working machine.
+We do so by altering the ssh-config and adding the following lines:
 
 .. code-block:: none
    :linenos:
 
    Host c00
-      Hostname localhost
-      Port 12345
+      ProxyJump ssh3
+      User stahn
+
+We just told our system, that it needs to use the ssh-server as a proxy for connecting to our remote working machine. 
+This enables us to connect to our remote working machine at the facility by a single ssh command:
+
+.. code-block:: none
+   :linenos:
+   :emphasize-lines: 1,6,8
+
+   stahn@M-Bot:~/.ssh$ ssh c00
+   The authenticity of host 'c00 (<no hostip for proxy command>)' can't be established.
+   ECDSA key fingerprint is SHA256:ozq72tQ9gROvzDwv+ZFQ7wc+L/Dmu9Fptbfhf2zfd1M.
+   Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+   Warning: Permanently added 'c00' (ECDSA) to the list of known hosts.
+   Password: 
+   Have a lot of fun...
+   stahn@c00:~> 
+
+
+.. .. admonition:: Note for Windows Users
+
+..    To make this work via WSL, you have to add the address of ``c00`` in the file in ``/etc/hosts``.
+..    Changes to this file won't last long as it is overwritten from the Windows hosts file.
+..    You can find the file in your Windows directory:
+
+..    .. code-block:: none
+
+..       /mnt/c/Windows/System32/drivers/etc/hosts
+
+..    Open your shell as administrator, then open this file with some text editor and add the following line *e.g.*
+..    at the end (replace ``c00`` by your computer):
+
+..    .. code-block:: none
+
+..       127.0.0.1     c00
+
+..    After closing and opening the terminal again, the file ``/etc/hosts`` should now also contain
+..    this line and you can open the above mentioned ssh tunnel.
+
+Now we generate another keypair (always use a new keypair for each connection) and register the connection like before:
+
+.. code-block:: none
+   :linenos:
+   :emphasize-lines: 1, 22, 26, 28
+
+   stahn@M-Bot:~/.ssh$ ssh-keygen -t ed25519
+   Generating public/private ed25519 key pair.
+   Enter file in which to save the key (/home/stahn/.ssh/id_ed25519): id_c00
+   Enter passphrase (empty for no passphrase): 
+   Enter same passphrase again: 
+   Your identification has been saved in id_c00
+   Your public key has been saved in id_c00.pub
+   The key fingerprint is:
+   SHA256:mUBCFiGUc6kqbb1fspxwQ0k9V0eT8sg59bV80w7jPTM stahn@M-Bot
+   The key's randomart image is:
+   +--[ED25519 256]--+
+   | .oo*+.     ..+. |
+   |  oooo .   ...o..|
+   |   +  o o .. *..+|
+   |  .  . o =  = +++|
+   | o .  o S    o =o|
+   |o o ..        .Eo|
+   |..  ..+ .       +|
+   |    .+ *         |
+   |     .=          |
+   +----[SHA256]-----+
+   stahn@M-Bot:~/.ssh$ ssh-copy-id -i id_c00.pub c00
+   /usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "id_c00.pub"
+   /usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+   /usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+   Password: 
+      
+   Number of key(s) added: 1
+      
+   Now try logging into the machine, with:   "ssh 'c00'"
+   and check to make sure that only the key(s) you wanted were added.
+
+
+
+
+Finally we want to include the new ssh-key to our ssh-config by adding the following lines to our ssh-config:
+
+.. code-block:: none
+   :linenos:
+
+   Host c00
+      ProxyJump ssh3
+      User stahn
       IdentityFile ~/.ssh/id_c00
 
 Now try to login to the work machine again (remember to specify the X forwarding).
@@ -336,8 +372,11 @@ Now try to login to the work machine again (remember to specify the X forwarding
 .. code-block:: none
    :linenos:
 
-   [awvwgk@saw2570 .ssh] $ ssh -Y ehlert@c00
-   [ehlert@c00 ~] $
+   stahn@M-Bot:~/.ssh$ ssh c00
+   Last login: Thu Feb 17 15:00:38 2022 from 131.220.44.130
+   Have a lot of fun...
+   stahn@c00:~> 
+
 
 Again, if you have to enter your password, the setup was not correct and you have to retry.
 From now on, you can also copy files from and to your work machine.
@@ -345,69 +384,58 @@ From now on, you can also copy files from and to your work machine.
 .. code-block:: none
    :linenos:
 
-   [awvwgk@saw2570 ~] $ scp .bashrc ehlert@c00:~/.bashrc
-   [awvwgk@saw2570 ~] $ scp ehlert@c00:~/QC2/orca.out QC2/
+   stahn@M-Bot:~/.ssh$ scp Lehre/lect3_htm.doc c00:Documents/.
+   stahn@M-Bot:~/.ssh$ scp c00:Lehre/QC2.pdf ~/Lehre/QC2/.
 
-As a short recap, you should now be able to log in with just two commands.
+As a short recap, you should now be able to log in with a single command.
 
 .. code-block:: none
    :linenos:
 
-   [awvwgk@saw2570 ~] $ ssh -L 12345:c00:22 -N ehlert@ssh3.thch.uni-bonn.de &
-   [1] 20640
-   [awvwgk@saw2570 ~] $ ssh -Y ehlert@c00
-   [ehlert@c00 ~] $
-
-Remember you always have to keep the ssh process alive that provides the tunnel.
+   stahn@M-Bot:~/.ssh$ ssh c00
+   Last login: Thu Feb 17 15:08:55 2022 from 131.220.44.130
+   Have a lot of fun...
+   stahn@c00:~> 
 
 
 Tips and Tricks
 ^^^^^^^^^^^^^^^
 
-The ssh-config file is quite nice to deal with several use cases, if you do not want to type your user name every time, you can set it in the ssh-config.
-For the three machine setup we had a configuration file like the following would be appropriate:
+For the three machine setup we had, a configuration file like the following would be appropriate:
 
 .. code-block:: none
    :linenos:
-
-   Host ssh3.thch.uni-bonn.de
-      User ehlert
-      IdentityFile ~/.ssh/id_ssh3
-      LocalForward 12345 c00:22
 
    Host c00
-      User ehlert
-      Hostname localhost
-      Port 12345
-      IdentityFile ~/.ssh/id_c00
+     User stahn
+     IdentityFile ~/.ssh/id_c00
+     ProxyJump ssh3                                                           
 
-Now logging in to the ssh-server will automatically put in the specified user name and forward port 22 of ``c00`` to the expected local one for you.
+   Host ssh3                                                                   
+     Hostname ssh3.thch.uni-bonn.de                                           
+     User stahn                                                               
+     IdentityFile ~/.ssh/id_ssh3
 
-
-If do not to use a separate terminal or a background process for your ssh-tunnel, you can detach the process from your terminal.
-You can create a detached process with
-
-.. code-block:: none
-   :linenos:
-
-   [awvwgk@saw2570 ~] $ nohup ssh -N ssh3.thch.uni-bonn.de &> /dev/null &
-   [1] 20640
-   [awvwgk@saw2570 ~] $ exit
-
-To close the tunnel again, you have to kill the process by its process ID.
-Usually one does not remember the process ID, but we can easily find it again.
+If you are working remotely over ssh, any process you start with the shell will be terminated as soon as you log out.
+Keeping your process alive, requires that you detach the process from your terminal.
+You can create a completely detached process by:
 
 .. code-block:: none
-   :linenos:
 
-   [awvwgk@saw2570 ~] $ pgrep -la ssh
-   20662 ssh -N ssh3.thch.uni-bonn.de
-   [awvwgk@saw2570 ~] $ kill 20662
-   [awvwgk@saw2570 ~] $
+   stahn@M-Bot:~/.ssh$ setsid xtb h2o.xyz > xtb.out
+
+However, keep in mind, that you have no control at all over this process after starting it. Normally, setting the process to ignore Hangup Signals and rerouting the output of the process is enough to keep it alive.
+You can do so by using nohup.
+
+.. code-block:: none
+
+   stahn@M-Bot:~/.ssh$ nohup xtb h2o.xyz
+
+Any output created by the process will be printed to nohup.out.
 
 .. note::
 
-   ``nohup`` is also a useful to run commands on your work machine that should continue even if you log out from the ssh-session.
+   ``nohup`` is a useful to run commands on your work machine that should continue even if you log out from the ssh-session.
 
    More lengthy calculations with quantum chemistry software are a potential target for this approach.
    But think first before adapting the above command, because you probably want to keep the output instead of scrapping it to ``/dev/null``.
