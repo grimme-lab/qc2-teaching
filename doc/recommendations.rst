@@ -158,27 +158,28 @@ We enter the ssh directory to create a new ssh-keypair, we recommend using ellip
    :linenos:
    :emphasize-lines: 4
 
-      stahn@M-Bot:~/.ssh$ ssh-keygen -t ed25519
-      Generating public/private ed25519 key pair.
-      Enter file in which to save the key (/home/stahn/.ssh/id_ed25519): id_ssh0
-      Enter passphrase (empty for no passphrase): 
-      Enter same passphrase again: 
-      Your identification has been saved in id_ssh0
-      Your public key has been saved in id_ssh0.pub
-      The key fingerprint is:
-      SHA256:bDVv26H9hIx1K21pFRZXF2pqfD8Mw9osb2K5opLeOHU stahn@M-Bot
-      The key's randomart image is:
-      +--[ED25519 256]--+
-      |               o*|
-      |              . +|
-      |          o  o o |
-      |       . ..o+ . .|
-      |        S  +o=o o|
-      |       o E..=O*++|
-      |      o .  o=+=X.|
-      |     +o  . +o.+o.|
-      |    .ooo. o.+.  .|
-      +----[SHA256]-----+
+   stahn@M-Bot:~/.ssh$ ssh-keygen -t ed25519
+   Generating public/private ed25519 key pair.
+   Enter file in which to save the key (/home/stahn/.ssh/id_ed25519): id_ssh0
+   Enter passphrase (empty for no passphrase): 
+   Enter same passphrase again: 
+   Your identification has been saved in id_ssh0
+   Your public key has been saved in id_ssh0.pub
+   The key fingerprint is:
+   SHA256:bDVv26H9hIx1K21pFRZXF2pqfD8Mw9osb2K5opLeOHU stahn@M-Bot
+   The key's randomart image is:
+   +--[ED25519 256]--+
+   |               o*|
+   |              . +|
+   |          o  o o |
+   |       . ..o+ . .|
+   |        S  +o=o o|
+   |       o E..=O*++|
+   |      o .  o=+=X.|
+   |     +o  . +o.+o.|
+   |    .ooo. o.+.  .|
+   +----[SHA256]-----+
+
 
 
 The key-generator will prompt you a to enter a filename, we will name the key
