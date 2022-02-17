@@ -286,14 +286,14 @@ This enables us to connect to our remote working machine at the facility by a si
    :linenos:
    :emphasize-lines: 1,6,8
 
-      stahn@M-Bot:~/.ssh$ ssh c00
-      The authenticity of host 'c00 (<no hostip for proxy command>)' can't be established.
-      ECDSA key fingerprint is SHA256:ozq72tQ9gROvzDwv+ZFQ7wc+L/Dmu9Fptbfhf2zfd1M.
-      Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
-      Warning: Permanently added 'c00' (ECDSA) to the list of known hosts.
-      Password: 
-      Have a lot of fun...
-      stahn@c00:~> 
+   stahn@M-Bot:~/.ssh$ ssh c00
+   The authenticity of host 'c00 (<no hostip for proxy command>)' can't be established.
+   ECDSA key fingerprint is SHA256:ozq72tQ9gROvzDwv+ZFQ7wc+L/Dmu9Fptbfhf2zfd1M.
+   Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+   Warning: Permanently added 'c00' (ECDSA) to the list of known hosts.
+   Password: 
+   Have a lot of fun...
+   stahn@c00:~> 
 
 
 .. .. admonition:: Note for Windows Users
