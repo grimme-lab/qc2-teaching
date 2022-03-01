@@ -54,13 +54,10 @@ If you are using the *MinGW64 terminal* you can install the required software wi
 
 .. code-block:: none
 
-   pacman -S git mingw-w64-x86_64-gcc-fortran mingw-w64-x86_64-make vim
+   pacman -S git mingw-w64-x86_64-gcc-fortran mingw-w64-x86_64-make mingw-w64-x86_64-fpm vim
 
 If you use the *MSYS terminal* leave out the ``mingw-w64-x86_64`` prefixes to install
 the required software.
-
-For this course we will use the Fortran package manager (fpm), which can
-be installed following the instructions `here <https://github.com/awvwgk/mingw-w64-fpm-pkgbuild>`_.
 
 After having installed the necessary software, you need to download the
 `course material`_.
