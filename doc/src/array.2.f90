@@ -11,6 +11,6 @@ program array
   read(*, *) vec
   write(*, *) "Sum of all elements", sum(vec)
   write(*, *) "Product of all elemnts", product(vec)
-  write(*, *) "Maximal/minimal value at", maxval(vec), minval(vec)
+  write(*, *) "Maximal/minimal value", maxval(vec), minval(vec)
 end program array
 

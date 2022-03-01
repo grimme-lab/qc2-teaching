@@ -595,7 +595,7 @@ Now consider the following program
    :linenos:
 
 
-The ``intrinsic :: selected_real_kinds`` declares that we are using
+The ``intrinsic :: selected_real_kind`` declares that we are using
 a built-in function from the Fortran compiler. This one returns the kind
 of ``real`` we need to represent a floating-point number with the
 specified significant digits.
@@ -823,7 +823,7 @@ less equal     ``<=``    ``.ge.``  ``var <= 8``,  ``var.le.8``
    If you are sure that it is really necessary, use ``.eqv.`` and ``.neqv.``
    for the task.
 
-To negate a logical expression we use prepend ``.not.`` to the expression
+To negate a logical expression we prepend ``.not.`` to the expression
 and to test multiple expressions we can use ``.or.`` and ``.and.``
 which have the same meaning as their equivalent operators in logic.
 
@@ -1006,7 +1006,7 @@ function.
 
    1. Reproduce the functionality of ``product``, ``maxval`` and ``minval``,
       compare to the intrinsic functions.
-   2. What happens when you read or write out side the bounds of the array?
+   2. What happens when you read or write outside the bounds of the array?
 
 .. admonition:: Solutions 10
    :class: tip, toggle
@@ -1113,7 +1113,7 @@ On the first glance, subroutines have several disadvantages compared to
 functions, we need to explicitly declare a temporary variable, also we
 cannot use them inline with another instruction.
 This holds true for short and simple operations, here functions should be
-preferred over subroutines.
+prefered over subroutines.
 On the other hand, if the code in the subroutine gets more complicated and the
 number of dummy arguments grows, we should prefer subroutines, because
 they are more visible in the code, especially due to the explicit ``call``
@@ -1142,7 +1142,7 @@ to produce more efficient programs.
 
 .. tip::
 
-   Array slices should preferrably used on continuous memory, practically
+   Array slices should preferably used on continuous memory, practically
    this means a colon should only be present in the innermost dimensions of
    an array.
 
@@ -1151,7 +1151,7 @@ to produce more efficient programs.
       array2 = array3(:, :, i)
 
    Storing data, like cartesian coordinates, should follow the same considerations.
-   It is always preferrable to have the three cartesian components of the position
+   It is always preferable to have the three cartesian components of the position
    close to each other in memory.
 
 
@@ -1186,7 +1186,7 @@ A *character variable* is a variable containing a value of the
   characters, but it turns out that this is not a viable approach
   to deal with characters
 - Fortran offers a better way to make use of the character data type
-  by adding a length to the variable, like its done for ``fname``.
+  by adding a length to the variable, as is done for ``fname``.
 - a more flexible way of declaring your character variables is to use a so
   called *deferred size* character, like ``input``.
 
