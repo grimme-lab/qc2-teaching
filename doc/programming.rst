@@ -1363,7 +1363,7 @@ Another advantage of using derived types is that you only need to pass one varia
 
   The program below includes a derived type called ``geometry``. So far, it contains 
   the number of atoms and the atom positions.
-  In the rest of the code, first two atoms and their positions are set. Then the geometry information is then printed by calling the subroutine ``geometry_info``.
+  In the rest of the code, two atoms and their positions are set. Then the geometry information is printed by calling the subroutine ``geometry_info``.
 
   1. In order to cleary specify a chemical structure, it is necessary to assign an ordinal number to each atom.
   Add a one dimensional allocatable integer variable to the derived type that will contain the ordinal number for each atom.
