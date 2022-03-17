@@ -1322,3 +1322,67 @@ it is not mandatory to solve the exercises here, but it will not harm as well.
 
       real(kind) :: x(dim)
       call random_number(x)
+
+
+Derived Types
+-------------
+
+When writing your SCF program, you will notice that there are variables that can be 
+grouped or belong to a certain category. To enhance the readability and structure of your code it 
+can be convenient to gather these variables in a so called derived type. A derived type is 
+another data type (like integer or character for example) that can contain built-in 
+types as well as other derived types.
+
+Here is an example of an arbitrary derived type:
+
+    .. code-block:: fortran
+       
+       type :: arbitrary
+         integer     :: num
+         real        :: pi
+         character   :: string
+         logical     :: boolean
+       end type arbitrary
+
+The derived type contains the four variables ``num``, ``pi``, ``string`` and ``boolean``. The syntax to create a variable of type ``arbitrary`` and access its members is:
+
+    .. code-block:: fortran
+       
+       ! create variable "arb" of type "arbitrary"
+       type(arbitrary) :: arb
+       ! access the members of the derived type with %
+       arb%num = 1
+       arb%pi = 3.0
+       arb%string = 'ok'
+       arb%boolean = .true.
+
+
+Another advantage of using derived types is that you only need to pass one variable to a procedure instead of all the variables included in the derived type.
+
+.. admonition:: Exercise 15
+
+  The program below includes a derived type called ``geometry``. So far, it contains 
+  the number of atoms and the atom positions.
+  In the rest of the code, two atoms and their positions are set. Then the geometry information is printed by calling the subroutine ``geometry_info``.
+
+  1. In order to cleary specify a chemical structure, it is necessary to assign an ordinal number to each atom.
+  Add a one dimensional allocatable integer variable to the derived type that will contain the ordinal number for each atom.
+  Allocate memory for your new variable and set the initial value to zero using the source expression.
+
+  2. Now add a third atom to the geometry and assign atom types and positions to create a sensible carbon dioxide molecule.
+
+  3. Add the ordinal number to the printout in the ``geometry_info`` subroutine.
+
+.. literalinclude:: src/derived_types.f90
+   :language: fortran
+   :caption: derived_types.f90
+   :linenos:
+
+
+.. admonition:: Solutions 15
+   :class: tip, toggle
+   
+   .. literalinclude:: src/derived_types_sol.f90
+      :language: fortran
+      :caption: derived_types.f90
+      :linenos:
