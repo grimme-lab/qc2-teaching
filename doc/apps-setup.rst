@@ -29,6 +29,7 @@ needed software, add the following lines to your ``.bashrc``:
    export PATH=/home/abt-grimme/AK-bin:$PATH
    export PATH=/home/$USER/bin:$PATH
    
+   export MODULEPATH=/software/modulefiles/
    module load turbomole orca
    alias molden='/software/bin/molden'
 
