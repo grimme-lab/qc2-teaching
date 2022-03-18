@@ -10,7 +10,7 @@ Working with this Script
 1. Work on the exercises in the given successive order. In the first exercises you will learn some basic
    routines and procedures which you will need again later but which will not be explained once more.
 
-2. Read the whole exercise before you start to working on it. Often technical hints are given at the end.
+2. Read the whole exercise before you start working on it. Often technical hints are given at the end.
 
 3. Programs can crash. So check your outputs as soon as possible to make sure your calculations actually did work.
    And sometimes preparing the input and running the program is much faster than finding the right number
@@ -27,7 +27,7 @@ Many programs may cause many problems, therefore you should follow some simple g
 - If a calculation stops abnormally check the output (*e.g.* orca.out, job.last etc.) and error files first. Always make sure that you pipe all needed output data into files if its not done by default.
 - Read your output and error files carefully. Especially check the last lines of the output file for error messages that give a hint what may caused the problem.
 - If you identified the problem (maybe you have to start at the first point again), check the program manual for additional options or trouble shooting help, fix the problem and restart your calculation.
-- If the calculations still stops abnormally and all other possibilities and options are exhausted, prepare a detailed description of the problem, the output/error messages and contact one of the tutors.
+- If the calculation still stops abnormally and all other possibilities and options are exhausted, prepare a detailed description of the problem, the output/error messages and contact one of the tutors.
 
 
 Software Recommendations
@@ -39,7 +39,7 @@ Logging in to your work machine
 
 At the beginning of the course you got a number of the computer you will work on.
 
-First you need access to the intranet, the only way to access any machine in the facility is by tunneling via the ssh-server.
+First you need access to the intranet. The only way to access any machine in the facility is by tunneling via the ssh-server.
 You will receive an account on one of the ssh-servers as well.
 
 .. important::
@@ -116,7 +116,7 @@ The request will be gone if you log in a second time.
    In the following guide we will highlight every line, which requires user input
 
 From here you have everything you need to work on the machines, but it might get somewhat inconvenient because you have to type your password every time.
-Also copying stuff back to your machine is not easily possible, because you shall not copy big files to the ssh-server.
+Also copying files back to your machine is not easily possible, because you shall not copy big files to the ssh-server.
 
 The following guide is a bit lengthy, but you only have to do it once and you can easily work and move files between your local computer and your work machine.
 
@@ -156,15 +156,15 @@ We enter the ssh directory to create a new ssh-keypair, we recommend using ellip
 
 .. code-block:: none
    :linenos:
-   :emphasize-lines: 4
+   :emphasize-lines: 3, 4, 5
 
    stahn@M-Bot:~/.ssh$ ssh-keygen -t ed25519
    Generating public/private ed25519 key pair.
-   Enter file in which to save the key (/home/stahn/.ssh/id_ed25519): id_ssh0
+   Enter file in which to save the key (/home/stahn/.ssh/id_ed25519): id_ssh3
    Enter passphrase (empty for no passphrase): 
    Enter same passphrase again: 
-   Your identification has been saved in id_ssh0
-   Your public key has been saved in id_ssh0.pub
+   Your identification has been saved in id_ssh3
+   Your public key has been saved in id_ssh3.pub
    The key fingerprint is:
    SHA256:bDVv26H9hIx1K21pFRZXF2pqfD8Mw9osb2K5opLeOHU stahn@M-Bot
    The key's randomart image is:
@@ -284,7 +284,7 @@ This enables us to connect to our remote working machine at the facility by a si
 
 .. code-block:: none
    :linenos:
-   :emphasize-lines: 1,6,8
+   :emphasize-lines: 1,4,6,8
 
    stahn@M-Bot:~/.ssh$ ssh c00
    The authenticity of host 'c00 (<no hostip for proxy command>)' can't be established.
@@ -320,7 +320,7 @@ Now we generate another keypair (always use a new keypair for each connection) a
 
 .. code-block:: none
    :linenos:
-   :emphasize-lines: 1, 22, 26, 28
+   :emphasize-lines: 1, 3, 4, 5, 22, 26, 28
 
    stahn@M-Bot:~/.ssh$ ssh-keygen -t ed25519
    Generating public/private ed25519 key pair.
@@ -372,7 +372,7 @@ Now try to login to the work machine again (remember to specify the X forwarding
 .. code-block:: none
    :linenos:
 
-   stahn@M-Bot:~/.ssh$ ssh c00
+   stahn@M-Bot:~/.ssh$ ssh -Y c00
    Last login: Thu Feb 17 15:00:38 2022 from 131.220.44.130
    Have a lot of fun...
    stahn@c00:~> 
