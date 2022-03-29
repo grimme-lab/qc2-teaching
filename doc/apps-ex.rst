@@ -228,6 +228,16 @@ specified otherwise we will use the RI approximation and C\ :sub:`1` symmetry th
       $ricc2
         mp2                # or ccsd(t)
         geoopt model=mp2   # only for MP2 geometry optimizations
+       
+.. hint::
+
+   If you encounter convergence problems in the MP2 calculation, try to increase the
+   maximum number of SCF cycles (e.g. 100) by adding the following keyword:
+
+   .. code-block:: none
+      :linenos: 
+
+        $scfiterlimit <limit>
 
 
 Basis Set Convergence
