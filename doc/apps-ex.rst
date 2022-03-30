@@ -689,96 +689,122 @@ Rearrangement and Dimerization Reactions
       often you can easily create a product structure from your reactant. Furthermore, this
       generally eases the sorting of the atoms.
 
-2. Optimize the geometries using PBEh-3c and C\ :sub:`1` symmetry. PBEh-3c is a composite
-   density functional method that uses a hybrid functional, correction schemes and the
-   pre-defined modified basis set def2-mSVP. To invoke the correct method and (auxiliary)
-   basis set in the ``control`` file, as well as the desired C\ :sub:`1` symmetry, please use:
+2. Optimize the geometries using GFN2-xTB. GFN2-xTB is a semi-empirical tight-binding based method
+   that employs a minimal valence basis set and is very efficient for calculating **G**\ eometries,
+   vibrational **F**\ requencies and **N**\ oncovalent interactions. For running the geometry optimization, call
 
-   .. code-block:: none
-      :linenos:
-
-      $symmetry c1
-      $atoms
-        basis=def2-mSVP
-        jbas=universal
-      $dft
-        functional pbeh-3c
+   .. code-block:: none´
+      
+      xtb start.xyz --opt > opt.out
+     
+   The optimized geometry is written to the file ``xtbopt.xyz``.
 
 3. Verify that the sequence of atoms is still the same in every pair of reactant and product structure.
 
-4. Perform a reaction path search:
+4. Perform a reaction path search with the double-ended Growing String Method (GSM)
+   at the GFN2-xTB level:
 
    (a) Create a directory for each reaction.
-   (b) Have your reactant and product structure sorted and available in TURBOMOLE
-       format (*e.g.* starting structure ``coord``, ending structure ``coord.2``).
-   (c) Set up a calculation for the starting structure. Employ PBEh-3c as before. For ``woelfling`` to run 
-       without errors, an additional parameter in the control file is needed. Adjust ``natoms`` to the actual 
-       number of atoms of your reaction.
+   (b) Have your optimized reactant and product structure sorted and available in xyz
+       format (*e.g.* starting structure ``start.xyz``, ending structure ``end.xyz``).
+   (c) Create a directory ``scratch`` and store the starting and ending structures in 
+       the file ``initial0000.xyz``:
+       
+       .. code-block:: none
+          
+          cat start.xyz end.xyz >> scratch/initial0000.xyz
+          
+   (d) Place a file named ``ograd`` in the respective directory with the following content:
    
        .. code-block:: none
           :linenos:
+          
+          #!/bin/bash 
+          ofile=orcain$1.in 
+          ofileout=orcain$1.out 
+          molfile=structure$1 
+          ncpu=$2 
+          basename="${ofile%.*}" 
+          ########## XTB/TM settings: ################# 
+          cd scratch 
+          wc -l < $molfile > $ofile.xyz 
+          echo "Dummy for XTB/TM calculation" >> $ofile.xyz 
+          cat $molfile >> $ofile.xyz 
+ 
+          xtb $ofile.xyz -grad  > $ofile.xtbout 
+ 
+          tm2orca.py $basename 
+          rm xtbrestart 
+          cd ..
 
-          $coord file=coord
-          $eht charge=0 unpaired=0
-          $symmetry c1
-          $atoms
-            basis=def2-mSVP
-            jbas=universal
-          $dft
-            functional pbeh-3c
-          $rij
-          $rundimensions 
-            natoms=XX
-          $end
+       The ``ograd`` file has to be made executable: 
       
-   (d) Merge reactant and product structure files into a file called ``coords``
-       *e.g.* by typing:
-
        .. code-block:: none
-
-          cat coord coord.2 >> coords
-
-       Afterwards, call:
-
-       .. code-block:: none
-
-          woelfling
-
-   (e) Check your initial path. It is available in the ``path.xyz`` file.
-   (f) If everything was okay, check the ``control`` file. On the bottom, a block
-       appeared that starts with ``$woelfling``.
-   (g) Three of the parameters listed there are of importance. ``ninter`` controls
-       the number of points on the path, ``maxit`` controls the number of refinement
-       iterations and ``thr`` controls the convergence of the path. Modify them to the
-       following values:
-
-       .. code-block:: none
-
-          ninter     40
-          maxit      40
-          thr        5.0E-04
-
-   (h) Start the optimization by typing:
-
-       .. code-block:: none
-
-          woelfling-job_xtb > woelfling.out
-
-       Every optimization iteration is saved in a ``path-<n>.xyz`` file. Be aware that
-       you are using a modified ``woelfling-job`` file that calculates energies and
-       gradients with the semi-empirical tight-binding based GFN-xTB method even if you
-       used PBEh-3c to set up your input files. This is a common method to speed up your
-       reaction path investigations.
-
+           
+           
+          chmod u+x ograd
+           
+   e) Place a file named ``inpfileq`` in the respective directory with the following content:
+    
+      .. code-block:: none
+          :linenos:
+          
+          # FSM/GSM/SSM inpfileq
+          
+          ------------- QCHEM Scratch Info ------------------------
+          $QCSCRATCH/    # path for scratch dir. end with "/" 
+          GSM_go1q       # name of run
+          ---------------------------------------------------------
+          
+          ------------ String Info --------------------------------
+          SM_TYPE                 GSM    # SSM, FSM or GSM
+          RESTART                 0      # read restart.xyz
+          MAX_OPT_ITERS           160     # maximum iterations
+          STEP_OPT_ITERS          30     # for FSM/SSM
+          CONV_TOL           	    0.0005 # perp grad
+          ADD_NODE_TOL		    0.1    # for GSM
+          SCALING			        1.0    # for opt steps
+          SSM_DQMAX               0.8    # add step size
+          GROWTH_DIRECTION        0      # normal/react/prod: 0/1/2
+          INT_THRESH              2.0    # intermediate detection
+          MIN_SPACING             5.0    # node spacing SSM
+          BOND_FRAGMENTS          1      # make IC's for fragments
+          INITIAL_OPT             0      # opt steps first node
+          FINAL_OPT               150    # opt steps last SSM node
+          PRODUCT_LIMIT           100.0  # kcal/mol
+          TS_FINAL_TYPE           0      # any/delta bond: 0/1
+          NNODES			        15      # including endpoints
+          ---------------------------------------------------------
+               
+               
+      For the Claisen rearrangement, you can change the ``TS_FINAL_TYPE`` option from 0 to 1 to force
+      GSM to break a bond upon the transition state search. The number of 
+      nodes (keyword ``NNODES``) can be increased for a more refined search, which (of course) leads to 
+      longer computing time. In most cases, 15 nodes should be sufficient to find a good guess for the transition state.
+       
+   (f)   Start the transition state search by typing:
+   
+         .. code-block:: none
+            
+            gsm.orca 
+            
+            
+   (g)   After the calculation, you can find the reaction path in the file
+         ``stringfile.xyz0000``, and the transition state in ``scratch/tsq0000.xyz``.
+       
 5. Prepare relative energy diagrams for both reactions (relative energy vs. reaction coordinate),
    depict the molecular structures of both transition states and highlight the most important
    bond distances.
 
 6. Calculate the activation energy for each reaction.
 
-7. How would you proceed further to gain more reliable numbers?
+7. Perform single-point calculations on the starting structure and transtion state structure
+   with PW6B95-D3/def2-TZVP using TURBOMOLE. Compare the DFT activation energy with the GFN2-xTB
+   energy and discuss the differences.
 
-8. How feasible is this approach? Where do you see its limits in applicability and usefulness?
+8. How would you proceed further to gain more reliable numbers?
+
+9. How feasible is this approach? Where do you see its limits in applicability and usefulness?
 
 
 Noncovalent Interactions
