@@ -937,7 +937,7 @@ to add a condition in our loop:
 The ``cycle`` instruction breaks out of the *current* iteration, but not out of
 the complete loop like ``exit``. Here we use it together with the intrinsic
 ``modulo`` function to determine the remainder of our loop counter variable in
-every step and ``cycle`` in case we find a reminder of one, meaning an odd number.
+every step and ``cycle`` in case we find a remainder of one, meaning an odd number.
 
 .. note::
 
@@ -1114,7 +1114,7 @@ functions, we need to explicitly declare a temporary variable, also we
 cannot use them inline with another instruction.
 This holds true for short and simple operations, here functions should be
 prefered over subroutines.
-On the other hand, if the code in the subroutine gets more complicated and the
+On the other hand, if the code in the function gets more complicated and the
 number of dummy arguments grows, we should prefer subroutines, because
 they are more visible in the code, especially due to the explicit ``call``
 keyword.
