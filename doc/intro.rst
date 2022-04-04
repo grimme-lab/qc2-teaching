@@ -126,7 +126,7 @@ a directory on the commandline we are in fact referring to its path.
 A path is identifying a particular file or directory on the system.
 Your filesystem starts at the root ``/`` and can be referenced absolutely
 from this root or relative from your current working directory.
-Every directory has at least to links to other directories, to itself ``.`` (dot)
+Every directory has at least two links to other directories, to itself ``.`` (dot)
 and to its parent ``..`` (dotdot), which can be used to build paths to reference
 to any file or directory on your system.
 
