@@ -1361,17 +1361,15 @@ Another advantage of using derived types is that you only need to pass one varia
 
 .. admonition:: Exercise 15
 
-  The program below includes a derived type called ``geometry``. So far, it contains 
-  the number of atoms and the atom positions.
-  In the rest of the code, two atoms and their positions are set. Then the geometry information is printed by calling the subroutine ``geometry_info``.
-
-  1. In order to cleary specify a chemical structure, it is necessary to assign an ordinal number to each atom.
-  Add a one dimensional allocatable integer variable to the derived type that will contain the ordinal number for each atom.
-  Allocate memory for your new variable and set the initial value to zero using the source expression.
-
-  2. Now add a third atom to the geometry and assign atom types and positions to create a sensible carbon dioxide molecule.
-
-  3. Add the ordinal number to the printout in the ``geometry_info`` subroutine.
+   The program below includes a derived type called ``geometry``. So far, it contains 
+   the number of atoms and the atom positions.
+   In the rest of the code, two atoms and their positions are set. Then the geometry information is printed by calling the subroutine ``geometry_info``.
+   
+   1. In order to clearly specify a chemical structure, it is necessary to assign an ordinal number to each atom.
+      Add a one-dimensional allocatable integer variable to the derived type that will contain the ordinal number for each atom.
+      Allocate memory for your new variable and set the initial value to zero using the source expression.
+   2. Now add a third atom to the geometry and assign atom types and positions to create a sensible carbon dioxide molecule.
+   3. Add the ordinal number to the printout in the ``geometry_info`` subroutine.
 
 .. literalinclude:: src/derived_types.f90
    :language: fortran
