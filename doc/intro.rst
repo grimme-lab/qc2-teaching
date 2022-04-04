@@ -336,7 +336,7 @@ After you have covered the basics, there are some tricks you might find useful.
    with ``<ctrl>-w q`` or by typing ``:q`` as usual.
 4. To open a second window you can split your ``vim`` window by using ``<ctrl>-w v``
    (for vertical splitting) or ``<ctrl>-w s`` (for horizontal splitting) to have
-   to windows with the same file which can be used independently.
+   two windows with the same file which can be used independently.
 
 .. tip::
 
