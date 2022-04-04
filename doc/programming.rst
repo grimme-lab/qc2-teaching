@@ -1078,7 +1078,7 @@ summation function which returns the sum for us.
 
 Note that we now have *two* declaration sections in our file, one for our program
 and one for the implementation of our summation function.
-You might also notice that writing interfaces might become cumbersome fast,
+You might also notice that writing interfaces can rapidly become cumbersome,
 so there is a better mechanism we want to use here:
 
 .. literalinclude:: src/sum_func.2.f90
@@ -1101,8 +1101,8 @@ the ``use`` statement to the main program.
 
 When writing functions like the above ones, we follow a specific scheme, all
 arguments are not modified (``intent(in)``) and we return a single variable.
-There are cases were we do not want to return a value, in this case we would
-return nothing, functions of this kind are called subroutines
+There are cases were we do not want to return a single value (in such a case we would
+return nothing) or do more complex operations in it. Functions of this kind are called subroutines:
 
 .. literalinclude:: src/sum_sub.1.f90
    :language: fortran
