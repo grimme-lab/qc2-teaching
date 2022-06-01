@@ -486,13 +486,13 @@ Now you can login as described above (remember to have ``Xming`` running).
 Software for Visualization of Molecules
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 A quantum chemical calculation always needs a structure as input (and will often result in a modified structure as output), so you need some kind of visualization program to create the desired molecule or to look at it. We recommend the use of the program `Avogadro <https://avogadro.cc/>`_ to generate and manipulate molecules.
-Next, you will need the program `molden <https://uni-bonn.sciebo.de/s/XxSEG5DHbzitX7Z>`_ for some exercises (we recommend the version ``gmolden``). You can open an input file (*e.g.* ``molden.input`` or a ``*.xyz`` file) by typing:
+Next, you will need the program `molden <https://ftp.science.ru.nl/Molden/bin/Windows/molden_native_windows_full.rar>`_ for some exercises (we recommend the version ``gmolden``). You can open an input file (*e.g.* ``molden.input`` or a ``*.xyz`` file) by typing:
 
 .. code-block:: none
 
    gmolden <input>
 
-For Windows users that have unpacked the above linked .rar file, we recommend opening the input file (``molden.input`` or ``*.xyz``) by right-clicking on it and selecting "Open with", then choose the unpacked ``gmolden.exe`` file.
+For Windows users that have unpacked the above linked .rar file, we recommend opening the input file (``molden.input`` or ``*.xyz``) by right-clicking on it and selecting "Open with", then choose the unpacked ``gmolden.exe`` file in the ``molden64\bin`` folder.
 You can also use ``gmolden`` for generation and manipulation of molecular structures, but we recommend the use of ``Avogadro``.
 Of course you can also use any other visualization software you know. Please remember that for some exercises it is important to keep the atom count during the manipulation of the molecule geometry, which some of the more common programs do not do (``Avogadro`` keeps it).
 
