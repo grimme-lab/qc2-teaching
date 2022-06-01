@@ -567,7 +567,7 @@ Check the ``.bashrc`` of your local Linux distribution and add ``export DISPLAY=
 +------------+--------------+---------------------------------------------------+-----------+
 | avogadro   | local / MCTC | `<https://avogadro.cc/>`_                         | no        |
 +------------+--------------+---------------------------------------------------+-----------+
-| molden     | local / MCTC | `<https://uni-bonn.sciebo.de/s/XxSEG5DHbzitX7Z>`_ | no        |
+| molden     | local / MCTC | `<https://ftp.science.ru.nl/Molden/bin/Windows/molden_native_windows_full.rar>`_ | no        |
 +------------+--------------+---------------------------------------------------+-----------+
 | gnuplot    | MCTC         | [-]                                               | yes       |
 +------------+--------------+---------------------------------------------------+-----------+
