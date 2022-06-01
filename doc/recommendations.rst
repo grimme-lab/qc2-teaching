@@ -429,7 +429,7 @@ You can do so by using nohup.
 
 .. code-block:: none
 
-   stahn@M-Bot:~/.ssh$ nohup xtb h2o.xyz
+   stahn@M-Bot:~/.ssh$ nohup xtb h2o.xyz &
 
 Any output created by the process will be printed to nohup.out.
 
