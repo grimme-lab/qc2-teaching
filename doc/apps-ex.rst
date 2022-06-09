@@ -358,7 +358,7 @@ Reaction Enthalpies of Gas-Phase Reactions
    reaction enthalpies.
 
 6. Calculate single-point energies with the double hybrid B2PLYP-D3/def2-QZVP and with
-   CCSD(T)/def2-QZVP. Use the TPSS geometries and thermal corrections to calculate the
+   CCSD(T)/def2-QZVP. Use the TPSS-D3 geometries and thermal corrections to calculate the
    reaction enthalpies. Keep in mind that you have to run an SCF first with ``ridft``.
    Afterwards, use ``ricc2`` for the double-hybrid and ``ccsdf12`` for the coupled cluster
    calculation. The energies can be found in the respective output.
