@@ -86,7 +86,7 @@ Multireference Methods
 
       orca <file>.inp > <file>.out
 
-3. Plot the resulting potential energy curves using *e.g.* with ``gnuplot`` (see section
+3. Plot the resulting potential energy curves *e.g.* using ``gnuplot`` (see section
    :ref:`Plotting`). To do so, delete the first line in the files ``<filename>.trj*.dat``
    to read them (find out which file is the right one yourself).
 
