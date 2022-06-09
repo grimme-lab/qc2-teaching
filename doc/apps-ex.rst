@@ -231,7 +231,7 @@ specified otherwise we will use the RI approximation and C\ :sub:`1` symmetry th
        
 .. hint::
 
-   If you encounter convergence problems in the MP2 calculation, try to increase the
+   If you encounter convergence problems in the MP2 or CCSD(T) calculations, try to increase the
    maximum number of SCF cycles (e.g. 100) by adding the following keyword:
 
    .. code-block:: none
