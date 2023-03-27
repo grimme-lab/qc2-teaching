@@ -733,7 +733,7 @@ is defined as:
 .. math::
    q_{A} = Z_{A} - \sum_{\mu \in A} (\mathbf{PS})_{\mu\mu}
 
-.. admonition:: Exercise 13
+.. admonition:: Exercise 14
 
    1. Code a subroutine to perform a Mulliken atomic population analysis
    2. Determine the Mulliken atomic partial charges in LiH using the input file
@@ -769,7 +769,7 @@ where *K*\ :sub:`AB` is given by
 Note that the norming constants of the Gaussians have been absorbed into the
 contraction coefficients already.
 
-.. admonition:: Exercise 14
+.. admonition:: Exercise 15
 
    1. Code a subroutine to calculate the electron density *ρ* at a given point
       in cartesian space.
@@ -804,7 +804,7 @@ Create a new subroutine that will allow the variation of one parameter
    + \Delta \theta, \ldots, \theta_{n}) - E(\theta_{1}, \ldots, \theta_{i}
    - \Delta \theta, \ldots, \theta_{n})}{2 \Delta \theta}.
 
-.. admonition:: Exercise 15
+.. admonition:: Exercise 16
 
    1. Code a numerical gradient that allows the calculation of the derivative of
       the HF energy with respect to atom positions and Slater exponents.
@@ -829,7 +829,7 @@ Code a variant of the “steepest descent” optimization routine as given by:
 *k* denotes the number of the optimization cycle, *Θ* is the parameter set for an
 iteration. Choose *η* to get smooth, fast convergence.
 
-.. admonition:: Exercise 16
+.. admonition:: Exercise 17
 
    1. Optimize the geometry of HeH\ :sup:`+` in a minimal basis set.
    2. Optimize the Slater exponents of Be and H\ :sub:`2` (*R*:sub:`HH` = 1.4 Bohr)
@@ -891,7 +891,7 @@ The UHF Energy is given by:
    {P}^{\beta}_{\mu\nu}( {h}_{\nu\mu} + {F}^{\beta}_{\nu\mu} )
    \Bigr)
 
-.. admonition:: Exercise 17
+.. admonition:: Exercise 18
 
    1. Calculate and plot the dissociation/potential curves for
       :sup:`3`\ H\ :sub:`2`, :sup:`1`\ H\ :sub:`2` and :sup:`1`\ Li\ :sub:`2`.
@@ -927,7 +927,7 @@ Calculate the spin contamination according to
 
 where *i*, *j* indicate *α* and *β*-MOs, respectively.
 
-.. admonition:: Exercise 18
+.. admonition:: Exercise 19
 
    1. For the system:
 
@@ -987,7 +987,7 @@ two-electron integrals step-by-step:
    \left({ar}|{b \kappa}\right) \rightarrow
    \left({ar}|{bs}\right)
 
-.. admonition:: Exercise 19
+.. admonition:: Exercise 20
 
    1. Copy your RMP2 routine and modify it such that your integral transformation
       scales with *M*:sup:`5`.
