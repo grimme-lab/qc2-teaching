@@ -54,7 +54,7 @@ contains
 
 
 !> This is the entry point to your program, do not modify the dummy arguments
-!  without adjusting the call in lib/prog.f90
+!  without adjusting the call in app/prog.f90
 subroutine scf_prog(input)
 
     !> Always declare everything explicitly

@@ -231,19 +231,41 @@ Editors
 
 To access and edit any text file in Linux you will need an editor. A huge variety
 of editors exist and your difficult task is to pick the one you are most
-comfortable with. We introduce the most common ones in this chapter but feel
+comfortable with. We introduce the most common ones in this chapter, but feel
 free to work with the editor that fits you the best.
+
+VSCode
+~~~~~~
+
+``vscode`` is a powerful, cross-platform source code editor. It benefits from 
+a rich ecosystem of extensions that provides support for all common programming
+languages including features like syntax highlighting, intellisense and many 
+more. It is well suited for large programming projects and the preferred choice
+in our group.
+
+The installation instructions can be found
+`here <https://code.visualstudio.com/docs/setup/linux>`_.
+
+Since you will be writing Fortran code, you want to install the *Modern Fortran*
+extension, which you can find via the extensions tab (Ctrl+Shift+X) within
+VSCode. For additional features, check out the `Language Server Integration  <https://github.com/fortran-lang/vscode-fortran-support#language-server-integration>`_.
+
+
 
 Atom
 ~~~~
 
-``atom`` is a rather heavyweight but easy-to-use editor, which is built on-top
-of the ``electron`` framework and has comparable capabilities to a web browser.
-It is available for Linux, macOS and Windows.
+.. attention::
+
+  Since December 15, 2022, atom is not maintained anymore. Nevertheless, you 
+  can still download and use it.
+
+``atom`` is a similar to ``vscode``, i.e., a rather heavyweight but easy-to-use 
+editor. It is built on-top of the ``electron`` framework and has comparable capabilities to a web browser. It is available for Linux, macOS and Windows.
 Since we are dealing here with electrons and atoms the choice of programs
 could not have been better, unfortunately, they do not know much about quantum
 chemistry.
-For you can work entirely in ``atom``, but you need some extension which
+You can work entirely in ``atom``, but you need some extensions which
 might already be installed with your version of ``atom``.
 If not install ``language-fortran``, ``build``, ``build-make`` and ``terminal-tab``
 at the setting menu ``<ctrl>-<,>`` under *install*.
@@ -290,10 +312,10 @@ to the screen, save it and compile it using ``gfortran`` in our shell inside
 Vim
 ~~~
 
-We usually prefer to use ``vim`` which is a very powerful and lightweight editor
-once you have mastered the initial steep learning curve.
-It has the advantage of being installed by default on almost any Linux
-machine and is even fully usable without a graphical user interface.
+``vim`` is a very powerful and lightweight editor, once you have mastered the 
+initial steep learning curve. It has the advantage of being installed by 
+default on almost any Linux machine and is even fully usable without a 
+graphical user interface.
 
 However, getting past the initial learning curve can take the better part of a
 month, but having truly mastered ``vim`` usually results in a huge performance

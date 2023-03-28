@@ -1,5 +1,5 @@
-Introduction to Quantum Chemistry
-=================================
+SCF program
+===========
 
 The main objective of this course is to write a working restricted Hartree--Fock
 program.
@@ -46,7 +46,7 @@ To get into the right ballpark we could choose Ångström which has an
 obvious relation to the SI unit, but here we will use Bohr which is
 the length unit of the atomic units system.
 Atomic units have the advantage that a lot of constants drop out of the
-equations we want to code up and we can convert them easily back,
+equations we want to code up, and we can convert them easily back,
 in fact, we provide a conversion routine back to SI units for you.
 
 These are the considerations we have to put in the geometry, now we have
@@ -62,20 +62,20 @@ in multiples of the electron charge (which is the atomic unit of charge)
 and specify the number of electrons separately.
 
 Having put some thoughts in the geometric representation of the system,
-we now have to tackle the electronic representation, that is, we need a basis set
-to expand our wavefunction.
+we now have to tackle the electronic representation, that is, we need a basis 
+set to expand our wavefunction.
 There are many possible choices, like atom centered basis functions
 (Slater-type, Gaussian-type, ...) plain waves, wavelets, ...
-This is one of the most important choices for every quantum chemistry code,
-usually, a single kind of functions is supported which is limiting the chemical
-systems that can be calculated with this.
+This is one of the most important choices for every quantum chemistry code.
+Usually, a single kind of functions is supported which is limiting the chemical
+systems that can be calculated with the program in question.
 The most common distinction is made between codes that support periodic boundary
 conditions or not, while periodic boundary conditions are naturally included
 in plain wave and wavelet based programs, extra effort has to be put into
 codes using Gaussian-type basis functions to support this kind of calculation.
 Also, most wavefunction centered programs use atom centered orbitals since the
 resulting integrals are easier to solve.
-Here the exception from the rule is quite common in our field of research
+Here, the exception to the rule is quite common in our field of research
 and usually offers a unique competitive edge.
 
 For writing your Hartree-Fock program you do not have to bother with this
@@ -104,7 +104,7 @@ we start with the first line, which contains the number of atoms,
 the number electrons and the total number of basis functions as integer
 values.
 None of this information is necessary to read the input file, but is
-included for convenience, *e.g.* such that you can allocate memory before
+included for convenience, *e.g.*, such that you can allocate memory before
 starting to read the rest of the file.
 
 Starting from the second line we expect a tuple of the three Cartesian
@@ -814,8 +814,8 @@ Create a new subroutine that will allow the variation of one parameter
    3. By definition, in which direction does a gradient point? How is this
       different from the force?
 
-Steepest Decent
-~~~~~~~~~~~~~~~
+Steepest Descent
+~~~~~~~~~~~~~~~~
 
 Similar to the SCF, parameter optimizations are performed iteratively and
 depend on a convergence criterion concerning energy and/or size of gradient.
