@@ -78,12 +78,14 @@ resulting integrals are easier to solve.
 Here, the exception to the rule is quite common in our field of research
 and usually offers a unique competitive edge.
 
-For writing your Hartree-Fock program you do not have to bother with this
+For writing your Hartree-Fock program, you do not have to bother with this
 choice, because we already made it for you by providing the implementation
 for integrals over Gaussian-type basis functions.
 We will limit you here to spherical basis functions only, so you can concentrate
 on coding the self-consistent field procedure and do not have to worry about
 mapping shells to orbitals to basis functions to primitives.
+However, you require a mapping from basis functions to atoms, i.e., which basis
+function belongs to which atom.
 
 We will start with the input for the dihydrogen molecule in a minimal basis set.
 With the input format we provide, the geometrical structure of the system
@@ -189,7 +191,7 @@ basis functions for this particular atom.
 .. admonition:: Solutions 1
    :class: tip, toggle
 
-   For a single atom the choice of the position is unimportant, so we
+   For a single atom, the choice of the position is unimportant, so we
    can write something like
 
    .. code-block:: none
@@ -223,7 +225,7 @@ basis functions for this particular atom.
 Classical Contributions
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-First, we start by computing the classical nuclear repulsion energy, *i.e.*
+First, we start by computing the classical nuclear repulsion energy, *i.e.*,
 the Coulomb energy between the nuclei.
 
 .. admonition:: Exercise 3
@@ -237,6 +239,7 @@ the Coulomb energy between the nuclei.
       same result? If not recheck your code.
    4. Check what happens if you calculate the nuclear repulsion energy for
       a single atom. Do you get the expected result?
+   5. Is there a (intrinsic) Fortran function that simplifies the calculation? 
 
 Classical contributions to the total energy do not dependent on
 the density or wavefunction and can already be calculated before
@@ -250,7 +253,7 @@ Basis Set Setup
 
 This Hartree-Fock program will use contracted Gaussian-type orbitals to
 expand the molecular orbitals in atomic orbitals.
-We will use an STO-6G basis set, *i.e.* we use the best representation of a
+We will use an STO-6G basis set, *i.e.*, we use the best representation of a
 Slater-type orbital by six primitive Gaussian-type orbitals.
 
 This is the first time you will use an external library function, therefore
@@ -285,7 +288,7 @@ you with the implementation details.
 
 .. note::
 
-    for programmers coming from C or C++, it is similar to an ``extern``
+    For programmers coming from C or C++, it is similar to an ``extern``
     declaration in a header file for a function.
 
 Usually, you do not have to write an ``interface`` since they
@@ -307,9 +310,9 @@ are conveniently created and handled for you by your compiler.
 One-Electron Integrals
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Note that the basis set we have chosen is very simple, we only allow
+Note that the chosen basis set is very simple, we only allow
 spherical basis function (*s*-functions), also the contraction depth of
-each function is the same. Usually one would choose more sophisticated
+each function is the same. Usually, one would choose more sophisticated
 basis sets for quantitative calculations, but the basic principle remains
 the same.
 
@@ -319,10 +322,10 @@ of the program to perform the integral evaluation in some clever way.
 We use a simple basis set here to teach you the basic principle of
 integral evaluation.
 
-We start with the simple one-electron integrals, for Hartree-Fock we need
+We start with the simple one-electron integrals. For Hartree-Fock, we need
 two-center overlap integrals, two-center kinetic energy integrals and
 three-center nuclear attraction integrals.
-To make things easier we provide the implementation for all three integrals
+To make things easier, we provide the implementation for all three integrals
 over contracted Gaussian orbitals, let's check out the ``interface``:
 
 .. code-block:: fortran
@@ -330,7 +333,6 @@ over contracted Gaussian orbitals, let's check out the ``interface``:
    interface
    !> one electron integrals over spherical Gaussian functions
    subroutine oneint(xyz, chrg, r_a, r_b, alp, bet, ca, cb, sab, tab, vab)
-      import wp
       real(wp), intent(in)  :: xyz(:, :) !< position of all atoms in atomic units, dim: [3, nat]
       real(wp), intent(in)  :: chrg(:) !< nuclear charges, dim: nat
       real(wp), intent(in)  :: r_a(:) !< aufpunkt of orbital a, dim: 3
@@ -345,15 +347,20 @@ over contracted Gaussian orbitals, let's check out the ``interface``:
    end subroutine oneint
    end interface
 
-The most important information is we need *two* centers for the calculation,
+The most important information is that we need *two* centers for the calculation,
 meaning we have to implement it as a loop over all orbital pairs (= pairs of basis
 functions).
+Additionally, we have to account for the different resolutions of the inputs of the
+subroutine ``oneint``: While the aufpunkte are atom-resolved, the exponents, contraction
+coefficients and integrals are orbital-resolved (relate to the basis functions).
+
 
 .. admonition:: Exercise 5
 
    1. Which matrices can you compute from the one-electron integrals?
    2. Allocate space for the necessary matrices.
-   3. Loop over all pairs and calculate all the matrix elements.
+   3. How can you map between atom- and orbital-resolved variables?
+   4. Loop over all pairs and calculate all the matrix elements.
 
 .. admonition:: Exercise 6
 
