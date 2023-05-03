@@ -629,7 +629,7 @@ Modify the provided ``bash`` script to calculate a dissociation curve:
    set -eu
 
    # Ensure non-localized printout
-   expot LC_NUMERIC=en_US.UTF-8
+   export LC_NUMERIC=en_US.UTF-8
 
    # put the name of your program here ("./scf" or "fpm run --")
    program=echo
