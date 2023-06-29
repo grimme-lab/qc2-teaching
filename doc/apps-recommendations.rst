@@ -471,15 +471,7 @@ Just add this lines to your bashrc (if you always want a full path use ``\w`` in
 X-Server or How to make your graphical connection work (optional)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Sometimes it is easier to directly have a look at structures or plots, instead of copying everything to your local computer. Therefore, we recommend an application that enables you to open graphical interfaces on the CIP Pool computers in the Mulliken Center and see the opened windows on your home computer. For everyone, who is interested, just google "X-Server connection windows linux" or some similar combination and try to install this on your own.
-For all others: Install `Xming <https://xming.en.softonic.com/>`_, a free Windows stand-alone program, and follow the setup there. Afterwards, always ensure that ``Xming`` is running, when you open a shell and try to open some visualization software. For that, you only have to start ``Xming`` (press the Windows button, type ``Xming`` and press enter), then the ``Xming`` symbol will appear at your taskbar.
-Now open a shell and type:
-
-.. code-block:: none
-
-   echo "export DISPLAY=localhost:0.0" >> ~/.bashrc
-   source ~/.bashrc
-
-Now you can login as described above (remember to have ``Xming`` running). 
+For all others: Install `Xming <https://xming.en.softonic.com/>`_, a free Windows stand-alone program, and follow the setup there. Afterwards, always ensure that ``Xming`` is running, when you open a shell and try to open some visualization software. For that, you only have to start ``Xming`` (press the Windows button, type ``Xming`` and press enter), then the ``Xming`` symbol will appear at your taskbar. Now you can login as described above (remember to have ``Xming`` running). 
 
 .. _Software for visualization of molecules:
 
