@@ -160,7 +160,8 @@ applications like building and running executables or creating new projects.
    unexpected issues. We have carefully evaluated fpm and the advantage
    of the simple user interface outweighs potential issues.
 
-   This course is structured such that it can be completed with or without using fpm.
+   This course is structured such that it can be completed with or without 
+   using fpm.
 
 .. note::
 
@@ -168,7 +169,22 @@ applications like building and running executables or creating new projects.
    have to activate the fpm installation by using the ``module`` commands:
 
    .. code:: shell
+      
+      export BASH_ENV=/usr/share/lmod/lmod/init/bash
+      . ${BASH_ENV} > /dev/null
+      module use /home/abt-grimme/modulefiles
+      module load fpm
 
+   To make access to fpm permanent, add these lines to your ``.bashrc`` file in
+   your home directory.
+
+   .. code:: shell
+
+      # make environment modules available
+      export BASH_ENV=/usr/share/lmod/lmod/init/bash
+      . ${BASH_ENV} > /dev/null
+
+      # load fpm
       module use /home/abt-grimme/modulefiles
       module load fpm
 
@@ -1121,7 +1137,7 @@ keyword.
 
 
 Multidimensional Arrays
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 We will be dealing in the following chapter with multidimensional arrays,
 usually in form of rank two arrays (matrices). Matrices are stored continuously
@@ -1142,7 +1158,7 @@ to produce more efficient programs.
 
 .. tip::
 
-   Array slices should preferably used on continuous memory, practically
+   Array slices should preferably be used on continuous memory, practically
    this means a colon should only be present in the innermost dimensions of
    an array.
 

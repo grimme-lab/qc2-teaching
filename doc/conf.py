@@ -22,7 +22,7 @@ copyright = '2020, Grimme group'
 author = 'Grimme group'
 
 # The full version, including alpha/beta/rc tags
-release = 'SoSe2023'
+release = 'SoSe2024'
 
 
 # -- General configuration ---------------------------------------------------

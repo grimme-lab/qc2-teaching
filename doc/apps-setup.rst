@@ -25,13 +25,17 @@ needed software, add the following lines to your ``.bashrc``:
 .. code-block:: none
    :linenos:
 
+   # make environment modules available
+   export BASH_ENV=/usr/share/lmod/lmod/init/bash
+   . ${BASH_ENV} > /dev/null
+   
+   module use /home/abt-grimme/modulefiles
+   module load turbomole orca
+   alias molden='/software/bin/molden'
+
    # AKbin
    export PATH=/home/abt-grimme/AK-bin:$PATH
    export PATH=/home/$USER/bin:$PATH
-   
-   module use /software/modulefiles
-   module load turbomole orca
-   alias molden='/software/bin/molden'
 
    # XTB
    export OMP_NUM_THREADS=2
