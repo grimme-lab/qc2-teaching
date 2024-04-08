@@ -786,30 +786,40 @@ contraction coefficients already.
 Geometry Optimization
 ---------------------
 
-The next task is to expand your program to perform a simple geometry optimization.
+The next task is to expand your program to perform a simple geometry 
+optimization.
 
 Numerical Derivatives
 ~~~~~~~~~~~~~~~~~~~~~
 
 The simplest way to perform geometry optimizations is by using the information
-from the energy derivative, since we do not want to code analytical derivatives
+from the energy derivative. As we do not want to code analytical derivatives
 of the Hartree--Fock energy expression, we will resort to numerical derivatives
-instead. This requires to evalulate several SCF energies in one program run,
-since you coded your SCF in a subroutine this should not be an issue.
+instead. This requires to evalulate several SCF energies in one program run.
+Since you coded your SCF in a subroutine, this should not be an issue.
 Nevertheless, try to run the subroutine several times to check if the code
-is correctly allocating and initializing its variables, they might show up now
-and you can fix them before adding much more code to your program.
+is correctly allocating and initializing all variables. If errors show up now,
+you can fix them before adding much more code to your program.
 
 Copy and modify your input files such that for each parameter (cartesian atomic
-coordinates and Slater exponents) *θ*\ :sub:`i` it contains an integer indicating
-whether a numerical gradient with respect to *θ*\ :sub:`i` is to be calculated.
-Create a new subroutine that will allow the variation of one parameter
-*θ*\ :sub:`i` at a time as necessary for each element of the numerical gradient
+coordinates and Slater exponents) *θ*\ :sub:`i`, it contains an integer
+indicating whether a numerical gradient with respect to *θ*\ :sub:`i` is to be
+calculated. Create a new subroutine that will allow the variation of one
+parameter *θ*\ :sub:`i` at a time as necessary for each element of the
+numerical gradient
 
 .. math::
-   \frac{\delta E}{\delta \theta_{i}} \approx \frac{E(\theta_{1}, \ldots, \theta_{i}
-   + \Delta \theta, \ldots, \theta_{n}) - E(\theta_{1}, \ldots, \theta_{i}
-   - \Delta \theta, \ldots, \theta_{n})}{2 \Delta \theta}.
+   \frac{\delta E}{\delta \theta_{i}} \approx \frac{E(\theta_{1}, \ldots, 
+   \theta_{i} + \Delta \theta, \ldots, \theta_{n}) - E(\theta_{1}, \ldots, 
+   \theta_{i} - \Delta \theta, \ldots, \theta_{n})}{2 \Delta \theta}.
+
+Specifically, the geometric derivative is given by (leaving out all other 
+parameters the energy depends on)
+
+.. math::
+
+   \frac{\delta E}{\delta R_{i}} \approx \frac{E(R_{i} + \Delta R) - E(R_{i} -
+   \Delta R)}{2 \Delta R}.
 
 .. admonition:: Exercise 16
 
