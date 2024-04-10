@@ -250,7 +250,7 @@ Since you will be writing Fortran code, you want to install the *Modern Fortran*
 extension, which you can find via the extensions tab (Ctrl+Shift+X) within
 VSCode. For additional features, check out the `Language Server Integration  <https://github.com/fortran-lang/vscode-fortran-support#language-server-integration>`_.
 
-
+You can also install a Vim emulator (see below) for VSCode to enable most of Vim's functionalities.
 
 Atom
 ~~~~
