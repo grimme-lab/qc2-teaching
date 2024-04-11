@@ -94,7 +94,7 @@ exit.
    The resulting binary file can be executed, thus usually called executable.
 
    .. code-block:: bash
-      :caption: bash
+      :caption: shell
 
       gfortran hello.f90 -o helloprog
       ./helloprog
