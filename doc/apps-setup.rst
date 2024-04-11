@@ -22,7 +22,7 @@ Additionally, some programs need global variables. All those
 are usually set in the ``.bashrc``. In order to gain access to all the
 needed software, add the following lines to your ``.bashrc``:
 
-.. code-block:: none
+.. code-block:: bash
    :linenos:
 
    # make environment modules available
@@ -45,7 +45,7 @@ needed software, add the following lines to your ``.bashrc``:
 
 Be sure to create a directory called ``bin`` in your home directory by typing:
 
-.. code-block:: none
+.. code-block:: bash
 
    mkdir ~/bin
 .. export TURBODIR=/home/abt-grimme/TURBOMOLE.7.0.2
@@ -55,7 +55,7 @@ Be sure to create a directory called ``bin`` in your home directory by typing:
 If you want to apply the changes to your current shell, you
 need to run:
 
-.. code-block:: none
+.. code-block:: bash
 
    source ~/.bashrc
 
@@ -86,7 +86,7 @@ TURBOMOLE has different binaries and scripts for different jobs.
 While they do not need an explicit input file when called, you should **always**
 pipe the output into a file, *e.g.*:
 
-.. code-block:: none
+.. code-block:: bash
 
    ridft > ridft.out &
 
@@ -138,7 +138,7 @@ in the next line and are indented. Every ``control`` file must end with the ``$e
 keyword in the last line. An example input for a simple DFT calculation on the
 BLYP/def2-TZVP level of theory can look as follows:
 
-.. code-block:: none
+.. code-block:: bash
    :linenos:
 
    $coord file=coord
@@ -158,13 +158,13 @@ ORCA
 
 ORCA needs an input file (*e.g.* ``myinput.inp``) to run. A typical call to perform a calculation with ORCA would be
 
-.. code-block:: none
+.. code-block:: bash
 
    orca myinput.inp > myinput.out &
 
 The input file is generally structured as follows:
 
-.. code-block:: none
+.. code-block:: bash
    :linenos:
 
    # Comment lines are marked with an '#' and are possible everywhere
@@ -208,43 +208,43 @@ The following table shows the most important keywords that are interesting for t
 +======================================+==========================================================================================+
 | *essential for all calculations*                                                                                                |
 +--------------------------------------+------------------------------------------------------------------------------------------+
-| .. code-block:: none                 | Defines the ``coord`` file to be the one containing the molecular structure information. |
+| .. code-block:: bash                 | Defines the ``coord`` file to be the one containing the molecular structure information. |
 |                                      |                                                                                          |
 |    $coord file=coord                 |                                                                                          |
 +--------------------------------------+------------------------------------------------------------------------------------------+
-| .. code-block:: none                 | Defines the basis set for the calculation to be ``<bas>``.                               |
+| .. code-block:: bash                 | Defines the basis set for the calculation to be ``<bas>``.                               |
 |                                      |                                                                                          |
 |    $atoms                            |                                                                                          |
 |      basis=<bas>                     |                                                                                          |
 +--------------------------------------+------------------------------------------------------------------------------------------+
 | *always recommended*                                                                                                            |
 +--------------------------------------+------------------------------------------------------------------------------------------+
-| .. code-block:: none                 | Defines the charge ``<chrg>`` and the number of unpaired electrons ``<uhf>`` for the     |
+| .. code-block:: bash                 | Defines the charge ``<chrg>`` and the number of unpaired electrons ``<uhf>`` for the     |
 |                                      | extended Hückel guess and the entire rest of the calculation.                            |
 |    $eht charge=<chrg> unpaired=<uhf> |                                                                                          |
 +--------------------------------------+------------------------------------------------------------------------------------------+
-| .. code-block:: none                 | Use the symmetry of pointgroup ``<sym>``. If not stated otherwise, in the scope of this  |
+| .. code-block:: bash                 | Use the symmetry of pointgroup ``<sym>``. If not stated otherwise, in the scope of this  |
 |                                      | course it is always recommended to use C\ :sub:`1` symmetry to avoid technical issues    |
 |    $symmetry <sym>                   | (choose ``c1``).                                                                         |
 +--------------------------------------+------------------------------------------------------------------------------------------+
-| .. code-block:: none                 | | Use the resolution of the identity (RI) approximation. Note that you then have to use  |
+| .. code-block:: bash                 | | Use the resolution of the identity (RI) approximation. Note that you then have to use  |
 |                                      |   ``ridft`` for single-point calculations and the ``-ri`` option for ``jobex``.          |
 |    $rij                              | | We recommend using the RI approximation for all exercises in this course.              |
 +--------------------------------------+------------------------------------------------------------------------------------------+
-| .. code-block:: none                 | For geometry optimizations: The energies and gradient of all optimization cycles will be |
+| .. code-block:: bash                 | For geometry optimizations: The energies and gradient of all optimization cycles will be |
 |                                      | saved in the files ``energy`` and ``gradient``.                                          |
 |    $energy file=energy               |                                                                                          |
 |    $grad file=gradient               |                                                                                          |
 +--------------------------------------+------------------------------------------------------------------------------------------+
 | *DFT calculations*                                                                                                              |
 +--------------------------------------+------------------------------------------------------------------------------------------+
-| .. code-block:: none                 | | Perform a DFT calculation using the functional ``<func>``. Note that the BYLP, B3YLP   |
+| .. code-block:: bash                 | | Perform a DFT calculation using the functional ``<func>``. Note that the BYLP, B3YLP   |
 |                                      |   and B2PLYP functionals are named ``b-lyp``, ``b3-lyp`` and ``b2-plyp``, respectively.  |
 |    $dft                              |   Define the integration grid ``<grid>`` (optional, the default is ``m4``).              |
 |      functional <func>               | | For double-hybrid functionals, also include the settings for MP2 calculations          |
 |      grid <grid>                     |   listed below (``$ricc2`` and ``$denconv`` blocks).                                     |
 +--------------------------------------+------------------------------------------------------------------------------------------+
-| .. code-block:: none                 | Use the D3 dispersion correction with Becke-Johnson damping.                             |
+| .. code-block:: bash                 | Use the D3 dispersion correction with Becke-Johnson damping.                             |
 |                                      |                                                                                          |
 |    $disp3 -bj                        |                                                                                          |
 +--------------------------------------+------------------------------------------------------------------------------------------+
@@ -254,34 +254,34 @@ The following table shows the most important keywords that are interesting for t
 +--------------------------------------+------------------------------------------------------------------------------------------+
 | *Post HF calculations*                                                                                                          |
 +--------------------------------------+------------------------------------------------------------------------------------------+
-| .. code-block:: none                 | For MP2 and CC calculations, a well-converged SCF run is needed. Therefore, set the      |
+| .. code-block:: bash                 | For MP2 and CC calculations, a well-converged SCF run is needed. Therefore, set the      |
 |                                      | convergence threshold of the SCF and the density matrix to :math:`10^{-7}` or less.      |
 |    $scfconv 7                        |                                                                                          |
 |    $denconv 1.0d-7                   |                                                                                          |
 +--------------------------------------+------------------------------------------------------------------------------------------+
-| .. code-block:: none                 | | Perform an MP2 single-point calculation.                                               |
+| .. code-block:: bash                 | | Perform an MP2 single-point calculation.                                               |
 |                                      | | The ``geoopt model=mp2`` keyword is only necessary if a geometry optimization on the   |
 |    $ricc2                            |   MP2 level is desired.                                                                  |
 |      mp2                             |                                                                                          |
 |      geoopt model=mp2                |                                                                                          |
 +--------------------------------------+------------------------------------------------------------------------------------------+
-| .. code-block:: none                 | Perform a CCSD(T) single-point calculation.                                              |
+| .. code-block:: bash                 | Perform a CCSD(T) single-point calculation.                                              |
 |                                      |                                                                                          |
 |    $ricc2                            |                                                                                          |
 |      ccsd(t)                         |                                                                                          |
 +--------------------------------------+------------------------------------------------------------------------------------------+
 | *other settings*                                                                                                                |
 +--------------------------------------+------------------------------------------------------------------------------------------+
-| .. code-block:: none                 | Use the condctor like screening model COSMO with the dielectric constant ``<epsilon>``   |
+| .. code-block:: bash                 | Use the condctor like screening model COSMO with the dielectric constant ``<epsilon>``   |
 |                                      | of the solvent.                                                                          |
 |    $cosmo                            |                                                                                          |
 |      epsilon=<epsilon>               |                                                                                          |
 +--------------------------------------+------------------------------------------------------------------------------------------+
-| .. code-block:: none                 | Defines the maximum number of iterations in an SCF calculation (default ``<limit>`` is   |
+| .. code-block:: bash                 | Defines the maximum number of iterations in an SCF calculation (default ``<limit>`` is   |
 |                                      | 30). If an SCF did not converge, try increasing this value, *e.g.* to 100.               |
 |    $scfiterlimit <limit>             |                                                                                          |
 +--------------------------------------+------------------------------------------------------------------------------------------+
-| .. code-block:: none                 | Specify the number of imaginary vibrational frequencies ``<imag>`` that shall be         |
+| .. code-block:: bash                 | Specify the number of imaginary vibrational frequencies ``<imag>`` that shall be         |
 |                                      | obtained by a geometry optimization (default is ``itrvec 0`` for minimum structures).    |
 |    $statpt                           | Set to ``itrvec 1`` for transition state optimizations.                                  |
 |      itrvec <imag>                   |                                                                                          |

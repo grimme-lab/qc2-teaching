@@ -552,14 +552,11 @@ Summary
 
 Check the ``.bashrc`` of your local Linux distribution and add ``export DISPLAY=localhost:0.0``, if you want to use a graphical interface to the MCTC computers.
 
-+------------+--------------+---------------------------------------------------+-----------+
-| Program    | local / MCTC | Links (if local installation needed)              | optional? |
-+============+==============+===================================================+===========+
-| Xming      | local        | `<https://xming.en.softonic.com>`_                | yes       |
-+------------+--------------+---------------------------------------------------+-----------+
-| avogadro   | local / MCTC | `<https://avogadro.cc/>`_                         | no        |
-+------------+--------------+---------------------------------------------------+-----------+
-| molden     | local / MCTC | `<https://ftp.science.ru.nl/Molden/bin/Windows/molden_native_windows_full.rar>`_ | no        |
-+------------+--------------+---------------------------------------------------+-----------+
-| gnuplot    | MCTC         | [-]                                               | yes       |
-+------------+--------------+---------------------------------------------------+-----------+
+.. csv-table:: Program,local / MCTC,Links (if local installation needed),optional?
+   :header: "Program", "local / MCTC", "Links (if local installation needed)", "optional?"
+   :widths: 15, 15, 50, 15
+
+   Xming, local, `<https://xming.en.softonic.com>`_, yes
+   avogadro, local / MCTC, `<https://avogadro.cc/>`_, no
+   molden, local / MCTC, `<https://ftp.science.ru.nl/Molden/bin/Windows/molden_native_windows_full.rar>`_, no
+   gnuplot, MCTC, [-], yes

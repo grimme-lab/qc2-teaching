@@ -2,3 +2,4 @@ sphinx_book_theme
 sphinx_panels
 sphinx_copybutton
 sphinx_togglebutton
+sphinx_tabs

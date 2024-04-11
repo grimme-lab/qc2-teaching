@@ -93,7 +93,7 @@ exit.
    translate your program using the compiler ``gfortran`` to machine code.
    The resulting binary file can be executed, thus usually called executable.
 
-   .. code-block:: none
+   .. code-block:: bash
 
       gfortran hello.f90 -o helloprog
       ./helloprog
@@ -109,7 +109,7 @@ Now that we can translate our program, we should check what it needs
 to create an executable, create an empty file ``empty.f90`` and try to translate
 it with ``gfortran``.
 
-.. code-block:: none
+.. code-block:: bash
    :emphasize-lines: 3
 
    gfortran empty.f90
@@ -190,14 +190,14 @@ applications like building and running executables or creating new projects.
 
 Create a new project with fpm by
 
-.. code-block:: none
+.. code-block:: bash
 
    fpm new --app myprogram
 
 This will initialize a new Fortran project with a simple program setup.
 Enter the newly created directory and run it with
 
-.. code-block:: none
+.. code-block:: bash
 
    cd myprogram
    fpm run
@@ -266,21 +266,23 @@ a value to ``my_number``, then we are printing it to the screen.
    you type in the above program. Then translate it with ``gfortran``
    with
 
-   .. tabbed:: gfortran
+   .. tabs::
 
-      .. code-block:: none
+      .. tab:: gfortran
 
-         gfortran numbers.f90 -o numbers_prog
-         ./numbers_prog
-          My number is          42
+          .. code-block:: bash
 
-   .. tabbed:: fpm
+            gfortran numbers.f90 -o numbers_prog
+            ./numbers_prog
+              My number is          42
 
-      .. code-block:: none
+      .. tab:: fpm
 
-         fpm run
-          + build/gfortran_debug/app/myproject
-          My number is          42
+          .. code-block:: bash
+
+            fpm run
+              + build/gfortran_debug/app/myproject
+              My number is          42
 
    Despite being a bit oddly formatted the program correctly returned the
    number we have written in ``numbers.f90``.
@@ -296,23 +298,25 @@ a value to ``my_number``, then we are printing it to the screen.
    We replace the assignment in line 4 with the ``read(*, *) my_number``
    and then translate it to a program.
 
-   .. tabbed:: gfortran
+   .. tabs::
 
-      .. code-block:: none
+      .. tab:: gfortran
 
-         gfortran numbers.f90 -o numbers_prog
-         ./numbers_prog
-         31
-          My number is          31
+          .. code-block:: bash
 
-   .. tabbed:: fpm
+            gfortran numbers.f90 -o numbers_prog
+            ./numbers_prog
+            31
+              My number is          31
 
-      .. code-block:: none
+      .. tab:: fpm
 
-         fpm run
-          + build/gfortran_debug/app/myproject
-         31
-          My number is          31
+          .. code-block:: bash
+
+            fpm run
+              + build/gfortran_debug/app/myproject
+            31
+              My number is          31
 
    If you now execute ``numbers_prog`` the shell freezes.
    We are now exactly at the read statement and the ``numbers_prog`` is waiting
@@ -320,54 +324,56 @@ a value to ``my_number``, then we are printing it to the screen.
 
    You might be tempted to type something like ``four``:
 
-   .. tabbed:: gfortran
+   .. tabs::
 
-      .. code-block:: none
-         :emphasize-lines: 4
+      .. tab:: gfortran
 
-         ./numbers_prog
-         four
-         At line 4 of file numbers.f90 (unit = 5, file = 'stdin')
-         Fortran runtime error: Bad integer for item 1 in list input
+          .. code-block:: bash
+            :emphasize-lines: 4
 
-         Error termination. Backtrace:
-         #0  0x7efe31de5e1b in read_integer
-            at /build/gcc/src/gcc/libgfortran/io/list_read.c:1099
-         #1  0x7efe31de8e29 in list_formatted_read_scalar
-            at /build/gcc/src/gcc/libgfortran/io/list_read.c:2171
-         #2  0x7efe31def535 in wrap_scalar_transfer
-            at /build/gcc/src/gcc/libgfortran/io/transfer.c:2369
-         #3  0x7efe31def535 in wrap_scalar_transfer
-            at /build/gcc/src/gcc/libgfortran/io/transfer.c:2346
-         #4  0x56338a59f23b in ???
-         #5  0x56338a59f31a in ???
-         #6  0x7efe31867ee2 in ???
-         #7  0x56338a59f0fd in ???
-         #8  0xffffffffffffffff in ???
+            ./numbers_prog
+            four
+            At line 4 of file numbers.f90 (unit = 5, file = 'stdin')
+            Fortran runtime error: Bad integer for item 1 in list input
 
-   .. tabbed:: fpm
+            Error termination. Backtrace:
+            #0  0x7efe31de5e1b in read_integer
+                at /build/gcc/src/gcc/libgfortran/io/list_read.c:1099
+            #1  0x7efe31de8e29 in list_formatted_read_scalar
+                at /build/gcc/src/gcc/libgfortran/io/list_read.c:2171
+            #2  0x7efe31def535 in wrap_scalar_transfer
+                at /build/gcc/src/gcc/libgfortran/io/transfer.c:2369
+            #3  0x7efe31def535 in wrap_scalar_transfer
+                at /build/gcc/src/gcc/libgfortran/io/transfer.c:2346
+            #4  0x56338a59f23b in ???
+            #5  0x56338a59f31a in ???
+            #6  0x7efe31867ee2 in ???
+            #7  0x56338a59f0fd in ???
+            #8  0xffffffffffffffff in ???
 
-      .. code-block:: none
-         :emphasize-lines: 6
+      .. tab:: fpm
 
-         fpm run
-          + build/gfortran_debug/app/numbers
-          Enter an integer value
-         four
-         At line 5 of file app/main.f90 (unit = 5, file = 'stdin')
-         Fortran runtime error: Bad integer for item 1 in list input
+          .. code-block:: bash
+            :emphasize-lines: 6
 
-         Error termination. Backtrace:
-         #0  0x7fb170e6ffdb in read_integer
-            at /build/gcc/src/gcc/libgfortran/io/list_read.c:1099
-         #1  0x7fb170e73229 in list_formatted_read_scalar
-            at /build/gcc/src/gcc/libgfortran/io/list_read.c:2171
-         #2  0x561f44a562a0 in numbers
-            at app/main.f90:5
-         #3  0x561f44a5637f in main
-            at app/main.f90:7
-          Command failed
-         ERROR STOP
+            fpm run
+              + build/gfortran_debug/app/numbers
+              Enter an integer value
+            four
+            At line 5 of file app/main.f90 (unit = 5, file = 'stdin')
+            Fortran runtime error: Bad integer for item 1 in list input
+
+            Error termination. Backtrace:
+            #0  0x7fb170e6ffdb in read_integer
+                at /build/gcc/src/gcc/libgfortran/io/list_read.c:1099
+            #1  0x7fb170e73229 in list_formatted_read_scalar
+                at /build/gcc/src/gcc/libgfortran/io/list_read.c:2171
+            #2  0x561f44a562a0 in numbers
+                at app/main.f90:5
+            #3  0x561f44a5637f in main
+                at app/main.f90:7
+              Command failed
+            ERROR STOP
 
    So we got an error here, the program is printing a lot of cryptic information,
    but the most useful lines are near to our input of ``four``.
@@ -459,44 +465,46 @@ program again.
    for both ``a`` and ``b`` to echo their values, the resulting shell history
    should look similar to this
 
-   .. tabbed:: gfortran
+   .. tabs::
 
-      .. code-block:: none
+      .. tab:: gfortran
 
-         gfortran add -o add_prog
-         ./add_prog
-          Enter two numbers to add
-         11 31
-          The value of a is          11
-          The value of b is          31
-          The result is          42
-         ./add_prog
-          Enter two numbers to add
-         -8
-         298
-          The value of a is          -8
-          The value of b is         298
-          The result is         290
+          .. code-block:: bash
 
-   .. tabbed:: fpm
+            gfortran add -o add_prog
+            ./add_prog
+              Enter two numbers to add
+            11 31
+              The value of a is          11
+              The value of b is          31
+              The result is          42
+            ./add_prog
+              Enter two numbers to add
+            -8
+            298
+              The value of a is          -8
+              The value of b is         298
+              The result is         290
 
-      .. code-block:: none
+      .. tab:: fpm
 
-         fpm run
-          + build/gfortran_debug/app/add
-          Enter two numbers to add
-         11 31
-          The value of a is          11
-          The value of b is          31
-          The result is          42
-         fpm run
-          + build/gfortran_debug/app/add
-          Enter two numbers to add
-         -8
-         298
-          The value of a is          -8
-          The value of b is         298
-          The result is         290
+          .. code-block:: bash
+
+            fpm run
+              + build/gfortran_debug/app/add
+              Enter two numbers to add
+            11 31
+              The value of a is          11
+              The value of b is          31
+              The result is          42
+            fpm run
+              + build/gfortran_debug/app/add
+              Enter two numbers to add
+            -8
+            298
+              The value of a is          -8
+              The value of b is         298
+              The result is         290
 
    The input seems to be quite forgiving and we can also add negative numbers.
    While this sounds obvious it is a common pitfall in other languages,
@@ -513,28 +521,30 @@ program again.
    for the multiplication, since there is nothing worse than a program called
    ``add_prog`` performing multiplications).
 
-   .. tabbed:: gfortran
+   .. tabs::
 
-      .. code-block:: none
+       .. tab:: gfortran
+      
+          .. code-block:: bash
+          
+             ./multiply_prog
+              Enter two numbers to multiply
+             1000000 1000000
+              The value of a is     1000000
+              The value of b is     1000000
+              The result is  -727379968
 
-         ./multiply_prog
-          Enter two numbers to multiply
-         1000000 1000000
-          The value of a is     1000000
-          The value of b is     1000000
-          The result is  -727379968
-
-   .. tabbed:: fpm
-
-      .. code-block:: none
-
-         fpm run
-          + build/gfortran_debug/app/muliply
-          Enter two numbers to multiply
-         1000000 1000000
-          The value of a is     1000000
-          The value of b is     1000000
-          The result is  -727379968
+       .. tab:: fpm
+      
+          .. code-block:: bash
+          
+             fpm run
+              + build/gfortran_debug/app/muliply
+              Enter two numbers to multiply
+             1000000 1000000
+              The value of a is     1000000
+              The value of b is     1000000
+              The result is  -727379968
 
    which is kind of surprising. Take a piece of paper or perform the
    multiplication in your head, you will probably something pretty close
@@ -577,25 +587,27 @@ Let us consider the following program using ``real`` variables
 We translate ``accuracy.f90`` to an executable and run it to find that
 it is not that accurate
 
-.. tabbed:: gfortran
+.. tabs::
 
-   .. code-block:: none
-
-      gfortran accuracy.f90 -o accuracy_test
-      ./accuracy.test
-       a is   1.00000000
-       b is   6.00000000
-       c is  0.166666672
-
-.. tabbed:: fpm
-
-   .. code-block:: none
-
-      fpm run
-       + build/gfortran_debug/app/accuracy
-       a is   1.00000000
-       b is   6.00000000
-       c is  0.166666672
+   .. tab:: gfortran
+   
+      .. code-block:: bash
+   
+         gfortran accuracy.f90 -o accuracy_test
+         ./accuracy.test
+          a is   1.00000000
+          b is   6.00000000
+          c is  0.166666672
+   
+   .. tab:: fpm
+   
+      .. code-block:: bash
+   
+         fpm run
+          + build/gfortran_debug/app/accuracy
+          a is   1.00000000
+          b is   6.00000000
+          c is  0.166666672
 
 Similar to our integer arithmetic test, real (floating point) arithmetic has
 also limitation. The default representation uses 32 bits (4 bytes) to represent
@@ -642,25 +654,27 @@ specified significant digits.
    we got more digits printed and also a more accurate, but still
    not perfect result
 
-   .. tabbed:: gfortran
+   .. tabs::
 
-      .. code-block:: none
-
-         gfortran accuracy.f90 -o accuracy_test
-         ./accuracy.test
-          a is   1.00000000000000
-          b is   6.00000000000000
-          c is  0.166666666666667
-
-   .. tabbed:: fpm
-
-      .. code-block:: none
-
-         fpm run
-          + build/gfortran_debug/app/accuracy
-          a is   1.00000000000000
-          b is   6.00000000000000
-          c is  0.166666666666667
+      .. tab:: gfortran
+   
+         .. code-block:: bash
+   
+            gfortran accuracy.f90 -o accuracy_test
+            ./accuracy.test
+             a is   1.00000000000000
+             b is   6.00000000000000
+             c is  0.166666666666667
+   
+      .. tab:: fpm
+   
+         .. code-block:: bash
+   
+            fpm run
+             + build/gfortran_debug/app/accuracy
+             a is   1.00000000000000
+             b is   6.00000000000000
+             c is  0.166666666666667
 
    It is important to notice here that we cannot get the same result
    we would evaluate on a piece of paper since the precision is still
@@ -688,7 +702,7 @@ value, while all others are off. We can easily explain the result for ``c``,
 the actual calculation is happening in integer arithmetic which yields 0
 and is then *cast* into a real number ``0.0``.
 
-.. code-block:: none
+.. code-block:: bash
 
     a is  0.16666666666666666
     b is  0.16666667163372040
@@ -739,7 +753,7 @@ to convert it first, which is called *casting*.
    line 7, with several errors following, as usual, the first error is the
    interesting one:
 
-   .. code-block:: none
+   .. code-block:: bash
       :emphasize-lines: 5
 
       accuracy.f90:7:7:
@@ -873,7 +887,7 @@ or equal to zero).
    the equal sign is reserved for the assignment ``gfortran`` will throw
    an error like this one
 
-   .. code-block:: none
+   .. code-block:: bash
       :emphasize-lines: 5
 
       loop.f90:9:10:
@@ -1030,7 +1044,7 @@ function.
    Let's try to read one element past the size of the array and add this
    elements to the sum (``do i = 1, size(vec)+1``):
 
-   .. code-block:: none
+   .. code-block:: bash
 
       ./array_sum
       10
@@ -1050,7 +1064,7 @@ function.
    Checking out-of-bounds errors is not enabled by default, we enable it by
    recompiling our program and now found a helpful message
 
-   .. code-block:: none
+   .. code-block:: bash
       :emphasize-lines: 6
 
       gfortran array_sum.f90 -fcheck=bounds -o array_sum

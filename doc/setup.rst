@@ -43,7 +43,7 @@ we recommend to use the latter.
 
 Open a new terminal and update your installation with
 
-.. code-block:: none
+.. code-block:: bash
 
    pacman -Syu
 
@@ -52,7 +52,7 @@ the above command again to update the installed packages.
 
 If you are using the *MinGW64 terminal* you can install the required software with
 
-.. code-block:: none
+.. code-block:: bash
 
    pacman -S git mingw-w64-x86_64-gcc-fortran mingw-w64-x86_64-make mingw-w64-x86_64-fpm vim
 
@@ -246,7 +246,7 @@ To setup your MacOS for the course follow this steps
 2. Open a terminal from /Applications/Utilities/
 3. Install command line tools with
 
-   .. code-block:: none
+   .. code-block:: bash
 
       xcode-select --install
 
@@ -261,7 +261,7 @@ To setup your MacOS for the course follow this steps
    be mostly compatible. In case you want to follow the course with a ``bash``
    start a new ``bash`` instance after opening your terminal with
 
-   .. code-block:: none
+   .. code-block:: bash
 
       exec bash
 

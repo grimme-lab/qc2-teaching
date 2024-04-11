@@ -28,7 +28,7 @@ Multireference Methods
 
    Input for RHF:
 
-   .. code-block:: none
+   .. code-block:: bash
       :linenos:
 
       ! RHF def2-TZVP TightSCF
@@ -44,7 +44,7 @@ Multireference Methods
 
    UHF:
 
-   .. code-block:: none
+   .. code-block:: bash
       :linenos:
 
       ! UHF def2-TZVP TightSCF
@@ -53,21 +53,21 @@ Multireference Methods
 
    MP2:
 
-   .. code-block:: none
+   .. code-block:: bash
       :linenos:
 
       ! RHF MP2 def2-TZVP TightSCF
 
    CCSD(T):
 
-   .. code-block:: none
+   .. code-block:: bash
       :linenos:
 
       ! RHF CCSD(T) def2-TZVP TightSCF
 
    CASSCF (2 active electrons in 2 orbitals):
 
-   .. code-block:: none
+   .. code-block:: bash
       :linenos:
 
       ! RHF def2-TZVP TightSCF Conv
@@ -82,7 +82,7 @@ Multireference Methods
 
 2. Call ORCA with the command
 
-   .. code-block:: none
+   .. code-block:: bash
 
       orca <file>.inp > <file>.out
 
@@ -107,7 +107,7 @@ Multireference Methods
    maximum number of macro-iterations for CASSCF by adding the following keyword in the
    ``%casscf`` block:
 
-   .. code-block:: none
+   .. code-block:: bash
       :lineno-start: 6
 
         maxiter 1000
@@ -130,7 +130,7 @@ specified otherwise we will use the RI approximation and C\ :sub:`1` symmetry th
 
    The syntax is:
 
-   .. code-block:: none
+   .. code-block:: bash
       :linenos:
 
       $coord
@@ -145,13 +145,13 @@ specified otherwise we will use the RI approximation and C\ :sub:`1` symmetry th
    |angst| as unit, but the unit for the ``coord`` file has to be bohr (atomic units). To
    convert a \*.xyz file into a coord file you can use the command
 
-   .. code-block:: none
+   .. code-block:: bash
 
       x2t *.xyz > coord
 
    This also works the other way round:
 
-   .. code-block:: none
+   .. code-block:: bash
 
       t2x coord > *.xyz
 
@@ -164,7 +164,7 @@ specified otherwise we will use the RI approximation and C\ :sub:`1` symmetry th
    The following input is an example of a ``control`` file with the correct options
    for a B3LYP/def2-TZVP calculation of the triplet (= 2 unpaired electrons) state.
 
-   .. code-block:: none
+   .. code-block:: bash
       :linenos:
 
       $coord file=coord
@@ -184,7 +184,7 @@ specified otherwise we will use the RI approximation and C\ :sub:`1` symmetry th
      with the proper ``$ricc2`` block and don't forget to specify ``$denconv`` small enough.
    | Geometry optimizations (DFT, HF) are done with the program ``jobex``:
 
-   .. code-block:: none
+   .. code-block:: bash
 
       jobex -ri > jobex.out
 
@@ -195,7 +195,7 @@ specified otherwise we will use the RI approximation and C\ :sub:`1` symmetry th
    optimization, but do a single-point calculation on the MP2 optimized geometries. Before
    performing the actual CCSD(T) calculation, you have do run a HF-SCF:
 
-   .. code-block:: none
+   .. code-block:: bash
 
       ridft > ridft.out
       ccsdf12 > ccsdf12.out
@@ -205,7 +205,7 @@ specified otherwise we will use the RI approximation and C\ :sub:`1` symmetry th
 3. In order to measure the angles of the optimized structures, you can use ``Avogadro``
    or a small TURBOMOLE script called ``bend``:
 
-     .. code-block:: none
+     .. code-block:: bash
 
         bend i j k
 
@@ -222,7 +222,7 @@ specified otherwise we will use the RI approximation and C\ :sub:`1` symmetry th
    A HF calculation can be performed by simply omitting the ``$dft`` block in the above
    input file. For post HF calculations, add the ``$ricc2`` block:
 
-   .. code-block:: none
+   .. code-block:: bash
       :linenos:
 
       $ricc2
@@ -234,7 +234,7 @@ specified otherwise we will use the RI approximation and C\ :sub:`1` symmetry th
    If you encounter convergence problems in the MP2 or CCSD(T) calculations, try to increase the
    maximum number of SCF cycles (e.g. 100) by adding the following keyword:
 
-   .. code-block:: none
+   .. code-block:: bash
       :linenos: 
 
         $scfiterlimit <limit>
@@ -260,7 +260,7 @@ Formic Acid Dimer
    ``$disp3 -bj`` keyword for the D3 dispersion correction. **DFT** geometry optimizations
    are performed via:
 
-   .. code-block:: none
+   .. code-block:: bash
 
       jobex -ri > jobex.out
 
@@ -325,7 +325,7 @@ Reaction Enthalpies of Gas-Phase Reactions
    frequency calculation first. Use the program ``aoforce`` to calculate the vibrational
    frequencies in TURBOMOLE:
 
-   .. code-block:: none
+   .. code-block:: bash
 
       aoforce > aoforce.out
 
@@ -333,7 +333,7 @@ Reaction Enthalpies of Gas-Phase Reactions
    ``thermo``. It needs a ``.thermorc`` input file from your home directory. Create this
    file by typing:
 
-   .. code-block:: none
+   .. code-block:: bash
 
       echo "0.0  298.15  1.0" > ~/.thermorc
 
@@ -341,7 +341,7 @@ Reaction Enthalpies of Gas-Phase Reactions
    the third the scaling factor for the vibrational frequencies (1.0 for TPSS). Pipe the
    output into a separate file, *e.g.*:
 
-   .. code-block:: none
+   .. code-block:: bash
 
       thermo > thermo.out
 
@@ -349,7 +349,7 @@ Reaction Enthalpies of Gas-Phase Reactions
    MP2/def2-TZVP. Calculate the deviation of these differently optimized structures by
    computing the root mean square deviation of the coordinates:
 
-   .. code-block:: none
+   .. code-block:: bash
 
       rmsd <tpss-geometry> <mp2-geometry>
 
@@ -406,7 +406,7 @@ Heat of Formation of C\ :sub:`60` (optional)
 7. Calculate the D3 dispersion correction to the TPSS/def2-QZVP energy and calculate
    :math:`\Delta H_f^0` again. Use the standalone program ``dftd3``:
 
-   .. code-block:: none
+   .. code-block:: bash
 
       dftd3 coord -func tpss -bj
 
@@ -450,7 +450,7 @@ Kinetic Isotope Effect
 
    (b) Consecutively, calculate energy, gradient and hessian:
 
-       .. code-block:: none
+       .. code-block:: bash
 
           ridft > ridft.out
           rdgrad > rdgrad.out
@@ -460,7 +460,7 @@ Kinetic Isotope Effect
        in the output of ``aoforce`` (it also appears in the ``vibspectrum`` file).
        Then, add the following block to the ``control`` file.
 
-       .. code-block:: none
+       .. code-block:: bash
           :linenos:
 
           $statpt
@@ -470,7 +470,7 @@ Kinetic Isotope Effect
 
    (d) Start the transition state search:
 
-       .. code-block:: none
+       .. code-block:: bash
 
           jobex -ri -trans > jobex.out
 
@@ -479,7 +479,7 @@ Kinetic Isotope Effect
    state (``aoforce``) and verify that there is only one imaginary frequency.
    You can have a look at that corresponding normal mode by calling:
 
-   .. code-block:: none
+   .. code-block:: bash
 
       tm2molden
 
@@ -497,7 +497,7 @@ Kinetic Isotope Effect
    the indices of the ``h`` atoms you want to change to deuterium. Say these hydrogen atoms
    are atoms 2, 3, 4 and 5, then change the ``$atoms`` block to:
 
-   .. code-block:: none
+   .. code-block:: bash
       :linenos:
 
       $atoms
@@ -554,7 +554,7 @@ S\ :sub:`N`\ 2-Reaction
    mind that you also have to specify the charge and the solvent model in the ``control``
    file, *e.g.*:
 
-   .. code-block:: none
+   .. code-block:: bash
       :linenos:
 
       $eht charge=-1 unpaired=0
@@ -622,7 +622,7 @@ S\ :sub:`N`\ 2-Reaction
    tells TURBOMOLE to keep the coordinates fixed for that atom. ``DIST`` ist a placeholder
    which will be substituted by the C--F distance.
 
-   .. code-block:: none
+   .. code-block:: bash
       :lineno-start: 13
 
       $coord
@@ -636,7 +636,7 @@ S\ :sub:`N`\ 2-Reaction
 
    In order to use the script, you have to make it executable by typing:
 
-   .. code-block:: none
+   .. code-block:: bash
 
       chmod +x run-scan.sh
 
@@ -646,7 +646,7 @@ S\ :sub:`N`\ 2-Reaction
    ``results.dat`` file will be written to the respective subdirectory.
    Execute the script by typing:
 
-   .. code-block:: none
+   .. code-block:: bash
 
       ./run-scan.sh
 
@@ -657,7 +657,7 @@ S\ :sub:`N`\ 2-Reaction
 
    If the execution of such a script takes some longer time, consider calling it with:
 
-   .. code-block:: none
+   .. code-block:: bash
 
       nohup ./run-scan.sh &
 
@@ -693,7 +693,7 @@ Rearrangement and Dimerization Reactions
    that employs a minimal valence basis set and is very efficient for calculating **G**\ eometries,
    vibrational **F**\ requencies and **N**\ oncovalent interactions. For running the geometry optimization, call
 
-   .. code-block:: none´
+   .. code-block:: bash´
       
       xtb start.xyz --opt > opt.out
      
@@ -710,13 +710,13 @@ Rearrangement and Dimerization Reactions
    (c) Create a directory ``scratch`` and store the starting and ending structures in 
        the file ``initial0000.xyz``:
        
-       .. code-block:: none
+       .. code-block:: bash
           
           cat start.xyz end.xyz >> scratch/initial0000.xyz
           
    (d) Place a file named ``ograd`` in the respective directory with the following content:
    
-       .. code-block:: none
+       .. code-block:: bash
           :linenos:
           
           #!/bin/bash 
@@ -739,14 +739,14 @@ Rearrangement and Dimerization Reactions
 
        The ``ograd`` file has to be made executable: 
       
-       .. code-block:: none
+       .. code-block:: bash
            
            
           chmod u+x ograd
            
    e) Place a file named ``inpfileq`` in the respective directory with the following content:
     
-      .. code-block:: none
+      .. code-block:: bash
           :linenos:
           
           # FSM/GSM/SSM inpfileq
@@ -784,7 +784,7 @@ Rearrangement and Dimerization Reactions
        
    (f)   Start the transition state search by typing:
    
-         .. code-block:: none
+         .. code-block:: bash
             
             gsm.orca 
             
@@ -832,7 +832,7 @@ Noble Gas |mult| |mult| |mult| Methane
    | Use the ``run-scan.sh`` script from exercise 5.1 and adopt it to this task.
      Substitute the template molecular geometry by the following one:
    
-   .. code-block:: none
+   .. code-block:: bash
       :lineno-start: 13
 
       $coord
@@ -853,14 +853,14 @@ Noble Gas |mult| |mult| |mult| Methane
    settings under ``$ricc2`` and ``$denconv``. In the latter case, don't forget to change
    the ``jobex`` command in the script to:
 
-   .. code-block:: none
+   .. code-block:: bash
       :lineno-start: 37
 
         jobex -ri -level cc2 -c 50
 
    To get the final MP2 energy for each distance, also change the ``sdg`` command to:
 
-   .. code-block:: none
+   .. code-block:: bash
       :lineno-start: 40
 
         e=$(grep "Total Energy" job.last | gawk '{print $4}')
@@ -936,14 +936,14 @@ The Color of Indigo
    To start the input generator, navigate to the directory containing the ``coord`` file,
    type the following command and answer all questions that appear.
 
-   .. code-block:: none
+   .. code-block:: bash
 
       define
 
    Prepare an input on the TPSS-D3/def2-SVP level and optimize the geometry. In the define
    dialogue, you can skip the first two questions, then choose the input geometry file via:
 
-   .. code-block:: none
+   .. code-block:: bash
 
       a coord
 
@@ -958,7 +958,7 @@ The Color of Indigo
      atomic attribute definition menu, you can choose the same basis for all atoms by
      typing *e.g.*:
 
-   .. code-block:: none
+   .. code-block:: bash
 
       b all def2-SVP
 
@@ -966,7 +966,7 @@ The Color of Indigo
    worry about a small HOMO/LUMO gap). In the last general menu, go to the ``dft`` submenu
    and type *e.g.*:
 
-   .. code-block:: none
+   .. code-block:: bash
 
       on
       func tpss
@@ -986,14 +986,14 @@ The Color of Indigo
 2. Prepare a HF-D3/def2-SVP single-point calculation in the same way by using ``define``,
    but do not turn on the ``dft`` option. Do not use the RI approximation here and run:
   
-   .. code-block:: none
+   .. code-block:: bash
 
       dscf > dscf.out
 
    In order to do the subsequent TD-HF (or a TD-DFT) calculation, add the following two blocks
    so the ``control`` file:
 
-   .. code-block:: none
+   .. code-block:: bash
       :linenos:
 
       $scfinstab rpas
@@ -1002,7 +1002,7 @@ The Color of Indigo
 
    Then, run:
 
-   .. code-block:: none
+   .. code-block:: bash
 
       escf > escf.out
 
@@ -1010,7 +1010,7 @@ The Color of Indigo
    PBE0-D3/def2-SVP (now with RI approximation). Use proper settings during the ``define``
    dialogue as well as in ``control`` and run:
 
-   .. code-block:: none
+   .. code-block:: bash
 
       ridft > ridft.out
       escf > escf.out
@@ -1029,7 +1029,7 @@ functional and a pcSseg-2 basis set is presented below. The pcSseg-*n* basis set
 segmented contracted basis sets otimized for the calculation of NMR shieldings.
 (For more information see: Jensen, F., *J. Chem. Theory Comput.* **2015**, *11*, 132 - 138.)
 
-.. code-block:: none
+.. code-block:: bash
    :linenos:
 
    !PBE RI pcSseg-2 def2/J NMR
@@ -1040,7 +1040,7 @@ At the end of the ORCA output, a summary of the calculated NMR absolute chemical
 
 Exemplary output for CH\ :sub:`3`\ NH\ :sub:`2`:
 
-.. code-block:: none
+.. code-block:: bash
    :linenos:
 
    --------------------------

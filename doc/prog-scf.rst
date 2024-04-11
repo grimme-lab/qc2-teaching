@@ -91,7 +91,7 @@ We will start with the input for the dihydrogen molecule in a minimal basis set.
 With the input format we provide, the geometrical structure of the system
 and the basis set are tied together.
 
-.. code-block:: none
+.. code-block:: bash
    :caption: h2.in
    :linenos:
 
@@ -116,67 +116,69 @@ In the lines after position and identity, we find the exponents of our basis
 functions, the number of lines following corresponds to the number of
 basis functions for this particular atom.
 
-.. tabbed:: make
+.. tabs::
 
-   .. important::
-
-      You can compile your program using
-
-      .. code-block:: text
-
-         make
-         ...
-         gfortran ... -o ./scf
-
-      The resulting binary will be placed in the current working directory.
-      Run it with
-
-      .. code-block:: text
-
-         ./scf
-         Here could start a Hartree-Fock calculation
-
-      The starting code provides the possibility to pass the input file
-      as command line argument to your program with
-
-      .. code-block:: text
-
-         ./scf molecules/h2.in
-         Here could start a Hartree-Fock calculation
-
-      The input file will always be opened to the ``input`` unit in ``app/main.f90``.
-
-.. tabbed:: fpm
-
-   .. important::
-
-      The starting code is already setup as fpm project.
-      The package manifest should contain the following content
-
-      .. literalinclude:: ../scf/fpm.toml
-         :caption: fpm.toml
-         :language: toml
-
-      You can run your program with
-
-      .. code-block:: text
-
-         fpm run
-         ...
-          + build/gfortran_debug/app/scf
-         Here could start a Hartree-Fock calculation
-
-      The starting code provides the possibility to pass the input file
-      as command line argument to your program with
-
-      .. code-block:: text
-
-         fpm run -- molecules/h2.in
-         ...
-          + build/gfortran_debug/app/scf "molecules/h2.in"
-         Here could start a Hartree-Fock calculation
-
-      The input file will always be opened to the ``input`` unit in ``app/main.f90``.
+   .. tab:: make
+   
+      .. important::
+   
+         You can compile your program using
+   
+         .. code-block:: text
+   
+            make
+            ...
+            gfortran ... -o ./scf
+   
+         The resulting binary will be placed in the current working directory.
+         Run it with
+   
+         .. code-block:: text
+   
+            ./scf
+            Here could start a Hartree-Fock calculation
+   
+         The starting code provides the possibility to pass the input file
+         as command line argument to your program with
+   
+         .. code-block:: text
+   
+            ./scf molecules/h2.in
+            Here could start a Hartree-Fock calculation
+   
+         The input file will always be opened to the ``input`` unit in ``app/main.f90``.
+   
+   .. tab:: fpm
+   
+      .. important::
+   
+         The starting code is already setup as fpm project.
+         The package manifest should contain the following content
+   
+         .. literalinclude:: ../scf/fpm.toml
+            :caption: fpm.toml
+            :language: toml
+   
+         You can run your program with
+   
+         .. code-block:: text
+   
+            fpm run
+            ...
+             + build/gfortran_debug/app/scf
+            Here could start a Hartree-Fock calculation
+   
+         The starting code provides the possibility to pass the input file
+         as command line argument to your program with
+   
+         .. code-block:: text
+   
+            fpm run -- molecules/h2.in
+            ...
+             + build/gfortran_debug/app/scf "molecules/h2.in"
+            Here could start a Hartree-Fock calculation
+   
+         The input file will always be opened to the ``input`` unit in ``app/main.f90``.
 
 
 .. admonition:: Exercise 1
@@ -194,7 +196,7 @@ basis functions for this particular atom.
    For a single atom, the choice of the position is unimportant, so we
    can write something like
 
-   .. code-block:: none
+   .. code-block:: bash
       :caption: he.in
       :linenos:
 
@@ -206,7 +208,7 @@ basis functions for this particular atom.
    The helium-hydrogen cation looks similar to the dihydrogen, except for
    the changed nuclear charge.
 
-   .. code-block:: none
+   .. code-block:: bash
       :caption: heh+.in
       :linenos:
 
@@ -948,7 +950,7 @@ where *i*, *j* indicate *α* and *β*-MOs, respectively.
 
    1. For the system:
 
-      .. code-block:: none
+      .. code-block:: bash
 
          h 0.0  0.0  -1.0
          h 0.0  0.0   0.0
