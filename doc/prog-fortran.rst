@@ -80,7 +80,7 @@ exit.
 
 .. admonition:: Exercise 1
 
-   Open a new file in ``atom`` and save as ``hello.f90`` in a new directory
+   Open a new file in an editor and save as ``hello.f90`` in a new directory
    in your project directory, you will always create a new directory for
    each exercise.
 
@@ -94,6 +94,7 @@ exit.
    The resulting binary file can be executed, thus usually called executable.
 
    .. code-block:: bash
+      :caption: bash
 
       gfortran hello.f90 -o helloprog
       ./helloprog
@@ -110,6 +111,7 @@ to create an executable, create an empty file ``empty.f90`` and try to translate
 it with ``gfortran``.
 
 .. code-block:: bash
+   :caption: shell
    :emphasize-lines: 3
 
    gfortran empty.f90
@@ -169,6 +171,7 @@ applications like building and running executables or creating new projects.
    have to activate the fpm installation by using the ``module`` commands:
 
    .. code:: shell
+      :caption: shell
       
       export BASH_ENV=/usr/share/lmod/lmod/init/bash
       . ${BASH_ENV} > /dev/null
@@ -179,6 +182,7 @@ applications like building and running executables or creating new projects.
    your home directory.
 
    .. code:: shell
+      :caption: shell
 
       # make environment modules available
       export BASH_ENV=/usr/share/lmod/lmod/init/bash
@@ -191,6 +195,7 @@ applications like building and running executables or creating new projects.
 Create a new project with fpm by
 
 .. code-block:: bash
+   :caption: shell
 
    fpm new --app myprogram
 
@@ -198,6 +203,7 @@ This will initialize a new Fortran project with a simple program setup.
 Enter the newly created directory and run it with
 
 .. code-block:: bash
+   :caption: shell
 
    cd myprogram
    fpm run
