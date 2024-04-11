@@ -157,7 +157,7 @@ Ubuntu
 
 Starting with a fresh version of `Ubuntu 18.04`_ we have to install a few programs
 first.
-You have to install the packages: ``git``, ``gfortran``, ``make``, ``atom`` and ``vim``.
+You have to install the packages: ``git``, ``gfortran``, ``make``, and ``vim``.
 We will assume you are working with ``apt`` to install packages, in case you
 prefer another package manager, feel free to install the packages listed here
 with this one (see `Ubuntu install & remove software`_).
@@ -167,7 +167,7 @@ with this one (see `Ubuntu install & remove software`_).
 
 .. code-block:: bash
 
-   sudo apt install git gfortran make atom vim
+   sudo apt install git gfortran make vim
 
 .. note::
 
@@ -254,7 +254,6 @@ To setup your MacOS for the course follow this steps
    or by using Homebrew (see :ref:`gfortran from homebrew`)
 5. Install the Fortran package manager from conda (see :ref:`fpm from conda`)
    or homebrew (see :ref:`gfortran from homebrew`)
-6. Download and install `atom <https://atom.io/>`_.
 
 .. important::
 

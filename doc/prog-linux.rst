@@ -252,63 +252,6 @@ VSCode. For additional features, check out the `Language Server Integration  <ht
 
 You can also install a Vim emulator (see below) for VSCode to enable most of Vim's functionalities.
 
-Atom
-~~~~
-
-.. attention::
-
-  Since December 15, 2022, atom is not maintained anymore. Nevertheless, you 
-  can still download and use it.
-
-``atom`` is a similar to ``vscode``, i.e., a rather heavyweight but easy-to-use 
-editor. It is built on-top of the ``electron`` framework and has comparable capabilities to a web browser. It is available for Linux, macOS and Windows.
-Since we are dealing here with electrons and atoms the choice of programs
-could not have been better, unfortunately, they do not know much about quantum
-chemistry.
-You can work entirely in ``atom``, but you need some extensions which
-might already be installed with your version of ``atom``.
-If not install ``language-fortran``, ``build``, ``build-make`` and ``terminal-tab``
-at the setting menu ``<ctrl>-<,>`` under *install*.
-``atom`` can be easily extended to a complete integrated development environment,
-but we will assume you are working with a vanilla version including the four
-additional packages here.
-
-Start ``atom`` by using ``<alt>-<F2>`` and typing atom in the quick launch bar
-or searching the start menu for ``atom``.
-
-.. image:: img/atom-new.png
-   :alt: New atom instance
-
-Having started a new instance of ``atom`` you either have already an empty
-file opened or you can open a new file by ``<ctrl>-<n>``, save the file
-with ``<ctrl>-<s>`` by creating a new directory and giving the file a name there,
-if you name the file ``hello.f90`` it will be automatically identified as
-Fortran source code.
-
-.. image:: img/atom-new-folder.png
-   :alt: Always save your files
-
-You can start a shell by hitting ``<ctrl>-<shft>-<p>`` and typing ``terminal``
-in the quick launcher of ``atom`` the shell can be used for all commands you
-previously learned.
-
-.. image:: img/atom-terminal.png
-   :alt: Quicklaunch terminal
-
-.. note::
-
-   If you are using atom in Windows and have installed WSL, you can start a
-   Unix shell by typing ``wsl`` or ``bash`` in the command line of the terminal
-   you just opened in ``atom``.
-
-Later you can use it to compile and execute your programs without leaving
-your editor. For example, we write a simple Fortran program to print a line
-to the screen, save it and compile it using ``gfortran`` in our shell inside
-``atom``.
-
-.. image:: img/atom-run.png
-   :alt: Running gfortran from atom
-
 Vim
 ~~~
 
@@ -319,7 +262,7 @@ graphical user interface.
 
 However, getting past the initial learning curve can take the better part of a
 month, but having truly mastered ``vim`` usually results in a huge performance
-gain when developing. We encourage you to pick up ``vim`` instead of ``atom``.
+gain when developing. We encourage you to pick up ``vim`` instead of ``vscode``.
 
 To get started with ``vim`` open a new terminal (type ``<alt>-<F2>`` for the
 quick launch menu, then type ``konsole`` or search for it in the menu) and
