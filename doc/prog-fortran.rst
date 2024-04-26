@@ -170,7 +170,7 @@ applications like building and running executables or creating new projects.
    If you are doing this course on a machine in the Mulliken center you
    have to activate the fpm installation by using the ``module`` commands:
 
-   .. code:: shell
+   .. code-block:: shell
       :caption: shell
       
       export BASH_ENV=/usr/share/lmod/lmod/init/bash
@@ -181,7 +181,7 @@ applications like building and running executables or creating new projects.
    To make access to fpm permanent, add these lines to your ``.bashrc`` file in
    your home directory.
 
-   .. code:: shell
+   .. code-block:: shell
       :caption: shell
 
       # make environment modules available
