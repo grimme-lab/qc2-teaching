@@ -6,29 +6,30 @@ program.
 
 .. contents::
 
-.. note::
-
-   Start by extracting the ``course-material.zip`` which you downloaded earlier.
-   You should find a ``scf/`` directory containing the starting code for your
-   program (see ``scf/app/main.f90``).
-
-   You can just continue to use fpm to work on your program now.
-
-   Alternatively, to make building your program easier with just the Fortran compiler
-   and give you more time to focus on the actual programming we put some build
-   automation there as well.
-   To use it just invoke ``make`` and find everything else taken care for.
-
-   For more details on building software and how we automated this process
-   you can find a guide at the
-   `fortran-lang learning page <https://fortran-lang.org/learn/building_programs>`_.
-
 
 Restricted Hartree--Fock
 ------------------------
 
 The first task in this course is to code a working restricted Hartree--Fock
 program.
+
+Downloading the Material
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Start by extracting the ``course-material.zip`` which you downloaded earlier.
+You should find a ``scf/`` directory containing the starting code for your
+program (see ``scf/app/main.f90``).
+
+You can just continue to use fpm to work on your program now.
+
+Alternatively, to make building your program easier with just the Fortran 
+compiler and give you more time to focus on the actual programming we put 
+some build automation there as well.
+To use it just invoke ``make`` and find everything else taken care for.
+
+For more details on building software and how we automated this process
+you can find a guide at the
+`fortran-lang learning page <https://fortran-lang.org/learn/building_programs>`_.
 
 Getting Input
 ~~~~~~~~~~~~~
@@ -84,8 +85,13 @@ for integrals over Gaussian-type basis functions.
 We will limit you here to spherical basis functions only, so you can concentrate
 on coding the self-consistent field procedure and do not have to worry about
 mapping shells to orbitals to basis functions to primitives.
+
 However, you require a mapping from basis functions to atoms, i.e., which basis
-function belongs to which atom.
+function belongs to which atom. This mapping is required later for the 
+calculation of the integrals, but the best place to create this mapping is
+when reading the input file.
+
+
 
 We will start with the input for the dihydrogen molecule in a minimal basis set.
 With the input format we provide, the geometrical structure of the system
@@ -223,6 +229,30 @@ basis functions for this particular atom.
    1. Code an input reader that can read all the provided input files.
    2. Make sure the input file is read correctly by printing all data read
       to the terminal.
+
+.. note::
+
+    For printing matrices and vectors, we provide convenience functions.
+
+    .. code-block:: fortran
+
+       call write_matrix(matrix, name="Matrix")
+       call write_vector(vector, name="Vector")
+
+    We highly recommend using these functions instead of ``write(*,*)`` to
+    print your data, as they provide a more structured output (for Fortran's
+    column-major order) and are easier to read.
+
+.. admonition:: Exercise 3
+  
+    Create a mapping between basis functions and atoms. You need to store the 
+    information about which basis function belongs to which atom. Hence, the 
+    mapping should give you the atom index if the basis function index is 
+    provided. This mapping is required later for the calculation of the 
+    integrals.
+
+    1. What is the optimal layout for saving the mapping?
+    2. How does the mapping look like for LiH?
 
 Classical Contributions
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -403,6 +433,11 @@ coefficients and integrals are orbital-resolved (relate to the basis functions).
    therefore you should have an unpacked to packed conversion routine ready for
    the next exercise.
 
+   .. note::
+
+      The ``ẁrite_matrix`` subroutine can be used to print packed matrices as 
+      well.
+
 Symmetric Orthonormalizer
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -571,8 +606,8 @@ in ``src/integrals.f90``.
    3. You can also pack the two-electron integrals like you packed your matrices
       (you need to pack them three times, the bra and the ket separately,
       and then the packed bra and ket again).
-      Note that this will make it later more difficult to access the values again,
-      therefore it is optional.
+      Note that this will make it later more difficult to access the values 
+      again, therefore it is optional.
 
 Self Consistent Field Procedure
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -862,8 +897,16 @@ iteration. Choose *η* to get smooth, fast convergence.
       Be          --14.573
       =========== ===================
 
+Beyond RHF
+----------
+
+Next, we will work on extending restricted Hartree-Fock (RHF) to either 
+unrestricted Hartree-Fock (UHF) or restricted second-order Møller--Plesset 
+perturbation theory (MP2). Only one of these two exercises is mandatory.
+Note that the UHF part also includes the calculation of the spin contamination.
+
 Unrestricted Hartree-Fock
--------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Copy and modify your RHF subroutine to create an UHF program. The input files will
 need to be modified such that they contain the number of *α* and the number of
@@ -921,7 +964,7 @@ The UHF Energy is given by:
    4. Are He\ :sub:`2`\ :sup:`+` or :sup:`3`\ He\ :sub:`2` bonded?
 
 Spin Contamination
-~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^
 
 Recall that spin contamination can occur in UHF calculations, *i.e.* deviations
 of the expectation value of the square of the total spin angular momentum operator
@@ -963,7 +1006,7 @@ where *i*, *j* indicate *α* and *β*-MOs, respectively.
    3. Why is the spin contamination of RHF always 0?
 
 Møller--Plesset Perturbation Theory
------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Using your RHF program, code a subroutine to calculate the RMP2 energy after
 your RHF procedure has converged. The RMP2 correction to the HF energy
