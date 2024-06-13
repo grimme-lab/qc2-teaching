@@ -1064,19 +1064,19 @@ Exemplary output for CH\ :sub:`3`\ NH\ :sub:`2`:
    and compare the results to experimental data. In addition,
    investigate the correlation of the |pi|-electron density with |delta|.
 
-.. figure:: img/nmr2018.png
+.. figure:: img/nmr24.png
    :align: center
    :width: 500px
 
-   Lewis structures of seven organic compounds **A** -- **G** with their experimentally obtained chemical shift as well as four aromatic compounds **Ar-1** - **Ar-4**.
+   Lewis structures of four organic compounds **A** -- **D** with their experimentally obtained chemical shift as well as four aromatic compounds **Ar-1** - **Ar-4**.
 
 **Approach**
 
-1. Optimize the geometries of the compounds **A** -- **G** and the reference molecule Si(CH\ :sub:`3`)\ :sub:`4` (TMS)
+1. Optimize the geometries of the compounds **A** -- **D** and the reference molecule Si(CH\ :sub:`3`)\ :sub:`4` (TMS)
    on the PBEh-3c level of theory (how to use PBEh-3c is explained in the ORCA manual).
 
 2. Calculate the :sup:`13`\ C-NMR chemical shieldings and shifts |delta| for compounds
-   **A** -- **G** with TMS as reference at PBE/pcSseg-2 level of theory (use this level in
+   **A** -- **D** with TMS as reference at PBE/pcSseg-2 level of theory (use this level in
    all the following calculations if not stated otherwise). Given the isotropic NMR shielding
    constants :math:`\sigma` of the compound (:math:`\text{c}`) and the reference
    (:math:`\text{ref.}`), the chemical shift :math:`\delta _\text{c,ref.}` is defined as
@@ -1090,7 +1090,8 @@ Exemplary output for CH\ :sub:`3`\ NH\ :sub:`2`:
       Computational time can be saved by calculating the shieldings only for carbon atoms instead of all atoms.
       How to do so is described in the ORCA manual.
 
-3. Compare your results with the experimental values and calculate the mean deviation (MD) and the mean absolute deviation (MAD).
+3. Compare your results with the experimental values and calculate the mean deviation (MD) and the mean absolute deviation (MAD). How meaningful are
+   these statistical measures for the given sample size?
 
    .. math::
 
@@ -1101,7 +1102,7 @@ Exemplary output for CH\ :sub:`3`\ NH\ :sub:`2`:
    density (:math:`\rho_\pi = n_{el^\pi}/n_{at^\pi}`). Discuss your results.
 
 5. The experimental :sup:`17`\ O- and :sup:`13`\ C-NMR chemical shifts of the carbonyl function in acetone are shifted by
-   75.5 and -18.9 ppm, respectively, if an acetone molecule is transferred from the gas phase to aqueous solution.
+   -75.5 and 18.9 ppm, respectively, if an acetone molecule is transferred from the gas phase to aqueous solution.
    Try to reproduce these values by considering solvation effects by the implicit solvent model CPCM. You can switch on
    the implicit solvent by adding the ``CPCM(<solvent>)`` keyword (example: ``CPCM(toluene)``) to your ORCA input.
    For carbon, the reference is TMS, for oxygen it is water.
