@@ -862,6 +862,9 @@ parameters the energy depends on)
 
    1. Code a numerical gradient that allows the calculation of the derivative of
       the HF energy with respect to atom positions and Slater exponents.
+      Design your code such that the optimizations can be run separately, i.e.,
+      use separate subroutines for the position gradient and the Slater 
+      exponent gradient.
    2. Save your gradient components to arrays analogous to the ones for the atom
       positions and Slater exponents.
       We shall call the conceptual combination of them the gradient vector **g**.
@@ -880,15 +883,19 @@ Code a variant of the “steepest descent” optimization routine as given by:
 
    \Theta^{k+1} = \Theta^{k} + \eta \mathbf{g}^{k}
 
-*k* denotes the number of the optimization cycle, *Θ* is the parameter set for an
-iteration. Choose *η* to get smooth, fast convergence.
+*k* denotes the number of the optimization cycle, *Θ* is the parameter set for 
+an iteration. Choose *η* to get reasonably smooth, fast convergence.
+
+.. tip::
+   
+   Using a fixed *η* is a quite simple approach to optimization. Do not try to "over-optimize" *η*. There is no common best *η* for both optimizations.
 
 .. admonition:: Exercise 17
 
    1. Optimize the geometry of HeH\ :sup:`+` in a minimal basis set.
-   2. Optimize the Slater exponents of Be and H\ :sub:`2` (*R*:sub:`HH` = 1.4 Bohr)
-      in a full double-ζ basis set.
-      Compare to energies for the est. HF basis set limit:
+   2. Optimize the Slater exponents of Be and H\ :sub:`2` (*R*:sub:`HH` =
+      1.4 Bohr) in a full double-ζ basis set.
+      Compare to energies for the estimated HF basis set limit:
 
       =========== ===================
       System      Energy/E\ :sub:`h`
@@ -896,6 +903,11 @@ iteration. Choose *η* to get smooth, fast convergence.
       H\ :sub:`2`  --1.134
       Be          --14.573
       =========== ===================
+
+      You won't reach these numbers, but how close do you get? What is missing?
+
+    3. Using gradient descent with a fixed *η* 
+
 
 Beyond RHF
 ----------
