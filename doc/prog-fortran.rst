@@ -124,6 +124,20 @@ missing a *main* which it was about to *start*. The main program
 in Fortran is indicated by the ``program`` statement, which is not present
 in the empty file we gave to ``gfortran``.
 
+.. note:: Note for interested students
+   :class: tip, toggle
+
+   The actually shortest valid Fortran program is
+
+   .. literalinclude:: src/shortest.1.f90
+   :language: fortran
+   :caption: shortest.f90
+   :linenos:
+
+   This program does nothing. It compiles sucessfully as the ``end`` statement 
+   is the only the only required statement in a program unit.
+   Further information can be found for example `here <https://www.ibm.com/docs/en/xffbg/121.141?topic=attributes-end>`_.
+
 .. admonition:: Important note about errors
    :class: tip
 
