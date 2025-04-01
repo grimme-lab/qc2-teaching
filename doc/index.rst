@@ -1,26 +1,31 @@
 QC2 -- Advanced Quantum Chemistry Methods
 =========================================
 
-This is the guide to the practical course for QC2.
+The QC2 course consists of two parts:
 
-The course material can be found `here <https://github.com/grimme-lab/qc2-teaching/releases/latest>`_.
+1. Programming: Writing a Hartree--Fock program in Fortran
+2. Applications: Running typical calculations with ORCA and Turbomole
+
+This guide is designed to help you through these two parts without requiring prior knowledge of Linux, Fortran, or quantum chemistry programs.
+Start by reading the setup instructions and familiarize yourself with the Linux environment, before tackling the programming part and the applications.
+
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 2
    :caption: Setup
 
-   setup
+   setup-pre
+   setup-linux
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 2
    :caption: Programming
 
-   prog-linux
    prog-fortran
    prog-scf
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 2
    :caption: Applications
 
    apps-recommendations
