@@ -16,7 +16,7 @@ program.
 Downloading the Material
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Start by extracting the ``course-material.zip`` which you downloaded earlier.
+Start by extracting the ``scf.zip``, which can found `here <https://github.com/grimme-lab/qc2-teaching/releases/latest>`_.
 You should find a ``scf/`` directory containing the starting code for your
 program (see ``scf/app/main.f90``).
 
@@ -246,12 +246,15 @@ basis functions for this particular atom.
 .. admonition:: Exercise 3
   
     Create a mapping between basis functions and atoms. You need to store the 
-    information about which basis function belongs to which atom. Hence, the 
-    mapping should give you the atom index if the basis function index is 
-    provided. This mapping is required later for the calculation of the 
-    integrals.
+    information about which basis function belongs to which atom. This is
+    necessary, because when looping over the basis functions during the
+    integral calculation, you require the aufpunkt of each basis function, which
+    is equivalent to the atom position. Hence, the mapping should give you the 
+    atom index if the basis function index is provided. 
 
-    1. What is the optimal layout for saving the mapping?
+    1. What is the optimal (minimal) layout for saving the mapping? Consider
+       which information is given (loop over basis functions) and which
+       information is needed (aufpunkt).
     2. How does the mapping look like for LiH?
 
 Classical Contributions
