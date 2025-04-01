@@ -8,4 +8,5 @@ program array
   write(*, *) "Sum of all elements", sum(vec)
   write(*, *) "Product of all elemnts", product(vec)
   write(*, *) "Maximal/minimal value", maxval(vec), minval(vec)
+  write(*,*) "Positions of maximal/minimal values", maxloc(vec), minloc(vec)
 end program array

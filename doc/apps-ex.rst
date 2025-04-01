@@ -693,7 +693,7 @@ Rearrangement and Dimerization Reactions
    that employs a minimal valence basis set and is very efficient for calculating **G**\ eometries,
    vibrational **F**\ requencies and **N**\ oncovalent interactions. For running the geometry optimization, call
 
-   .. code-block:: bash´
+   .. code-block:: bash
       
       xtb start.xyz --opt > opt.out
      

@@ -70,10 +70,23 @@ is designed for the task at hand, translating scientific equations into computer
 
 Let's take a look at a complete Fortran program.
 
-.. literalinclude:: src/hello.1.f90
-   :language: fortran
-   :caption: hello.f90
-   :linenos:
+.. tabs::
+
+      .. tab:: hello.f90
+
+          .. literalinclude:: src/hello.1.f90
+            :language: fortran
+            :caption: hello.f90
+            :linenos:
+
+      .. tab:: shortest.f90
+
+          .. literalinclude:: src/shortest.1.f90
+            :language: fortran
+            :caption: shortest.f90
+            :linenos:
+
+
 
 If you were to execute this program, it would simply display its message and
 exit.
@@ -100,7 +113,7 @@ exit.
       ./helloprog
        This is probably the simplest Fortran program.
 
-   Directly after the ``gfortran`` command, you find the input file name.
+   Directly after the ``gfortran`` command, you find the source file name.
    The ``-o`` flag allows you to name your program.
    Try to leave out the ``-o helloprog`` part and translate ``hello.f90`` again
    with ``gfortran``. You will find that the default name for your executable
@@ -636,9 +649,9 @@ specified significant digits.
 
 .. admonition:: Exercise 4
 
-   1. create a file ``kinds.f90`` and run it to determine the necessary
+   1. Create a file ``kinds.f90`` and run it to determine the necessary
       kind of your floating-point variables.
-   2. use the syntax ``real(kind) ::`` to modify ``accuracy.f90``
+   2. Use the syntax ``real(kind) ::`` to modify ``accuracy.f90``
       to employ what we call double-precision floating-point numbers.
       Replace kind with the number you determined in ``kinds.f90``.
 
@@ -818,7 +831,7 @@ Check out the following program to find roots
 
 .. admonition:: Exercise 5
 
-    1. check the conditions for simple cases, start by setting up quadratic
+    1. Check the conditions for simple cases, start by setting up quadratic
        equations with known roots and compare your results against the
        program.
 
@@ -883,8 +896,8 @@ or equal to zero).
 
 .. admonition:: Exercise 6
 
-   1. there is no reason to limit us to positive values, modify the program
-      such that it also takes negative values and breaks at zero.
+   1. There is no reason to limit ourselves to positive values. 
+      Modify the program such that it also takes negative values and breaks at zero.
 
 .. admonition:: Solutions 6
    :class: tip, toggle
@@ -1006,8 +1019,8 @@ in this we choose a range from 1 to 3, resulting in 3 elements.
 .. admonition:: Exercise 8
 
    1. Expand the above program to work on a 3 by 3 matrix
-   2. The ``sum`` and ``product`` can also work on only one of the two dimensions,
-      try to use them only for the rows or columns of the matrix
+   2. The ``sum`` and ``product`` can also work on only one of the two dimensions. 
+      Try to use them only for the rows or columns of the matrix.
 
 Usually, we do not know the size of the array in advance, to deal with this
 issue we have to make the array ``allocatable`` and explicitly request
@@ -1138,7 +1151,7 @@ the ``use`` statement to the main program.
 When writing functions like the above ones, we follow a specific scheme, all
 arguments are not modified (``intent(in)``) and we return a single variable.
 There are cases were we do not want to return a single value (in such a case we would
-return nothing) or do more complex operations in it. Functions of this kind are called subroutines:
+return nothing) or do more complex operations in it. Procedures of this kind are called subroutines:
 
 .. literalinclude:: src/sum_sub.1.f90
    :language: fortran
