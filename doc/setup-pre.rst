@@ -16,10 +16,10 @@ of your platform.
 .. contents::
 
 
-Windows 10
-----------
+Windows
+-------
 
-There are multiple ways to enable your Windows system for development.
+There are multiple ways to enable your Windows (10 or higher) system for development.
 For this course we will present two methods, either running natively
 (see :ref:`msys2`) or with a virtualisation of a Linux subsystem (see :ref:`wsl`).
 
@@ -34,12 +34,13 @@ makes many common Unix tools available for Windows.
 It comes with its own bash-like shell which allows to easily follow this course.
 
 Download the ``msys2-x86_64-YYYYMMDD.exe`` installer from the MSYS2 webpage
-and run the installer. MSYS2 will create three new desktop shortcuts:
-*MSYS terminal*, *MinGW64 terminal* and *MinGW32 terminal* (more information
-on MSYS2 terminals is available `here <https://www.msys2.org/docs/terminals/>`_).
+and run the installer. MSYS2 will create several new desktop shortcuts called environments:
+*MSYS*, *MinGW64*, *UCRT64*, etc. (more information
+on MSYS2 environments is available `here <https://www.msys2.org/docs/environments>`_).
 
-You can either use the *MSYS terminal* or the *MinGW64 terminal* for this course
-we recommend to use the latter.
+To run installed environments (we recommend *MinGW64* for this course), you can either use the 
+default MSYS terminal emulator mintty by clicking on the corresponding shortcut, or use external 
+terminal emulators (more information is available `here <https://www.msys2.org/docs/terminals>`_).
 
 Open a new terminal and update your installation with
 
@@ -50,30 +51,14 @@ Open a new terminal and update your installation with
 You might have to update MSYS2 and ``pacman`` first, restart the terminal and run
 the above command again to update the installed packages.
 
-If you are using the *MinGW64 terminal* you can install the required software with
+If you are using the *MinGW64* environment, you can install the required software with
 
 .. code-block:: bash
 
    pacman -S git mingw-w64-x86_64-gcc-fortran mingw-w64-x86_64-make mingw-w64-x86_64-fpm vim
 
-If you use the *MSYS terminal* leave out the ``mingw-w64-x86_64`` prefixes to install
+If you use the *MSYS* environment leave out the ``mingw-w64-x86_64`` prefixes to install
 the required software.
-
-After having installed the necessary software, you need to download the
-`course material`_.
-Unzip the ``course-material.zip`` archive to your home directory and
-you are setup to start with the next chapter.
-
-.. note::
-
-   Your home directories ``C:\Users\<name>`` will be accessible under
-   ``/c/Users/<name>`` in the MSYS2 terminals, look there if you are
-   searching for your downloaded files.
-
-.. tip::
-
-   The content of the archive might be potentially important as a starting
-   point for your SCF program later.
 
 
 .. _wsl:
