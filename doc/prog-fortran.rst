@@ -192,7 +192,9 @@ applications like building and running executables or creating new projects.
       module load fpm
 
    To make access to fpm permanent, add these lines to your ``.bashrc`` file in
-   your home directory.
+   your home directory. If you do not have a ``.bashrc`` file yet, create one
+   with the command ``touch ~/.bashrc`` or directly open it with an editor
+   (e.g., ``vim ~/.bashrc``).
 
    .. code-block:: shell
       :caption: shell

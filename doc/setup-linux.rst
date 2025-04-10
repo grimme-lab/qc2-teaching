@@ -52,8 +52,6 @@ looks similar to the following image:
    Desktop     Music      QCII
    Documents   Pictures   Templates
    Downloads   Public     Videos
-   ehlert@c01:~> cd QCII
-   ehlert@c01:~/QCII>
 
 On the left, you can see the so-called **prompt**. Depending on the default
 settings of your system it provides you with various information. In a
@@ -115,8 +113,8 @@ files within this directory
 
 .. code-block:: bash
 
-   ehlert@c01:~> ls QCII
-   tutorial   scf
+   ehlert@c01:~> ls Downloads
+   scf.zip
 
 Of course we can also combine options and paths for ``ls``.
 
@@ -133,8 +131,15 @@ to any file or directory on your system.
 Up to now we only looked around, but we can also change the directory, which
 is done by the command ``cd``, short for change directory.
 
+We want to change to the ``QCII`` directory, which we can do by typing
+``cd QCII``. If the `QCII` directory does not exist (check your previous ``ls``
+commands), you need to create it first with ``mkdir QCII``.
+
 .. code-block:: bash
 
+   ehlert@c01:~> mkdir QCII
+
+.. code-block:: bash
    ehlert@c01:~> cd QCII
    ehlert@c01:~/QCII> cd .
    ehlert@c01:~/QCII> cd ../..
