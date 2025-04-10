@@ -140,6 +140,7 @@ commands), you need to create it first with ``mkdir QCII``.
    ehlert@c01:~> mkdir QCII
 
 .. code-block:: bash
+
    ehlert@c01:~> cd QCII
    ehlert@c01:~/QCII> cd .
    ehlert@c01:~/QCII> cd ../..
