@@ -50,14 +50,13 @@ You will receive an account on one of the ssh-servers as well.
    Whatever you do, never copy large files to the ssh-server, it has only very limited disk space.
    Also do not run any resource consuming program on the server (anything that needs a GUI is per definition resource consuming if used on shared resources).
 
-First, we will work with three machines in this tutorial, your local machine (``M-Bot``), the ssh-server instance (``ssh3``) and the CIP computer (``c00``).
+First, we will work with three machines in this tutorial, your local machine (``M-Bot``), the ssh-server instance (``ssh5``) and the CIP computer (``c00``).
 ``c00`` is an existing machine, you can log in there as well, it is also the least powerful machine, therefore, just do not use this machine for computations, use the one you were assigned.
 Your local username might also be different from the one in the facility, we will use ``stahn`` for the user on the local machine as well as for the user at the facility.
 
 .. attention:: 
 
    When following the steps described afterward, you have to change the respective names (both usernames and hostnames), of course.
-   You will *not* be able to use ``ssh3`` to log in the ssh server, but a different machine (most likely ``ssh5``).
 
    Please read the tutorial and the code snippets carefully, understand what is shown and adapt the commands accordingly.
    *A copy and paste approach on this tutorial will fail!*
@@ -84,13 +83,13 @@ The request will be gone if you log in a second time.
    :linenos:
    :emphasize-lines: 4, 6, 10, 12, 19, 22
 
-   stahn@M-Bot:~/.ssh$ ssh -Y stahn@ssh3.thch.uni-bonn.de
-   The authenticity of host 'ssh3.thch.uni-bonn.de (131.220.44.130)' can't be established.
+   stahn@M-Bot:~/.ssh$ ssh -Y stahn@ssh5.thch.uni-bonn.de
+   The authenticity of host 'ssh5.thch.uni-bonn.de (131.220.44.130)' can't be established.
    ECDSA key fingerprint is SHA256:eEdQpqyV6oP0Ddra7H2QDI6kC9rX3XQRAlWxX6LfA6U.
    Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
-   Warning: Permanently added 'ssh3.thch.uni-bonn.de' (ECDSA) to the list of known hosts.
+   Warning: Permanently added 'ssh5.thch.uni-bonn.de' (ECDSA) to the list of known hosts.
    Password:
-   stahn@ssh3:~> ssh -Y stahn@c00
+   stahn@ssh5:~> ssh -Y stahn@c00
    The authenticity of host 'c00 (172.17.3.20)' can't be established.
    ECDSA key fingerprint is SHA256:ozq72tQ9gROvzDwv+ZFQ7wc+L/Dmu9Fptbfhf2zfd1M.
    Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
@@ -99,12 +98,12 @@ The request will be gone if you log in a second time.
    Have a lot of fun...
    stahn@c00:~> logout  
    Connection to c00 closed.
-   stahn@ssh3:~> logout
-   Connection to ssh3.thch.uni-bonn.de closed.
-   stahn@M-Bot:~/.ssh$ ssh -Y stahn@ssh3.thch.uni-bonn.de
+   stahn@ssh5:~> logout
+   Connection to ssh5.thch.uni-bonn.de closed.
+   stahn@M-Bot:~/.ssh$ ssh -Y stahn@ssh5.thch.uni-bonn.de
    Password:
    Last login: Thu Feb 17 16:39:19 2022 from 131.220.44.207
-   stahn@ssh3:~> ssh -Y stahn@c00
+   stahn@ssh5:~> ssh -Y stahn@c00
    Password: 
    Last login: Thu Feb 17 16:39:35 2022 from 131.220.44.130
    Have a lot of fun...
@@ -160,11 +159,11 @@ We enter the ssh directory to create a new ssh-keypair, we recommend using ellip
 
    stahn@M-Bot:~/.ssh$ ssh-keygen -t ed25519
    Generating public/private ed25519 key pair.
-   Enter file in which to save the key (/home/stahn/.ssh/id_ed25519): id_ssh3
+   Enter file in which to save the key (/home/stahn/.ssh/id_ed25519): id_ssh5
    Enter passphrase (empty for no passphrase): 
    Enter same passphrase again: 
-   Your identification has been saved in id_ssh3
-   Your public key has been saved in id_ssh3.pub
+   Your identification has been saved in id_ssh5
+   Your public key has been saved in id_ssh5.pub
    The key fingerprint is:
    SHA256:bDVv26H9hIx1K21pFRZXF2pqfD8Mw9osb2K5opLeOHU stahn@M-Bot
    The key's randomart image is:
@@ -183,7 +182,7 @@ We enter the ssh directory to create a new ssh-keypair, we recommend using ellip
 
 
 The key-generator will prompt you a to enter a filename, we will name the key
-``id_ssh3``, choose any name you find appropriate.
+``id_ssh5``, choose any name you find appropriate.
 
 .. tip::
 
@@ -195,15 +194,15 @@ Now we need to copy the public key to the ssh-server. Since you log in for the f
    :linenos:
    :emphasize-lines: 1, 5, 7
 
-   stahn@M-Bot:~/.ssh$ ssh-copy-id -i id_ssh3 stahn@ssh3.thch.uni-bonn.de
-   /usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "id_ssh3.pub"
+   stahn@M-Bot:~/.ssh$ ssh-copy-id -i id_ssh5 stahn@ssh5.thch.uni-bonn.de
+   /usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "id_ssh5.pub"
    /usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
    /usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
    Password: 
 
    Number of key(s) added: 1
 
-   Now try logging into the machine, with:   "ssh 'stahn@ssh3.thch.uni-bonn.de'"
+   Now try logging into the machine, with:   "ssh 'stahn@ssh5.thch.uni-bonn.de'"
    and check to make sure that only the key(s) you wanted were added.
 
 
@@ -216,13 +215,13 @@ You can check, if your key was succesfully added by logging into the machine. Th
    :linenos:
    :emphasize-lines: 1,4,7
 
-   stahn@M-Bot:~/.ssh$ ssh stahn@ssh3.thch.uni-bonn.de
-   The authenticity of host 'ssh3.thch.uni-bonn.de (131.220.44.130)' can't be established.
+   stahn@M-Bot:~/.ssh$ ssh stahn@ssh5.thch.uni-bonn.de
+   The authenticity of host 'ssh5.thch.uni-bonn.de (131.220.44.130)' can't be established.
    ECDSA key fingerprint is SHA256:eEdQpqyV6oP0Ddra7H2QDI6kC9rX3XQRAlWxX6LfA6U.
    Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
-   Warning: Permanently added 'ssh3.thch.uni-bonn.de' (ECDSA) to the list of known hosts.
+   Warning: Permanently added 'ssh5.thch.uni-bonn.de' (ECDSA) to the list of known hosts.
    Last login: Thu Feb 17 13:56:18 2022 from 131.220.44.207
-   stahn@ssh3:~> 
+   stahn@ssh5:~> 
 
 We need to register the ssh-server now in our configuration file
 
@@ -236,15 +235,15 @@ We will use ``vim`` here but feel free to edit the file with your preferred edit
 .. code-block:: none
    :linenos:
 
-   Host ssh3.thch.uni-bonn.de
-      IdentityFile ~/.ssh/id_ssh3
+   Host ssh5.thch.uni-bonn.de
+      IdentityFile ~/.ssh/id_ssh5
 
 Now we will try again, to see if our connection is correctly established.
 
 .. code-block:: none
    :linenos:
 
-   stahn@M-Bot:~/.ssh$ ssh stahn@ssh3.thch.uni-bonn.de
+   stahn@M-Bot:~/.ssh$ ssh stahn@ssh5.thch.uni-bonn.de
    stahn@M-Bot:~/.ssh$
 
 If you are prompted for a password your setup is wrong and you have to retry.
@@ -255,18 +254,18 @@ If you are prompted for a password your setup is wrong and you have to retry.
 
    .. code-block:: none
 
-      Host ssh3
-         Hostname ssh3.thch.uni-bonn.de
+      Host ssh5
+         Hostname ssh5.thch.uni-bonn.de
          User stahn
-         IdentityFile ~/.ssh3/id_ssh3
+         IdentityFile ~/.ssh5/id_ssh5
 
    This will allow you to easily connect to the ssh-server by just typing:
 
    .. code-block:: none
 
-      stahn@M-Bot:~/.ssh$ ssh ssh3
+      stahn@M-Bot:~/.ssh$ ssh ssh5
       Last login: Thu Feb 17 13:57:03 2022 from 131.220.44.207
-      stahn@ssh3:~> 
+      stahn@ssh5:~> 
 
 
 Now we have to repeat the same steps for the machine at the facility, but first we need to be able to directly connect to it from our local working machine.
@@ -276,7 +275,7 @@ We do so by altering the ssh-config and adding the following lines:
    :linenos:
 
    Host c00
-      ProxyJump ssh3
+      ProxyJump ssh5
       User stahn
 
 We just told our system, that it needs to use the ssh-server as a proxy for connecting to our remote working machine. 
@@ -363,7 +362,7 @@ Finally we want to include the new ssh-key to our ssh-config by adding the follo
    :linenos:
 
    Host c00
-      ProxyJump ssh3
+      ProxyJump ssh5
       User stahn
       IdentityFile ~/.ssh/id_c00
 
@@ -409,12 +408,12 @@ For the three machine setup we had, a configuration file like the following woul
    Host c00
      User stahn
      IdentityFile ~/.ssh/id_c00
-     ProxyJump ssh3                                                           
+     ProxyJump ssh5                                                           
 
-   Host ssh3                                                                   
-     Hostname ssh3.thch.uni-bonn.de                                           
+   Host ssh5                                                                   
+     Hostname ssh5.thch.uni-bonn.de                                           
      User stahn                                                               
-     IdentityFile ~/.ssh/id_ssh3
+     IdentityFile ~/.ssh/id_ssh5
 
 If you are working remotely over ssh, any process you start with the shell will be terminated as soon as you log out.
 Keeping your process alive, requires that you detach the process from your terminal.
