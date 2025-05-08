@@ -3,3 +3,6 @@ name = "scf"
 [[executable]]
 name = "scf"
 main = "prog.f90"
+
+[fortran]
+implicit-external = true

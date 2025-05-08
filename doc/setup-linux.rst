@@ -131,8 +131,8 @@ to any file or directory on your system.
 Up to now we only looked around, but we can also change the directory, which
 is done by the command ``cd``, short for change directory.
 
-We want to change to the ``QCII`` directory, which we can do by typing
-``cd QCII``. If the `QCII` directory does not exist (check your previous ``ls``
+We want to change to the QCII directory, which we can do by typing
+``cd QCII``. If the QCII directory does not exist (check your previous ``ls``
 commands), you need to create it first with ``mkdir QCII``.
 
 .. code-block:: bash
