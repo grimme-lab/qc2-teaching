@@ -733,7 +733,7 @@ Rearrangement and Dimerization Reactions
  
           xtb $ofile.xyz -grad  > $ofile.xtbout 
  
-          tm2orca.py $basename 
+          python3 tm2orca.py $basename 
           rm xtbrestart 
           cd ..
 
@@ -759,11 +759,11 @@ Rearrangement and Dimerization Reactions
           ------------ String Info --------------------------------
           SM_TYPE                 GSM    # SSM, FSM or GSM
           RESTART                 0      # read restart.xyz
-          MAX_OPT_ITERS           160     # maximum iterations
+          MAX_OPT_ITERS           160    # maximum iterations
           STEP_OPT_ITERS          30     # for FSM/SSM
-          CONV_TOL           	    0.0005 # perp grad
-          ADD_NODE_TOL		    0.1    # for GSM
-          SCALING			        1.0    # for opt steps
+          CONV_TOL                0.0005 # perp grad
+          ADD_NODE_TOL            0.1    # for GSM
+          SCALING                 1.0    # for opt steps
           SSM_DQMAX               0.8    # add step size
           GROWTH_DIRECTION        0      # normal/react/prod: 0/1/2
           INT_THRESH              2.0    # intermediate detection
@@ -772,8 +772,8 @@ Rearrangement and Dimerization Reactions
           INITIAL_OPT             0      # opt steps first node
           FINAL_OPT               150    # opt steps last SSM node
           PRODUCT_LIMIT           100.0  # kcal/mol
-          TS_FINAL_TYPE           0      # any/delta bond: 0/1
-          NNODES			        15      # including endpoints
+          TS_FINAL_TYPE           0      # 0=no bond breaking, 1=breaking of bond
+          NNODES                  15     # including endpoints
           ---------------------------------------------------------
                
                
