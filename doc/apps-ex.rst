@@ -733,7 +733,7 @@ Rearrangement and Dimerization Reactions
  
           xtb $ofile.xyz -grad  > $ofile.xtbout 
  
-          python3 tm2orca.py $basename 
+          tm2orca.py $basename 
           rm xtbrestart 
           cd ..
 
