@@ -31,3 +31,4 @@ Start by reading the setup instructions and familiarize yourself with the Linux 
    apps-recommendations
    apps-setup
    apps-ex
+   apps-report

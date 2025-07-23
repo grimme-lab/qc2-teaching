@@ -93,8 +93,8 @@ Multireference Methods
 4. Calculate the energies for hydrogen and fluorine atoms for all given methods.
    Which methods will yield the identical energies for the hydrogen atom?
 
-5. Plot the curves relative to the energies of the individual atoms and discuss your results
-   (particularly the energies at large distances).
+5. Plot the curves relative to the energies of the individual atoms and discuss
+   your results (particularly the energies at large distances).
 
 .. hint::
 
@@ -272,9 +272,11 @@ Formic Acid Dimer
 3. Tabulate your results and plot the total energies versus the cardinal number
    of the basis set for each method (*e.g.* with ``gnuplot``).
 
-4. Discuss your findings with respect to the basis set superposition error (BSSE) and
-   the basis set incompleteness (BSIE). Which methods can be considered as converged
-   towards the basis set limit when used with a quadruple-|zeta| basis?
+4. Discuss your findings with respect to the basis set superposition error
+   (BSSE) and the basis set incompleteness (BSIE).
+   
+5. Which methods can be considered as converged towards the basis set limit 
+   when used with a quadruple-|zeta| basis? Is this expected from theory?
 
 .. hint::
 
