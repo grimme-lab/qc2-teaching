@@ -26,6 +26,7 @@ needed software, add the following lines to your ``.bashrc``:
    :linenos:
 
    # make environment modules available
+   source /etc/profile
    export BASH_ENV=/usr/share/lmod/lmod/init/bash
    . ${BASH_ENV} > /dev/null
    
