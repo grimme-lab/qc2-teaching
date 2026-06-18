@@ -30,7 +30,7 @@ needed software, add the following lines to your ``.bashrc``:
    . ${BASH_ENV} > /dev/null
    
    module use /home/abt-grimme/modulefiles
-   module load turbomole orca
+   module load turbomole orca mctc-rmsd
    alias molden='/software/bin/molden'
 
    # AKbin
