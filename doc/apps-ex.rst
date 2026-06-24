@@ -561,7 +561,17 @@ S\ :sub:`N`\ 2-Reaction
 
       $eht charge=-1 unpaired=0
       $cosmo
-        epsilon=32.0
+         epsilon=32.0
+
+   If you run into problems running the constrained optimizations, try adding the following to your control file:
+
+   .. code-block:: bash
+      :linenos:
+
+      $optimize
+       internal off
+       cartesian on
+
 
 2. To create the potential energy curves, use the shell script below. The script
    loops over all distances. For each distance it creates a new directory, performs
