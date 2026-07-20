@@ -550,7 +550,11 @@ S\ :sub:`N`\ 2-Reaction
 
 **Approach**
 
-1. Create structures and calculate the energies of the reactants (one calculation
+1. Before performing any calculations, understand and very briefly describe the basic idea
+   of an implicit solvation model. What component of the solvation energy does COSMO describe
+   and how is the solvent therefor represented?
+
+2. Create structures and calculate the energies of the reactants (one calculation
    for each reactant) in the gas-phase and at |eps| = 32 (methanol). Use the hybrid
    functional PW6B95 with a def2-TZVP basis and D3 dispersion correction. Keep in
    mind that you also have to specify the charge and the solvent model in the ``control``
@@ -573,7 +577,7 @@ S\ :sub:`N`\ 2-Reaction
        cartesian on
 
 
-2. To create the potential energy curves, use the shell script below. The script
+3. To create the potential energy curves, use the shell script below. The script
    loops over all distances. For each distance it creates a new directory, performs
    the constrained geometry optimization and writes the electronic energy (not
    necessarily your final reaction energy) into a file called ``results.dat``.
@@ -662,18 +666,34 @@ S\ :sub:`N`\ 2-Reaction
 
       ./run-scan.sh
 
-3. Plot the two curves together (normalize the curves reasonably) and discuss the
-   results. Estimate the activation barrier for both cases.
+   .. hint::
 
-.. hint::
+      If the execution of such a script takes some longer time, consider calling it with:
 
-   If the execution of such a script takes some longer time, consider calling it with:
+      .. code-block:: bash
 
-   .. code-block:: bash
+         nohup ./run-scan.sh &
 
-      nohup ./run-scan.sh &
+      Then, you can log out of your shell without killing the calculation.
 
-   Then, you can log out of your shell without killing the calculation.
+4. Plot the two curves together (normalize the curves reasonably) and discuss the
+   results:
+    * Estimate the activation barrier in the gas phase and in methanol.
+    * Which parts of the reaction are stabilized the most by the solvent and why?
+    * Why does the reaction barrier change upon solvation?
+    * Are the thermodynamics influenced by the solvent? If yes, how and why?
+    * What are possible limitations of the COSMO solvation model?
+
+   .. hint::
+
+      Consider the solvation free energy given by
+
+      .. math::
+
+         \Delta G_\mathrm{solv} = G_\mathrm{solvated} - G_\mathrm{gas}
+
+      to explain the central points of this exercise.
+
 
 
 Activation Energies
