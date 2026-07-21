@@ -13,7 +13,9 @@ SRCS += integrals.f90\
         prog.f90\
         print_matrix.f90\
         linear_algebra.f90\
-        io_tools.f90
+        io_tools.f90\
+        grid.f90\
+        xc.f90
 
 # make object files from source names
 OBJS := $(patsubst %, build/%.o, $(SRCS))
@@ -64,7 +66,9 @@ $(BUILD)/main.f90.o: $(BUILD)/integrals.f90.o\
                      $(BUILD)/slater.f90.o\
                      $(BUILD)/print_matrix.f90.o\
                      $(BUILD)/linear_algebra.f90.o\
-                     $(BUILD)/io_tools.f90.o
+                     $(BUILD)/io_tools.f90.o\
+                     $(BUILD)/grid.f90.o\
+                     $(BUILD)/xc.f90.o
 $(BUILD)/prog.f90.o: $(BUILD)/main.f90.o
 
 .PHONY: setup clean veryclean

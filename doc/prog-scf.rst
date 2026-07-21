@@ -915,9 +915,10 @@ an iteration. Choose *η* to get reasonably smooth, fast convergence.
 Beyond RHF
 ----------
 
-Next, we will work on extending restricted Hartree-Fock (RHF) to either 
-unrestricted Hartree-Fock (UHF) or restricted second-order Møller--Plesset 
-perturbation theory (MP2). Only one of these two exercises is mandatory.
+Next, we will work on extending restricted Hartree-Fock (RHF) to either
+unrestricted Hartree-Fock (UHF), restricted second-order Møller--Plesset
+perturbation theory (MP2) or Kohn--Sham density functional theory (DFT).
+Only one of these three exercises is mandatory.
 Note that the UHF part also includes the calculation of the spin contamination.
 
 Unrestricted Hartree-Fock
@@ -1085,3 +1086,460 @@ two-electron integrals step-by-step:
       You will find that there is a minimum in each curve. From your knowledge
       about HF and MP2, did you expect this behavior?
       What effect could be the cause for the minimum in the RHF curve?
+
+
+Kohn--Sham Density Functional Theory
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In Kohn--Sham DFT the exact exchange of HF is replaced by an
+exchange-correlation (XC) functional that depends on the electron density.
+Your task is to modify your RHF program into a Kohn--Sham DFT program.
+
+Recall the Hartree--Fock total energy:
+
+.. math::
+
+   E_\text{HF} = \sum_{\mu\nu} P_{\mu\nu} H_{\mu\nu}
+   + \frac{1}{2} \sum_{\mu\nu\lambda\kappa} P_{\mu\nu} P_{\lambda\kappa}
+   \left[ (\mu\nu|\kappa\lambda) - \frac{1}{2}(\mu\lambda|\kappa\nu) \right]
+   + E_\text{nuc}
+
+In Kohn--Sham DFT, the exchange term is replaced by the XC energy functional:
+
+.. math::
+
+   E_\text{KS} = \sum_{\mu\nu} P_{\mu\nu} H_{\mu\nu}
+   + \frac{1}{2} \sum_{\mu\nu\lambda\kappa} P_{\mu\nu} P_{\lambda\kappa}
+   \, (\mu\nu|\kappa\lambda)
+   + E_\text{xc}[\rho]
+   + E_\text{nuc}
+
+The Coulomb (classical electron-electron repulsion) term remains, but the
+nonlocal HF exchange term is absent. Instead, exchange is included
+approximately inside the XC energy functional, which also captures
+correlation effects. The XC energy is evaluated by numerical integration
+over the electron density on a grid.
+
+Concretely, the XC energy integral we need to evaluate is
+
+.. math::
+
+   E_\text{xc}[\rho] = \int \varepsilon_\text{xc}(\rho(\mathbf{r}))
+   \, \rho(\mathbf{r}) \,\mathrm{d}\mathbf{r}
+   \approx \sum_{g=1}^{N_\text{grid}} w_g \,
+   \varepsilon_\text{xc}(\rho_g) \, \rho_g
+
+where :math:`\mathbf{r}_g` are grid points, :math:`w_g` are the associated
+weights and :math:`\rho_g = \rho(\mathbf{r}_g)`.
+
+
+Numerical Integration
+^^^^^^^^^^^^^^^^^^^^^
+
+Analytical integration of the XC functional over all space is not possible
+for general functionals. Because of this, we use numerical quadrature.
+
+You already have a subroutine to evaluate the electron density at arbitrary
+points in space from Exercise 15. This will be an important building block here.
+
+Formally, this has to be solved:
+
+.. math::
+
+   \int f(\mathbf{r})\,\mathrm{d}\mathbf{r}
+   \approx \sum_{g=1}^{N_\text{grid}} w_g \, f(\mathbf{r}_g)
+
+where :math:`\mathbf{r}_g` are grid points and :math:`w_g` are the associated
+weights. For molecular calculations, atom-centered grids with a space
+partitioning scheme (Becke partitioning) are standard.
+
+We provide a library routine ``generate_grid`` that returns a set of grid
+points and weights for a given molecular geometry:
+
+.. code-block:: fortran
+
+   call generate_grid(xyz, chrg, grid_xyz, grid_w, ngrid)
+
+where ``xyz(3, nat)`` are the atomic positions in bohr, ``chrg(nat)`` are the
+nuclear charges, and the outputs ``grid_xyz(3, ngrid)`` and ``grid_w(ngrid)``
+are allocatable arrays of grid point coordinates and integration weights.
+Check ``src/grid.f90`` for details.
+
+
+The optional arguments ``nrad`` and ``nang`` allow overriding the default number of
+radial and angular grid points per atom.  For example, for maximum integration accuracy 
+you can use :code:`nrad = 250` and :code:`nang = 1202`; at the expense of a much higher
+computational cost.
+
+.. admonition:: Exercise 21
+
+   1. Generate a grid for your molecule using the provided ``generate_grid``
+      routine.
+   2. Evaluate the density :math:`\rho` at every grid point.
+   3. Verify that the numerical integration of the density reproduces the
+      number of electrons to reasonable accuracy.
+
+      .. math::
+
+         N_\text{el} \approx \sum_{g=1}^{N_\text{grid}} w_g \, \rho(\mathbf{r}_g)
+
+   4. Integrate two overlapping Gaussian functions on the grid and compare to the analytical result.
+      How large is the error of the numerical integration grid?
+
+Exchange-Correlation Functionals
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+An XC functional maps the electron density (and possibly its derivatives) to
+an energy density :math:`\varepsilon_\text{xc}`. The XC energy is then
+
+.. math::
+
+   E_\text{xc} = \int \varepsilon_\text{xc}[\rho](\mathbf{r})
+   \, \rho(\mathbf{r}) \,\mathrm{d}\mathbf{r}
+   \approx \sum_{g} w_g \, \varepsilon_\text{xc}(\rho_g) \, \rho_g
+
+To construct the Kohn--Sham potential matrix we also need the XC potential,
+which is the functional derivative of the XC energy with respect to the
+density:
+
+.. math::
+
+   v_\text{xc}(\mathbf{r}) = \frac{\delta E_\text{xc}}{\delta \rho(\mathbf{r})}
+
+For LDA, where :math:`E_\text{xc} = \int \rho\,\varepsilon_\text{xc}(\rho)\,\mathrm{d}\mathbf{r}`,
+this reduces to
+
+.. math::
+
+   v_\text{xc}^\text{LDA}(\rho) = \frac{d\left[\rho\,\varepsilon_\text{xc}(\rho)\right]}{d\rho}
+
+
+LDA: Local Density Approximation
+"""""""""""""""""""""""""""""""""
+
+The simplest class of functionals depends only on the local value of the
+density. The LDA exchange energy density (Slater exchange, also known as
+Dirac exchange) is given by
+
+.. math::
+
+   \varepsilon_\text{x}^\text{LDA}(\rho) = -\frac{3}{4}
+   \left(\frac{3}{\pi}\right)^{1/3} \rho^{1/3}
+
+and the corresponding potential by
+
+.. math::
+
+   v_\text{x}^\text{LDA}(\rho) = -\left(\frac{3}{\pi}\right)^{1/3} \rho^{1/3}
+
+For the LDA correlation we use the VWN (Vosko--Wilk--Nusair, parametrization/version 5)
+functional. The VWN correlation energy density is given in terms of a function
+of the Wigner--Seitz radius :math:`r_s`:
+
+.. math::
+
+   r_s = \left(\frac{3}{4\pi\rho}\right)^{1/3}
+
+.. math::
+
+   \varepsilon_\text{c}^\text{VWN}(r_s) = \frac{A}{2}\left\{
+   \ln\frac{x^2}{X(x)}
+   + \frac{2b}{Q}\arctan\frac{Q}{2x+b}
+   - \frac{bx_0}{X(x_0)}\left[
+   \ln\frac{(x-x_0)^2}{X(x)} + \frac{2(b+2x_0)}{Q}\arctan\frac{Q}{2x+b}
+   \right]\right\}
+
+where :math:`x = r_s^{1/2}`,
+:math:`X(x) = x^2 + bx + c`,
+:math:`Q = (4c - b^2)^{1/2}`
+and the VWN-V parameters are
+:math:`A = 0.0621814`, :math:`b = 3.72744`, :math:`c = 12.9352`, :math:`x_0 = -0.10498`.
+
+The VWN potential :math:`v_\text{c}` is obtained by
+
+.. math::
+
+   v_\text{c}^\text{VWN} = \varepsilon_\text{c}^\text{VWN}(r_s)
+   - \frac{r_s}{3}\frac{\partial\varepsilon_\text{c}^\text{VWN}}{\partial r_s}
+
+.. admonition:: Exercise 22
+
+   1. Write a ``subroutine`` that computes the LDA exchange energy density
+      :math:`\varepsilon_\text{x}` for a given density :math:`\rho`.
+   2. Extend this ``subroutine`` to compute the LDA exchange potential
+      :math:`v_\text{x}` for a given density :math:`\rho`.
+   3. The implementation for the VWN correlation energy density and potential
+      is supplied inside ``src/xc.f90``. Combine that with your LDA exchange
+      implementation to get the total LDA XC energy density and potential.
+   4. Verify your implementations against the following reference values
+      (from the libxc density functional library):
+
+      .. list-table::
+         :header-rows: 1
+         :widths: 15 40 40
+
+         * - :math:`\rho`
+           - :math:`\varepsilon_\text{x}\;(E_\text{h})`
+           - :math:`v_\text{x}\;(E_\text{h})`
+         * - :math:`0.176`
+           - :math:`-0.413894142281`
+           - :math:`-0.551858856374`
+         * - :math:`0.300`
+           - :math:`-0.494415573787`
+           - :math:`-0.659220765051`
+         * - :math:`0.520`
+           - :math:`-0.593908451244`
+           - :math:`-0.791877934993`
+         * - :math:`3.400`
+           - :math:`-1.110566825988`
+           - :math:`-1.480755767980`
+
+.. hint::
+
+   Be careful with the case :math:`\rho = 0`. Your functional routines should return
+   zero for vanishing density without causing division by zero.
+
+
+PBE: Generalized Gradient Approximation
+""""""""""""""""""""""""""""""""""""""""
+
+Generalized gradient approximation (GGA) functionals also depend on the
+gradient of the density. This introduces an additional quantity, the reduced
+density gradient:
+
+.. math::
+
+   s = \frac{|\nabla\rho|}{2(3\pi^2)^{1/3}\rho^{4/3}}
+
+For the density gradient you need to evaluate the gradient of each basis
+function at the grid points. For :math:`s`-type Gaussian basis functions
+the gradient is straightforward:
+
+.. math::
+
+   \nabla\psi_\mu(\mathbf{r}) = -2\alpha(\mathbf{r} - \mathbf{R}_A)
+   \,\psi_\mu(\mathbf{r})
+
+where :math:`\alpha` is the exponent and :math:`\mathbf{R}_A` the center of the basis function.
+For contracted functions, this gradient is a linear combination over primitives
+weighted by the contraction coefficients.
+
+The gradient of the density is then
+
+.. math::
+
+   \nabla\rho(\mathbf{r}) = 2\sum_{\mu}\sum_{\nu} P_{\mu\nu}\,
+   \nabla\psi_\mu(\mathbf{r})\,\psi_\nu(\mathbf{r})
+
+where the factor of 2 exploits the symmetry in :math:`\mu` and :math:`\nu`.
+
+The PBE exchange enhancement factor is
+
+.. math::
+
+   F_\text{x}^\text{PBE}(s) = 1 + \kappa
+   - \frac{\kappa}{1 + \mu s^2 / \kappa}
+
+with :math:`\kappa = 0.804` and :math:`\mu = 0.21951`. The PBE exchange energy density is then
+
+.. math::
+
+   \varepsilon_\text{x}^\text{PBE}(\rho, s) =
+   \varepsilon_\text{x}^\text{LDA}(\rho) \cdot F_\text{x}^\text{PBE}(s)
+
+The PBE correlation builds on the LDA correlation (specifically the
+Perdew--Wang 1992 parametrization). The PBE correlation energy density is
+
+.. math::
+
+   \varepsilon_\text{c}^\text{PBE}(\rho, s) =
+   \varepsilon_\text{c}^\text{LDA}(\rho) + H(r_s, t)
+
+where :math:`t = |\nabla\rho| / (2 k_s \rho)` with
+:math:`k_s = (4 k_F / \pi)^{1/2}` and
+:math:`k_F = (3\pi^2 \rho)^{1/3}`, and
+
+.. math::
+
+   H = \gamma\,\ln\left\{1 + \frac{\beta}{\gamma}\,t^2\,
+   \frac{1 + At^2}{1 + At^2 + A^2t^4}\right\}
+
+with :math:`\gamma = (1 - \ln 2) / \pi^2`, :math:`\beta = 0.066725` (in atomic units) and
+
+.. math::
+
+   A = \frac{\beta}{\gamma}\left[\exp\!\left(
+   -\varepsilon_\text{c}^\text{LDA}/\gamma\right) - 1\right]^{-1}
+
+Note that the standard PBE functional consists of PBE exchange *and* PBE
+correlation — it is *not* a combination of PBE exchange with VWN correlation.
+VWN5 is an LDA correlation functional.  In summary:
+
+- **LDA** = Slater exchange + VWN5 correlation
+- **PBE** = PBE exchange + PBE correlation
+
+Both PBE exchange and PBE correlation are provided in ``src/xc.f90``.
+
+For GGA functionals it is convenient to define the XC energy integrand
+
+.. math::
+
+   f(\rho, \sigma) = \rho\,\varepsilon_\text{xc}(\rho, \sigma),
+   \qquad \sigma = |\nabla\rho|^2
+
+The XC potential contribution to the Kohn--Sham matrix then has an additional
+term involving the density gradient:
+
+.. math::
+
+   (V_\text{xc})_{\mu\nu} = \sum_g w_g \left[
+   \frac{\partial f}{\partial\rho}\,
+   \psi_\mu(\mathbf{r}_g)\,\psi_\nu(\mathbf{r}_g)
+   + 2\,\frac{\partial f}{\partial\sigma}\,
+   \nabla\rho(\mathbf{r}_g)\cdot
+   \left(\nabla\psi_\mu(\mathbf{r}_g)\,\psi_\nu(\mathbf{r}_g)
+   + \psi_\mu(\mathbf{r}_g)\,\nabla\psi_\nu(\mathbf{r}_g)\right)
+   \right]
+
+The routines ``pbe_exchange`` and ``pbe_correlation`` in ``src/xc.f90`` return
+exactly these derivatives: ``vrho`` = :math:`\partial f/\partial\rho` and
+``vsigma`` = :math:`\partial f/\partial\sigma`.
+
+.. admonition:: Exercise 23
+
+   1. Code a ``subroutine`` that evaluates the gradient of each basis function
+      :math:`\nabla\psi_\mu(\mathbf{r})` at a given grid point.
+   2. Use it together with the density matrix to compute the density gradient
+      :math:`\nabla\rho(\mathbf{r})` and the reduced density gradient :math:`s` on the
+      grid.
+   3. Verify your gradient implementation:
+      - Check that the numerical integral :math:`\int|\nabla\rho|^2\,\mathrm{d}\mathbf{r}`
+      gives a physically reasonable result.
+      - Compare the  analytical gradient with a finite-difference (numerical) 
+      approximation at selected grid points.
+
+Building the Kohn--Sham Matrix
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The Kohn--Sham (KS) matrix replaces the Fock matrix in the SCF procedure.
+Instead of the HF exchange, we have a DFA XC contribution:
+
+.. math::
+
+   F_{\mu\nu}^\text{KS} = H_{\mu\nu}
+   + \sum_\lambda \sum_\kappa P_{\lambda\kappa}
+   \left(\mu\nu|\kappa\lambda\right)
+   + (V_\text{xc})_{\mu\nu}
+
+Note the absence of the exchange term
+:math:`P_{\lambda\kappa}(\mu\lambda|\kappa\nu)` compared to HF.
+For LDA, the XC matrix elements are computed by numerical integration:
+
+.. math::
+
+   (V_\text{xc})_{\mu\nu} = \sum_{g=1}^{N_\text{grid}} w_g \,
+   v_\text{xc}(\rho(\mathbf{r}_g)) \, \psi_\mu(\mathbf{r}_g) \,
+   \psi_\nu(\mathbf{r}_g)
+
+The total Kohn--Sham energy is
+
+.. math::
+
+   E_\text{KS} = \sum_{\mu\nu} P_{\mu\nu} H_{\mu\nu}
+   + \frac{1}{2} \sum_{\mu\nu} P_{\mu\nu} J_{\mu\nu}
+   + E_\text{xc}
+   + E_\text{nuc}
+
+where :math:`\mathbf{J}` is the Coulomb matrix, i.e.
+:math:`J_{\mu\nu} = \sum_{\lambda\kappa} P_{\lambda\kappa}(\mu\nu|\kappa\lambda)`.
+
+.. admonition:: Exercise 24
+
+   1. Copy your RHF subroutine and modify it into a Kohn--Sham DFT
+      subroutine. Remove the exchange term from the Fock matrix construction
+      and replace it with the DFA XC potential matrix.
+   2. Build the LDA XC potential :math:`(V_\text{xc})_{\mu\nu}` by looping
+      over all grid points. At each grid point, evaluate the density,
+      the XC potential and all basis function values.
+   3. Implement the Kohn--Sham energy expression.
+   4. Run LDA (Slater + VWN5) calculations using the STO-3G basis set and
+      compare your results (see the table below).
+   5. Extend your KS subroutine to support GGA functionals.
+      Use the ``pbe_exchange`` and ``pbe_correlation`` routines from
+      ``src/xc.f90`` — they return ``vrho`` (= :math:`\partial f/\partial\rho`) and
+      ``vsigma`` (= :math:`\partial f/\partial\sigma`).
+      Build the GGA XC matrix using the formula given above.
+   6. Run PBE (PBE exchange + PBE correlation) calculations for the same
+      systems and compare with LDA and the results from table.
+   7. Calculate the dissociation curve of :math:`\text{H}_2` with LDA and PBE.
+      Plot the DFT curves together with the RHF curve on a relative energy
+      scale (in kcal/mol).
+      How does DFT describe the dissociation compared to RHF?
+
+
+   Reference energies (ORCA 6.1, STO-3G basis):
+
+   .. list-table::
+      :header-rows: 1
+      :widths: 15 28 28 28
+
+      * - Input
+        - :math:`E_\text{LDA}\;(E_\text{h})`
+        - :math:`E_\text{PBE}\;(E_\text{h})`
+        - :math:`E_\text{PBE0}\;(E_\text{h})`
+      * - :math:`\text{H}_2`
+        - :math:`-1.121201`
+        - :math:`-1.152066`
+        - :math:`-1.154312`
+      * - He
+        - :math:`-2.771886`
+        - :math:`-2.830171`
+        - :math:`-2.835986`
+      * - Be
+        - :math:`-14.221142`
+        - :math:`-14.405935`
+        - :math:`-14.415201`
+      * - LiH
+        - :math:`-7.791016`
+        - :math:`-7.919654`
+        - :math:`-7.926304`
+
+Beyond Semi-Local Functionals (Bonus)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+LDA and GGA functionals depend only on the local density and its gradient.
+A natural next step is to mix in a fraction of exact (Hartree--Fock) exchange.
+These *hybrid* functionals construct the XC energy as
+
+.. math::
+
+   E_\text{xc}^\text{hybrid} = a\,E_\text{x}^\text{HF}
+   + (1 - a)\,E_\text{x}^\text{DFA} + E_\text{c}^\text{DFA}
+
+where :math:`a` is the mixing parameter and DFA denotes the chosen
+density functional approximation.
+The most widely used hybrid is PBE0, which combines 25% HF exchange with
+75% PBE exchange and full PBE correlation (:math:`a = 0.25`).
+
+In practice this means the Kohn--Sham matrix becomes
+
+.. math::
+
+   F_{\mu\nu}^\text{hybrid} = H_{\mu\nu}
+   + \sum_{\lambda\kappa} P_{\lambda\kappa}\,(\mu\nu|\kappa\lambda)
+   - \frac{a}{2}\sum_{\lambda\kappa} P_{\lambda\kappa}\,(\mu\lambda|\kappa\nu)
+   + (V_\text{xc}^\text{DFA})_{\mu\nu}
+
+Note that a fraction of the HF exchange integral reappears — you can reuse
+your existing exchange code, scaled by :math:`a`.
+The DFA XC potential matrix :math:`(V_\text{xc}^\text{DFA})_{\mu\nu}` is
+built exactly as before, but using :math:`(1-a)` times the DFA exchange
+contribution.
+
+.. admonition:: Exercise 25 (Bonus)
+
+   1. Implement PBE0 by combining your PBE KS routine with a fraction
+      :math:`a = 0.25` of HF exchange.
+   2. Run PBE0 calculations for the reference systems and compare with
+      the PBE0 column in the table above.
+   3. How do the PBE0 energies compare to pure PBE and LDA?
